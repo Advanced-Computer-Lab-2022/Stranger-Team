@@ -48,13 +48,13 @@ const courseSchema = new Schema({
   Course_Description:{
     type:String,
     required:false
-  }
-    // Instructor_Id:{
-    //     type:mongoose.Types.ObjectId,
-    //     ref:'instructor',
-    //     //type:String,
-    //     required:false
-    // }
+  },
+    Instructor_Id:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'instructor',
+        //type:String,
+        required:true
+    }
 }, { timestamps: true });
 
 const Course = mongoose.model('course', courseSchema);

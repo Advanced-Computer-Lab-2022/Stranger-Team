@@ -7,6 +7,31 @@ const course = require('../Models/Course');
 const instructor = require('../Models/Instructor');
 
 
+
+//Basmala's create Course
+    // const createCourse = async(req,res)=>{
+    // //This was added today
+    //     const userId = req.query.id;
+
+    // const {Title, Subject, Subtitles,Subtitles_Total_Hours,Exercises,
+    //     Course_Total_Hours,Price,Rating,Instructor_Name}= req.body;
+    // try{
+
+    // const addCourse=await course.create({"Title":Title, "Subject":Subject,
+    // "Subtitles":Subtitles,"Subtitles_Total_Hours":Subtitles_Total_Hours,
+    // "Exercises":Exercises,"Course_Total_Hours":Course_Total_Hours,"Price":Price,
+    // "Rating":Rating,"Instructor_Name":Instructor_Name,instructorid:req.query.id
+    // //instructorid:req.params.id
+    // })
+    // }
+    // catch(error){
+    //     res.status(400).json({error:error.message});
+    // }
+    // const ayy=await course.find({}).populate({path:'instructorid',select:['Username','Name','coursedets']})
+    // const ayy2=await course.find({"instructorid":req.query.id})
+    // res.status(200).json(ayy2);
+    // }
+
 const data = (req, res) => {
     res.status(200).send("You have everything installed!");
     }
@@ -15,9 +40,10 @@ const data = (req, res) => {
     const createCourse = async(req,res)=>{
 
         const {Title, Subject, Subtitles,Subtitles_Total_Hours,Exercises,Course_Total_Hours,Price,Rating,Instructor_Name,discount,Course_Description}= req.body;
+        const instructorid=req.query.id;
     try{
 
-    const addCourse =await course.create({Title, Subject, Subtitles,Subtitles_Total_Hours,Exercises,Course_Total_Hours,Price,Rating,Instructor_Name,discount,Course_Description});
+    const addCourse =await course.create({Title, Subject, Subtitles,Subtitles_Total_Hours,Exercises,Course_Total_Hours,Price,Rating,Instructor_Name,discount,Course_Description,"Instructor_Id":req.query.id});
     console.log(addCourse);
     res.status(200).json(addCourse);
 
@@ -27,6 +53,12 @@ const data = (req, res) => {
     }
 
 }
+
+
+
+
+
+
 const addInstructor = async(req,res)=>{
         
     const {Username, Password,First_Name} = req.body;
@@ -47,6 +79,21 @@ const View_All_Courses = async(req,res) =>{
     const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles:1,Subtitles_Total_Hours:1,Exercises:1, Course_Total_Hours:1,Price:1,Rating:1,Instructor_Name:1,discout:1,Course_Description:1 }).sort({createdAt:-1}) ;
     res.status(200).json(allCourses);
 }
+
+// const View_All_Courses = async(req,res) =>{
+//     const q = req.query.q;
+//     console.log(q);
+
+//     const keys=["Title","Subject","Instructor_Name"];
+//     const search = (data)=>{
+//         return data.filter((item)=>
+//         keys.some((key)=>item[key].toLowerCase().includes(q))
+//         );
+//     };
+//         const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles:1,Subtitles_Total_Hours:1,Exercises:1, Course_Total_Hours:1,Price:1,Rating:1,Instructor_Name:1,discout:1,Course_Description:1 }).sort({createdAt:-1}) ;
+//         res.status(200).json(allCourses);
+//     }
+
 
 
 

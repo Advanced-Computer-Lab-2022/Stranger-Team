@@ -7,10 +7,12 @@
 
     const CorporateHome = () => {
     const [courses, setCourses] = useState(null)
+    const [searchQuery, setSearchQuery] = useState("")
 
     useEffect(() => {
         const fetchCourses = async () => {
-        const response = await fetch('/View_All_Courses')
+        //const response = await fetch('/View_All_Courses')
+        const response = await fetch(`/View_All_Courses/?q=${searchQuery}`)
         const json = await response.json()
 
         if (response.ok) {
@@ -19,13 +21,13 @@
         }
 
         fetchCourses()
-    }, [])
+    }, [searchQuery])
 
     let navigate = useNavigate();
-        const routeChange = () =>{ 
-        let path = '/CoursesFilterBySubject'; 
-        navigate(path);
-    }
+    //     const routeChange = () =>{ 
+    //     let path = '/CoursesFilterBySubject'; 
+    //     navigate(path);
+    // }
 
     const routeChange2 = () =>{ 
         let path = '/CourseFilterByRate'; 
@@ -37,15 +39,15 @@
         navigate(path);
     }
 
-    const routeChange3 = () =>{ 
-        let path = '/CourseSearchByTitle'; 
-        navigate(path);
-    }
+    // const routeChange3 = () =>{ 
+    //     let path = '/CourseSearchByTitle'; 
+    //     navigate(path);
+    // }
 
-    const routeChange4 = () =>{ 
-        let path = '/CourseSearchByInstructorName'; 
-        navigate(path);
-    }
+    // const routeChange4 = () =>{ 
+    //     let path = '/CourseSearchByInstructorName'; 
+    //     navigate(path);
+    // }
     
 
     const routeChange5 = () =>{ 
@@ -65,7 +67,8 @@
     
 
     return (
-        <div className="home">
+        <div >
+            <input type="text" placeholder="Search By Course Title,Subject,Instructor..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}></input>
         <div className="courses">
             {courses && courses.map(course => (
             <CorporateCourseDetails course={course} key={course._id} />
@@ -76,9 +79,9 @@
             
             <form className="signin">
             
-            <button onClick={routeChange3}> Search By Title </button>
+            {/* <button onClick={routeChange3}> Search By Title </button>
             <button onClick={routeChange4}> Search By Instructor Name </button>
-            <button onClick={routeChange}> Filter By Subject </button>
+            <button onClick={routeChange}> Filter By Subject </button> */}
             <button onClick={routeChange2}> Filter By Rate </button>
             <button onClick={routeChange8}> Filter By Price </button>
             <button onClick={routeChange5}> Filter By Price And Subject </button>

@@ -7,25 +7,52 @@
 
     const Home1 = () => {
     const [courses, setCourses] = useState(null)
+    const [searchQuery, setSearchQuery] = useState("")
+    const [searchRateQuery, setSearchRateQuery] = useState("")
+
 
     useEffect(() => {
         const fetchCourses = async () => {
-        const response = await fetch('/View_All_Courses')
-        const json = await response.json()
+        //const response = await fetch('/View_All_Courses')
+        ///Filter_By_Rate/
+        //const response = await fetch(`/View_All_Courses/?q=${searchQuery}`)
+        
 
-        if (response.ok) {
-            setCourses(json)
-        }
+        const response = await fetch(`/View_All_Courses/?q=${searchQuery}`)
+
+        // if(setSearchQuery == null && setSearchRateQuery == null)
+        // {
+        //     console.log("jjj")
+        //    response = await fetch(`/View_All_Courses/?q=`)
+        //}
+        // if(setSearchRateQuery != null)
+        // {
+        
+        //     response = await fetch(`/Filter_By_Rate/?q=${searchRateQuery}`)
+        // }
+        // else if(setSearchQuery!= null)
+        // {
+        //     response = await fetch(`/View_All_Courses/?q=${searchQuery}`)
+        // }
+        
+        
+        
+        
+        const json = await response.json()
+        console.log(json)
+        
+        setCourses(json)
+        
         }
 
         fetchCourses()
-    }, [])
+    }, [searchQuery,searchRateQuery])
 
     let navigate = useNavigate();
-        const routeChange = () =>{ 
-        let path = '/CoursesFilterBySubject'; 
-        navigate(path);
-    }
+    //     const routeChange = () =>{ 
+    //     let path = '/CoursesFilterBySubject'; 
+    //     navigate(path);
+    // }
 
         const routeChange1 = () =>{ 
         let path = '/CoursesFilterByPrice'; 
@@ -37,15 +64,15 @@
         navigate(path);
     }
 
-    const routeChange3 = () =>{ 
-        let path = '/CourseSearchByTitle'; 
-        navigate(path);
-    }
+    // const routeChange3 = () =>{ 
+    //     let path = '/CourseSearchByTitle'; 
+    //     navigate(path);
+    // }
 
-    const routeChange4 = () =>{ 
-        let path = '/CourseSearchByInstructorName'; 
-        navigate(path);
-    }
+    // const routeChange4 = () =>{ 
+    //     let path = '/CourseSearchByInstructorName'; 
+    //     navigate(path);
+    // }
 
     const routeChange5 = () =>{ 
         let path = '/CourseFilterBySubjectAndPrice'; 
@@ -67,10 +94,17 @@
         navigate(path);
     }
 
-
+    
 
     return (
-        <div className="home">
+        <div >
+            <input type="text" placeholder="Search By Course Title,Subject,Instructor..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}>
+            
+            </input>
+
+            <div>
+                <input type="number" placeholder="Filter By Rate..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}></input>
+            </div>
         <div className="courses">
             {courses && courses.map(course => (
             <CourseDetails course={course} key={course._id} />
@@ -81,9 +115,9 @@
             
             <form className="signin">
         
-            <button onClick={routeChange3}> Search By Title </button>
+            {/* <button onClick={routeChange3}> Search By Title </button>
             <button onClick={routeChange4}> Search By Instructor Name </button>
-            <button onClick={routeChange}> Filter By Subject </button>
+            <button onClick={routeChange}> Filter By Subject </button> */}
             <button onClick={routeChange2}> Filter By Rate </button>
             <button onClick={routeChange8}> Filter By Price </button>
             <button onClick={routeChange5}> Filter By Price And Subject </button>

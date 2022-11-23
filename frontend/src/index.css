@@ -6,6 +6,11 @@
   --primary: #1aac83;
   --error: #e7195a;
 }
+.search{
+  padding:10px;
+  font-size: 20px;
+  width: 50%;
+}
 
 body {
   background: #f1f1f1;

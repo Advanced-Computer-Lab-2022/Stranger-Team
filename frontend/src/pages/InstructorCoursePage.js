@@ -10,10 +10,12 @@
 
     const InstructorCoursePage = () => {
     const [courses, setCourses] = useState(null)
+    const [searchQuery, setSearchQuery] = useState("")
 
     useEffect(() => {
         const fetchInstructor = async () => {
-        const response = await fetch('/View_My_Courses/Layla')
+        //const response = await fetch('/View_My_Courses/Layla')
+        const response = await fetch(`/View_My_Courses/Layla/?q=${searchQuery}`)
         const json = await response.json()
         console.log(response)
         console.log( json)
@@ -24,7 +26,7 @@
         }
 
         fetchInstructor()
-    }, [])
+    }, [searchQuery])
 
         let navigate = useNavigate();
         const routeChange = () =>{ 
@@ -33,7 +35,8 @@
     }
 
     return (
-        <div className="home1">
+        <div >
+            <input type="text" placeholder="Search By Course Title,Subject..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}></input>
         <div className="courses">
             <h1>My Courses</h1>
             {courses && courses.map(course => (
