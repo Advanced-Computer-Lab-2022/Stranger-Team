@@ -43,7 +43,7 @@ const data = (req, res) => {
         const instructorid=req.query.id;
     try{
 
-    const addCourse =await course.create({Title, Subject, Subtitles,Subtitles_Total_Hours,Exercises,Course_Total_Hours,Price,Rating,Instructor_Name,discount,Course_Description,"Instructor_Id":req.query.id});
+    const addCourse =await course.create({Title, Subject, Subtitles,Subtitles_Total_Hours,Exercises,Course_Total_Hours,Price,Rating,Instructor_Name,discount,Course_Description,"Instructor":req.query.id});
     console.log(addCourse);
     res.status(200).json(addCourse);
 
@@ -55,7 +55,21 @@ const data = (req, res) => {
 }
 
 
-
+const viewMyInstructorCoursesById = async(req,res) => {
+    /*
+    1- get the author id from the request query
+    2- find all the blogs that have the same author id
+    3- send the blogs as a response
+    */
+    const instructorId = req.query.id;
+    // check if userId is not empty
+    if(instructorId){
+    const result = await course.find({Instructor:mongoose.Types.ObjectId(instructorId)}).populate('Instructor');
+    res.status(200).json(result)
+    }else{
+        res.status(400).json({error:"instructorId is required"})
+    }
+}
 
 
 
@@ -185,4 +199,4 @@ const Filter_By_Subject_And_Rating_And_Price= async (req,res) => {
             res.status(200).json(data);
             };   
 
-module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price};
+module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById};

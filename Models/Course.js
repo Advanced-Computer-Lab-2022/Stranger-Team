@@ -49,11 +49,9 @@ const courseSchema = new Schema({
     type:String,
     required:false
   },
-    Instructor_Id:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'instructor',
-        //type:String,
-        required:true
+    Instructor:{
+        type: mongoose.Types.ObjectId,
+        ref:'instructor'
     }
 }, { timestamps: true });
 

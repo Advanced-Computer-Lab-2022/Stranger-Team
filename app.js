@@ -27,7 +27,7 @@ const instructor = require('./Models/Instructor');
 const admins = require('./Models/Administrator');
 const pendingInstructors = require('./Models/pendingInstructors');
 const corporateTrainees = require('./Models/corporateTrainees');
-const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price} = require('./Routes/coursesController');
+const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById} = require('./Routes/coursesController');
 
 const {insttitles,filterTitles2} = require('./Routes/instructorController');
 
@@ -223,6 +223,8 @@ app.get("/View_All_Courses/",async (req,res)=>{
 
 // });
 
+
+
 app.post("/Filter_By_Subject/", Filter_By_Subject);
 app.post("/Filter_By_Price/",Filter_By_Price);
 app.post("/Filter_By_Rate/",Filter_By_Rate);
@@ -235,23 +237,59 @@ app.post("/Filter_By_Subject_And_Rating_And_Price/",Filter_By_Subject_And_Rating
 app.post("/createCourse/", createCourse);
 //app.get("/View_My_Courses/:Instructor_Name",insttitles);
 
-app.get("/View_My_Courses/:Instructor_Name",async (req,res)=>{
+// app.get("/View_My_Courses/:Instructor_Name",async (req,res)=>{
+
+//   const q = req.query.q;
+//   console.log(q);
+
+//   const keys=["Title","Subject"];
+//   const search = (data)=>{
+//     return data.filter((item)=>
+//     keys.some((key)=>item[key].toLowerCase().includes(q))
+//     );
+//   };
+
+//   const instData=await course.find({ Instructor_Name: req.params.Instructor_Name },{});
+
+//     res.status(200).json(search(instData));
+
+// });
+
+//app.get("/MyCourses/",viewMyInstructorCoursesById);
+app.get("/MyCourses/:id",async (req,res)=>{
 
   const q = req.query.q;
+  const p = req.query.p;
+  const instructorId = req.params.id;
   console.log(q);
+  console.log(p);
 
-  const keys=["Title","Subject"];
+  const keys=["Title","Subject","Price"];
   const search = (data)=>{
     return data.filter((item)=>
     keys.some((key)=>item[key].toLowerCase().includes(q))
     );
   };
 
-  const instData=await course.find({ Instructor_Name: req.params.Instructor_Name },{});
-
+  if(parseInt(p))
+  {
+    const instData=await course.find({Instructor:mongoose.Types.ObjectId(instructorId),"Price":p},{});
+    console.log(instData)
+    console.log(instData)
+    res.status(200).json(instData);
+  }
+  else
+  {
+    const instData=await course.find({Instructor:mongoose.Types.ObjectId(instructorId)},{});
+    console.log(instData)
+    console.log(search(instData))
     res.status(200).json(search(instData));
+  }
+  
 
 });
+
+
 
 
 // const insttitles= async (req,res) => { 
