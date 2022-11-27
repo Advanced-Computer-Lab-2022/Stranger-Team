@@ -94,6 +94,18 @@ const View_All_Courses = async(req,res) =>{
     res.status(200).json(allCourses);
 }
 
+const getCurrentCourseDetails  = async(req,res) =>{
+    const currentCourse = req.query.CourseId;
+
+    const currentCourseDetails = await course.find({_id:currentCourse}, {Title: 1, Subject: 1,Subtitles:1,Subtitles_Total_Hours:1,Exercises:1, Course_Total_Hours:1,Price:1,Rating:1,Instructor_Name:1,discout:1,Course_Description:1 }).sort({createdAt:-1}) ;
+
+
+    console.log(currentCourseDetails)
+
+    res.status(200).json(currentCourseDetails); 
+
+}
+
 // const View_All_Courses = async(req,res) =>{
 //     const q = req.query.q;
 //     console.log(q);
@@ -153,6 +165,21 @@ const Search_By_Title  = async(req,res) =>{
 
 }
 
+const getCurrentCourseInformation = async (req,res) => { 
+            try{
+                console.log(req.query.CourseId);
+                const data=await course.find( { "_id":req.query.CourseId,},{})
+                console.log(data)
+                res.status(200).json(data);
+            }
+            catch(error){
+                res.status(400).json({error:error.message});
+            }
+
+            }; 
+
+
+
 const Filter_By_Subject_And_Price= async (req,res) => {
             const subject = req.body.Subject;
             const price = req.body.Price;
@@ -199,4 +226,4 @@ const Filter_By_Subject_And_Rating_And_Price= async (req,res) => {
             res.status(200).json(data);
             };   
 
-module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById};
+module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation};

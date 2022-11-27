@@ -27,9 +27,9 @@ const instructor = require('./Models/Instructor');
 const admins = require('./Models/Administrator');
 const pendingInstructors = require('./Models/pendingInstructors');
 const corporateTrainees = require('./Models/corporateTrainees');
-const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById} = require('./Routes/coursesController');
+const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation} = require('./Routes/coursesController');
 
-const {insttitles,filterTitles2} = require('./Routes/instructorController');
+const {insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio} = require('./Routes/instructorController');
 
 const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor} = require('./Routes/adminController');
 const { isNumberObject } = require('util/types');
@@ -206,23 +206,7 @@ app.get("/View_All_Courses/",async (req,res)=>{
 
 });
 
-// app.get("/Filter_By_Rate/",async (req,res)=>{
-
-//   const q = req.query.q;
-//   console.log(q);
-
-//   const keys=["Rating"];
-//   const search = (data)=>{
-//     return data.filter((item)=>
-//     keys.some((key)=>item[key].includes(parseInt(q)))
-//     );
-//   };
-
-//   const allCourses = await course.find({"Rating":q}, {Title: 1, Subject: 1,Subtitles:1,Subtitles_Total_Hours:1,Exercises:1, Course_Total_Hours:1,Price:1,Rating:1,Instructor_Name:1,discout:1,Course_Description:1 }).sort({createdAt:-1}) ;
-//     res.status(200).json(search(allCourses));
-
-// });
-
+app.get("/CurrentCourse/",getCurrentCourseDetails);
 
 
 app.post("/Filter_By_Subject/", Filter_By_Subject);
@@ -290,7 +274,11 @@ app.get("/MyCourses/:id",async (req,res)=>{
 });
 
 
+app.get("/MyProfile/",getInstructorInformation);
 
+app.post("/EditMyProfile/",editInstructorProfileEmailAndBio);
+
+app.get("/CurrentCourse/",getCurrentCourseInformation);
 
 // const insttitles= async (req,res) => { 
 //             const instructorName = req.body;

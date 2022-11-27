@@ -5,6 +5,12 @@
     // components
     import CourseDetails from "../components/CourseDetails"
 
+    import 'bootstrap/dist/css/bootstrap.min.css'
+
+    import{Button, Alert, Container} from 'react-bootstrap'
+    import ProfileNavBar from '../components/ProfileNavBar'
+    import Navbar from "../components/Navbar";
+
     const Home1 = () => {
     const [courses, setCourses] = useState(null)
     const [searchQuery, setSearchQuery] = useState("")
@@ -97,7 +103,9 @@
     
 
     return (
+
         <div >
+            <Navbar/>
             <input type="text" placeholder="Search By Course Title,Subject,Instructor..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}>
             
             </input>
@@ -107,7 +115,18 @@
             </div>
         <div className="courses">
             {courses && courses.map(course => (
+            <Container hover
+                sx={{
+                    "&:hover":{
+                    cursor: "pointer",
+                    backgroundColor: "#f5f5f5",
+                    width: "100%"
+                    }
+                }}
+                onClick={() => window.location.href=`/CurrentCourse?CourseId=${course._id}`}
+                key={course._id}>
             <CourseDetails course={course} key={course._id} />
+            </Container>
             ))}
         </div>
 

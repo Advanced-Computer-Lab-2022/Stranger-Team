@@ -6,6 +6,10 @@
 
     // components
     import MyCourses from "../components/MyCourses"
+    import 'bootstrap/dist/css/bootstrap.min.css'
+
+    import{Button, Alert, Container} from 'react-bootstrap'
+    import ProfileNavBar from '../components/ProfileNavBar'
 
 
     const InstructorCoursePage = () => {
@@ -71,13 +75,25 @@
     }
 
     return (
-        <div >
+        <Container >
+            <ProfileNavBar/>
             <input type="text" placeholder="Search My Courses By Title,Subject..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}></input>
             <input type="text" placeholder="Search My Courses By Price..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}></input>
         <div className="courses">
             <h1>My Courses</h1>
             {courses && courses.map(course => (
+            <Container hover
+                sx={{
+                    "&:hover":{
+                    cursor: "pointer",
+                    backgroundColor: "#f5f5f5",
+                    width: "100%"
+                    }
+                }}
+                onClick={() => window.location.href=`/CurrentCourse?CourseId=${course._id}`}
+                key={course._id}>
             <MyCourses course={course} key={course._id} />
+            </Container>
             ))}
         </div>
         
@@ -85,13 +101,13 @@
             
             <form className="signin">
         
-            <button onClick={routeChange}> Add A Course </button>
+            <Button onClick={routeChange}> Add A Course </Button>
             </form>
         </div>
 
         
         
-        </div>
+        </Container>
     )
     }
 

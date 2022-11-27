@@ -19,9 +19,12 @@ import HomeAdmin from './pages/adminH'; //admin homepage
 import InstructorsPage from './pages/instructors';
 import CorporateTPage from './pages/corporateTrainees';
 import PendingInstructorsPage from './pages/pendingInstructors';
+import InstructorProfilePage from './pages/InstructorProfilePage';
+import EditMyProfilePage from './pages/EditMyProfilePage'
 import Home from './pages/adminHome'; //admins
 
 import CorporateHome from './pages/corporateTraineeHome'
+import CurrentCoursePage from './pages/CurrentCoursePage'
 
 
 
@@ -30,7 +33,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <Navbar/>
+      {/* <Navbar/> */}
       <div className="pages">
         <Routes>
         <Route
@@ -56,6 +59,24 @@ function App() {
         <Route
         path="/CourseFilterBySubjectAndPrice"
         element={<CourseFilterBySubjectAndPrice />}
+        />
+
+        
+
+        <Route
+        path="/EditMyProfile"
+        element={<EditMyProfilePage />}
+        />
+
+        <Route
+        path="/CurrentCourse"
+        element={<CurrentCoursePage />}
+        />
+
+
+        <Route
+        path="/MyProfile/"
+        element={<InstructorProfilePage />}
         />
         
         <Route

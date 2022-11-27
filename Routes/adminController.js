@@ -226,7 +226,7 @@
     //adding an instructor
 
     const addInstructor = async (req, res) => {
-    const {Username, Password, First_Name, Last_Name, Email, Gender} = req.body
+    const {Username, Password, First_Name, Last_Name, Email, Gender,Bio} = req.body
 
     let emptyFields = []
     if (!Username) {
@@ -252,6 +252,9 @@
     if (!Gender) {
         emptyFields.push('Gender')
     }
+    if(!Bio){
+        emptyFields.push('Bio')
+    }
 
     if(emptyFields.length > 0) {
         console.log(emptyFields.length)
@@ -261,7 +264,7 @@
 
 
     try {
-        const instructor = await Instructors.create({Username, Password, First_Name, Last_Name, Email, Gender})
+        const instructor = await Instructors.create({Username, Password, First_Name, Last_Name, Email, Gender,Bio})
         res.status(200).json(instructor)
     }
     catch(error) {
