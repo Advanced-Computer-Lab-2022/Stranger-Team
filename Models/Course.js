@@ -9,22 +9,12 @@ const courseSchema = new Schema({
     type: String,
     required: true
   },
+  
   Subject:{
     type: String,
     required: true
   },
-  Subtitles:{
-    type: String,
-    required: true
-  },
-  Subtitles_Total_Hours:{
-    type: Number,
-    required: true
-  },
-  Exercises:{
-    type: String,
-    required: true
-  },
+  
   Course_Total_Hours:{
     type: Number,
     required: true
@@ -49,12 +39,7 @@ const courseSchema = new Schema({
     type:String,
     required:false
   }
-    // Instructor_Id:{
-    //     type:mongoose.Types.ObjectId,
-    //     ref:'instructor',
-    //     //type:String,
-    //     required:false
-    // }
+  
 }, { timestamps: true });
 
 const Course = mongoose.model('course', courseSchema);

@@ -3,8 +3,9 @@ const { appendFile } = require('fs');
 const express = require("express");
 const mongoose = require('mongoose');
 const MongoClient = require('mongodb').MongoClient;
-const MongoURI = 'mongodb+srv://roka:roka@cluster0.9sdu6uc.mongodb.net/test' ;
+const MongoURI = 'mongodb+srv://ACL123:ACL123@aclcluster.1uihlnr.mongodb.net/ACL?retryWrites=true&w=majority' ;
 //'mongodb+srv://nour:nour@cluster1.yxlcle2.mongodb.net/test'
+// marams db --> mongodb+srv://ACL123:ACL123@aclcluster.1uihlnr.mongodb.net/ACL?retryWrites=true&w=majority
 var path = require('path');
 const user = require('./Models/User');
 
@@ -23,13 +24,15 @@ app.engine('ejs', require('ejs').__express);
 const course = require('./Models/Course');
 const instructor = require('./Models/Instructor');
 const admins = require('./Models/Administrator');
-const pendingInstructors = require('./Models/pendingInstructors');
 const corporateTrainees = require('./Models/corporateTrainees');
 const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price} = require('./Routes/coursesController');
 
 const {insttitles,filterTitles2} = require('./Routes/instructorController');
 
-const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor} = require('./Routes/adminController');
+const {addAdmin, addCorporateTrainee, addInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT} = require('./Routes/adminController');
+
+//solving exercises
+const {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults} = require('./Routes/solvingExercisesController');
 
 
 const cs1 = new course({
@@ -189,8 +192,6 @@ app.get("/Filter_By_Price_And_Subject/:Price/:Subject",filterTitles2);
 
 app.get("/adminHome/admins", viewAdmins);
 
-app.get("/adminHome/pendingInstructors", viewPendingInstructors);
-
 app.get("/adminHome/instructors", viewInstructors);
 
 app.get("/adminHome/corporateTrainees", viewCT);
@@ -198,10 +199,6 @@ app.get("/adminHome/corporateTrainees", viewCT);
 app.post("/adminHome/addAdmin", addAdmin);
 
 app.post("/adminHome/addCorporateTrainee", addCorporateTrainee);
-
-app.post("/adminHome/registerInstructorRequest", registerPendingInstructor);
-
-app.post("/acceptPendingInstructor/:id", addPendingInstructor)
 
 app.post("/adminHome/addInstructor", addInstructor);
 
@@ -211,11 +208,33 @@ app.put("/adminHome/update/instructors/:id", updateInstructor);
 
 app.put("/adminHome/update/corporateTrainees/:id", updateCT);
 
-app.delete('/adminHome/pendingInstructors/:id', deletePendingInstructor);
-
 app.delete('/adminHome/delete/admins/:id', deleteAdmin);
 
 app.delete('/adminHome/delete/instructors/:id', deleteInstructor);
 
 app.delete('/adminHome/delete/corporateTrainees/:id', deleteCT);
+
+//solving exercises 
+
+
+// COURSES (JUST FOR TESTS)
+app.get('/courses', viewCourses);
+app.post('/addCourse', addCourse);
+
+
+// WEEKS
+app.post('/addWeek', addWeek);
+app.get('/viewWeeks', viewWeeks);
+
+//EXERCISES
+app.post('/addExercise', addExercise);
+app.get('/viewExercises', viewExercises);
+
+//QUESTIONS
+app.post('/addQ', addQuestions)
+app.get('/viewQuestions', viewQuestions);
+
+//RESULTS
+app.post('/addResults' , addResults);
+app.get('/viewResults', viewResults);
 

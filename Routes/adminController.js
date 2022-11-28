@@ -1,6 +1,5 @@
 
     const Administrator = require ('../Models/Administrator');
-    const pendingInstructors = require ('../Models/pendingInstructors');
     const corporateTrainees = require ('../Models/corporateTrainees');
     const Instructors = require ('../Models/Instructor');
 
@@ -102,102 +101,6 @@
     res.status(200).json(updatedAdmin)
 
     }
-
-
-
-
-    //to view pending requests from instructors
-    const viewPendingInstructors = async (req, res) => {
-    const data = await pendingInstructors.find({})
-    res.status(200).json(data)
-    console.log(data)
-
-
-    // const viewPendingInstructors = async (req, res) => {
-    //   const data = await pendingInstructors.find({})
-    //   console.log(data)
-    //   if (data.length == 0) {
-    //     res.status(400).json("No records found.")
-    //   }
-    //   res.status(200).json(data)
-    // };
-    }
-
-
-
-    //adding a pending instructor
-    const registerPendingInstructor = async (req, res) => {
-    const {Username, Password, First_Name, Last_Name, Email, Gender} = req.body
-
-    let emptyFields = []
-    if (!Username) {
-        emptyFields.push('Username')
-    }
-
-    if (!Password) {
-        emptyFields.push('Password')
-    }
-
-    if (!First_Name) {
-        emptyFields.push('First_Name')
-    }
-
-    if (!Last_Name) {
-        emptyFields.push('Last_Name')
-    }
-
-    if (!Email) {
-        emptyFields.push('Email')
-    }
-
-    if (!Gender) {
-        emptyFields.push('Gender')
-    }
-
-    if(emptyFields.length > 0) {
-        return res.status(400).json({error: 'Please fill in the missing fields.', emptyFields})
-    }
-
-
-
-    try {
-        const pendingI = await pendingInstructors.create({Username, Password, First_Name, Last_Name, Email, Gender})
-        res.status(200).json(pendingI)
-    }
-    catch(error) {
-        res.status(400).json({error: error.message})
-    }
-    // const registerPendingInstructor = async (req,res) => {
-    //   const data = pendingInstructors.create(req.body);
-    //   res.status(200).json('Pending instructor added successfully.')
-    }
-
-
-
-    //deleting a pending instructor
-
-    const deletePendingInstructor = async (req, res) => {
-    const { id } = req.params
-
-    const deletedPendingInstructor = await pendingInstructors.findOneAndDelete({_id: id})
-
-    if(!deletedPendingInstructor) {
-        return res.status(400).json({error: 'No such pending Instructor'})
-    }
-
-    res.status(200).json(deletedPendingInstructor)
-
-    // const deletePendingInstructor = async (req, res) => {
-    //   const data = await pendingInstructors.findById(req.params.id)
-    //   console.log(data)
-    //   if (!data) {
-    //     res.status(400).json('Record not found.')
-    //     throw new Error('Record not found.')
-    //   }
-    //   await data.remove()
-    //   res.status(200).json({id: req.params.id})
-    }
-
 
 
     //to view instructors
@@ -427,4 +330,4 @@
     }
 
 
-    module.exports = {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor}
+    module.exports = {addAdmin, addCorporateTrainee,  addInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor}

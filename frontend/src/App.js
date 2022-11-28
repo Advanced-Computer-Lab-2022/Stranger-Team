@@ -18,10 +18,14 @@ import CourseFilterBySubjectAndRatingAndPrice from './pages/CourseFilterBySubjec
 import HomeAdmin from './pages/adminH'; //admin homepage
 import InstructorsPage from './pages/instructors';
 import CorporateTPage from './pages/corporateTrainees';
-import PendingInstructorsPage from './pages/pendingInstructors';
 import Home from './pages/adminHome'; //admins
 
 import CorporateHome from './pages/corporateTraineeHome'
+
+//imports for quiz
+import Main from './pages/mainForQuiz';
+import Quiz from './components/Quiz';
+import Result from './components/Result';
 
 
 
@@ -74,10 +78,6 @@ function App() {
         element={<CorporateTPage/>}
         />
 
-        <Route
-        path="/pendingInstructors"
-        element={<PendingInstructorsPage/>}
-        />
 
           <Route
           path="/"
@@ -107,6 +107,25 @@ function App() {
           <Route path="/CourseFilterByRate"
           element={<CourseFilterByRate />}
           />
+
+
+
+       <Route
+        path="/mainForQuiz"
+        element={<Main/>}
+        />
+
+        <Route
+        path="/quiz"
+        element={<Quiz />}
+        />
+
+
+        <Route
+        path="/results"
+        element={<Result />}
+        />
+
 
         <Route
         path="/CourseSearchByInstructorName"
