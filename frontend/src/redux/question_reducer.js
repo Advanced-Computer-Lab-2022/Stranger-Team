@@ -15,6 +15,7 @@ export const questionReducer = createSlice({
             return {
                 ...state,
                 queue : action.payload
+                
             }
         },
 
@@ -22,6 +23,7 @@ export const questionReducer = createSlice({
             return {
                 ...state,
                 trace : state.trace + 1
+                
             }
         },
 
