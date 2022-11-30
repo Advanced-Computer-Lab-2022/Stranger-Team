@@ -19,7 +19,7 @@ const exerciseSchema = new Schema({
     WeekID:
     {
         type: mongoose.Types.ObjectId,
-        ref:'weeks'
+        ref:'week'
     }
   }, { timestamps: true });
   

@@ -3,6 +3,9 @@ const Exercise = require('../Models/Exercise');
 const Week = require('../Models/Week');
 const Question = require('../Models/Question');
 const Result = require('../Models/Result');
+const mongoose = require('mongoose');
+const express = require("express");
+const projection = require('projection');
 
 
 //adding a new Course
@@ -141,6 +144,23 @@ const viewQuestions = async (req, res) => {
   };
 
 
+  //viewing questions of a specific exercise
+  const fetchQuestionsByEID = async(req,res) => {
+
+    const exerciseId = req.query.EID;
+
+    if(exerciseId){
+    const result = await Question.find({ExerciseID:mongoose.Types.ObjectId(exerciseId)}).populate('ExerciseID');
+    res.status(200).json(result)
+    }else{
+        res.status(400).json({error:"exerciseId is required"})
+    }
+}
+ 
+   
+
+
+
 // to add results
 const addResults = async (req, res) => {
     const{Res, Attempts, Points, Achieved} = req.body;
@@ -165,4 +185,4 @@ const viewResults = async (req, res) => {
  
 
 
-  module.exports = {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults}
+  module.exports = {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults, fetchQuestionsByEID}

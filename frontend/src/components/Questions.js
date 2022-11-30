@@ -25,9 +25,10 @@ export default function Questions({ onChecked }) {
     
     function onSelect(i){
        
-       // dispatch(updateResult({trace, checked}))
+       
        onChecked(i)
        setChecked(i)
+       dispatch(updateResult({trace, checked}))
     }
 
 

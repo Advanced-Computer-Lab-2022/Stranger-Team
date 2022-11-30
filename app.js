@@ -32,7 +32,7 @@ const {insttitles,filterTitles2} = require('./Routes/instructorController');
 const {addAdmin, addCorporateTrainee, addInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT} = require('./Routes/adminController');
 
 //solving exercises
-const {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults} = require('./Routes/solvingExercisesController');
+const {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults, fetchQuestionsByEID} = require('./Routes/solvingExercisesController');
 
 
 const cs1 = new course({
@@ -233,6 +233,7 @@ app.get('/viewExercises', viewExercises);
 //QUESTIONS
 app.post('/addQ', addQuestions)
 app.get('/viewQuestions', viewQuestions);
+app.get('/viewQbyEID', fetchQuestionsByEID);
 
 //RESULTS
 app.post('/addResults' , addResults);

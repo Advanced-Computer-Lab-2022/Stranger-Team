@@ -17,7 +17,7 @@ const weekSchema = new Schema({
     CourseID:
     {
         type: mongoose.Types.ObjectId,
-        ref:'courses'
+        ref:'course'
     }
   }, { timestamps: true });
   

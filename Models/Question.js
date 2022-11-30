@@ -25,7 +25,7 @@ const questionSchema = new Schema({
     ExerciseID:
     {
         type: mongoose.Types.ObjectId,
-        ref:'exercises'
+        ref:'exercise'
     }
   }, { timestamps: true });
   
