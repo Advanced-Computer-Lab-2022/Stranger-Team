@@ -20,8 +20,8 @@ export default function Questions({ onChecked }) {
 
     useEffect(() => {
         console.log({trace, checked})
-        dispatch(updateResultAction({trace, checked}))
-    })
+        dispatch(updateResult({trace, checked}))
+    }, [checked])
     
     function onSelect(i){
        
