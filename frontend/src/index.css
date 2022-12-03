@@ -1,0 +1,253 @@
+/* google font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
+
+/* layout */
+:root {
+  --primary: #1aac83;
+  --error: #e7195a;
+}
+
+body {
+  background: #f1f1f1;
+  margin: 0;
+  font-family: "Poppins";
+}
+
+header {
+  background: #fff;
+}
+
+
+header .container {
+  font-size:larger;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header a {
+  color: #333;
+  text-decoration: none;
+}
+
+.pages {
+  max-width: 1400px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+
+
+
+/* homepage */
+.home {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 100px;
+}
+
+.home1 {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 100px;
+}
+
+/* .Coursecontainer{
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 100px;
+
+} */
+
+.course-details {
+  background: #fff;
+  border-radius: 4px;
+  margin: 20px auto;
+  padding: 20px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.course-details h4 {
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+  color: var(--primary);
+}
+
+.course-details p {
+  margin: 0;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.course-details span {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  background: #f1f1f1;
+  padding: 6px;
+  border-radius: 50%;
+  color: #333;
+}
+
+/* new workout form */
+label,
+input {
+  display: block;
+}
+
+/* input {
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+} */
+
+form button {
+  background: var(--primary);
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+div.error {
+  padding: 10px;
+  background: #ffefef;
+  border: 1px solid var(--error);
+  color: var(--error);
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+.admin-details {
+  background: #fff;
+  border-radius: 4px;
+  margin: 20px auto;
+  padding: 20px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.admin-details h4 {
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+  color: var(--primary);
+}
+
+.admin-details p {
+  margin: 0;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.admin-details span {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  background: #f1f1f1;
+  padding: 6px;
+  border-radius: 50%;
+  color: #333;
+  display: inline-block;
+}
+
+.button-85 {
+  padding: 0.6em 2em;
+  border: none;
+  outline: none;
+  color: rgb(0, 145, 255);
+  background: #111;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  text-align: center;
+  text-decoration: none;
+  font-size: 22px;
+  width: 280px
+}
+
+.button-85:before {
+  content: "";
+  background: linear-gradient(45deg,
+      #ff0000,
+      #ff7300,
+      #fffb00,
+      #48ff00,
+      #00ffd5,
+      #002bff,
+      #7a00ff,
+      #ff00c8,
+      #ff0000);
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing-button-85 20s linear infinite;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes glowing-button-85 {
+  0% {
+    background-position: 0 0;
+  }
+
+  50% {
+    background-position: 400% 0;
+  }
+
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.button-85:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #222;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+.spanny {
+  position: absolute;
+  top: 135px;
+  right: 1px;
+  cursor: pointer;
+  background: #f1f1f1;
+  /* padding: 6px; */
+  border-radius: 50%;
+  color: #333;
+
+}
+
+a {
+  color: #147de7;
+  text-decoration: none;
+  font-family: nos;
+}
