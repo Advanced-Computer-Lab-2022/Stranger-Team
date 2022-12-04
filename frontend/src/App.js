@@ -25,6 +25,22 @@ import Home from './pages/adminHome'; //admins
 
 import CorporateHome from './pages/corporateTraineeHome'
 import CurrentCoursePage from './pages/CurrentCoursePage'
+import CurrentCoursePageTrainee from './pages/CurrentCoursePageTrainee'
+// import CurrentCourseDiscountPage from './pages/CurrentCourseDiscountPage'
+import DefineACourseDiscountInstructorPage from './pages/DefineACourseDiscountInstructorPage'
+import InstructorAddNewSubtitlePage from './pages/InstructorAddANewSubtitlePage'
+import InstructorAddANewCoursePage from './pages/InstructorAddANewCoursePage'
+import PasswordReset from './components/passwordReset'
+import ForgetPassword from './components/forgetPassword/ForgotPassword'
+import ChangePassword from './components/changePassword/ChangePassword'
+
+
+//imports for quiz
+import Main from './pages/mainForQuiz';
+import Quiz from './components/Quiz';
+import Result from './components/Result';
+
+
 
 
 
@@ -62,6 +78,14 @@ function App() {
         />
 
         
+        <Route
+        path="/InstructorAddANewCoursePage"
+        element={<InstructorAddANewCoursePage />}
+        />
+
+        
+
+        
 
         <Route
         path="/EditMyProfile"
@@ -73,6 +97,41 @@ function App() {
         element={<CurrentCoursePage />}
         />
 
+          <Route
+            path="/forgetPassword"
+            element={<ForgetPassword/>}
+            />
+            <Route
+            path="/passwordReset/:id/:token"
+            element={<PasswordReset/>}
+            />
+            <Route
+            path="/changePassword"
+            element={<ChangePassword/>}
+            />
+
+
+        <Route
+        path="/CurrentCoursePageTrainee"
+        element={<CurrentCoursePageTrainee />}
+        />
+
+        
+        <Route
+        path="/DefineACourseDiscountInstructorPage"
+        element={<DefineACourseDiscountInstructorPage />}
+        />
+        
+
+        <Route
+        path="/AddANewSubtitle"
+        element={<InstructorAddNewSubtitlePage />}
+        />
+
+        {/* <Route
+        path="/CurrentCourseDiscountPage"
+        element={<CurrentCourseDiscountPage />}
+        /> */}
 
         <Route
         path="/MyProfile/"
@@ -112,7 +171,7 @@ function App() {
           path="/InstructorAddCourse"
           element={<InstructorAddCourse />}
           /> 
-          <Route path="/Home"
+          <Route path="/Home/"
           element={<Home1 />}
           />
           <Route path="/Courses"
@@ -135,6 +194,31 @@ function App() {
         />
           <Route path="/CoursesFilterBySubject"
           element={<CourseFilterBySubject />}/>
+
+          
+
+
+
+       <Route
+        path="/mainForQuiz"
+        element={<Main/>}
+        />
+
+        <Route
+        path="/quiz"
+        element={<Quiz />}
+        />
+
+
+        <Route
+        path="/results"
+        element={<Result />}
+        />
+
+
+
+
+
         </Routes>
       </div>
       </BrowserRouter>

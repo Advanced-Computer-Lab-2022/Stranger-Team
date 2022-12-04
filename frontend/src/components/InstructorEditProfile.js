@@ -1,9 +1,11 @@
     import 'bootstrap/dist/css/bootstrap.min.css'
 
     import{Button, Alert, Container, Nav} from 'react-bootstrap'
-    import React from 'react';
+    import React, { useEffect } from 'react';
     import { useNavigate } from "react-router-dom";
 	import { useState } from 'react'
+
+	
 
     const InstructorEditProfile = () => {
 
@@ -163,8 +165,13 @@
         setEmail('')
         setBio('')
         
-        
+		//http://localhost:3000/MyProfile/?id=635ff82db9f20282ed560dae
+        //window.location=`/MyProfile/?id=${instructorId}`
+
         console.log('Instructor Updated:', json)
+
+
+
         }
 
     }

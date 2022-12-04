@@ -10,19 +10,25 @@
     import{Button, Alert, Container} from 'react-bootstrap'
     import ProfileNavBar from '../components/ProfileNavBar'
     import Navbar from "../components/Navbar";
+    import StarRating from "../components/StarRating";
+    import PreviewCourseVideoPageDetails from '../components/PreviewCourseVideoTraineePageDetails'
 
     const Home1 = () => {
     const [courses, setCourses] = useState(null)
     const [searchQuery, setSearchQuery] = useState("")
     const [searchRateQuery, setSearchRateQuery] = useState("")
-
+    var TraineeID= "";
 
     useEffect(() => {
         const fetchCourses = async () => {
         //const response = await fetch('/View_All_Courses')
         ///Filter_By_Rate/
         //const response = await fetch(`/View_All_Courses/?q=${searchQuery}`)
-        
+        const params = new URLSearchParams(window.location.search);
+        const traineeId = params.get('traineeId');
+        console.log(traineeId); 
+        TraineeID = params.get('traineeId');
+        console.log("TraineeID"+traineeId); 
 
         const response = await fetch(`/View_All_Courses/?q=${searchQuery}`)
 
@@ -123,9 +129,12 @@
                     width: "100%"
                     }
                 }}
-                onClick={() => window.location.href=`/CurrentCourse?CourseId=${course._id}`}
+                onClick={() => window.location.href=`/CurrentCoursePageTrainee?CourseId=${course._id}&traineeId=${TraineeID}`}
                 key={course._id}>
             <CourseDetails course={course} key={course._id} />
+            <PreviewCourseVideoPageDetails course={course} key={course._id} />
+            
+            
             </Container>
             ))}
         </div>

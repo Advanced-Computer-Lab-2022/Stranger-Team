@@ -3,7 +3,6 @@
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
-    
 
     // components
     import MyCourses from "../components/MyCourses"
@@ -15,14 +14,17 @@
     import CourseDetails from "../components/CourseDetails";
     import StarRating from "../components/StarRating";
     import CurrentCoursePageDetails from "../components/CurrentCoursePageDetails";
+    import CurrentCoursePageDiscountDetails from "../components/CurrentCoursePageDiscountDetails";
     import CurrentCourseDiscountPage from "../components/CurrentCourseDiscountPage";
-    import InstructorAddNewSubtitleForm from "../components/InstructorAddNewSubtitleForm";
-    import CurrentCourseInstructorPageSubtitles from "../components/CurrentCourseInstructorPageSubtitles"
+    import CurrentCourseSubtitlesPageTrainee from "./CurrentCourseSubtitlesPageTrainee";
+    // import FetchInstructorNameForTraineeCourseDetails from "../components/FetchInstructorNameForTraineeCourseDetails";
 
 
-    const CurrentCoursePage = () => {
+
+
+    const CurrentCoursePageTrainee = () => {
     const [course, setCourse] = useState(null)
-    
+    const [discount,setDiscount] = useState(null)
     
 
     useEffect(() => {
@@ -32,6 +34,8 @@
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
         console.log(courseId); 
+        const traineeId = params.get('traineeId');
+        console.log("traineeId "+traineeId);
         
         
         const response = await fetch(`/CurrentCourse/?CourseId=${courseId}`)
@@ -45,62 +49,38 @@
         if (response.ok) {
             setCourse(json)
         }
+
+
         }
+
 
         fetchCourse()
     }, [])
 
 
-    let navigate = useNavigate();
-        const routeChange = () =>{ 
-        const params = new URLSearchParams(window.location.search);
-        const courseId = params.get('CourseId');
-        // console.log(courseId); 
-        let path = `/DefineACourseDiscountInstructorPage/?CourseId=${courseId}`; 
-        console.log("CourseId"+courseId)
-        navigate(path);
-    }
-
-    const routeChange2 = () =>{ 
-        const params = new URLSearchParams(window.location.search);
-        const courseId = params.get('CourseId');
-        // console.log(courseId); 
-        let path = `/AddANewSubtitle/?CourseId=${courseId}`; 
-        console.log("CourseId"+courseId)
-        navigate(path);
-    }
-
-
     return (
         <div>
         <Navbar/>
-        <form className="create">
+        <Container >
 
-        {/* <div class="container"> */}
         <div class="row gutters">
-        {/* <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12"> */}
         <div class="card h-100">
             <div class="card-body">
+                {/* <FetchInstructorNameForTraineeCourseDetails/> */}
                 {course && course.map(course => (
                 <CurrentCoursePageDetails course={course} key={course._id} />
                 ))[0]}
                 {/* <CurrentCourseDiscountPage/> */}
-                <CurrentCourseInstructorPageSubtitles/>
-
-                <button onClick={routeChange}>Define A New Course Discount</button>
-                <button onClick={routeChange2}>Define A New Course Subtitle</button>
+                <CurrentCourseSubtitlesPageTrainee/>
+                {/* <StarRating></StarRating> */}
             </div>
             
-            
-            
         </div>
-        {/* </div> */}
         </div>
-        {/* </div> */}
         
-        </form>
+        </Container>
         </div>
     )
     }
 
-    export default CurrentCoursePage
+    export default CurrentCoursePageTrainee

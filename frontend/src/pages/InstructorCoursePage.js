@@ -26,14 +26,6 @@
         console.log(instructorId); 
 
         const response = await fetch(`/MyCourses/${instructorId}/?q=${searchQuery}`)
-        // if(searchPriceQuery == null)
-        // {
-        //     const response = await fetch(`/MyCourses/${instructorId}/?q=${searchQuery}`)
-        // }
-        // else
-        // {
-        //     const response = await fetch(`/MyCourses/${instructorId}/?q=${searchQuery}&p=${searchPriceQuery}`)
-        // }
         
         
         console.log(searchQuery)
@@ -74,6 +66,13 @@
         navigate(path);
     }
 
+    const routeChange2 = () =>{ 
+        const params = new URLSearchParams(window.location.search);
+        const instructorId = params.get('id');
+        let path = `/InstructorAddANewCoursePage/?id=${instructorId}`; 
+        navigate(path);
+    }
+
     return (
         <Container >
             <ProfileNavBar/>
@@ -90,7 +89,7 @@
                     width: "100%"
                     }
                 }}
-                onClick={() => window.location.href=`/CurrentCourse?CourseId=${course._id}`}
+                onClick={() => window.location.href=`/CurrentCourse/?CourseId=${course._id}&id=${new URLSearchParams(window.location.search).get('id')}`}
                 key={course._id}>
             <MyCourses course={course} key={course._id} />
             </Container>
@@ -101,7 +100,7 @@
             
             <form className="signin">
         
-            <Button onClick={routeChange}> Add A Course </Button>
+            <Button onClick={routeChange2}> Add A Course </Button>
             </form>
         </div>
 
