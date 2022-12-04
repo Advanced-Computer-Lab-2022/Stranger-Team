@@ -139,7 +139,17 @@ const viewQuestions = async (req, res) => {
  
    
   };
-
+  const viewAnswers = async (req, res) => {
+    const data = await Question.find({})
+    const t = []
+    for (let i = 0; i < data.length; i++) {
+        t[i]=data[i].correctAnswer
+        console.log(t);
+    }
+    res.status(200).json(t)
+ 
+   
+  };
 
 // to add results
 const addResults = async (req, res) => {
@@ -165,4 +175,4 @@ const viewResults = async (req, res) => {
  
 
 
-  module.exports = {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults}
+  module.exports = {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults,viewAnswers}

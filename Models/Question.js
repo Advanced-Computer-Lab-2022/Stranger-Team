@@ -21,7 +21,11 @@ const questionSchema = new Schema({
     type: Array,
     default: []
   },
-
+  correctAnswer:{
+    type: Number,
+    default:0
+  }
+,
     ExerciseID:
     {
         type: mongoose.Types.ObjectId,

@@ -17,14 +17,15 @@ export const useFetchQestion = () => {
         (async () => {
             try {
                 const response = await fetch('/viewQuestions')
-                const json = await response.json()
-
-                if(json.length > 0){
+                const question = await response.json()
+                const ans =  await fetch('/viewAnswers')
+                const answers = await ans.json()
+                if(question.length > 0){
                     setGetData(prev => ({...prev, isLoading : false}));
-                    setGetData(prev => ({...prev, apiData : json}));
+                    setGetData(prev => ({...prev, apiData : question}));
 
                     /** dispatch an action */
-                    dispatch(Action.startExamAction(json))
+                    dispatch(Action.startExamAction({question,answers}))
                 } else{
                     throw new Error("No Questions Available");
                 }

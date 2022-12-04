@@ -5,7 +5,9 @@ const changePasswordRoutes = require("./Routes/changePassword");
 const express = require("express");
 const mongoose = require('mongoose');
 const MongoClient = require('mongodb').MongoClient;
-const MongoURI = 'mongodb+srv://roka:roka@cluster0.9sdu6uc.mongodb.net/test' ;
+//const MongoURI = 'mongodb+srv://roka:roka@cluster0.9sdu6uc.mongodb.net/test' ;
+const MongoURI = 'mongodb+srv://ACL123:ACL123@aclcluster.1uihlnr.mongodb.net/ACL?retryWrites=true&w=majority' ;
+
 //'mongodb+srv://nour:nour@cluster1.yxlcle2.mongodb.net/test'
 //mongodb+srv://roka:roka@cluster0.9sdu6uc.mongodb.net/test
 //mongodb+srv://nour:nour@cluster1.yxlcle2.mongodb.net/cluster1?retryWrites=true&w=majority
@@ -44,7 +46,7 @@ const {insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEm
 const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor} = require('./Routes/adminController');
 
 //solving exercises
-const {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults} = require('./Routes/solvingExercisesController');
+const {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults, viewAnswers} = require('./Routes/solvingExercisesController');
 
 
 const { isNumberObject } = require('util/types');
@@ -373,7 +375,7 @@ app.get('/viewExercises', viewExercises);
 //QUESTIONS
 app.post('/addQ', addQuestions)
 app.get('/viewQuestions', viewQuestions);
-
+app.get('/viewAnswers', viewAnswers);
 //RESULTS
 app.post('/addResults' , addResults);
 app.get('/viewResults', viewResults);
