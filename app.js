@@ -5,8 +5,8 @@ const changePasswordRoutes = require("./Routes/changePassword");
 const express = require("express");
 const mongoose = require('mongoose');
 const MongoClient = require('mongodb').MongoClient;
-//const MongoURI = 'mongodb+srv://roka:roka@cluster0.9sdu6uc.mongodb.net/test' ;
-const MongoURI = 'mongodb+srv://ACL123:ACL123@aclcluster.1uihlnr.mongodb.net/ACL?retryWrites=true&w=majority' ;
+const MongoURI = 'mongodb+srv://roka:roka@cluster0.9sdu6uc.mongodb.net/test' ;
+//const MongoURI = 'mongodb+srv://ACL123:ACL123@aclcluster.1uihlnr.mongodb.net/ACL?retryWrites=true&w=majority' ;
 
 //'mongodb+srv://nour:nour@cluster1.yxlcle2.mongodb.net/test'
 //mongodb+srv://roka:roka@cluster0.9sdu6uc.mongodb.net/test
