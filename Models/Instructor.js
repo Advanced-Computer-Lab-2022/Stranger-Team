@@ -26,6 +26,10 @@ const InstructorSchema = new Schema({
     Gender: {
       type: String,
       required: true
+    },
+    Bio:{
+      type:String,
+      required:false
     }
   }, { timestamps: true });
 

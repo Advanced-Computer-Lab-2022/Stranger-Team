@@ -15,20 +15,37 @@
     const [discount,setDiscount] = useState('')
     const[Course_Description,setCourse_Description]= useState('')
     const [error, setError] = useState(null)
+    //const [instructorId, setInstructorId] = useState("")
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        const queryParams = new URLSearchParams(window.location.search);
+        const instructorId = queryParams.get('id');
 
-        const course = {Title, Subject, Subtitles,Subtitles_Total_Hours,Exercises,Course_Total_Hours,Price,Rating,Instructor_Name,discount,Course_Description}
+        //const instructorId=req.query.id;
+
+        const course = {Title, Subject, Subtitles,Subtitles_Total_Hours,Exercises,Course_Total_Hours,Price,Rating,Instructor_Name,discount,Course_Description,instructorId}
         console.log(course)
+
+        //`/View_All_Courses/?q=${searchQuery}`
         
-        const response = await fetch('/createCourse', {
+        // const response = await fetch('/createCourse', {
+        // method: 'POST',
+        // body: JSON.stringify(course),
+        // headers: {
+        //     'Content-Type': 'application/json'
+        // }
+        // })
+
+        const response = await fetch(`/createCourse/?id=${instructorId}`, {
         method: 'POST',
         body: JSON.stringify(course),
         headers: {
             'Content-Type': 'application/json'
         }
         })
+
+
         const json = await response.json()
         console.log(response)
 

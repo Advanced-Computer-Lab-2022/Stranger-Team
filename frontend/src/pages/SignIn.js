@@ -54,6 +54,15 @@
         let path = '/adminHome'; 
         navigate(path);
     }
+
+    const routeChange5 = () =>{ 
+        let path = '/forgetPassword';
+        navigate(path);
+    }
+    const routeChange6 = () =>{ 
+        let path = '/changePassword';
+        navigate(path);
+    }
     
     return (
         <div>
@@ -64,6 +73,8 @@
             <button onClick={routeChange2}> Trainee </button>
             <button onClick={routeChange3}> Corporate Trainee </button>
             <button onClick={routeChange4}> Admin  </button> 
+            <button onClick={routeChange5}> Forgot Password  </button> 
+            <button onClick={routeChange6}> Change Password  </button> 
             </form>
         </div>
     );
