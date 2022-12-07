@@ -119,7 +119,7 @@
             <div>
                 <input type="number" placeholder="Filter By Rate..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}></input>
             </div>
-        <div className="courses">
+            <div className="courses">
             {courses && courses.map(course => (
             <Container hover
                 sx={{

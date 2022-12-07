@@ -11,7 +11,6 @@
     import{Button, Alert, Container} from 'react-bootstrap'
     import ProfileNavBar from '../components/ProfileNavBar'
     import InstructorProfileDetails from "../components/InstructorProfileDetails";
-    import InstructorEditProfile from "../components/InstructorEditProfile";
 
 
     const InstructorProfilePage = () => {
@@ -57,7 +56,10 @@
 
         let navigate = useNavigate();
         const routeChange = () =>{ 
-        let path = '/EditMyProfile'; 
+        const params = new URLSearchParams(window.location.search);
+        const instructorId = params.get('id');
+        console.log(instructorId); 
+        let path = `/InstructorEditMyProfilePage/?id=${instructorId}`; 
         navigate(path);
     }
 
@@ -65,7 +67,7 @@
         <Container >
             <ProfileNavBar/>
         
-        
+        <form className="create"> 
         <div class="container">
         <div class="row gutters">
         <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
@@ -79,11 +81,12 @@
         </div>
         </div>
         </div>
+        <button className="create" onClick={routeChange}>Edit Profile</button>
         
-        <InstructorEditProfile/>
+        {/* <InstructorEditProfile/> */}
 
         
-        
+        </form>
         </Container>
     )
     }

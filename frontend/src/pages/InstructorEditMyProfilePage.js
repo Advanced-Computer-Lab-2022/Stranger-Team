@@ -1,13 +1,11 @@
     import 'bootstrap/dist/css/bootstrap.min.css'
 
     import{Button, Alert, Container, Nav} from 'react-bootstrap'
-    import React, { useEffect } from 'react';
+    import React from 'react';
     import { useNavigate } from "react-router-dom";
 	import { useState } from 'react'
 
-	
-
-    const InstructorEditProfile = () => {
+    const InstructorEditMyProfilePage = () => {
 
     const [First_Name, setFirst_Name] = useState('')
     const [Last_Name, setLast_Name] = useState('')
@@ -18,9 +16,10 @@
 		const updateInstructorProfile = async (e) => {
         e.preventDefault()
         const queryParams = new URLSearchParams(window.location.search);
-        const instructorId = queryParams.get('id');
+        const instrcutorId = queryParams.get('id');
+        console.log("instrcutorId"+instrcutorId)
 
-		var updatedInstructor = null;
+        var updatedInstructor = null;
 		if(First_Name==null||First_Name=="")
 		{
 			if(Last_Name==null||Last_Name=="")
@@ -143,8 +142,8 @@
 				}
 			}
 		}
-
-        const response = await fetch(`/EditMyProfile/?id=${instructorId}`, {
+        
+        const response = await fetch(`/EditMyProfile/?id=${instrcutorId}`, {
         method: 'POST',
         body: JSON.stringify(updatedInstructor),
         headers: {
@@ -166,7 +165,7 @@
         setBio('')
         
 		//http://localhost:3000/MyProfile/?id=635ff82db9f20282ed560dae
-        //window.location=`/MyProfile/?id=${instructorId}`
+        window.location=`http://localhost:3000/MyProfile/?id=${instrcutorId}`
 
         console.log('Instructor Updated:', json)
 
@@ -179,58 +178,43 @@
 
     return (
 
-        <div class="container" >
-<div class="row gutters">
+        
+        <div className="course-details">
+        <form className="create" onSubmit={updateInstructorProfile}> 
+        <h3>Edit Profile Details:</h3>
+
+        <label> First Name:</label>
+        <input 
+            type="text" 
+            onChange={(e) => setFirst_Name(e.target.value)} value={First_Name}
+        />
+
+        <label> Last Name:</label>
+        <input 
+            type="text" 
+            onChange={(e) => setLast_Name(e.target.value)} value={Last_Name}
+        />
 
 
-<div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-<div class="card h-100">
-	<div class="card-body">
-		<div class="row gutters">
-			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-				<h6 class="mb-2 text-primary">Edit Personal Details</h6>
-			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="fullName">First Name</label>
-					<input type="text" class="form-control" id="fullName" placeholder="Enter the first name you wish to update" onChange={(e) => setFirst_Name(e.target.value)} value={First_Name}/>
-				</div>
-			</div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="fullName">Last Name</label>
-					<input type="text" class="form-control" id="fullName" placeholder="Enter the last name you wish to update" onChange={(e) => setLast_Name(e.target.value)} value={Last_Name}/>
-				</div>
-			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="eMail">Email</label>
-					<input type="email" class="form-control" id="eMail" placeholder="Enter the email address you wish to update" onChange={(e) => setEmail(e.target.value)} value={Email}/>
-				</div>
-			</div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="fullName">Bio</label>
-					<input type="text" class="form-control" id="fullName" placeholder="Enter the bio you wish to update" onChange={(e) => setBio(e.target.value)} value={Bio}/>
-				</div>
-			</div>
-			
-		</div>
-		<div class="row gutters">
-			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-				<div class="text-right">
-					<button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button>
-					<button type="button" id="submit" name="submit" class="btn btn-primary" height="30" onClick={updateInstructorProfile}>Update</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-</div>
-</div>
-</div>
+        <label>Email:</label>
+        <input 
+            type="text" 
+            onChange={(e) => setEmail(e.target.value)} value={Email}
+        />
+
+        <label>Bio:</label>
+        <input 
+            type="text" 
+            onChange={(e) => setBio(e.target.value)} value={Bio}
+        />
+
+        <button>Update</button>
+        {/* {error && <div className="error">{error}</div>} */}
+        </form>
+        </div>
+        
 
     )
     }
 
-    export default InstructorEditProfile
+    export default InstructorEditMyProfilePage

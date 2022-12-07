@@ -52,37 +52,11 @@ const { update } = require("../Models/User");
             try{
 
                 const instructorId= req.query.id;
-                // const {firstName,lastName,email,bio} = req.body;  
-                // console.log(firstName)
-                // console.log(lastName)
-                // console.log(email)
-                // console.log(bio)
-                //req.body.newData.name,
                 const updatedprofile =await instructor.findByIdAndUpdate(instructorId,{First_Name:req.body.First_Name,Last_Name:req.body.Last_Name,Email:req.body.Email,Bio:req.body.Bio},{new:true});
                 console.log(updatedprofile)
                 res.status(200).json(updatedprofile);
 
-                //User.findByIdAndUpdate(user_id, { name: 'Gourav' }
-                // if(firstName !=null && lastName!=null && email!= null && bio!=null)
-                // {
-                //     const updatedprofile = (instructorId,{First_Name:firstName,Last_Name:lastName,Email:email,Bio:bio});
-                //     res.status(200).json(updatedprofile);
-                // }
-                // else if(firstName !=null && lastName==null && email== null && bio==null)
-                // {
-                //     const updatedprofile = (instructorId,{First_Name:firstName});
-                //     res.status(200).json(updatedprofile);
-                // }
-                // else if(firstName !=null && lastName!=null && email== null && bio==null)
-                // {
-                //     const updatedprofile = (instructorId,{First_Name:firstName,Last_Name:lastName});
-                //     res.status(200).json(updatedprofile);
-                // }
-                // else if(firstName !=null && lastName==null && email!= null && bio==null)
-                // {
-                //     const updatedprofile = (instructorId,{First_Name:firstName,Email:email});
-                //     res.status(200).json(updatedprofile);
-                // }
+                
             }
             catch(error){
                 res.status(400).json({error:error.message});

@@ -14,8 +14,8 @@
     }
     return (
 
-        <div class="container mt-4 mb-4 p-3 d-flex justify-content-center"> 
-        <div class="card p-4"> <div class=" image d-flex flex-column justify-content-center align-items-center"> <button class="btn btn-secondary"> 
+        
+        <div class=" image d-flex flex-column justify-content-center align-items-center"> <button class="btn btn-secondary"> 
         <img src="https://i.imgur.com/wvxPV9S.png" height="100" width="100" /></button>
         <span class="name mt-3"><strong>{instructor.Username}</strong></span>
         <span class="name mt-3"><strong>{instructor.First_Name} {instructor.Last_Name}</strong></span>
@@ -32,8 +32,8 @@
         
         
         </div> 
-        </div>
-        </div>
+        
+        
 
     )
     }

@@ -33,6 +33,8 @@ import InstructorAddANewCoursePage from './pages/InstructorAddANewCoursePage'
 import PasswordReset from './components/passwordReset'
 import ForgetPassword from './components/forgetPassword/ForgotPassword'
 import ChangePassword from './components/changePassword/ChangePassword'
+import CurrentCoursePageCorporateTrainee from './pages/CurrentCoursePageCorporateTrainee'
+import InstructorEditMyProfilePage from './pages/InstructorEditMyProfilePage'
 
 
 //imports for quiz
@@ -115,13 +117,24 @@ function App() {
         path="/CurrentCoursePageTrainee"
         element={<CurrentCoursePageTrainee />}
         />
+        
+
+        <Route
+        path="/CurrentCoursePageCorporateTrainee"
+        element={<CurrentCoursePageCorporateTrainee />}
+        />
 
         
         <Route
         path="/DefineACourseDiscountInstructorPage"
         element={<DefineACourseDiscountInstructorPage />}
         />
+
         
+        <Route
+        path="/InstructorEditMyProfilePage"
+        element={<InstructorEditMyProfilePage />}
+        />
 
         <Route
         path="/AddANewSubtitle"

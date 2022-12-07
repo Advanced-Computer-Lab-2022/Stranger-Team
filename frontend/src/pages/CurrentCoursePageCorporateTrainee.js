@@ -16,12 +16,13 @@
     import CurrentCoursePageDiscountDetails from "../components/CurrentCoursePageDiscountDetails";
     import CurrentCourseDiscountPage from "../components/CurrentCourseDiscountPage";
     import CurrentCourseSubtitlesPageTrainee from "./CurrentCourseSubtitlesPageTrainee";
+    import CurrentCoursePageDetailsCorporateTrainee from "../components/CurrentCoursePageDetailsCorporateTrainee"
     // import FetchInstructorNameForTraineeCourseDetails from "../components/FetchInstructorNameForTraineeCourseDetails";
 
 
 
 
-    const CurrentCoursePageTrainee = () => {
+    const CurrentCoursePageCorporateTrainee = () => {
     const [course, setCourse] = useState(null)
     const [discount,setDiscount] = useState(null)
     
@@ -67,7 +68,7 @@
             <div class="card-body">
                 {/* <FetchInstructorNameForTraineeCourseDetails/> */}
                 {course && course.map(course => (
-                <CurrentCoursePageDetails course={course} key={course._id} />
+                <CurrentCoursePageDetailsCorporateTrainee course={course} key={course._id} />
                 ))[0]}
                 {/* <CurrentCourseDiscountPage/> */}
                 <CurrentCourseSubtitlesPageTrainee/>
@@ -82,4 +83,4 @@
     )
     }
 
-    export default CurrentCoursePageTrainee
+    export default CurrentCoursePageCorporateTrainee
