@@ -30,6 +30,14 @@ const InstructorSchema = new Schema({
     Bio:{
       type:String,
       required:false
+    },
+    Rating:{
+      type:Number,
+      required:false
+    },
+    Instructor_Ratings:{
+      type:[Number],
+      required:false
     }
   }, { timestamps: true });
 

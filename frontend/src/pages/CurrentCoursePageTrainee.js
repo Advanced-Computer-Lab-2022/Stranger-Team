@@ -32,18 +32,17 @@
         //const response = await fetch(`/View_My_Courses/Layla/?q=${searchQuery}`)
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        console.log(courseId); 
+        //console.log(courseId); 
         const traineeId = params.get('traineeId');
-        console.log("traineeId "+traineeId);
+        //console.log("traineeId "+traineeId);
         
         
         const response = await fetch(`/CurrentCourse/?CourseId=${courseId}`)
-
         
         
         const json = await response.json()
-        console.log(response)
-        console.log( json)
+        console.log("res "+response)
+        console.log( "json "+json)
 
         if (response.ok) {
             setCourse(json)
@@ -71,7 +70,7 @@
                 ))[0]}
                 {/* <CurrentCourseDiscountPage/> */}
                 <CurrentCourseSubtitlesPageTrainee/>
-                {/* <StarRating></StarRating> */}
+                <StarRating></StarRating> 
             </div>
             
         </div>

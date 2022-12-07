@@ -183,6 +183,18 @@ const fetchCoursePreviewLink = async(req,res) => {
     }
 }
 
+const getCurrentCourseInstructor = async(req,res) => {
+
+    const instructorId = req.query.id;
+
+    if(instructorId){
+    const currInstructor = await instructor.findById({_id:instructorId},{First_Name:1,Last_Name:1});
+    res.status(200).json(currInstructor)
+    }else{
+        res.status(400).json({error:"instructorId is required"})
+    }
+}
+
 const fetchInstructorById = async(req,res) => {
 
     const courseId = req.query.CourseId;
@@ -212,12 +224,12 @@ const fetchInstructorById = async(req,res) => {
 
 
 
-const addInstructor = async(req,res)=>{
+const addANewInstructor = async(req,res)=>{
         
-    const {Username, Password,First_Name} = req.body;
+    const {Username, Password,First_Name,Last_Name,Email,Gender,Bio} = req.body;
     try{
-    const addInstructor =await instructor.create({Username,Password,First_Name});
-    res.status(200).json(addInstructor);
+    const addANewInstructor =await instructor.create({Username,Password,First_Name,Last_Name,Email,Gender,Bio});
+    res.status(200).json(addANewInstructor);
 
     }
     catch(error){
@@ -236,7 +248,7 @@ const View_All_Courses = async(req,res) =>{
 const getCurrentCourseDetails  = async(req,res) =>{
     const currentCourse = req.query.CourseId;
 
-    const currentCourseDetails = await course.find({_id:currentCourse}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Course_Description:1 }).sort({createdAt:-1}) ;
+    const currentCourseDetails = await course.find({_id:currentCourse}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Course_Description:1,Instructor:1 }).sort({createdAt:-1}) ;
 
 
     console.log(currentCourseDetails)
@@ -365,4 +377,4 @@ const Filter_By_Subject_And_Rating_And_Price= async (req,res) => {
             res.status(200).json(data);
             };   
 
-module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink};
+module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addANewInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,getCurrentCourseInstructor};

@@ -37,11 +37,11 @@ const subtitles = require('./Models/Subtitles');
 const admins = require('./Models/Administrator');
 const pendingInstructors = require('./Models/pendingInstructors');
 const corporateTrainees = require('./Models/corporateTrainees');
-const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink} = require('./Routes/coursesController');
+const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,addANewInstructor,getCurrentCourseInstructor} = require('./Routes/coursesController');
 
 const {addUserRating,saveUserRating} = require('./Routes/usersController');
 
-const {insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio} = require('./Routes/instructorController');
+const {insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor} = require('./Routes/instructorController');
 
 const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor} = require('./Routes/adminController');
 
@@ -231,6 +231,10 @@ app.post("/addCourseDiscount/",addCourseDiscount);
 
 app.post("/addSubtitle/",addSubtitle);
 
+app.post("/addANewInstructor",addANewInstructor);
+
+app.post("/ratingAnInstructor",ratingAnInstructor);
+
 
 
 app.post("/Filter_By_Subject/", Filter_By_Subject);
@@ -313,6 +317,8 @@ app.get("/fetchSubtitlesByCourseId",fetchSubtitlesByCourseId);
 app.get("/fetchInstructorById",fetchInstructorById);
 
 app.get("/fetchCoursePreviewLink",fetchCoursePreviewLink);
+
+app.get("/getCurrentCourseInstructor",getCurrentCourseInstructor);
 
 // const insttitles= async (req,res) => { 
 //             const instructorName = req.body;

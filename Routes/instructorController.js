@@ -62,10 +62,40 @@ const { update } = require("../Models/User");
                 res.status(400).json({error:error.message});
             }
 
-            }; 
+            };
+            
+            
+            const ratingAnInstructor = async (req,res) => { 
+            try{
 
-                                
-    module.exports ={insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio};
+                const instructorId= req.query.id;
+                const instructorRating = req.query.rating;
+                const currInstructor = await instructor.findById({_id:instructorId});
+                
+                const array = currInstructor.Instructor_Ratings;
+                console.log(array);
+                array.push(instructorRating);
+                console.log(array);
+                const updatedInstructor =  await instructor.findByIdAndUpdate({_id:instructorId},{Instructor_Ratings:array},{new:true});
+                const updatedarray = updatedInstructor.Instructor_Ratings;
+                var x = 0;
+                for (let i = 0; i < updatedarray.length; i++) {
+                    x += updatedarray[i];
+                }
+                x= x / updatedarray.length;
+                console.log(x);
+                const finalUpdatedInstructor = await instructor.findByIdAndUpdate({_id:instructorId},{"Rating":x},{new:true});
+                res.status(200).json(finalUpdatedInstructor);
+
+            }
+            catch(error){
+                res.status(400).json({error:error.message});
+            }
+
+            };
+
+
+    module.exports ={insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor};
 
     // module.exports =filterTitles;
     //module.exports =createinst;

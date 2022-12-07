@@ -17,6 +17,7 @@
     import CurrentCourseDiscountPage from "../components/CurrentCourseDiscountPage";
     import CurrentCourseSubtitlesPageTrainee from "./CurrentCourseSubtitlesPageTrainee";
     import CurrentCoursePageDetailsCorporateTrainee from "../components/CurrentCoursePageDetailsCorporateTrainee"
+    
     // import FetchInstructorNameForTraineeCourseDetails from "../components/FetchInstructorNameForTraineeCourseDetails";
 
 
@@ -72,7 +73,7 @@
                 ))[0]}
                 {/* <CurrentCourseDiscountPage/> */}
                 <CurrentCourseSubtitlesPageTrainee/>
-                {/* <StarRating></StarRating> */}
+                {/* <StarRating></StarRating>  */}
             </div>
             
         </div>
