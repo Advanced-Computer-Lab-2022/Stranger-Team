@@ -6,6 +6,18 @@ const Schema = mongoose.Schema;
 
 const questionSchema = new Schema({
 
+  // quiz:[{
+  //   Question:{type:String},
+  //   Answers:{type:Array,default:[]},
+  //   CorrectAnswer:{type:Number}
+  // }]
+
+  CourseId:
+  {
+      type: mongoose.Types.ObjectId,
+      ref:'course'
+  },
+
   QNumber: {
     type: Number,
     default: 0
@@ -25,12 +37,7 @@ const questionSchema = new Schema({
     type: Number,
     default:0
   }
-,
-    ExerciseID:
-    {
-        type: mongoose.Types.ObjectId,
-        ref:'exercises'
-    }
+   
   }, { timestamps: true });
   
   const question = mongoose.model('question', questionSchema);

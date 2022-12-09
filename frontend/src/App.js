@@ -44,6 +44,7 @@ import TraineeReviewAnInstructor from './components/TraineeReviewAnInstructor'
 import Main from './pages/mainForQuiz';
 import Quiz from './components/Quiz';
 import Result from './components/Result';
+import InstructorAddQuiz from './pages/InstructorAddQuiz'
 
 
 
@@ -246,6 +247,12 @@ function App() {
         <Route
         path="/results"
         element={<Result />}
+        />
+
+
+<Route
+        path="/createQuiz"
+        element={<InstructorAddQuiz />}
         />
 
 

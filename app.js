@@ -46,7 +46,7 @@ const {insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEm
 const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor} = require('./Routes/adminController');
 
 //solving exercises
-const {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults, viewAnswers,addQuestion} = require('./Routes/solvingExercisesController');
+const {addCourse, viewCourses, insertQuestions, viewQuestions, addResults, viewResults, viewAnswers, fetchQuestionsByCID} = require('./Routes/solvingExercisesController');
 
 
 const { isNumberObject } = require('util/types');
@@ -243,7 +243,6 @@ app.get("/getInstructorRatings",getInstructorRatings);
 
 
 
-app.post("/addQuestion",addQuestion);
 
 app.post("/Filter_By_Subject/", Filter_By_Subject);
 app.post("/Filter_By_Price/",Filter_By_Price);
@@ -382,16 +381,17 @@ app.delete('/adminHome/delete/instructors/:id', deleteInstructor);
 app.delete('/adminHome/delete/corporateTrainees/:id', deleteCT);
 
 
-// WEEKS
-app.post('/addWeek', addWeek);
-app.get('/viewWeeks', viewWeeks);
+// // WEEKS
+// app.post('/addWeek', addWeek);
+// app.get('/viewWeeks', viewWeeks);
 
-//EXERCISES
-app.post('/addExercise', addExercise);
-app.get('/viewExercises', viewExercises);
+// //EXERCISES
+// app.post('/addExercise', addExercise);
+// app.get('/viewExercises', viewExercises);
 
 //QUESTIONS
-app.post('/addQ', addQuestions)
+app.post('/addQ', insertQuestions);
+app.get('/fetchQ', fetchQuestionsByCID);
 app.get('/viewQuestions', viewQuestions);
 app.get('/viewAnswers', viewAnswers);
 //RESULTS

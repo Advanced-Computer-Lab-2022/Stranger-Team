@@ -1,6 +1,4 @@
 const Course = require ('../Models/Course');
-const Exercise = require('../Models/Exercise');
-const Week = require('../Models/Week');
 const Question = require('../Models/Question');
 const Result = require('../Models/Result');
 
@@ -69,28 +67,29 @@ const viewCourses = async (req, res) => {
 
 
 
-  // adding a week
-    const addWeek = async (req, res) => {
-    const{Title,Hours} = req.body;
-    //const CourseID = req.query.id;
-    try{
-        const week = await Week.create({Title,Hours,"CourseID":req.query.id});
+//   // adding a week
+//     const addWeek = async (req, res) => {
+//     const{Title,Hours} = req.body;
+//     //const CourseID = req.query.id;
+//     try{
+//         const week = await Week.create({Title,Hours,"CourseID":req.query.id});
         
-        res.status(200).json(week);
-    }catch(error){
-        res.status(400).json({error:error.message});
-    }
+//         res.status(200).json(week);
+//     }catch(error){
+//         res.status(400).json({error:error.message});
+//     }
  
- }
+//  }
 
   //adding a question
-  const addQuestion = async (req, res) => {
-    const exerciseId = req.query.id;
+  const insertQuestions = async (req, res) => {
+    const courseId = req.query.CourseId;
+    console.log("courseid"+courseId);
     const{QNumber,Q,Answer1,Answer2,Answer3,Answer4,correctAnswer} = req.body;
     
     
     try{
-        const questionId = (await Question.create({QNumber,Q,correctAnswer,ExerciseID:req.query.id}))._id;
+        const questionId = (await Question.create({QNumber,Q,correctAnswer,CourseId:req.query.CourseId}))._id;
         const currQuestion = await Question.findById({_id:questionId});
         const answersArray = currQuestion.Answers;
         answersArray.push(Answer1);
@@ -109,51 +108,57 @@ const viewCourses = async (req, res) => {
 
 
 
- //to view Weeks
-const viewWeeks = async (req, res) => {
-    const data = await Week.find({})
-    res.status(200).json(data)
-   // console.log(data)
+//  //to view Weeks
+// const viewWeeks = async (req, res) => {
+//     const data = await Week.find({})
+//     res.status(200).json(data)
+//    // console.log(data)
    
-  };
+//   };
 
 
-  // adding an exercise 
-  const addExercise = async (req, res) => {
-    const{Num,Score} = req.body;
-    //const CourseID = req.query.id;
-    try{
-        const exercise = await Exercise.create({Num, Score,"WeekID":req.query.id});
+//   // adding an exercise 
+//   const addExercise = async (req, res) => {
+//     const{Num,Score} = req.body;
+//     //const CourseID = req.query.id;
+//     try{
+//         const exercise = await Exercise.create({Num, Score,"WeekID":req.query.id});
         
-        res.status(200).json(exercise);
-    }catch(error){
-        res.status(400).json({error:error.message});
-    }
+//         res.status(200).json(exercise);
+//     }catch(error){
+//         res.status(400).json({error:error.message});
+//     }
  
- }
+//  }
 
 
- //to view Exercises
-const viewExercises = async (req, res) => {
-    const data = await Exercise.find({})
-    res.status(200).json(data)
-   // console.log(data)
+//  //to view Exercises
+// const viewExercises = async (req, res) => {
+//     const data = await Exercise.find({})
+//     res.status(200).json(data)
+//    // console.log(data)
    
-  };
+//   };
 
+
+// const insertQuestions=async(req,res)=>{
+//   console.log(req.body);
+//   var quiz=req.body
+//  const q= await Question.create({quiz:quiz})
+// }
 
 
 // adding questions
-const addQuestions = async (req, res) => {
-    const{QNumber, Q, Answers} = req.body;
-    try {
-        Question.insertMany({ QNumber, Q,Answers, "ExerciseID":req.query.id }, function(err, data){
-            res.json({ msg: "Data Saved Successfully...!"})
-        })
-    } catch (error) {
-        res.json({ error })
-    }
-}
+// const addQuestions = async (req, res) => {
+//     const{QNumber, Q, Answers} = req.body;
+//     try {
+//         Question.insertMany({ QNumber, Q,Answers, "ExerciseID":req.query.id }, function(err, data){
+//             res.json({ msg: "Data Saved Successfully...!"})
+//         })
+//     } catch (error) {
+//         res.json({ error })
+//     }
+// }
 
 
 //to view the questions
@@ -163,6 +168,24 @@ const viewQuestions = async (req, res) => {
  
    
   };
+
+
+  //viewing questions of a specific exercise
+  const fetchQuestionsByCID = async(req,res) => {
+
+    const courseId = req.query.id;
+
+    if(courseId){
+    const result = await Question.find({CourseId:mongoose.Types.ObjectId(courseId)}).populate('CourseId');
+    res.status(200).json(result)
+    }else{
+        res.status(400).json({error:"courseId is required"})
+    }
+}
+
+
+
+
   const viewAnswers = async (req, res) => {
     const data = await Question.find({})
     const t = []
@@ -199,4 +222,4 @@ const viewResults = async (req, res) => {
  
 
 
-  module.exports = {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults,viewAnswers,addQuestion}
+  module.exports = {addCourse, viewCourses, insertQuestions, viewQuestions, addResults, viewResults, viewAnswers, fetchQuestionsByCID}
