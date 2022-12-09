@@ -35,6 +35,9 @@ import ForgetPassword from './components/forgetPassword/ForgotPassword'
 import ChangePassword from './components/changePassword/ChangePassword'
 import CurrentCoursePageCorporateTrainee from './pages/CurrentCoursePageCorporateTrainee'
 import InstructorEditMyProfilePage from './pages/InstructorEditMyProfilePage'
+import CurrentCourseInstructorPage from './pages/CurrentCourseInstructorPage'
+import RadioButtonsRateAnInstructor from './components/RadioButtonsRateAnInstructor'
+import TraineeReviewAnInstructor from './components/TraineeReviewAnInstructor'
 
 
 //imports for quiz
@@ -97,6 +100,23 @@ function App() {
         <Route
         path="/CurrentCourse"
         element={<CurrentCoursePage />}
+        />
+
+        <Route
+        path="/CurrentCourseInstructorPage"
+        element={<CurrentCourseInstructorPage />}
+        />
+
+        
+        <Route
+        path="/RadioButtonsRateAnInstructor"
+        element={<RadioButtonsRateAnInstructor />}
+        />
+
+        
+        <Route
+        path="/TraineeReviewAnInstructor"
+        element={<TraineeReviewAnInstructor />}
         />
 
           <Route

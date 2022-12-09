@@ -46,7 +46,30 @@ const { update } = require("../Models/User");
                 res.status(400).json({error:error.message});
             }
 
-            }; 
+            };
+            
+            const getInstructorRatings= async (req,res) => { 
+            try{
+                const instructorId = req.query.id;
+                if(instructorId)
+                {
+                    const currInstructor=await instructor.findById({_id:instructorId});
+                    console.log(currInstructor);
+                    const instructorRatings = currInstructor.Instructor_Ratings;
+                    console.log(instructorRatings);
+                    res.status(200).json(instructorRatings);
+                }
+                else
+                {
+                    res.status(400).json({error:"instructorId is required"});
+                }
+                
+            }
+            catch(error){
+                res.status(400).json({error:error.message});
+            }
+
+            };
 
             const editInstructorProfileEmailAndBio = async (req,res) => { 
             try{
@@ -94,8 +117,30 @@ const { update } = require("../Models/User");
 
             };
 
+            const reviewingAnInstructor = async (req,res) => { 
+            try{
 
-    module.exports ={insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor};
+                const instructorId= req.query.id;
+                const instructorReview = req.query.review;
+                const currInstructor = await instructor.findById({_id:instructorId});
+                
+                const array = currInstructor.Instructor_Reviews;
+                console.log(array);
+                array.push(instructorReview);
+                console.log(array);
+                const updatedInstructor =  await instructor.findByIdAndUpdate({_id:instructorId},{Instructor_Reviews:array},{new:true});
+
+                res.status(200).json(updatedInstructor);
+
+            }
+            catch(error){
+                res.status(400).json({error:error.message});
+            }
+
+            };
+
+
+    module.exports ={insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor,reviewingAnInstructor,getInstructorRatings};
 
     // module.exports =filterTitles;
     //module.exports =createinst;

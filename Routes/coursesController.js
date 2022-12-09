@@ -195,6 +195,38 @@ const getCurrentCourseInstructor = async(req,res) => {
     }
 }
 
+const fetchCurrentCourseInstructorByInstructorId = async(req,res) => {
+
+    const instructorId = req.query.id;
+    if(instructorId)
+    {
+        const currInstructor = await instructor.find({_id:instructorId});
+        
+        res.status(200).json(currInstructor)
+    }
+    else
+    {
+        res.status(400).json({error:"courseId is required"})
+    }
+
+}
+
+const fetchCurrentCourseInstructorCoursesByInstructorId = async(req,res) => {
+
+    const instructorId = req.query.id;
+    if(instructorId)
+    {
+        const currInstructorCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId)});
+        
+        res.status(200).json(currInstructorCourses)
+    }
+    else
+    {
+        res.status(400).json({error:"courseId is required"})
+    }
+
+}
+
 const fetchInstructorById = async(req,res) => {
 
     const courseId = req.query.CourseId;
@@ -238,9 +270,38 @@ const addANewInstructor = async(req,res)=>{
 
 }
 
+    const ratingACourse = async (req,res) => { 
+            try{
+
+                const courseId= req.query.CourseId;
+                const courseRating = req.query.rating;
+                const currCourse = await course.findById({_id:courseId});
+                
+                const array = currCourse.Course_Ratings;
+                console.log(array);
+                array.push(courseRating);
+                console.log(array);
+                const updatedCourse =  await course.findByIdAndUpdate({_id:courseId},{Course_Ratings:array},{new:true});
+                const updatedarray = updatedCourse.Course_Ratings;
+                var x = 0;
+                for (let i = 0; i < updatedarray.length; i++) {
+                    x += updatedarray[i];
+                }
+                x= x / updatedarray.length;
+                console.log(x);
+                const finalUpdatedCourse = await course.findByIdAndUpdate({_id:courseId},{"Rating":x},{new:true});
+                res.status(200).json(finalUpdatedCourse);
+
+            }
+            catch(error){
+                res.status(400).json({error:error.message});
+            }
+
+            };
 
 
-const View_All_Courses = async(req,res) =>{
+
+    const View_All_Courses = async(req,res) =>{
     const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles:1,Subtitles_Total_Hours:1,Exercises:1, Course_Total_Hours:1,Price:1,Rating:1,Instructor_Name:1,discout:1,Course_Description:1 }).sort({createdAt:-1}) ;
     res.status(200).json(allCourses);
 }
@@ -248,7 +309,8 @@ const View_All_Courses = async(req,res) =>{
 const getCurrentCourseDetails  = async(req,res) =>{
     const currentCourse = req.query.CourseId;
 
-    const currentCourseDetails = await course.find({_id:currentCourse}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Course_Description:1,Instructor:1 }).sort({createdAt:-1}) ;
+    
+    const currentCourseDetails = await course.find({_id:currentCourse}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Rating:1,Course_Description:1,Instructor:1 }).sort({createdAt:-1}) ;
 
 
     console.log(currentCourseDetails)
@@ -377,4 +439,4 @@ const Filter_By_Subject_And_Rating_And_Price= async (req,res) => {
             res.status(200).json(data);
             };   
 
-module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addANewInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,getCurrentCourseInstructor};
+module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addANewInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse};

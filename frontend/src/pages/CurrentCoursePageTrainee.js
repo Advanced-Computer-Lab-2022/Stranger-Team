@@ -16,6 +16,7 @@
     import CurrentCoursePageDiscountDetails from "../components/CurrentCoursePageDiscountDetails";
     import CurrentCourseDiscountPage from "../components/CurrentCourseDiscountPage";
     import CurrentCourseSubtitlesPageTrainee from "./CurrentCourseSubtitlesPageTrainee";
+import RadioButtonsRateACourse from "../components/RadioButtonsRateACourse";
     // import FetchInstructorNameForTraineeCourseDetails from "../components/FetchInstructorNameForTraineeCourseDetails";
 
 
@@ -69,8 +70,9 @@
                 <CurrentCoursePageDetails course={course} key={course._id} />
                 ))[0]}
                 {/* <CurrentCourseDiscountPage/> */}
+                <RadioButtonsRateACourse/>
                 <CurrentCourseSubtitlesPageTrainee/>
-                <StarRating></StarRating> 
+                {/* <StarRating></StarRating>  */}
             </div>
             
         </div>

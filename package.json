@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@material/radio": "^14.0.0",
+    "@mui/material": "^5.10.17",
     "bcrypt": "^5.1.0",
     "bootstrap": "^5.2.3",
     "crypto": "^1.0.1",

@@ -83,6 +83,30 @@ const viewCourses = async (req, res) => {
  
  }
 
+  //adding a question
+  const addQuestion = async (req, res) => {
+    const exerciseId = req.query.id;
+    const{QNumber,Q,Answer1,Answer2,Answer3,Answer4,correctAnswer} = req.body;
+    
+    
+    try{
+        const questionId = (await Question.create({QNumber,Q,correctAnswer,ExerciseID:req.query.id}))._id;
+        const currQuestion = await Question.findById({_id:questionId});
+        const answersArray = currQuestion.Answers;
+        answersArray.push(Answer1);
+        answersArray.push(Answer2);
+        answersArray.push(Answer3);
+        answersArray.push(Answer4);
+        console.log(answersArray)
+        const newQuestion = await Question.findByIdAndUpdate({_id:questionId},{Answers:answersArray},{new:true});
+        
+        res.status(200).json(newQuestion);
+    }catch(error){
+        res.status(400).json({error:error.message});
+    }
+ 
+ }
+
 
 
  //to view Weeks
@@ -175,4 +199,4 @@ const viewResults = async (req, res) => {
  
 
 
-  module.exports = {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults,viewAnswers}
+  module.exports = {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults,viewAnswers,addQuestion}

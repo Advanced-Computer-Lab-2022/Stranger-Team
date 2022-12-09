@@ -6,16 +6,16 @@ const StarRating = () => {
 const [rating, setRating] = useState(null);
 const [hover, setHover] = useState(null);
 
-    const handleSubmit = async(e) => {
-        e.preventDefault()
+    const handleSubmit = async() => {
+
+        
         const params = new URLSearchParams(window.location.search);
         const instructorId = params.get('id');
         console.log(instructorId); 
-        const instructorRating = params.get('rating');
-        console.log("instructorId "+instructorRating);
-        const response = await fetch(`/ratingAnInstructor/?id=${instructorId}&rating=${instructorRating}`, {
+        console.log("rating"+rating);
+        const response = await fetch(`/ratingAnInstructor/?id=${instructorId}&rating=${rating}`, {
             method: 'POST',
-            body: JSON.stringify(instructorRating),
+            body: JSON.stringify(rating),
             headers: {
                 'Content-Type': 'application/json'
             }

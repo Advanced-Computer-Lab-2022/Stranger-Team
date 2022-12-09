@@ -11,6 +11,7 @@
 
     import{Button, Alert, Container, Nav} from 'react-bootstrap'
     import Navbar from "../components/Navbar";
+    import ProfileNavBar from "../components/ProfileNavBar"
 
     import CourseDetails from "../components/CourseDetails";
     import StarRating from "../components/StarRating";
@@ -18,6 +19,7 @@
     import CurrentCourseDiscountPage from "../components/CurrentCourseDiscountPage";
     import InstructorAddNewSubtitleForm from "../components/InstructorAddNewSubtitleForm";
     import CurrentCourseInstructorPageSubtitles from "../components/CurrentCourseInstructorPageSubtitles"
+    import InstructorCurrentCoursePageDetails from "../components/InstructorCurrentCoursePageDetails";
 
 
     const CurrentCoursePage = () => {
@@ -73,7 +75,7 @@
 
     return (
         <div>
-        <Navbar/>
+        <ProfileNavBar/>
         <form className="create">
 
         {/* <div class="container"> */}
@@ -82,7 +84,7 @@
         <div class="card h-100">
             <div class="card-body">
                 {course && course.map(course => (
-                <CurrentCoursePageDetails course={course} key={course._id} />
+                <InstructorCurrentCoursePageDetails course={course} key={course._id} />
                 ))[0]}
                 {/* <CurrentCourseDiscountPage/> */}
                 <CurrentCourseInstructorPageSubtitles/>

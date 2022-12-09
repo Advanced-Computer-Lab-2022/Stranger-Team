@@ -38,6 +38,10 @@ const InstructorSchema = new Schema({
     Instructor_Ratings:{
       type:[Number],
       required:false
+    },
+    Instructor_Reviews:{
+      type:[String],
+      required:false
     }
   }, { timestamps: true });
 
