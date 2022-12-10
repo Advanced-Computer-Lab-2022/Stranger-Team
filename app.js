@@ -38,7 +38,7 @@ const admins = require('./Models/Administrator');
 const pendingInstructors = require('./Models/pendingInstructors');
 const corporateTrainees = require('./Models/corporateTrainees');
 const individual_Trainee=require('./Models/Individual Trainee');
-const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,addANewInstructor,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse} = require('./Routes/coursesController');
+const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,addANewInstructor,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId} = require('./Routes/coursesController');
 
 const {addUserRating,saveUserRating} = require('./Routes/usersController');
 
@@ -250,6 +250,7 @@ app.get("/indiviualTraineeRegisterCourse",indiviualTraineeRegisterCourse);
 
 app.get("/viewMyRegisteredCourses",viewMyRegisteredCourses);
 
+app.get("/fetchTheSubtitleBySubtitleId",fetchTheSubtitleBySubtitleId);
 
 
 app.post("/addQuestion",addQuestion);

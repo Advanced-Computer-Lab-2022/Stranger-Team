@@ -40,6 +40,7 @@ import RadioButtonsRateAnInstructor from './components/RadioButtonsRateAnInstruc
 import TraineeReviewAnInstructor from './components/TraineeReviewAnInstructor'
 import MyRegisteredCoursesTraineePage from './pages/MyRegisteredCoursesTraineePage'
 import InstructorAddANewCourseSubtitlePageDirectlyAfterAddingCourse from './pages/InstructorAddANewCourseSubtitlePageDirectlyAfterAddingCourse'
+import CurrentCourseSubtitlesPageTrainee from './pages/CurrentCourseSubtitlesPageTrainee'
 
 
 //imports for quiz
@@ -131,6 +132,12 @@ function App() {
         <Route
         path="/MyRegisteredCoursesTrainee"
         element={<MyRegisteredCoursesTraineePage />}
+        />
+
+        
+        <Route
+        path="/CurrentCourseSubtitlesPageTrainee"
+        element={<CurrentCourseSubtitlesPageTrainee />}
         />
 
           <Route

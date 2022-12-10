@@ -136,6 +136,18 @@ const fetchSubtitlesByCourseId = async(req,res) => {
     }
 }
 
+const fetchTheSubtitleBySubtitleId= async(req,res) => {
+
+    const subtitleId = req.query.SubtitleId;
+
+    if(subtitleId){
+    const result = await subtitles.findById({_id:subtitleId});
+    res.status(200).json(result)
+    }else{
+        res.status(400).json({error:"subtitleId is required"})
+    }
+}
+
 const fetchCoursePreviewLink = async(req,res) => {
 
     const courseId = req.query.CourseId;
@@ -389,4 +401,4 @@ const Filter_By_Subject_And_Rating_And_Price= async (req,res) => {
             res.status(200).json(data);
             };   
 
-module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addANewInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse};
+module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addANewInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId};

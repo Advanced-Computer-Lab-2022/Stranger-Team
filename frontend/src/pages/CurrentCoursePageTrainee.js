@@ -16,7 +16,8 @@
     import CurrentCoursePageDiscountDetails from "../components/CurrentCoursePageDiscountDetails";
     import CurrentCourseDiscountPage from "../components/CurrentCourseDiscountPage";
     import CurrentCourseSubtitlesPageTrainee from "./CurrentCourseSubtitlesPageTrainee";
-import RadioButtonsRateACourse from "../components/RadioButtonsRateACourse";
+    import RadioButtonsRateACourse from "../components/RadioButtonsRateACourse";
+    import TraineeSubtitleTitlesPage from "./TraineeSubtitleTitlesPage";
     // import FetchInstructorNameForTraineeCourseDetails from "../components/FetchInstructorNameForTraineeCourseDetails";
 
 
@@ -71,7 +72,8 @@ import RadioButtonsRateACourse from "../components/RadioButtonsRateACourse";
                 ))[0]}
                 {/* <CurrentCourseDiscountPage/> */}
                 <RadioButtonsRateACourse/>
-                <CurrentCourseSubtitlesPageTrainee/>
+                <TraineeSubtitleTitlesPage/>
+                {/* <CurrentCourseSubtitlesPageTrainee/>  */}
                 {/* <StarRating></StarRating>  */}
             </div>
             
