@@ -65,9 +65,10 @@
 
     const routeChange2 = () =>{ 
         const params = new URLSearchParams(window.location.search);
+        const instructorId = params.get('id');
         const courseId = params.get('CourseId');
         // console.log(courseId); 
-        let path = `/AddANewSubtitle/?CourseId=${courseId}`; 
+        let path = `/AddANewSubtitle/?id=${instructorId}&CourseId=${courseId}`; 
         console.log("CourseId"+courseId)
         navigate(path);
     }

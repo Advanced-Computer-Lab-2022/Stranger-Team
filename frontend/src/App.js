@@ -38,6 +38,8 @@ import InstructorEditMyProfilePage from './pages/InstructorEditMyProfilePage'
 import CurrentCourseInstructorPage from './pages/CurrentCourseInstructorPage'
 import RadioButtonsRateAnInstructor from './components/RadioButtonsRateAnInstructor'
 import TraineeReviewAnInstructor from './components/TraineeReviewAnInstructor'
+import MyRegisteredCoursesTraineePage from './pages/MyRegisteredCoursesTraineePage'
+import InstructorAddANewCourseSubtitlePageDirectlyAfterAddingCourse from './pages/InstructorAddANewCourseSubtitlePageDirectlyAfterAddingCourse'
 
 
 //imports for quiz
@@ -89,6 +91,12 @@ function App() {
         />
 
         
+        <Route
+        path="/InstructorAddMoreSubtitles"
+        element={<InstructorAddANewCourseSubtitlePageDirectlyAfterAddingCourse />}
+        />
+
+        
 
         
 
@@ -117,6 +125,12 @@ function App() {
         <Route
         path="/TraineeReviewAnInstructor"
         element={<TraineeReviewAnInstructor />}
+        />
+
+        
+        <Route
+        path="/MyRegisteredCoursesTrainee"
+        element={<MyRegisteredCoursesTraineePage />}
         />
 
           <Route

@@ -5,7 +5,7 @@
     import { useNavigate } from "react-router-dom";
 	import { useState } from 'react'
 
-    const InstructorAddNewSubtitlePage = () => {
+    const InstructorAddANewCourseSubtitlePageDirectlyAfterAddingCourse = () => {
 
     const [Link,setLink] = useState('')
     const [Subtitle_Title, setSubtitle_Title]= useState('')
@@ -49,19 +49,18 @@
     let navigate = useNavigate();
     const routeChange2 = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id'); 
-        const courseId = params.get('CourseId'); 
-        let path = `/CurrentCourse/?id=${instructorId}&CourseId=${courseId}`; 
+        const instructorId = params.get('id');
+        let path = `/InstructorCoursePage/?id=${instructorId}`; 
         navigate(path);
     }
 
 
     return (
 
-
+        
         <div className="course-details">
         <form className="create" onSubmit={defineCourseSubtitle}> 
-        <h3>Please enter the link to the new subtitle you would like to define for your course:</h3>
+        <h3>If you wish to add more subtitles to your course now, please enter the link to the new subtitle you would like to define for your course:</h3>
 
         <label>Subtitle Title:</label>
         <input 
@@ -84,15 +83,13 @@
         />
 
         <button>Add Subtitle</button>
-        <p></p>
-        <button className="create" onClick={routeChange2}>Done</button>
         {/* {error && <div className="error">{error}</div>} */}
         </form>
-        
+        <button className="create" onClick={routeChange2}>Done</button>
         </div>
         
 
     )
     }
 
-    export default InstructorAddNewSubtitlePage
+    export default InstructorAddANewCourseSubtitlePageDirectlyAfterAddingCourse

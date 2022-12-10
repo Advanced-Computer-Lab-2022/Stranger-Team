@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 
 const subtitlesSchema = new Schema({
-    Title:{
+    Subtitle_Title:{
         type: String,
         required: true
     },

@@ -12,6 +12,7 @@
     import Navbar from "../components/Navbar";
     import StarRating from "../components/StarRating";
     import PreviewCourseVideoPageDetails from '../components/PreviewCourseVideoTraineePageDetails'
+    import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
 
     const Home1 = () => {
     const [courses, setCourses] = useState(null)
@@ -25,7 +26,7 @@
         ///Filter_By_Rate/
         //const response = await fetch(`/View_All_Courses/?q=${searchQuery}`)
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('traineeId');
+        const traineeId = params.get('TraineeId');
         console.log(traineeId); 
         TraineeID = params.get('traineeId');
         console.log("TraineeID"+traineeId); 
@@ -108,10 +109,19 @@
 
     
 
+    const routeChange9 = () =>{ 
+        const params = new URLSearchParams(window.location.search);
+        const traineeId = params.get('TraineeId');
+        console.log(traineeId);
+        
+        let path = '/CourseFilterByPrice'; 
+        navigate(path);
+    }
+
     return (
 
         <div >
-            <Navbar/>
+            <TraineeProfileNavBar/>
             <input type="text" placeholder="Search By Course Title,Subject,Instructor..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}>
             
             </input>
@@ -120,7 +130,9 @@
                 <input type="number" placeholder="Filter By Rate..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}></input>
             </div>
             <div className="courses">
+                
             {courses && courses.map(course => (
+                
             <Container hover
                 sx={{
                     "&:hover":{
@@ -129,11 +141,14 @@
                     width: "100%"
                     }
                 }}
-                onClick={() => window.location.href=`/CurrentCoursePageTrainee?CourseId=${course._id}&traineeId=${TraineeID}`}
+                onClick={() =>{
+                const params = new URLSearchParams(window.location.search);
+                const traineeId = params.get('TraineeId');
+                console.log(traineeId);
+                window.location.href=`/CurrentCoursePageTrainee?CourseId=${course._id}&TraineeId=${traineeId}`} }
                 key={course._id}>
-            <CourseDetails course={course} key={course._id} />
-            <PreviewCourseVideoPageDetails course={course} key={course._id} />
-            
+            <CourseDetails course={course} key={course.id} />
+            <PreviewCourseVideoPageDetails course={course} key={course.id} />
             
             </Container>
             ))}

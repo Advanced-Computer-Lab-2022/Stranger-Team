@@ -89,7 +89,12 @@
                     width: "100%"
                     }
                 }}
-                onClick={() => window.location.href=`/CurrentCourse/?CourseId=${course._id}&id=${new URLSearchParams(window.location.search).get('id')}`}
+                onClick={
+                    
+                    () =>{
+                        const params = new URLSearchParams(window.location.search);
+                        const instructorId = params.get('id'); 
+                        window.location.href=`/CurrentCourse/?id=${instructorId}&CourseId=${course._id}`}}
                 key={course._id}>
             <MyCourses course={course} key={course._id} />
             </Container>

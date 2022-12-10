@@ -12,10 +12,10 @@ const subtitles = require('../Models/Subtitles');
 const addSubtitle = async(req,res) => {
 
     const courseId = req.query.CourseId;
-    const {Title,Link,Description} = req.body;
+    const {Subtitle_Title,Link,Description} = req.body;
 
     if(courseId){
-    const result = await subtitles.create({Title,Link,Description,CourseId:req.query.CourseId});
+    const result = await subtitles.create({Subtitle_Title,Link,Description,CourseId:req.query.CourseId});
     console.log(result)
     res.status(200).json(result)
     }else{
@@ -29,35 +29,32 @@ const data = (req, res) => {
     }
 
 
-//     const createCourse = async(req,res)=>{
-
-//         const {Title, Subject, Subtitles,Subtitles_Total_Hours,Exercises,Course_Total_Hours,Price,Rating,Instructor_Name,discount,Course_Description}= req.body;
-//         const instructorid=req.query.id;
-//     try{
-
-//     const addCourse =await course.create({Title, Subject, Subtitles,Subtitles_Total_Hours,Exercises,Course_Total_Hours,Price,Rating,Instructor_Name,discount,Course_Description,"Instructor":req.query.id});
-//     console.log(addCourse);
-//     res.status(200).json(addCourse);
-
-//     }
-//     catch(error){
-//         res.status(400).json({error:error.message});
-//     }
-
-// }
-
 //new addCourse
 
 const createCourse = async(req,res)=>{
+        // const questionId = (await Question.create({QNumber,Q,correctAnswer,ExerciseID:req.query.id}))._id;
+        // const currQuestion = await Question.findById({_id:questionId});
 
-        const {Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Course_Description,PreviewLink}= req.body;
+        const {Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Course_Description,PreviewLink,Subtitle_Title,Link,Description}= req.body;
         const instructorid=req.query.id;
     try{
 
     const addCourse =await course.create({Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Course_Description,PreviewLink,"Instructor":req.query.id});
+    const newlyAddedCourseId = addCourse._id;
+    console.log(newlyAddedCourseId);
+    
+    // const {Subtitle_Title,Link,Description} = req.body;
+
+    if(newlyAddedCourseId){
+    const newlyAddedSubtitle = await subtitles.create({Subtitle_Title,Link,Description,CourseId:newlyAddedCourseId});
+    console.log(newlyAddedSubtitle)
+    //res.status(200).json(newlyAddedSubtitle)
+    }else{
+        res.status(400).json({error:"courseId is required"})
+    }
+
     console.log(addCourse);
     res.status(200).json(addCourse);
-
     }
     catch(error){
         res.status(400).json({error:error.message});
@@ -82,38 +79,6 @@ const viewMyInstructorCoursesById = async(req,res) => {
     }
 }
 
-// const addCourseDiscount = async(req,res)=>{
-
-//         const {discountAmount}= req.body;
-//         const courseId=req.query.CourseId;
-        
-//     try{
-
-        
-//         const result = await discount.find({courseId:mongoose.Types.ObjectId(courseId)}).populate('courseId');
-//         console.log(result);
-//         if(result !=null || result !=[] || result != "")
-//         {
-//             const delet = await discount.deleteMany({courseId:courseId})
-//             const addCourseDiscount =await discount.create({discountAmount,"courseId":req.query.CourseId});
-//             console.log(addCourseDiscount);
-//             res.status(200).json(addCourseDiscount);
-//         }
-//         else
-//         {
-//             const addCourseDiscount =await discount.create({discountAmount,"courseId":req.query.CourseId});
-//             console.log(addCourseDiscount);
-//             res.status(200).json(addCourseDiscount);
-//         }
-
-
-
-//     }
-//     catch(error){
-//         res.status(400).json({error:error.message});
-//     }
-
-// }
 
 const addCourseDiscount = async(req,res)=>{
 
@@ -318,21 +283,6 @@ const getCurrentCourseDetails  = async(req,res) =>{
     res.status(200).json(currentCourseDetails); 
 
 }
-
-// const View_All_Courses = async(req,res) =>{
-//     const q = req.query.q;
-//     console.log(q);
-
-//     const keys=["Title","Subject","Instructor_Name"];
-//     const search = (data)=>{
-//         return data.filter((item)=>
-//         keys.some((key)=>item[key].toLowerCase().includes(q))
-//         );
-//     };
-//         const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles:1,Subtitles_Total_Hours:1,Exercises:1, Course_Total_Hours:1,Price:1,Rating:1,Instructor_Name:1,discout:1,Course_Description:1 }).sort({createdAt:-1}) ;
-//         res.status(200).json(allCourses);
-//     }
-
 
 
 
