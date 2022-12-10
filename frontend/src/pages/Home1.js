@@ -17,19 +17,14 @@
     const Home1 = () => {
     const [courses, setCourses] = useState(null)
     const [searchQuery, setSearchQuery] = useState("")
-    const [searchRateQuery, setSearchRateQuery] = useState("")
-    var TraineeID= "";
+    const [searchRateQuery, setSearchRateQuery] = useState("");
 
     useEffect(() => {
         const fetchCourses = async () => {
-        //const response = await fetch('/View_All_Courses')
-        ///Filter_By_Rate/
-        //const response = await fetch(`/View_All_Courses/?q=${searchQuery}`)
         const params = new URLSearchParams(window.location.search);
         const traineeId = params.get('TraineeId');
         console.log(traineeId); 
-        TraineeID = params.get('traineeId');
-        console.log("TraineeID"+traineeId); 
+
 
         const response = await fetch(`/View_All_Courses/?q=${searchQuery}`)
 

@@ -42,14 +42,18 @@ const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data
 
 const {addUserRating,saveUserRating} = require('./Routes/usersController');
 
-const {insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor,reviewingAnInstructor,getInstructorRatings} = require('./Routes/instructorController');
+const {insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor,reviewingAnInstructor,getInstructorRatings,instructorSendReport,fetchInstructorAllPreviousReports} = require('./Routes/instructorController');
 
 const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor} = require('./Routes/adminController');
 
 //solving exercises
 const {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults, viewAnswers,addQuestion} = require('./Routes/solvingExercisesController');
 
-const {addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses} = require('./Routes/individualTraineeController');
+const {addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports} = require('./Routes/individualTraineeController');
+
+const {corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse} = require('./Routes/corporateTraineeController');
+
+
 
 
 const { isNumberObject } = require('util/types');
@@ -246,14 +250,32 @@ app.get("/reviewingAnInstructor",reviewingAnInstructor);
 
 app.get("/getInstructorRatings",getInstructorRatings);
 
+app.get("/fetchInstructorAllPreviousReports",fetchInstructorAllPreviousReports);
+
 app.get("/indiviualTraineeRegisterCourse",indiviualTraineeRegisterCourse);
+
+app.get("/corporateTraineeRegisterCourse",corporateTraineeRegisterCourse);
 
 app.get("/viewMyRegisteredCourses",viewMyRegisteredCourses);
 
+app.get("/corporateViewMyRegisteredCourses",corporateViewMyRegisteredCourses);
+
 app.get("/fetchTheSubtitleBySubtitleId",fetchTheSubtitleBySubtitleId);
 
+app.get("/fetchTraineeAllPreviousReports",fetchTraineeAllPreviousReports);
+
+app.get("/fetchCorporateTraineeAllPreviousReports",fetchCorporateTraineeAllPreviousReports);
+
+
+
+app.post("/traineeSendReport",traineeSendReport);
+
+app.post("/corporateTraineeSendReport",corporateTraineeSendReport);
+
+app.post("/instructorSendReport",instructorSendReport);
 
 app.post("/addQuestion",addQuestion);
+
 
 app.post("/Filter_By_Subject/", Filter_By_Subject);
 app.post("/Filter_By_Price/",Filter_By_Price);

@@ -1,5 +1,5 @@
 
-    const TraineeSubtitleTitlesDetailsPage = ({ subtitle }) => {
+    const CorporateTraineeSubtitleTitlesDetailsPage = ({ subtitle }) => {
 
 
     return (
@@ -14,4 +14,4 @@
     )
     }
 
-    export default TraineeSubtitleTitlesDetailsPage
+    export default CorporateTraineeSubtitleTitlesDetailsPage

@@ -17,26 +17,24 @@
     import CurrentCourseDiscountPage from "../components/CurrentCourseDiscountPage";
     import CurrentCourseSubtitlesPageTrainee from "./CurrentCourseSubtitlesPageTrainee";
     import CurrentCoursePageDetailsCorporateTrainee from "../components/CurrentCoursePageDetailsCorporateTrainee"
-    
-    // import FetchInstructorNameForTraineeCourseDetails from "../components/FetchInstructorNameForTraineeCourseDetails";
+import RadioButtonsRateACourse from "../components/RadioButtonsRateACourse";
+import CorporateTraineeSubtitleTitlesPage from "./CorporateTraineeSubtitleTitlesPage";
 
 
 
 
     const CurrentCoursePageCorporateTrainee = () => {
     const [course, setCourse] = useState(null)
-    const [discount,setDiscount] = useState(null)
     
 
     useEffect(() => {
         const fetchCourse = async () => {
-        //const response = await fetch('/View_My_Courses/Layla')
-        //const response = await fetch(`/View_My_Courses/Layla/?q=${searchQuery}`)
+        
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        console.log(courseId); 
-        const traineeId = params.get('traineeId');
-        console.log("traineeId "+traineeId);
+        const corporateTraineeId = params.get('CorporateTraineeId');
+        console.log(corporateTraineeId); 
+
         
         
         const response = await fetch(`/CurrentCourse/?CourseId=${courseId}`)
@@ -58,6 +56,16 @@
         fetchCourse()
     }, [])
 
+    let navigate = useNavigate();
+        const routeChange = () =>{ 
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get('CourseId');
+        const corporateTraineeId = params.get('CorporateTraineeId');
+        console.log(corporateTraineeId); 
+        let path = `/CorporateTraineeReportAProblemPage/?CorporateTraineeId=${corporateTraineeId}&CourseId=${courseId}`; 
+        navigate(path);
+    }
+
 
     return (
         <div>
@@ -68,11 +76,16 @@
         <div class="card h-100">
             <div class="card-body">
                 {/* <FetchInstructorNameForTraineeCourseDetails/> */}
+                <form className="course-details">
+                    <button  onClick={routeChange}>Report a problem</button>
+                </form>
                 {course && course.map(course => (
                 <CurrentCoursePageDetailsCorporateTrainee course={course} key={course._id} />
                 ))[0]}
+                <RadioButtonsRateACourse/>
                 {/* <CurrentCourseDiscountPage/> */}
-                <CurrentCourseSubtitlesPageTrainee/>
+                {/* <CurrentCourseSubtitlesPageTrainee/> */}
+                <CorporateTraineeSubtitleTitlesPage/>
                 {/* <StarRating></StarRating>  */}
             </div>
             

@@ -2,6 +2,7 @@
     const mongoose = require('mongoose');
     const instructor = require("../Models/Instructor");
     const course = require("../Models/Course");
+    const reportedProblem = require("../Models/InstructorReports");
 const { update } = require("../Models/User");
     var instTitles = [];
     let instname;
@@ -139,8 +140,53 @@ const { update } = require("../Models/User");
 
             };
 
+    const instructorSendReport = async(req,res) => {
 
-    module.exports ={insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor,reviewingAnInstructor,getInstructorRatings};
+    const instructorId = req.query.id;
+
+    
+    const {Reported_Problem,Report_Type} = req.body;
+
+    try{
+    const result = await reportedProblem.create({Instructor_Id:instructorId,Reported_Problem,Report_Type,Status:"Delivered"});
+    console.log(result)
+    res.status(200).json(result)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+
+const fetchInstructorAllPreviousReports = async(req,res) => {
+
+    const instructorId = req.query.id;
+    const allReports=[];
+
+    try{
+    const resolvedProblems = await reportedProblem.find({Instructor_Id:mongoose.Types.ObjectId(instructorId),Status:"Resolved"}).populate('Trainee_Id');
+    const underSupervisionProblems = await reportedProblem.find({Instructor_Id:mongoose.Types.ObjectId(instructorId),Status:"Pending"}).populate('Trainee_Id');
+    for (let i = 0; i < resolvedProblems.length; i++) {
+                allReports.push(resolvedProblems[i]);
+        }
+
+    for (let i = 0; i < underSupervisionProblems.length; i++) {
+                allReports.push(underSupervisionProblems[i]);
+        }
+    // allReports.push(resolvedProblems);
+    // allReports.push(underSupervisionProblems)
+
+    console.log(allReports)
+    res.status(200).json(allReports)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+
+
+
+
+    module.exports ={insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor,reviewingAnInstructor,getInstructorRatings,instructorSendReport,fetchInstructorAllPreviousReports};
 
     // module.exports =filterTitles;
     //module.exports =createinst;

@@ -131,44 +131,21 @@
     import StarRating from "../components/StarRating";
     import PreviewCourseVideoPageDetails from '../components/PreviewCourseVideoTraineePageDetails'
     import CourseDetailsCorporateTrainee from "../components/CourseDetailsCorporateTrainee";
+import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfileNavBar";
 
     const CorporateHome = () => {
     const [courses, setCourses] = useState(null)
     const [searchQuery, setSearchQuery] = useState("")
     const [searchRateQuery, setSearchRateQuery] = useState("")
-    var TraineeID= "";
 
     useEffect(() => {
         const fetchCourses = async () => {
-        //const response = await fetch('/View_All_Courses')
-        ///Filter_By_Rate/
-        //const response = await fetch(`/View_All_Courses/?q=${searchQuery}`)
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('traineeId');
-        console.log(traineeId); 
-        TraineeID = params.get('traineeId');
-        console.log("TraineeID"+traineeId); 
+        const corporateTraineeId = params.get('CorporateTraineeId');
+        console.log(corporateTraineeId); 
 
         const response = await fetch(`/View_All_Courses/?q=${searchQuery}`)
 
-        // if(setSearchQuery == null && setSearchRateQuery == null)
-        // {
-        //     console.log("jjj")
-        //    response = await fetch(`/View_All_Courses/?q=`)
-        //}
-        // if(setSearchRateQuery != null)
-        // {
-        
-        //     response = await fetch(`/Filter_By_Rate/?q=${searchRateQuery}`)
-        // }
-        // else if(setSearchQuery!= null)
-        // {
-        //     response = await fetch(`/View_All_Courses/?q=${searchQuery}`)
-        // }
-        
-        
-        
-        
         const json = await response.json()
         console.log(json)
         
@@ -216,7 +193,7 @@
     return (
 
         <div >
-            <Navbar/>
+            <CorporateTraineeProfileNavBar/>
             <input type="text" placeholder="Search By Course Title,Subject,Instructor..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}>
             
             </input>
@@ -234,10 +211,14 @@
                     width: "100%"
                     }
                 }}
-                onClick={() => window.location.href=`/CurrentCoursePageCorporateTrainee?CourseId=${course._id}&traineeId=${TraineeID}`}
+                onClick={() => {
+                    const params = new URLSearchParams(window.location.search);
+                    const corporateTraineeId = params.get('CorporateTraineeId');
+                    console.log(corporateTraineeId);
+                    window.location.href=`/CurrentCoursePageCorporateTrainee?CourseId=${course._id}&CorporateTraineeId=${corporateTraineeId}`}}
                 key={course._id}>
-            <CourseDetailsCorporateTrainee course={course} key={course._id} />
-            <PreviewCourseVideoPageDetails course={course} key={course._id} />
+            <CourseDetailsCorporateTrainee course={course} key={course.id} />
+            <PreviewCourseVideoPageDetails course={course} key={course.id} />
             
             
             </Container>

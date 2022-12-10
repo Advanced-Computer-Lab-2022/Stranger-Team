@@ -39,27 +39,27 @@
         <form className="course-details" onSubmit={handleSubmit}>
         <h3>Rate The Course: </h3>
         <label className="radio-inline">
-        <input type="radio"  classNameName="rate" onChange={(e) => setRate(e.target.value)} 
+        <input type="radio"  className="rate" onChange={(e) => setRate(e.target.value)} 
             /> 1
         </label>
         <label className="radio-inline">
-        <input type="radio"  value="2" classNameName="rate" onChange={(e) => setRate(e.target.value)} 
+        <input type="radio"  value="2" className="rate" onChange={(e) => setRate(e.target.value)} 
             /> 2
         </label>
         <label className="radio-inline">
-        <input type="radio"  value="3" classNameName="rate" onChange={(e) => setRate(e.target.value)} 
+        <input type="radio"  value="3" className="rate" onChange={(e) => setRate(e.target.value)} 
             /> 3
         </label>
         <label className="radio-inline">
-        <input type="radio"  value="4" classNameName="rate" onChange={(e) => setRate(e.target.value)} 
+        <input type="radio"  value="4" className="rate" onChange={(e) => setRate(e.target.value)} 
             /> 4
         </label>
         <label className="radio-inline">
-        <input type="radio"  value="5" classNameName="rate" onChange={(e) => setRate(e.target.value)} 
+        <input type="radio"  value="5" className="rate" onChange={(e) => setRate(e.target.value)} 
             /> 5
         </label>
         <button >Submit Rating</button>
-        {error && <div classNameName="error">{error}</div>}
+        {error && <div className="error">{error}</div>}
         </form>
     );
     }

@@ -30,6 +30,11 @@
     Corporate: {
         type: String,
         required: true
+    },
+    Registered_Courses:{
+    type:[mongoose.Types.ObjectId],
+    ref:'course',
+    required:false
     }
     }, { timestamps: true });
 

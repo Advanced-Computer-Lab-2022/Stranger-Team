@@ -41,12 +41,16 @@ import TraineeReviewAnInstructor from './components/TraineeReviewAnInstructor'
 import MyRegisteredCoursesTraineePage from './pages/MyRegisteredCoursesTraineePage'
 import InstructorAddANewCourseSubtitlePageDirectlyAfterAddingCourse from './pages/InstructorAddANewCourseSubtitlePageDirectlyAfterAddingCourse'
 import CurrentCourseSubtitlesPageTrainee from './pages/CurrentCourseSubtitlesPageTrainee'
+import TraineeReportAProblemPage from './pages/TraineeReportAProblemPage'
+import InstructorReportAProblemPage from './pages/InstructorReportAProblemPage'
 
 
 //imports for quiz
 import Main from './pages/mainForQuiz';
 import Quiz from './components/Quiz';
 import Result from './components/Result';
+import CorporateTraineeReportAProblemPage from './pages/CorporateTraineeReportAProblemPage'
+import MyRegisteredCoursesCorporateTraineePage from './pages/MyRegisteredCoursesCorporateTraineePage'
 
 
 
@@ -128,10 +132,31 @@ function App() {
         element={<TraineeReviewAnInstructor />}
         />
 
+        <Route
+        path="/TraineeReportAProblemPage"
+        element={<TraineeReportAProblemPage />}
+        />
+
+        <Route
+        path="/InstructorReportAProblemPage"
+        element={<InstructorReportAProblemPage />}
+        />
+
+        <Route
+        path="/CorporateTraineeReportAProblemPage"
+        element={<CorporateTraineeReportAProblemPage />}
+        />
+
         
         <Route
         path="/MyRegisteredCoursesTrainee"
         element={<MyRegisteredCoursesTraineePage />}
+        />
+
+        
+        <Route
+        path="/MyRegisteredCoursesCorporateTraineePage"
+        element={<MyRegisteredCoursesCorporateTraineePage />}
         />
 
         
@@ -176,6 +201,9 @@ function App() {
         path="/InstructorEditMyProfilePage"
         element={<InstructorEditMyProfilePage />}
         />
+
+        
+        
 
         <Route
         path="/AddANewSubtitle"

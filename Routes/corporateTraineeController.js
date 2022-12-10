@@ -2,15 +2,15 @@
     const mongoose = require('mongoose');
     const instructor = require("../Models/Instructor");
     const course = require("../Models/Course");
-    const individual_Trainee = require("../Models/Individual Trainee");
-    const reportedProblem = require("../Models/TraineeReports");
+    const corporate_Trainee = require("../Models/corporateTrainees");
+    const reportedProblem = require("../Models/CorporateTraineeReports");
 
-    const addIndividualTrainee = async(req,res) => {
+    const addCorporateTrainee = async(req,res) => {
     
-    const {Username,Email,Password,First_Name,Last_Name,Gender} = req.body;
+    const {Username,Email,Password,First_Name,Last_Name,Gender,Corporate} = req.body;
 
     try{
-    const result = await individual_Trainee.create({Username,Email,Password,First_Name,Last_Name,Gender});
+    const result = await corporate_Trainee.create({Username,Email,Password,First_Name,Last_Name,Gender,Corporate});
     console.log(result)
     res.status(200).json(result)
     }
@@ -19,19 +19,20 @@
     }
 }
 
-    const indiviualTraineeRegisterCourse = async(req,res) => {
+    const corporateTraineeRegisterCourse = async(req,res) => {
     
-        const individualTraineeId = req.query.TraineeId;
+        const corporateTrainee = req.query.CorporateTraineeId;
         const courseId = req.query.CourseId;
+        console.log(courseId);
 
     try{
-    const currTrainee = await individual_Trainee.findById({_id:individualTraineeId});
+    const currTrainee = await corporate_Trainee.findById({_id:corporateTrainee});
     const updatedArray = currTrainee.Registered_Courses;
     console.log(updatedArray);
     updatedArray.push(courseId);
     console.log(updatedArray)
 
-    const updatedTrainee =  await individual_Trainee.findByIdAndUpdate({_id:individualTraineeId},{Registered_Courses:updatedArray},{new:true});
+    const updatedTrainee =  await corporate_Trainee.findByIdAndUpdate({_id:corporateTrainee},{Registered_Courses:updatedArray},{new:true});
     console.log(updatedTrainee)
     res.status(200).json(updatedTrainee)
     }
@@ -40,13 +41,13 @@
     }
 }
 
-    const viewMyRegisteredCourses = async(req,res) => {
+    const corporateViewMyRegisteredCourses = async(req,res) => {
     
-        const individualTraineeId = req.query.TraineeId;
+        const corporateTrainee = req.query.CorporateTraineeId;
         
 
     try{
-    const currTrainee = await individual_Trainee.findById({_id:individualTraineeId});
+    const currTrainee = await corporate_Trainee.findById({_id:corporateTrainee});
     const coursesArray = currTrainee.Registered_Courses;
     const coursesArray1 = [];
     console.log(coursesArray)
@@ -63,15 +64,15 @@
     }
 }
 
-const traineeSendReport = async(req,res) => {
+const corporateTraineeSendReport = async(req,res) => {
 
-    const traineeId = req.query.TraineeId;
+    const corporateTraineeId = req.query.CorporateTraineeId;
 
     
     const {Reported_Problem,Report_Type} = req.body;
 
     try{
-    const result = await reportedProblem.create({Trainee_Id:traineeId,Reported_Problem,Report_Type,Status:"Delivered"});
+    const result = await reportedProblem.create({Corporate_Trainee_Id:corporateTraineeId,Reported_Problem,Report_Type,Status:"Delivered"});
     console.log(result)
     res.status(200).json(result)
     }
@@ -80,14 +81,14 @@ const traineeSendReport = async(req,res) => {
     }
 }
 
-const fetchTraineeAllPreviousReports = async(req,res) => {
+const fetchCorporateTraineeAllPreviousReports = async(req,res) => {
 
-    const traineeId = req.query.TraineeId;
+    const corporateTraineeId = req.query.CorporateTraineeId;
     const allReports=[];
 
     try{
-    const resolvedProblems = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Resolved"}).populate('Trainee_Id');
-    const underSupervisionProblems = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Pending"}).populate('Trainee_Id');
+    const resolvedProblems = await reportedProblem.find({Corporate_Trainee_Id:mongoose.Types.ObjectId(corporateTraineeId),Status:"Resolved"}).populate('Trainee_Id');
+    const underSupervisionProblems = await reportedProblem.find({Corporate_Trainee_Id:mongoose.Types.ObjectId(corporateTraineeId),Status:"Pending"}).populate('Trainee_Id');
     for (let i = 0; i < resolvedProblems.length; i++) {
                 allReports.push(resolvedProblems[i]);
         }
@@ -111,4 +112,4 @@ const fetchTraineeAllPreviousReports = async(req,res) => {
 
 
 
-    module.exports ={addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports};
+    module.exports ={corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,addCorporateTrainee};
