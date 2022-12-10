@@ -57,6 +57,15 @@ import RadioButtonsRateACourse from "../components/RadioButtonsRateACourse";
     }, [])
 
 
+    let navigate = useNavigate();
+    const routeChange = () =>{ 
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get('CourseId');
+        console.log(courseId); 
+        let path =  `/mainForQuiz/?CourseId=${courseId}`; 
+        navigate(path);
+    }
+
     return (
         <div>
         <Navbar/>
@@ -76,6 +85,10 @@ import RadioButtonsRateACourse from "../components/RadioButtonsRateACourse";
             </div>
             
         </div>
+        </div>
+
+        <div>
+        <button className="create" onClick={routeChange}>Solve Exam</button>
         </div>
         
         </Container>

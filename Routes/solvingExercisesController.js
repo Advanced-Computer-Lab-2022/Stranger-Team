@@ -2,6 +2,8 @@ const Course = require ('../Models/Course');
 const Question = require('../Models/Question');
 const Result = require('../Models/Result');
 
+const mongoose = require('mongoose');
+
 
 //adding a new Course
 const addCourse = async (req, res) => {
@@ -173,7 +175,8 @@ const viewQuestions = async (req, res) => {
   //viewing questions of a specific exercise
   const fetchQuestionsByCID = async(req,res) => {
 
-    const courseId = req.query.id;
+    const courseId = req.query.CourseId;
+    console.log("courseid"+courseId);
 
     if(courseId){
     const result = await Question.find({CourseId:mongoose.Types.ObjectId(courseId)}).populate('CourseId');
@@ -183,20 +186,37 @@ const viewQuestions = async (req, res) => {
     }
 }
 
+const viewAnswers = async(req,res) => {
 
+  const courseId = req.query.CourseId;
+  console.log("courseid"+courseId);
 
-
-  const viewAnswers = async (req, res) => {
-    const data = await Question.find({})
-    const t = []
+  if(courseId){
+  const data = await Question.find({CourseId:mongoose.Types.ObjectId(courseId)}).populate('CourseId');
+  const t = []
     for (let i = 0; i < data.length; i++) {
         t[i]=data[i].correctAnswer
         console.log(t);
     }
     res.status(200).json(t)
  
+  }else{
+      res.status(400).json({error:"courseId is required"})
+  }
+}
+
+
+  // const viewAnswers = async (req, res) => {
+  //   const data = await Question.find({})
+  //   const t = []
+  //   for (let i = 0; i < data.length; i++) {
+  //       t[i]=data[i].correctAnswer
+  //       console.log(t);
+  //   }
+  //   res.status(200).json(t)
+ 
    
-  };
+  // };
 
 // to add results
 const addResults = async (req, res) => {
