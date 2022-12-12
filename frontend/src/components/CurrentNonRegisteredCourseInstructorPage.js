@@ -15,15 +15,14 @@
     import StarRating from "../components/StarRating";
     import RadioButtonsRateAnInstructor from "../components/RadioButtonsRateAnInstructor";
     import CurrentCourseInstructorProfileDetailsForTrainee from "../components/CurrentCourseInstructorProfileDetailsForTrainee";
+import CorporateTraineeProfileNavBar from "./CorporateTraineeProfileNavBar";
 
 
-    const CurrentCourseInstructorPage = () => {
+    const CurrentNonRegisteredCourseInstructorPage = () => {
     const [instructors, setInstructor] = useState(null)
 
     useEffect(() => {
         const fetchInstructor = async () => {
-        //const response = await fetch('/View_My_Courses/Layla')
-        //const response = await fetch(`/View_My_Courses/Layla/?q=${searchQuery}`)
         const params = new URLSearchParams(window.location.search);
         const instructorId = params.get('id');
         console.log(instructorId); 
@@ -43,25 +42,13 @@
         fetchInstructor()
     }, [])
 
-    
-    let navigate = useNavigate();
-
-        const routeChange = () =>{ 
-        const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        let path = `/RadioButtonsRateAnInstructor/?id=${instructorId}`; 
-        navigate(path);
-    }
-
-    const routeChange1 = () =>{ 
-        const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        let path = `/TraineeReviewAnInstructor/?id=${instructorId}`; 
-        navigate(path);
-    }
-
     return (
+        
+        
+        
         <Container >
+        
+
         <form className="create"> 
         <div className="container">
         <div className="row gutters">
@@ -76,10 +63,6 @@
         </div>
         </div>
         </div>
-        <button onClick={routeChange}>Rate Instructor</button>
-        <button onClick={routeChange1}>Review Instructor</button>
-        {/* <RadioButtonsRateAnInstructor/> */}
-        {/* <StarRating/> */}
         <h3>Instructor Available Courses:</h3>
         <CurrentCourseInstructorCoursesComponent/>
 
@@ -89,4 +72,4 @@
     )
     }
 
-    export default CurrentCourseInstructorPage
+    export default CurrentNonRegisteredCourseInstructorPage

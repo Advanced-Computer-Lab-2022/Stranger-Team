@@ -51,7 +51,23 @@ import Quiz from './components/Quiz';
 import Result from './components/Result';
 import CorporateTraineeReportAProblemPage from './pages/CorporateTraineeReportAProblemPage'
 import MyRegisteredCoursesCorporateTraineePage from './pages/MyRegisteredCoursesCorporateTraineePage'
-
+import TraineeProfilePage from './pages/TraineeProfilePage'
+import TraineeCurrentReportPage from './pages/TraineeCurrentReportPage'
+import TraineeDeliveredReportsPage from './pages/TraineeDeliveredReportsPage'
+import TraineeReportsPage from './pages/TraineeReportsPage'
+import TraineePendingReportsPage from './pages/TraineePendingReportsPage'
+import TraineeResolvedReportsPage from './pages/TraineeResolvedReportsPage'
+import TraineeCurrentResolvedReportPage from './pages/TraineeCurrentResolvedReportPage'
+import CurrentNonRegisteredCoursePageTrainee from './pages/CurrentNonRegisteredCoursePageTrainee'
+import CurrentNonRegisteredCoursePageCorporateTrainee from './pages/CurrentNonRegisteredCoursepageCorporateTrainee'
+import CorporateTraineeProfilePage from './pages/CorporateTraineeProfilePage'
+import CorporateTraineeCurrentReportPage from './pages/CorporateTraineeCurrentReportPage'
+import CorporateTraineeDeliveredReportsPage from './pages/CorporateTraineeDeliveredReportsPage'
+import CorporateTraineePendingReportsPage from './pages/CorporateTraineePendingReportsPage'
+import CorporateTraineeCurrentResolvedReportPage from './pages/CorporateTraineeCurrentResolvedReportPage'
+import CurrentNonRegisteredCourseInstructorPage from './components/CurrentNonRegisteredCourseInstructorPage'
+import CorporateTraineeReportsPage from './pages/CorporateTraineeReportsPage'
+import CorporateTraineeResolvedReportsPage from './pages/CorporateTraineeResolvedReportsPage'
 
 
 
@@ -101,9 +117,101 @@ function App() {
         element={<InstructorAddANewCourseSubtitlePageDirectlyAfterAddingCourse />}
         />
 
+        <Route
+        path="/CurrentNonRegisteredCoursePageCorporateTrainee"
+        element={<CurrentNonRegisteredCoursePageCorporateTrainee />}
+        />
+
+        
+        <Route
+        path="/CurrentNonRegisteredCourseInstructorPage"
+        element={<CurrentNonRegisteredCourseInstructorPage />}
+        />
+
+        <Route
+        path="/CorporateTraineeProfilePage"
+        element={<CorporateTraineeProfilePage />}
+        />
+
+        
+        <Route
+        path="/CorporateTraineeReportsPage"
+        element={<CorporateTraineeReportsPage />}
+        />
+
+        <Route
+        path="/CorporateTraineeCurrentReportPage"
+        element={<CorporateTraineeCurrentReportPage />}
+        />
+
+        <Route
+        path="/CorporateTraineeDeliveredReportsPage"
+        element={<CorporateTraineeDeliveredReportsPage />}
+        />
+
+        <Route
+        path="/CorporateTraineePendingReportsPage"
+        element={<CorporateTraineePendingReportsPage />}
+        />
+
+        
+        <Route
+        path="/CorporateTraineeResolvedReportsPage"
+        element={<CorporateTraineeResolvedReportsPage />}
+        />
+
+        <Route
+        path="/CorporateTraineeCurrentResolvedReportPage"
+        element={<CorporateTraineeCurrentResolvedReportPage />}
+        />
         
 
         
+
+        <Route
+        path="/CurrentNonRegisteredCoursePageTrainee"
+        element={<CurrentNonRegisteredCoursePageTrainee />}
+        />
+
+        
+        <Route
+        path="/TraineeProfilePage"
+        element={<TraineeProfilePage />}
+        />
+
+        <Route
+        path="/TraineeReportsPage"
+        element={<TraineeReportsPage />}
+        />
+
+
+        <Route
+        path="/TraineeDeliveredReportsPage"
+        element={<TraineeDeliveredReportsPage />}
+        />
+
+        
+        <Route
+        path="/TraineePendingReportsPage"
+        element={<TraineePendingReportsPage />}
+        />
+
+        <Route
+        path="/TraineeResolvedReportsPage"
+        element={<TraineeResolvedReportsPage />}
+        />
+
+        
+        <Route
+        path="/TraineeCurrentReportPage"
+        element={<TraineeCurrentReportPage />}
+        />
+
+        
+        <Route
+        path="/TraineeCurrentResolvedReportPage"
+        element={<TraineeCurrentResolvedReportPage />}
+        />
 
         <Route
         path="/EditMyProfile"

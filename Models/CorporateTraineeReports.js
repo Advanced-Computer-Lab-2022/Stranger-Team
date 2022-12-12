@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 const corporateTraineeReportSchema = new Schema({
     Corporate_Trainee_Id:{
         type:mongoose.Types.ObjectId,
-        ref:'corporatetrainee',
+        ref:'corporateTrainees',
         required:true
     },
     Reported_Problem:{
@@ -19,6 +19,14 @@ const corporateTraineeReportSchema = new Schema({
         required:true
     },
     Status:{
+        type:String,
+        required:false
+    },
+    Admin_Response:{
+        type:String,
+        required:false
+    },
+    Username:{
         type:String,
         required:false
     }

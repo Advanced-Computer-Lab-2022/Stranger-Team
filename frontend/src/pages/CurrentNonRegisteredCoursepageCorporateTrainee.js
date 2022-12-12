@@ -19,11 +19,14 @@
     import RadioButtonsRateACourse from "../components/RadioButtonsRateACourse";
     import TraineeSubtitleTitlesPage from "./TraineeSubtitleTitlesPage";
 import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+import CurrentNonRegisteredCoursePageDetailsTrainee from "../components/CurrentNonRegisteredCoursePageDetailsTrainee";
+import CurrentNonRegisteredCoursePageDetailsCorporateTrainee from "../components/CurrentNonRegisteredCoursePageDetailsCorporateTrainee";
+import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfileNavBar";
     
 
 
 
-    const CurrentCoursePageTrainee = () => {
+    const CurrentNonRegisteredCoursePageCorporateTrainee = () => {
     const [course, setCourse] = useState(null)
     
 
@@ -53,44 +56,39 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     }, [])
 
     let navigate = useNavigate();
-        const routeChange = () =>{ 
-        const params = new URLSearchParams(window.location.search);
-        const courseId = params.get('CourseId');
-        const traineeId = params.get('TraineeId');
-        // console.log(courseId); 
-        let path = `/TraineeReportAProblemPage/?TraineeId=${traineeId}&CourseId=${courseId}`; 
-        navigate(path);
-    }
 
     return (
         <div>
-        <TraineeProfileNavBar/>
+        <CorporateTraineeProfileNavBar/>
         <Container >
 
         <div className="row gutters">
         <div className="card h-100">
             <div className="card-body">
-                {/* <FetchInstructorNameForTraineeCourseDetails/> */}
-                <form className="course-details">
+                {/* <form className="course-details">
                     <button  onClick={routeChange}>Report a problem</button>
-                </form>
+                </form> */}
+
                 
                 {course && course.map(course => (
-                <CurrentCoursePageDetails course={course} key={course._id} />
+                <CurrentNonRegisteredCoursePageDetailsCorporateTrainee course={course} key={course._id} />
                 ))[0]}
-                {/* <CurrentCourseDiscountPage/> */}
-                <RadioButtonsRateACourse/>
-                <TraineeSubtitleTitlesPage/>
-                {/* <CurrentCourseSubtitlesPageTrainee/>  */}
-                {/* <StarRating></StarRating>  */}
+
+                <form className="course-details">
+            <button >Request Access For The Course</button>
+            </form>
+                
             </div>
             
         </div>
+        
+                
         </div>
+        
         
         </Container>
         </div>
     )
     }
 
-    export default CurrentCoursePageTrainee
+    export default CurrentNonRegisteredCoursePageCorporateTrainee

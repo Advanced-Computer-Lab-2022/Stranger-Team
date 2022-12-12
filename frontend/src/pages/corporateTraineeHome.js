@@ -215,7 +215,7 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
                     const params = new URLSearchParams(window.location.search);
                     const corporateTraineeId = params.get('CorporateTraineeId');
                     console.log(corporateTraineeId);
-                    window.location.href=`/CurrentCoursePageCorporateTrainee?CourseId=${course._id}&CorporateTraineeId=${corporateTraineeId}`}}
+                    window.location.href=`/CurrentNonRegisteredCoursePageCorporateTrainee?CourseId=${course._id}&CorporateTraineeId=${corporateTraineeId}`}}
                 key={course._id}>
             <CourseDetailsCorporateTrainee course={course} key={course.id} />
             <PreviewCourseVideoPageDetails course={course} key={course.id} />

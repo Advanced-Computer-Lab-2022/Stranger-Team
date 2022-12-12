@@ -21,6 +21,14 @@ const instructorReportSchema = new Schema({
     Status:{
         type:String,
         required:false
+    },
+    Admin_Response:{
+        type:String,
+        required:false
+    },
+    Username:{
+        type:String,
+        required:false
     }
 }, { timestamps: true });
 

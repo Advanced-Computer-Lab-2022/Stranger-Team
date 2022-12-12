@@ -12,41 +12,47 @@
     import Navbar from "../components/Navbar";
     import StarRating from "../components/StarRating";
     import PreviewCourseVideoPageDetails from '../components/PreviewCourseVideoTraineePageDetails'
-import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+    import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+import ReportHeadings from "../components/ReportHeadings";
+    
 
-    const MyRegisteredCoursesTraineePage = () => {
-    const [courses, setCourses] = useState(null)
-    const [searchQuery, setSearchQuery] = useState("")
-    const [searchRateQuery, setSearchRateQuery] = useState("")
+    const TraineeDeliveredReportsPage = () => {
+    const [problems, setProblems] = useState(null)
     
     useEffect(() => {
-        const fetchCourses = async () => {
-        
+        const fetchProblems = async () => {
         const params = new URLSearchParams(window.location.search);
         const traineeId = params.get('TraineeId');
         console.log(traineeId); 
-        
 
-        const response = await fetch(`/viewMyRegisteredCourses/?TraineeId=${traineeId}`)
+
+        const response = await fetch(`/fetchTraineeDeliveredReports/?TraineeId=${traineeId}`)
         
         const json = await response.json()
         console.log(json)
         
-        setCourses(json)
+        setProblems(json)
         
         }
 
-        fetchCourses()
+        fetchProblems()
     }, [])
+
+    let navigate = useNavigate();
+
+        const routeChange1 = () =>{ 
+        let path = '/CoursesFilterByPrice'; 
+        navigate(path);
+    }
+
+
 
     return (
 
         <div >
             <TraineeProfileNavBar/>
-            
-            <div className="courses">
-            {courses && courses.map(course => (
-                
+
+            {problems && problems.map(problem => (
             <Container hover
                 sx={{
                     "&:hover":{
@@ -55,22 +61,21 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
                     width: "100%"
                     }
                 }}
-                onClick={() =>{
-                const params = new URLSearchParams(window.location.search);
-                const traineeId = params.get('TraineeId');
-                console.log(traineeId);
-                window.location.href=`/CurrentCoursePageTrainee?CourseId=${course._id}&TraineeId=${traineeId}`} }
-                key={course._id}>
-            <CourseDetails course={course} key={course.id} />
-            <PreviewCourseVideoPageDetails course={course} key={course.id} />
+                onClick={() => {
+                    const params = new URLSearchParams(window.location.search);
+                    const traineeId = params.get('TraineeId');
+                    console.log(traineeId);
+                    window.location.href=`/TraineeCurrentReportPage?ReportId=${problem._id}&TraineeId=${traineeId}`}}
+                key={problem._id}>
+            <ReportHeadings problem={problem} key={problem.id} />
             
             </Container>
             ))}
-        </div>
 
-        
+            
+
         </div>
     )
     }
 
-    export default MyRegisteredCoursesTraineePage
+    export default TraineeDeliveredReportsPage

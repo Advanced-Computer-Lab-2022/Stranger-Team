@@ -63,15 +63,32 @@
     }
 }
 
+// const traineeSendReport = async(req,res) => {
+
+//     const traineeId = req.query.TraineeId;
+
+    
+//     const {Reported_Problem,Report_Type} = req.body;
+
+//     try{
+//     const result = await reportedProblem.create({Trainee_Id:traineeId,Reported_Problem,Report_Type,Status:"Delivered"});
+//     console.log(result)
+//     res.status(200).json(result)
+//     }
+//     catch(error){
+//         res.status(400).json({error:error.message});
+//     }
+// }
+
 const traineeSendReport = async(req,res) => {
 
     const traineeId = req.query.TraineeId;
-
-    
     const {Reported_Problem,Report_Type} = req.body;
+    const trainee = await individual_Trainee.findById({_id:traineeId});
+    const traineeUsername = trainee.Username;
 
     try{
-    const result = await reportedProblem.create({Trainee_Id:traineeId,Reported_Problem,Report_Type,Status:"Delivered"});
+    const result = await reportedProblem.create({Trainee_Id:traineeId,Reported_Problem,Report_Type,Status:"Delivered", Username:traineeUsername});
     console.log(result)
     res.status(200).json(result)
     }
@@ -106,9 +123,81 @@ const fetchTraineeAllPreviousReports = async(req,res) => {
     }
 }
 
+const fetchTraineeDeliveredReports = async(req,res) => {
+
+    const traineeId = req.query.TraineeId;
+
+    try{
+    const deliveredProblems = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Delivered"}).populate('Trainee_Id');
+
+    console.log(deliveredProblems)
+    res.status(200).json(deliveredProblems)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+
+const fetchTraineePendingReports = async(req,res) => {
+
+    const traineeId = req.query.TraineeId;
+
+    try{
+    const pendingProblems = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Pending"}).populate('Trainee_Id');
+
+    console.log(pendingProblems)
+    res.status(200).json(pendingProblems)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+
+const fetchTraineeResolvedReports = async(req,res) => {
+
+    const traineeId = req.query.TraineeId;
+
+    try{
+    const resolvedProblems = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Resolved"}).populate('Trainee_Id');
+
+    console.log(resolvedProblems)
+    res.status(200).json(resolvedProblems)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+
+const fetchProblem = async(req,res) => {
+
+    const problemId = req.query.ReportId;
+
+    try{
+    const problem = await reportedProblem.findById({_id:problemId});
+
+    console.log(problem)
+    res.status(200).json(problem)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+
+
+const fetchTraineeProfileDetails = async(req,res) => {
+
+    const traineeId = req.query.TraineeId;
+
+    try{
+    const trainee = await individual_Trainee.findById({_id:traineeId});
+    console.log(trainee)
+    res.status(200).json(trainee)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
 
 
 
-
-
-    module.exports ={addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports};
+    module.exports ={addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports,fetchTraineeProfileDetails,fetchTraineeDeliveredReports,fetchTraineePendingReports,fetchTraineeResolvedReports,fetchProblem};

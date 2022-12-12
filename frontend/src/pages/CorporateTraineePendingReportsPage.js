@@ -12,41 +12,48 @@
     import Navbar from "../components/Navbar";
     import StarRating from "../components/StarRating";
     import PreviewCourseVideoPageDetails from '../components/PreviewCourseVideoTraineePageDetails'
+    import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+import ReportHeadings from "../components/ReportHeadings";
 import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfileNavBar";
+    
 
-    const MyRegisteredCoursesCorporateTraineePage = () => {
-    const [courses, setCourses] = useState(null)
-    const [searchQuery, setSearchQuery] = useState("")
-    const [searchRateQuery, setSearchRateQuery] = useState("")
+    const CorporateTraineePendingReportsPage = () => {
+    const [problems, setProblems] = useState(null)
     
     useEffect(() => {
-        const fetchCourses = async () => {
-        
+        const fetchProblems = async () => {
         const params = new URLSearchParams(window.location.search);
-        const corporateTraineeId = params.get('CorporateTraineeId');
-        console.log(corporateTraineeId); 
-        
+        const traineeId = params.get('CorporateTraineeId');
+        console.log(traineeId); 
 
-        const response = await fetch(`/corporateViewMyRegisteredCourses/?CorporateTraineeId=${corporateTraineeId}`)
+
+        const response = await fetch(`/fetchCorporateTraineePendingReports/?CorporateTraineeId=${traineeId}`)
         
         const json = await response.json()
         console.log(json)
         
-        setCourses(json)
+        setProblems(json)
         
         }
 
-        fetchCourses()
+        fetchProblems()
     }, [])
+
+    let navigate = useNavigate();
+
+        const routeChange1 = () =>{ 
+        let path = '/CoursesFilterByPrice'; 
+        navigate(path);
+    }
+
+
 
     return (
 
         <div >
             <CorporateTraineeProfileNavBar/>
-            
-            <div className="courses">
-            {courses && courses.map(course => (
-                
+
+            {problems && problems.map(problem => (
             <Container hover
                 sx={{
                     "&:hover":{
@@ -55,21 +62,21 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
                     width: "100%"
                     }
                 }}
-                onClick={() =>{
-                const params = new URLSearchParams(window.location.search);
-                const corporateTraineeId = params.get('CorporateTraineeId');
-                window.location.href=`/CurrentCoursePageCorporateTrainee?CourseId=${course._id}&CorporateTraineeId=${corporateTraineeId}`} }
-                key={course._id}>
-            <CourseDetails course={course} key={course.id} />
-            <PreviewCourseVideoPageDetails course={course} key={course.id} />
+                onClick={() => {
+                    const params = new URLSearchParams(window.location.search);
+                    const traineeId = params.get('CorporateTraineeId');
+                    console.log(traineeId);
+                    window.location.href=`/CorporateTraineeCurrentReportPage?ReportId=${problem._id}&CorporateTraineeId=${traineeId}`}}
+                key={problem._id}>
+            <ReportHeadings problem={problem} key={problem.id} />
             
             </Container>
             ))}
-        </div>
 
-        
+            
+
         </div>
     )
     }
 
-    export default MyRegisteredCoursesCorporateTraineePage
+    export default CorporateTraineePendingReportsPage

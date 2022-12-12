@@ -64,15 +64,16 @@
     }
 }
 
+
 const corporateTraineeSendReport = async(req,res) => {
 
-    const corporateTraineeId = req.query.CorporateTraineeId;
-
-    
+    const traineeId = req.query.CorporateTraineeId;
     const {Reported_Problem,Report_Type} = req.body;
+    const trainee = await corporate_Trainee.findById({_id:traineeId});
+    const traineeUsername = trainee.Username;
 
     try{
-    const result = await reportedProblem.create({Corporate_Trainee_Id:corporateTraineeId,Reported_Problem,Report_Type,Status:"Delivered"});
+    const result = await reportedProblem.create({Corporate_Trainee_Id:traineeId,Reported_Problem,Report_Type,Status:"Delivered", Username:traineeUsername});
     console.log(result)
     res.status(200).json(result)
     }
@@ -81,14 +82,15 @@ const corporateTraineeSendReport = async(req,res) => {
     }
 }
 
+
 const fetchCorporateTraineeAllPreviousReports = async(req,res) => {
 
     const corporateTraineeId = req.query.CorporateTraineeId;
     const allReports=[];
 
     try{
-    const resolvedProblems = await reportedProblem.find({Corporate_Trainee_Id:mongoose.Types.ObjectId(corporateTraineeId),Status:"Resolved"}).populate('Trainee_Id');
-    const underSupervisionProblems = await reportedProblem.find({Corporate_Trainee_Id:mongoose.Types.ObjectId(corporateTraineeId),Status:"Pending"}).populate('Trainee_Id');
+    const resolvedProblems = await reportedProblem.find({Corporate_Trainee_Id:mongoose.Types.ObjectId(corporateTraineeId),Status:"Resolved"}).populate('Corporate_Trainee_Id');
+    const underSupervisionProblems = await reportedProblem.find({Corporate_Trainee_Id:mongoose.Types.ObjectId(corporateTraineeId),Status:"Pending"}).populate('Corporate_Trainee_Id');
     for (let i = 0; i < resolvedProblems.length; i++) {
                 allReports.push(resolvedProblems[i]);
         }
@@ -107,9 +109,80 @@ const fetchCorporateTraineeAllPreviousReports = async(req,res) => {
     }
 }
 
+const fetchCorporateTraineeProfileDetails = async(req,res) => {
+
+    const corporateTraineeId = req.query.CorporateTraineeId;
+
+    try{
+    const trainee = await corporate_Trainee.findById({_id:corporateTraineeId});
+    console.log(trainee)
+    res.status(200).json(trainee)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
 
 
+const fetchCorporateTraineeDeliveredReports = async(req,res) => {
+
+    const traineeId = req.query.CorporateTraineeId;
+
+    try{
+    const deliveredProblems = await reportedProblem.find({Corporate_Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Delivered"}).populate('Corporate_Trainee_Id');
+
+    console.log(deliveredProblems)
+    res.status(200).json(deliveredProblems)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+
+const fetchCorporateTraineePendingReports = async(req,res) => {
+
+    const traineeId = req.query.CorporateTraineeId;
+
+    try{
+    const pendingProblems = await reportedProblem.find({Corporate_Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Pending"}).populate('Corporate_Trainee_Id');
+
+    console.log(pendingProblems)
+    res.status(200).json(pendingProblems)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+
+const fetchCorporateTraineeResolvedReports = async(req,res) => {
+
+    const traineeId = req.query.CorporateTraineeId;
+
+    try{
+    const resolvedProblems = await reportedProblem.find({Corporate_Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Resolved"}).populate('Corporate_Trainee_Id');
+
+    console.log(resolvedProblems)
+    res.status(200).json(resolvedProblems)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+
+const fetchCorporateProblem = async(req,res) => {
+
+    const problemId = req.query.ReportId;
+
+    try{
+    const problem = await reportedProblem.findById({_id:problemId});
+
+    console.log(problem)
+    res.status(200).json(problem)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
 
 
-
-    module.exports ={corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,addCorporateTrainee};
+    module.exports ={corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,addCorporateTrainee,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem};

@@ -15,11 +15,12 @@
         let navigate = useNavigate();
         const routeChange = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        console.log(instructorId); 
-        let path =  `/MyProfile/?id=${instructorId}`; 
+        const traineeId = params.get('CorporateTraineeId');
+        console.log(traineeId); 
+        let path =  `/CorporateTraineeProfilePage/?CorporateTraineeId=${traineeId}`; 
         navigate(path);
     }
+
 
     const routeChange2 = () =>{ 
         const params = new URLSearchParams(window.location.search);
@@ -44,6 +45,9 @@
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div className="navbar-nav">
             <label className="nav-item nav-link active" onClick={routeChange3}>My Registered Courses</label> 
+
+            <p></p>
+            <label className="nav-item nav-link active" onClick={routeChange}>My Profile</label> 
             {/* <a className="nav-item nav-link active" href={routeChange}> <span className="sr-only"></span></a> */}
             </div>
         </div>    

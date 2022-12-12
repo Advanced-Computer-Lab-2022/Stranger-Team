@@ -28,8 +28,6 @@
 
     useEffect(() => {
         const fetchCourse = async () => {
-        //const response = await fetch('/View_My_Courses/Layla')
-        //const response = await fetch(`/View_My_Courses/Layla/?q=${searchQuery}`)
         const params = new URLSearchParams(window.location.search);
         const instructorId = params.get('id');
         //console.log(courseId); 

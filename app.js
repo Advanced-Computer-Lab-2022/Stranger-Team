@@ -49,9 +49,9 @@ const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingIns
 //solving exercises
 const {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults, viewAnswers,addQuestion} = require('./Routes/solvingExercisesController');
 
-const {addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports} = require('./Routes/individualTraineeController');
+const {addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports,fetchTraineeProfileDetails,fetchTraineeDeliveredReports,fetchTraineePendingReports,fetchTraineeResolvedReports,fetchProblem} = require('./Routes/individualTraineeController');
 
-const {corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse} = require('./Routes/corporateTraineeController');
+const {corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem} = require('./Routes/corporateTraineeController');
 
 
 
@@ -252,9 +252,30 @@ app.get("/getInstructorRatings",getInstructorRatings);
 
 app.get("/fetchInstructorAllPreviousReports",fetchInstructorAllPreviousReports);
 
+app.get("/fetchTraineeDeliveredReports",fetchTraineeDeliveredReports);
+
+app.get("/fetchTraineePendingReports",fetchTraineePendingReports);
+
+app.get("/fetchTraineeResolvedReports",fetchTraineeResolvedReports);
+
+app.get("/fetchProblem",fetchProblem);
+
+app.get("/fetchCorporateTraineeDeliveredReports",fetchCorporateTraineeDeliveredReports);
+
+app.get("/fetchCorporateTraineePendingReports",fetchCorporateTraineePendingReports);
+
+app.get("/fetchCorporateTraineeResolvedReports",fetchCorporateTraineeResolvedReports);
+
+app.get("/fetchCorporateProblem",fetchCorporateProblem);
+
+
+
 app.get("/indiviualTraineeRegisterCourse",indiviualTraineeRegisterCourse);
 
 app.get("/corporateTraineeRegisterCourse",corporateTraineeRegisterCourse);
+
+app.get("/fetchCorporateTraineeProfileDetails",fetchCorporateTraineeProfileDetails);
+
 
 app.get("/viewMyRegisteredCourses",viewMyRegisteredCourses);
 
@@ -263,6 +284,8 @@ app.get("/corporateViewMyRegisteredCourses",corporateViewMyRegisteredCourses);
 app.get("/fetchTheSubtitleBySubtitleId",fetchTheSubtitleBySubtitleId);
 
 app.get("/fetchTraineeAllPreviousReports",fetchTraineeAllPreviousReports);
+
+app.get("/fetchTraineeProfileDetails",fetchTraineeProfileDetails);
 
 app.get("/fetchCorporateTraineeAllPreviousReports",fetchCorporateTraineeAllPreviousReports);
 
