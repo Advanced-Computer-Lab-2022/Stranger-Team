@@ -176,6 +176,7 @@ div.error {
   display: inline-block;
 }
 
+
 .button-85 {
   padding: 0.6em 2em;
   border: none;
@@ -257,6 +258,45 @@ div.error {
   border-radius: 50%;
   color: #333;
 
+}
+
+
+.spanni {
+  position: absolute;
+  top: 100px;
+  right: 1px;
+  cursor: pointer;
+  background: #f1f1f1;
+  /* padding: 6px; */
+  border-radius: 50%;
+  color: #333;
+
+}
+
+
+.drp {
+  position: absolute;
+  top: 20px;
+  right: 260px;
+  cursor: pointer;
+
+}
+
+
+.drpp {
+  position: absolute;
+  top: 100px;
+  right: 50px;
+  cursor: pointer;
+
+}
+
+
+
+.nonspanny {
+  cursor: context-menu
+  
+ 
 }
 
 a {
@@ -388,3 +428,9 @@ hr .new1 {
   width: 100%;
   position: absolute;
 }
+
+/* .edit span {
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+} */

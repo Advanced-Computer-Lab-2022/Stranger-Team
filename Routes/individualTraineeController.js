@@ -66,12 +66,12 @@
 const traineeSendReport = async(req,res) => {
 
     const traineeId = req.query.TraineeId;
-
-    
-    const {Reported_Problem,Report_Type} = req.body;
+    const {Reported_Problem,Report_Type,Status} = req.body;
+    const itrainee = await individual_Trainee.findById({_id:traineeId});
+    const itraineeUsername = itrainee.Username;
 
     try{
-    const result = await reportedProblem.create({Trainee_Id:traineeId,Reported_Problem,Report_Type,Status:"Delivered"});
+    const result = await reportedProblem.create({Trainee_Id:traineeId,Reported_Problem,Report_Type,Status,Username:itraineeUsername});
     console.log(result)
     res.status(200).json(result)
     }

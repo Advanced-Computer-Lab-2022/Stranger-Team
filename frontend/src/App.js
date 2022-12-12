@@ -49,10 +49,18 @@ import InstructorReportAProblemPage from './pages/InstructorReportAProblemPage'
 import Main from './pages/mainForQuiz';
 import Quiz from './components/Quiz';
 import Result from './components/Result';
+
+
+
 import CorporateTraineeReportAProblemPage from './pages/CorporateTraineeReportAProblemPage'
 import MyRegisteredCoursesCorporateTraineePage from './pages/MyRegisteredCoursesCorporateTraineePage'
 
-
+//imports for admin reports
+import DeliveredReportsPage from './components/DeliveredReports'
+import DeliveredReportSingle from './components/DeliveredReportSingle'
+import SeenReportsPage from './components/SeenReports'
+import SeenReportSingle from './components/SeenReportSingle'
+import ReportsPage from './pages/reportsPage'
 
 
 
@@ -298,8 +306,39 @@ function App() {
         />
 
 
+        <Route
+        path="/DeliveredReportSingle"
+        element={<DeliveredReportSingle />}
+        />
 
 
+       <Route
+        path="/deliveredReports"
+        element={<DeliveredReportsPage/>}
+        />
+
+       <Route
+        path="/SeenReportSingle"
+        element={<SeenReportSingle />}
+        />
+
+
+       <Route
+        path="/seenReports"
+        element={<SeenReportsPage/>}
+        />
+
+<Route
+        path="/reports"
+        element={<ReportsPage/>}
+        />
+
+
+
+       {/* <Route
+        path="/instructorsDeliveredReportSingle"
+        element={<InstructorsDeliveredReportSingle/>}
+        /> */}
 
         </Routes>
       </div>

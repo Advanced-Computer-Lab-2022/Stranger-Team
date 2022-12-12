@@ -2,6 +2,7 @@ import { useEffect } from "react";
 //components
 import CorporateTraineeDetails from '../components/CorporateTraineeDetails';
 import CorporateTraineeForm from "../components/CorporateTraineeForm";
+import AdminNavbar from "../components/AdminNavbar";
 
 //hooks
 import { useCorporateTraineesContext } from "../hooks/UseCorporateTraineeContext";
@@ -26,6 +27,8 @@ const CorporateTPage = () => {
     
     
         return (
+            <div>
+                <AdminNavbar/>
         <div className="home">
         <div className="admins">
             {corporatetrainees && corporatetrainees.map((corporatetrainees) => (
@@ -33,6 +36,7 @@ const CorporateTPage = () => {
             ))}
         </div>
         <CorporateTraineeForm />
+        </div>
         </div>
         )
     

@@ -10,6 +10,7 @@ const corporateTraineeReportSchema = new Schema({
         ref:'corporatetrainee',
         required:true
     },
+
     Reported_Problem:{
         type:String,
         required:true
@@ -19,6 +20,14 @@ const corporateTraineeReportSchema = new Schema({
         required:true
     },
     Status:{
+        type:String,
+        required:false
+    },
+    Username:{
+        type:String,
+        required:true
+    },
+    Admin_Response:{
         type:String,
         required:false
     }

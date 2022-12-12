@@ -1,9 +1,10 @@
     import { useEffect } from "react";
-
+   
 
     //components
     import AdminDetails from '../components/AdminDetails';
     import AdminForm from "../components/AdminForm";
+    import AdminNavbar from "../components/AdminNavbar";
 
     //hooks
     import { useAdminsContext } from "../hooks/UseAdminContext";
@@ -27,6 +28,8 @@
 
 
         return (
+            <div>
+                 <AdminNavbar/>
         <div className="home">
         <div className="admins">
             {admins && admins.map((admins) => (
@@ -34,6 +37,9 @@
             ))}
         </div>
         <AdminForm />
+       
+      
+        </div>
         </div>
         )
 

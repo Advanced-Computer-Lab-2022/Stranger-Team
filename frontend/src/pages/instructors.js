@@ -1,4 +1,5 @@
     import { useEffect } from "react";
+    import AdminNavbar from "../components/AdminNavbar";
 
 
         //components
@@ -27,6 +28,8 @@
             
             
                 return (
+                    <div>
+                        <AdminNavbar/>
                 <div className="home">
                 <div className="admins">
                     {instructors && instructors.map((instructors) => (
@@ -34,6 +37,7 @@
                     ))}
                 </div>
                 <InstructorForm />
+                </div>
                 </div>
                 )
             

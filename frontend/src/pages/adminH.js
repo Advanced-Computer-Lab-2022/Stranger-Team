@@ -1,8 +1,10 @@
     import {Link, useNavigate} from 'react-router-dom'
+    import AdminNavbar from '../components/AdminNavbar'
 
     const HomeAdmin = () => {
         return (
-            <div>
+            <div className='home'>
+                 <AdminNavbar/>
                 <h4>Welcome, Admin</h4>
                 <div className="button-85">
                 <a href='http://localhost:3000/admins'>ADMINS</a>

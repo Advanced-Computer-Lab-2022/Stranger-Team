@@ -143,12 +143,11 @@ const { update } = require("../Models/User");
     const instructorSendReport = async(req,res) => {
 
     const instructorId = req.query.id;
-
-    
-    const {Reported_Problem,Report_Type} = req.body;
-
+    const {Reported_Problem,Report_Type, Status} = req.body;
+    const selectedi = await instructor.findById({_id:instructorId});
+    const instructorUsername = selectedi.Username;
     try{
-    const result = await reportedProblem.create({Instructor_Id:instructorId,Reported_Problem,Report_Type,Status:"Delivered"});
+    const result = await reportedProblem.create({Instructor_Id:instructorId,Reported_Problem,Report_Type,Status,Username:instructorUsername});
     console.log(result)
     res.status(200).json(result)
     }
