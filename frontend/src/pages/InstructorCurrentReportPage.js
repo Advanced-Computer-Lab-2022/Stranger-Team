@@ -21,11 +21,10 @@
     import CurrentCourseInstructorPageSubtitles from "../components/CurrentCourseInstructorPageSubtitles"
     import InstructorCurrentCoursePageDetails from "../components/InstructorCurrentCoursePageDetails";
     import CurrentReportPageDetails from "../components/CurrentReportPageDetails";
-    import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
-    import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfileNavBar";
+import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
 
 
-    const CorporateTraineeCurrentReportPage = () => {
+    const InstructorCurrentReportPage = () => {
     const [problem, setProblem] = useState(null)
     
     
@@ -33,13 +32,12 @@
     useEffect(() => {
         const fetchProblem = async () => {
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('CorporateTraineeId');
-        console.log(traineeId); 
+        const instructorId = params.get('id');
+        console.log(instructorId); 
         const reportId = params.get('ReportId');
-        console.log(traineeId); 
         
         
-        const response = await fetch(`/fetchCorporateProblem/?ReportId=${reportId}`)
+        const response = await fetch(`/fetchInstructorProblem/?ReportId=${reportId}`)
 
         
         
@@ -58,7 +56,7 @@
 
     return (
         <div>
-        <CorporateTraineeProfileNavBar/>
+        <ProfileNavBar/>
         <form className="create">
 
         
@@ -78,4 +76,4 @@
     )
     }
 
-    export default CorporateTraineeCurrentReportPage
+    export default InstructorCurrentReportPage

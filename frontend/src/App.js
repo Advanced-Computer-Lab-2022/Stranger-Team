@@ -68,6 +68,12 @@ import CorporateTraineeCurrentResolvedReportPage from './pages/CorporateTraineeC
 import CurrentNonRegisteredCourseInstructorPage from './components/CurrentNonRegisteredCourseInstructorPage'
 import CorporateTraineeReportsPage from './pages/CorporateTraineeReportsPage'
 import CorporateTraineeResolvedReportsPage from './pages/CorporateTraineeResolvedReportsPage'
+import InstructorCurrentReportPage from './pages/InstructorCurrentReportPage'
+import InstructorDeliveredReportsPage from './pages/InstructorDeliveredReportsPage'
+import InstructorPendingReportsPage from './pages/InstructorPendingReportsPage'
+import InstructorCurrentResolvedReportPage from './pages/InstructorCurrentResolvedReportPage'
+import InstructorReportsPage from './pages/InstructorReportsPage'
+import InstructorResolvedReportsPage from './pages/InstructorResolvedReportsPage'
 
 
 
@@ -166,7 +172,35 @@ function App() {
         />
         
 
-        
+        <Route
+        path="/InstructorCurrentReportPage"
+        element={<InstructorCurrentReportPage />}
+        />
+
+        <Route
+        path="/InstructorDeliveredReportsPage"
+        element={<InstructorDeliveredReportsPage />}
+        />
+
+        <Route
+        path="/InstructorPendingReportsPage"
+        element={<InstructorPendingReportsPage />}
+        />
+
+        <Route
+        path="/InstructorResolvedReportsPage"
+        element={<InstructorResolvedReportsPage />}
+        />
+
+        <Route
+        path="/InstructorCurrentResolvedReportPage"
+        element={<InstructorCurrentResolvedReportPage />}
+        />
+
+        <Route
+        path="/InstructorReportsPage"
+        element={<InstructorReportsPage />}
+        />
 
         <Route
         path="/CurrentNonRegisteredCoursePageTrainee"

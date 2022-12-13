@@ -143,12 +143,14 @@ const { update } = require("../Models/User");
     const instructorSendReport = async(req,res) => {
 
     const instructorId = req.query.id;
-
+    
+    const currInstructor = await instructor.findById({_id:instructorId});
+    const currInstructorUsername = currInstructor.Username;
     
     const {Reported_Problem,Report_Type} = req.body;
 
     try{
-    const result = await reportedProblem.create({Instructor_Id:instructorId,Reported_Problem,Report_Type,Status:"Delivered"});
+    const result = await reportedProblem.create({Instructor_Id:instructorId,Reported_Problem,Report_Type,Status:"Delivered",Username:currInstructorUsername});
     console.log(result)
     res.status(200).json(result)
     }
@@ -183,10 +185,69 @@ const fetchInstructorAllPreviousReports = async(req,res) => {
     }
 }
 
+const fetchInstructorDeliveredReports = async(req,res) => {
+
+    const instructorId = req.query.id;
+
+    try{
+    const deliveredProblems = await reportedProblem.find({Instructor_Id:mongoose.Types.ObjectId(instructorId),Status:"Delivered"}).populate('Instructor_Id');
+
+    console.log(deliveredProblems)
+    res.status(200).json(deliveredProblems)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+
+const fetchInstructorPendingReports = async(req,res) => {
+
+    const instructorId = req.query.id;
+
+    try{
+    const pendingProblems = await reportedProblem.find({Instructor_Id:mongoose.Types.ObjectId(instructorId),Status:"Pending"}).populate('Instructor_Id');
+
+    console.log(pendingProblems)
+    res.status(200).json(pendingProblems)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+
+const fetchInstructorResolvedReports = async(req,res) => {
+
+    const instructorId = req.query.id;
+
+    try{
+    const resolvedProblems = await reportedProblem.find({Instructor_Id:mongoose.Types.ObjectId(instructorId),Status:"Resolved"}).populate('Instructor_Id');
+
+    console.log(resolvedProblems)
+    res.status(200).json(resolvedProblems)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+
+const fetchInstructorProblem = async(req,res) => {
+
+    const problemId = req.query.ReportId;
+
+    try{
+    const problem = await reportedProblem.findById({_id:problemId});
+
+    console.log(problem)
+    res.status(200).json(problem)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
 
 
 
-    module.exports ={insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor,reviewingAnInstructor,getInstructorRatings,instructorSendReport,fetchInstructorAllPreviousReports};
+    module.exports ={insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor,reviewingAnInstructor,getInstructorRatings,instructorSendReport,fetchInstructorAllPreviousReports,fetchInstructorDeliveredReports,fetchInstructorPendingReports,fetchInstructorResolvedReports,fetchInstructorProblem};
 
     // module.exports =filterTitles;
     //module.exports =createinst;

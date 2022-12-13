@@ -112,8 +112,6 @@ const fetchTraineeAllPreviousReports = async(req,res) => {
     for (let i = 0; i < underSupervisionProblems.length; i++) {
                 allReports.push(underSupervisionProblems[i]);
         }
-    // allReports.push(resolvedProblems);
-    // allReports.push(underSupervisionProblems)
 
     console.log(allReports)
     res.status(200).json(allReports)

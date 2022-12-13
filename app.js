@@ -42,7 +42,7 @@ const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data
 
 const {addUserRating,saveUserRating} = require('./Routes/usersController');
 
-const {insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor,reviewingAnInstructor,getInstructorRatings,instructorSendReport,fetchInstructorAllPreviousReports} = require('./Routes/instructorController');
+const {insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor,reviewingAnInstructor,getInstructorRatings,instructorSendReport,fetchInstructorAllPreviousReports,fetchInstructorDeliveredReports,fetchInstructorPendingReports,fetchInstructorResolvedReports,fetchInstructorProblem} = require('./Routes/instructorController');
 
 const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor} = require('./Routes/adminController');
 
@@ -267,6 +267,14 @@ app.get("/fetchCorporateTraineePendingReports",fetchCorporateTraineePendingRepor
 app.get("/fetchCorporateTraineeResolvedReports",fetchCorporateTraineeResolvedReports);
 
 app.get("/fetchCorporateProblem",fetchCorporateProblem);
+
+app.get("/fetchInstructorDeliveredReports",fetchInstructorDeliveredReports);
+
+app.get("/fetchInstructorPendingReports",fetchInstructorPendingReports);
+
+app.get("/fetchInstructorResolvedReports",fetchInstructorResolvedReports);
+
+app.get("/fetchInstructorProblem",fetchInstructorProblem);
 
 
 

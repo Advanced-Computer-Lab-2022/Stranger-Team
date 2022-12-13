@@ -100,10 +100,15 @@
                 <InstructorCurrentCoursePageDetails course={course} key={course._id} />
                 ))[0]}
                 {/* <CurrentCourseDiscountPage/> */}
-                <CurrentCourseInstructorPageSubtitles/>
 
+                <form className="course-details">
                 <button onClick={routeChange}>Define A New Course Discount</button>
                 <button onClick={routeChange2}>Define A New Course Subtitle</button>
+                </form>
+
+                <CurrentCourseInstructorPageSubtitles/>
+
+                
             </div>
             
             

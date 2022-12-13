@@ -68,11 +68,11 @@
             <ProfileNavBar/>
         
         <form className="create"> 
-        <div class="container">
-        <div class="row gutters">
-        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-        <div class="card h-100">
-            <div class="card-body">
+        <div className="container">
+        <div className="row gutters">
+        <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+        <div className="card h-100">
+            <div className="card-body">
                 {instructors && instructors.map(instructor => (
                 <InstructorProfileDetails instructor={instructor} key={instructor._id} />
                 ))[0]}

@@ -28,6 +28,7 @@
     import React from 'react';
     import { useNavigate } from "react-router-dom";
     import RadioButtonsRateAnInstructor from '../components/RadioButtonsRateAnInstructor';
+    import InitialNavbar from '../components/InitialNavBar';
     const SignIn = () => {
     
     let navigate = useNavigate(); 
@@ -67,6 +68,10 @@
     
     return (
         <div>
+            <div>
+            <InitialNavbar/>
+            </div>
+
             <form className="signin">
         
             <button onClick={routeChange}> Guest </button>
