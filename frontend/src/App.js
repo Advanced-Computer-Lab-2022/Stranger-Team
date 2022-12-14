@@ -22,6 +22,7 @@ import PendingInstructorsPage from './pages/pendingInstructors';
 import InstructorProfilePage from './pages/InstructorProfilePage';
 import EditMyProfilePage from './pages/EditMyProfilePage'
 import Home from './pages/adminHome'; //admins
+import CourseRequestsPage from './pages/courseRequests'
 
 import CorporateHome from './pages/corporateTraineeHome'
 import CurrentCoursePage from './pages/CurrentCoursePage'
@@ -437,6 +438,12 @@ function App() {
         <Route
         path="/results"
         element={<Result />}
+        />
+
+
+<Route
+        path="/courseRequests"
+        element={<CourseRequestsPage />}
         />
 
 

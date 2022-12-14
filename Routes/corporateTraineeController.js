@@ -4,6 +4,7 @@
     const course = require("../Models/Course");
     const corporate_Trainee = require("../Models/corporateTrainees");
     const reportedProblem = require("../Models/CorporateTraineeReports");
+    const courseRequests = require("../Models/CourseRequests");
 
     const addCorporateTrainee = async(req,res) => {
     
@@ -185,4 +186,30 @@ const fetchCorporateProblem = async(req,res) => {
 }
 
 
-    module.exports ={corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,addCorporateTrainee,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem};
+
+const requestCourseAccess = async(req,res) => {
+    const corporateTraineeId = req.query.CorporateTraineeId;
+    console.log(corporateTraineeId)
+    const courseId = req.query.CourseId;
+    //console.log(courseId)
+    const ct = await corporate_Trainee.findById({_id:corporateTraineeId}).populate();
+    //console.log(ct)
+    const c = await course.findById({_id:courseId}).populate();
+    const CourseTitle = c.Title;
+    const TUsername = ct.Username;
+    const Role = ct.Role;
+
+    try {
+        const data = await courseRequests.create({"CourseId":courseId, "CorporateTraineeId":corporateTraineeId, "CourseTitle":CourseTitle, "TUsername":TUsername, "Role":Role })
+        res.status(200).json(data)
+    }
+    catch(error) {
+        res.status(400).json({error: error.message})
+    }
+
+
+}
+
+
+
+    module.exports ={corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,addCorporateTrainee,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem, requestCourseAccess};

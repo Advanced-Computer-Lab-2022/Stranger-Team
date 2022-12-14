@@ -5,6 +5,16 @@
     const Instructors = require ('../Models/Instructor');
 
 
+    //S3
+    const InstructorReports = require ('../Models/InstructorReports');
+    const TraineeReports = require ('../Models/TraineeReports');
+    const courseRequests = require("../Models/CourseRequests");
+    const CTraineeReports = require ('../Models/CorporateTraineeReports');
+
+    const express = require("express");
+    const mongoose = require('mongoose');
+
+
 
 
 
@@ -377,7 +387,7 @@
 
 
     try {
-        const ct = await corporateTrainees.create({Username, Password, First_Name, Last_Name, Email, Gender, Corporate})
+        const ct = await corporateTrainees.create({Username, Password, First_Name, Last_Name, Email, Gender, Corporate, "Role":"Corporate Trainee"})
         res.status(200).json(ct)
     }
     catch(error) {
@@ -430,4 +440,277 @@
     }
 
 
-    module.exports = {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor}
+    const fetchSeenReports = async(req,res) => {
+
+        const allReports=[];
+    
+        try{
+        const iResolvedProblems = await InstructorReports.find({Status:"Resolved"}).populate();
+        const iPendingProblems = await InstructorReports.find({Status:"Pending"}).populate();
+
+        const tResolvedProblems = await TraineeReports.find({Status:"Resolved"}).populate();
+        const tPendingProblems = await TraineeReports.find({Status:"Pending"}).populate();
+
+        const ctResolvedProblems = await CTraineeReports.find({Status:"Resolved"}).populate();
+        const ctPendingProblems = await CTraineeReports.find({Status:"Pending"}).populate();
+
+        for (let i = 0; i < iResolvedProblems.length; i++) {
+                    allReports.push(iResolvedProblems[i]);
+            }
+    
+        for (let i = 0; i < iPendingProblems.length; i++) {
+                    allReports.push(iPendingProblems[i]);
+            }
+
+
+            for (let i = 0; i < tResolvedProblems.length; i++) {
+                allReports.push(tResolvedProblems[i]);
+        }
+
+    for (let i = 0; i < tPendingProblems.length; i++) {
+                allReports.push(tPendingProblems[i]);
+        }
+
+
+        for (let i = 0; i < ctResolvedProblems.length; i++) {
+                    allReports.push(ctResolvedProblems[i]);
+            }
+    
+        for (let i = 0; i < ctPendingProblems.length; i++) {
+                    allReports.push(ctPendingProblems[i]);
+            }
+       
+    
+        console.log(allReports)
+        res.status(200).json(allReports)
+        }
+        catch(error){
+            res.status(400).json({error:error.message});
+        }
+    }
+
+
+    const fetchAllDeliveredReports = async(req,res) => {
+       const allReports = [];
+        try{
+        const iDeliveredReports = await InstructorReports.find({Status:"Delivered"}).populate()
+        const tDeliveredReports = await TraineeReports.find({Status:"Delivered"}).populate()
+        const ctDeliveredReports = await CTraineeReports.find({Status:"Delivered"}).populate()
+        for (let i = 0; i < iDeliveredReports.length; i++) {
+            allReports.push(iDeliveredReports[i]);
+    }
+
+
+    for (let i = 0; i < tDeliveredReports.length; i++) {
+        allReports.push(tDeliveredReports[i]);
+}
+
+for (let i = 0; i < ctDeliveredReports.length; i++) {
+    allReports.push(ctDeliveredReports[i]);
+}
+        res.status(200).json(allReports)
+        // for (let i = 0; i < pendingProblems.length; i++) {
+        //             pendingReports.push(pendingProblems[i]);
+        //             console.log(pendingReports)
+        // }
+        
+     
+    }
+        catch(error){
+            res.status(400).json({error:error.message});
+        }
+    }
+
+    const viewIReport = async (req, res) => {
+        const RID = req.query.RID;
+        //console.log(repId)
+
+        if(RID)
+        {
+            const currRep = await InstructorReports.find({_id:RID}).populate();
+           // console.log(currRep.length)
+            if (currRep.length > 0) {
+               // console.log("here0")
+                res.status(200).json(currRep)
+            }
+
+            if (currRep == 0) {
+               // console.log("here1")
+                const currRep1 = await TraineeReports.find({_id:RID}).populate();
+                if (currRep1.length > 0) {
+                    res.status(200).json(currRep1)
+                }
+
+                if(currRep1.length == 0 ) {
+                    const currRep2 = await CTraineeReports.find({_id:RID}).populate();
+                    res.status(200).json(currRep2)
+                }
+            }
+        }
+        
+    } 
+    
+
+
+    //updating status from delivered to pending
+    const updateReportStatus = async (req, res) => {
+       const RID = req.query.RID
+
+       if(RID)
+       {
+        const currRep = await InstructorReports.find({_id:RID}).populate();
+        // console.log(currRep.length)
+         if (currRep.length > 0) {
+            const updatedIR = await InstructorReports.findByIdAndUpdate({_id:RID}, {Status:"Pending"}, {new : true})
+             res.status(200).json(updatedIR)
+         }
+
+         if (currRep == 0) {
+            // console.log("here1")
+             const currRep1 = await TraineeReports.find({_id:RID}).populate();
+             if (currRep1.length > 0) {
+                const updatedTR = await TraineeReports.findByIdAndUpdate({_id:RID}, {Status:"Pending"}, {new : true})
+                res.status(200).json(updatedTR)
+             }
+
+             if(currRep1.length == 0 ) {
+                const updatedCTR = await CTraineeReports.findByIdAndUpdate({_id:RID}, {Status:"Pending"}, {new : true})
+             res.status(200).json(updatedCTR)
+             }
+         }
+    }
+
+    }
+
+
+
+
+     const updateR = async (req, res) => {
+        const RID = req.query.RID
+        const {Status} = req.body
+        let emptyFields = []
+        if (!Status) {
+          emptyFields.push('Status')
+         }
+
+          if(emptyFields.length > 0) {
+        return res.status(400).json({error: 'Please fill in the missing fields.', emptyFields})
+    }
+    
+
+       if (Status) {if(RID)
+        {
+         const currRep = await InstructorReports.find({_id:RID}).populate();
+         // console.log(currRep.length)
+          if (currRep.length > 0) {
+             const updatedIR = await InstructorReports.findByIdAndUpdate({_id:RID},{Status}, {new : true})
+              res.status(200).json(updatedIR)
+          }
+ 
+          if (currRep == 0) {
+             // console.log("here1")
+              const currRep1 = await TraineeReports.find({_id:RID}).populate();
+              if (currRep1.length > 0) {
+                 const updatedTR = await TraineeReports.findByIdAndUpdate({_id:RID}, {Status}, {new : true})
+                 res.status(200).json(updatedTR)
+              }
+ 
+              if(currRep1.length == 0 ) {
+                 const updatedCTR = await CTraineeReports.findByIdAndUpdate({_id:RID}, {Status}, {new : true})
+              res.status(200).json(updatedCTR)
+              }
+          }
+     }
+
+    }}
+
+
+    const adminResponse = async (req, res) => { 
+        const RID = req.query.RID
+        const {Admin_Response} = req.body
+        let emptyFieldz = []
+       if (!Admin_Response) {
+        emptyFieldz.push('Admin_Response')
+         }
+
+         if(emptyFieldz.length > 0) {
+            return res.status(400).json({error1: 'Please fill in the missing fields.', emptyFieldz})
+        }
+ 
+
+        if (Admin_Response) { if(RID)
+            {
+             const currRep = await InstructorReports.find({_id:RID}).populate();
+             // console.log(currRep.length)
+              if (currRep.length > 0) {
+                 const updatedIR = await InstructorReports.findByIdAndUpdate({_id:RID},{Admin_Response}, {new : true})
+                  res.status(200).json(updatedIR)
+              }
+     
+              if (currRep == 0) {
+                 // console.log("here1")
+                  const currRep1 = await TraineeReports.find({_id:RID}).populate();
+                  if (currRep1.length > 0) {
+                     const updatedTR = await TraineeReports.findByIdAndUpdate({_id:RID}, {Admin_Response}, {new : true})
+                     res.status(200).json(updatedTR)
+                  }
+     
+                  if(currRep1.length == 0 ) {
+                     const updatedCTR = await CTraineeReports.findByIdAndUpdate({_id:RID}, {Admin_Response}, {new : true})
+                  res.status(200).json(updatedCTR)
+                  }
+              }
+         }}
+       
+}
+        
+        
+const deleteRequest = async (req, res) => {
+    const { id } = req.params
+
+    const deletedRequest = await courseRequests.findOneAndDelete({_id: id})
+
+    if(!deletedRequest) {
+        return res.status(400).json({error: 'No such request'})
+    }
+
+    res.status(200).json(deletedRequest)
+    }
+
+
+    const grantAccess = async (req, res) => {
+        const { id } = req.params //id of the request
+        const request = await courseRequests.findById({_id:id}).populate();
+        console.log(request)
+        const courseId = request.CourseId;
+        const traineeId = request.CorporateTraineeId;
+        const currTrainee =  await corporateTrainees.findById({_id:traineeId}).populate();
+        const updatedArray = currTrainee.Registered_Courses;
+       // console.log(updatedArray);
+        updatedArray.push(courseId);
+       // console.log(updatedArray);
+    
+
+        try{
+        const updatedTrainee =  await corporateTrainees.findByIdAndUpdate({_id:traineeId},{Registered_Courses:updatedArray},{new:true});
+        console.log(updatedTrainee)
+        res.status(200).json(updatedTrainee)
+        }
+        catch(error){
+            res.status(400).json({error:error.message});
+        }
+    }
+    
+
+
+    const viewRequests = async (req, res) => {
+        const data = await courseRequests.find({})
+        console.log(data)
+        if (data.length == 0) {
+            res.status(400).json("No new requests.")
+        }
+        res.status(200).json(data)
+        };
+    
+
+    module.exports = {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchAllDeliveredReports, fetchSeenReports,updateR, updateReportStatus, viewIReport, adminResponse, deleteRequest, grantAccess, viewRequests}
