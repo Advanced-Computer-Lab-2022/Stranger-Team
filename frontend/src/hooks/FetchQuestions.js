@@ -20,7 +20,6 @@ export const useFetchQestion = () => {
                 const question = await response.json()
                 const ans =  await fetch('/viewAnswers')
                 const answers = await ans.json()
-              //  console.log("heeenaaaa"+answers);
                 if(question.length > 0){
                     setGetData(prev => ({...prev, isLoading : false}));
                     setGetData(prev => ({...prev, apiData : question}));

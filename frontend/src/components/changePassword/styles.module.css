@@ -1,4 +1,4 @@
-.container {
+/* .container {
 	width: 100vw;
 	height: 100vh;
 	display: flex;
@@ -18,15 +18,14 @@
 		0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%);
 }
 
-.input {
-	outline: none;
-	border: none;
-	width: 370px;
-	padding: 15px;
-	border-radius: 10px;
-	background-color: #edf5f3;
-	margin: 5px 0;
-	font-size: 14px;
+input {
+	padding: 10px;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	width: 100%;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	box-sizing: border-box;
 }
 
 .green_btn {
@@ -57,4 +56,4 @@
 
 .success_msg {
 	background-color: #5cdd5c;
-}
+} */

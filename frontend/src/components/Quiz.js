@@ -20,6 +20,9 @@ export default function Quiz() {
     const {queue, trace} = useSelector(state => state.ques);
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        console.log(result)
+     })
 
     /** next button event handler */
     function onNext(){
@@ -32,7 +35,7 @@ export default function Quiz() {
             /** insert a new result in the array.  */
             if(result.length <= trace){
                dispatch(PushAnswer(check))
-                console.log(result)
+               // console.log("result")
             }
         }
      
@@ -56,10 +59,6 @@ export default function Quiz() {
 
     /** finished exam after the last question */
     if(result.length && result.length >= queue.length){
-    //     fetch(`http://localhost:4000/exerciseMarker/?result=${result}`, {
-    //                                             method: 'POST',
-                                                
-    // })
         return <Navigate to={'/results'} replace={true}></Navigate>
     }
 

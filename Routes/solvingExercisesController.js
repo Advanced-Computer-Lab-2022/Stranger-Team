@@ -121,9 +121,9 @@ const viewExercises = async (req, res) => {
 
 // adding questions
 const addQuestions = async (req, res) => {
-    const{QNumber, Q, Answers, correctAnswer} = req.body;
+    const{QNumber, Q, Answers} = req.body;
     try {
-        Question.insertMany({ QNumber, Q,Answers,correctAnswer, "ExerciseID":req.query.id }, function(err, data){
+        Question.insertMany({ QNumber, Q,Answers, "ExerciseID":req.query.id }, function(err, data){
             res.json({ msg: "Data Saved Successfully...!"})
         })
     } catch (error) {
@@ -151,7 +151,6 @@ const viewQuestions = async (req, res) => {
    
   };
 
-
 // to add results
 const addResults = async (req, res) => {
     const{Res, Attempts, Points, Achieved} = req.body;
@@ -164,27 +163,7 @@ const addResults = async (req, res) => {
         res.json({ error })
     }
 }
-//to mark exercise !!
-const exerciseMarker = async (req, res) => {
- 
-  let question = await Question.find({ExerciseID : req.query.Ei});
-  
-  console.log("question:"+question);
-  //console.log("result:"+result);
-  
-  let temp = req.query.result;
-  console.log("result:"+temp);
-        for (let i = 0; i < temp.length; i++) {
-          const question = await Question.findOne({ExerciseID : req.query.Ei ,QNumber :i+1});
-         if(question.correctAnswer==temp.get(i)) 
-         {
-          // result.Points++;
-         }
-}
-result.Attempts++;
-result.save();
-res.json({ msg: "Exercise Marked Successfully...!"});
-}
+
 // to view results
 const viewResults = async (req, res) => {
   const data = await Result.find({})
@@ -196,4 +175,4 @@ const viewResults = async (req, res) => {
  
 
 
-  module.exports = {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults,exerciseMarker,viewAnswers}
+  module.exports = {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults,viewAnswers}

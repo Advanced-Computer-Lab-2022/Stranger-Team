@@ -17,7 +17,7 @@
         useEffect(() => {
         const fetchCourses = async () => {
 
-        const response = await fetch('/View_All_Courses')
+        const response = await fetch(`/View_All_Courses/?q=`)
         const json = await response.json()
 
         if (response.ok) {

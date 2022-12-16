@@ -1,5 +1,9 @@
-import {BrowserRouter,Routes,Route} from 'react-router-dom'
+import {BrowserRouter,Navigate,Routes,Route} from 'react-router-dom'
 
+import Main2 from "./components/Main";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
+import EmailVerify from "./components/EmailVerify";
 import Home1 from './pages/Home1'
 import SignIn from './pages/SignIn'
 import InstructorCoursePage from './pages/InstructorCoursePage'
@@ -18,24 +22,39 @@ import CourseFilterBySubjectAndRatingAndPrice from './pages/CourseFilterBySubjec
 import HomeAdmin from './pages/adminH'; //admin homepage
 import InstructorsPage from './pages/instructors';
 import CorporateTPage from './pages/corporateTrainees';
+import PendingInstructorsPage from './pages/pendingInstructors';
+import InstructorProfilePage from './pages/InstructorProfilePage';
+import EditMyProfilePage from './pages/EditMyProfilePage'
 import Home from './pages/adminHome'; //admins
 
 import CorporateHome from './pages/corporateTraineeHome'
-
-//imports for quiz
-import Main from './pages/mainForQuiz';
-import Quiz from './components/Quiz';
-import Result from './components/Result';
+import CurrentCoursePage from './pages/CurrentCoursePage'
+import CurrentCoursePageTrainee from './pages/CurrentCoursePageTrainee'
+// import CurrentCourseDiscountPage from './pages/CurrentCourseDiscountPage'
+import DefineACourseDiscountInstructorPage from './pages/DefineACourseDiscountInstructorPage'
+import InstructorAddNewSubtitlePage from './pages/InstructorAddANewSubtitlePage'
+import InstructorAddANewCoursePage from './pages/InstructorAddANewCoursePage'
 import PasswordReset from './components/passwordReset'
 import ForgetPassword from './components/forgetPassword/ForgotPassword'
 import ChangePassword from './components/changePassword/ChangePassword'
 
 
+//imports for quiz
+import Main from './pages/mainForQuiz';
+import Quiz from './components/Quiz';
+import Result from './components/Result';
+
+
+
+
+
+
 function App() {
+  const User = localStorage.getItem("token");
   return (
     <div className="App">
       <BrowserRouter>
-      <Navbar/>
+      {/* <Navbar/> */}
       <div className="pages">
         <Routes>
         <Route
@@ -62,6 +81,72 @@ function App() {
         path="/CourseFilterBySubjectAndPrice"
         element={<CourseFilterBySubjectAndPrice />}
         />
+
+        
+        <Route
+        path="/InstructorAddANewCoursePage"
+        element={<InstructorAddANewCoursePage />}
+        />
+
+        
+
+        
+
+        <Route
+        path="/EditMyProfile"
+        element={<EditMyProfilePage />}
+        />
+
+        <Route
+        path="/CurrentCourse"
+        element={<CurrentCoursePage />}
+        />
+
+          <Route
+            path="/forgetPassword"
+            element={<ForgetPassword/>}
+            />
+            <Route
+            path="/passwordReset/:id/:token"
+            element={<PasswordReset/>}
+            />
+            <Route
+            path="/changePassword"
+            element={<ChangePassword/>}
+            />
+     {User && <Route path="/" exact element={<Main2 />} />}
+			<Route path="/signup" exact element={<Signup />} />
+			<Route path="/login" exact element={<Login />} />
+			{/* <Route path="/" element={<Navigate replace to="/login" />} /> */}
+			<Route path="/users/:id/verify/:token" element={<EmailVerify />} />
+
+
+        <Route
+        path="/CurrentCoursePageTrainee"
+        element={<CurrentCoursePageTrainee />}
+        />
+
+        
+        <Route
+        path="/DefineACourseDiscountInstructorPage"
+        element={<DefineACourseDiscountInstructorPage />}
+        />
+        
+
+        <Route
+        path="/AddANewSubtitle"
+        element={<InstructorAddNewSubtitlePage />}
+        />
+
+        {/* <Route
+        path="/CurrentCourseDiscountPage"
+        element={<CurrentCourseDiscountPage />}
+        /> */}
+
+        <Route
+        path="/MyProfile/"
+        element={<InstructorProfilePage />}
+        />
         
         <Route
         path="/CourseFilterBySubjectAndRating"
@@ -72,24 +157,17 @@ function App() {
         path="/CourseFilterBySubjectAndRatingAndPrice"
         element={<CourseFilterBySubjectAndRatingAndPrice />}
         />
-     <Route
-          path="/forgetPassword"
-          element={<ForgetPassword/>}
-          />
-           <Route
-          path="/passwordReset/:id/:token"
-          element={<PasswordReset/>}
-          />
-           <Route
-          path="/changePassword"
-          element={<ChangePassword/>}
-          />
+
 
         <Route
         path="/corporateTrainees"
         element={<CorporateTPage/>}
         />
 
+        <Route
+        path="/pendingInstructors"
+        element={<PendingInstructorsPage/>}
+        />
 
           <Route
           path="/"
@@ -103,7 +181,7 @@ function App() {
           path="/InstructorAddCourse"
           element={<InstructorAddCourse />}
           /> 
-          <Route path="/Home"
+          <Route path="/Home/"
           element={<Home1 />}
           />
           <Route path="/Courses"
@@ -119,6 +197,15 @@ function App() {
           <Route path="/CourseFilterByRate"
           element={<CourseFilterByRate />}
           />
+
+        <Route
+        path="/CourseSearchByInstructorName"
+        element={<CourseSearchByInstructorName/>}
+        />
+          <Route path="/CoursesFilterBySubject"
+          element={<CourseFilterBySubject />}/>
+
+          
 
 
 
@@ -139,12 +226,9 @@ function App() {
         />
 
 
-        <Route
-        path="/CourseSearchByInstructorName"
-        element={<CourseSearchByInstructorName/>}
-        />
-          <Route path="/CoursesFilterBySubject"
-          element={<CourseFilterBySubject />}/>
+
+
+
         </Routes>
       </div>
       </BrowserRouter>
