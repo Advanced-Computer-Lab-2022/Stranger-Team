@@ -259,6 +259,58 @@ div.error {
 
 }
 
+
+
+.spanni {
+  position: absolute;
+  top: 100px;
+  right: 1px;
+  cursor: pointer;
+  background: #f1f1f1;
+  /* padding: 6px; */
+  border-radius: 50%;
+  color: #333;
+
+}
+
+
+.drp {
+  position: absolute;
+  top: 20px;
+  right: 260px;
+  cursor: pointer;
+
+}
+
+
+.drpp {
+  position: absolute;
+  top: 100px;
+  right: 50px;
+  cursor: pointer;
+
+}
+
+
+.spannyyyy {
+  position: absolute;
+  top: 60px;
+  right: 1px;
+  cursor: pointer;
+  background: #f1f1f1;
+  /* padding: 6px; */
+  border-radius: 50%;
+  color: #333;
+
+}
+
+
+
+.nonspanny {
+  cursor: context-menu
+}
+
+
 a {
   color: #147de7;
   text-decoration: none;

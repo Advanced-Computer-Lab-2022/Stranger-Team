@@ -1,5 +1,9 @@
-import {BrowserRouter,Routes,Route} from 'react-router-dom'
+import {BrowserRouter,Navigate,Routes,Route} from 'react-router-dom'
 
+import Main2 from "./components/Main";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
+import EmailVerify from "./components/EmailVerify";
 import Home1 from './pages/Home1'
 import SignIn from './pages/SignIn'
 import InstructorCoursePage from './pages/InstructorCoursePage'
@@ -74,12 +78,25 @@ import InstructorPendingReportsPage from './pages/InstructorPendingReportsPage'
 import InstructorCurrentResolvedReportPage from './pages/InstructorCurrentResolvedReportPage'
 import InstructorReportsPage from './pages/InstructorReportsPage'
 import InstructorResolvedReportsPage from './pages/InstructorResolvedReportsPage'
+import CurrentCourseInstructorPageCorporateTrainee from './pages/CurrentCourseInstructorPageCorporateTrainee'
+import FromCurrentNonRegisteredCoursePageTrainee from './pages/FromCurrentNonRegisteredCoursePageTrainee'
+import FromCurrentNonRegisteredCoursePageCorporateTrainee from './pages/FromCurrentNonRegisteredCoursePageCorporateTrainee'
 
 
 
+//imports for admin reports
+import DeliveredReportsPage from './components/DeliveredReports'
+import DeliveredReportSingle from './components/DeliveredReportSingle'
+import SeenReportsPage from './components/SeenReports'
+import SeenReportSingle from './components/SeenReportSingle'
+import ReportsPage from './pages/reportsPage'
+import AdminResponsesPageTrainee from './pages/AdminResponsesPageTrainee'
+import AdminResponseCurrentReportPageTrainee from './pages/AdminResponseCurrentReportPageTrainee'
 
+import CourseRequestsPage from './pages/courseRequests'
 
 function App() {
+   const User = localStorage.getItem("token");
   return (
     <div className="App">
       <BrowserRouter>
@@ -141,6 +158,12 @@ function App() {
 
         
         <Route
+        path="/FromCurrentNonRegisteredCoursePageCorporateTrainee"
+        element={<FromCurrentNonRegisteredCoursePageCorporateTrainee />}
+        />
+
+        
+        <Route
         path="/CorporateTraineeReportsPage"
         element={<CorporateTraineeReportsPage />}
         />
@@ -166,11 +189,18 @@ function App() {
         element={<CorporateTraineeResolvedReportsPage />}
         />
 
+        
+
         <Route
         path="/CorporateTraineeCurrentResolvedReportPage"
         element={<CorporateTraineeCurrentResolvedReportPage />}
         />
+
         
+        <Route
+        path="/CurrentCourseInstructorPageCorporateTrainee"
+        element={<CurrentCourseInstructorPageCorporateTrainee />}
+        />
 
         <Route
         path="/InstructorCurrentReportPage"
@@ -209,6 +239,12 @@ function App() {
 
         
         <Route
+        path="/FromCurrentNonRegisteredCoursePageTrainee"
+        element={<FromCurrentNonRegisteredCoursePageTrainee />}
+        />
+
+        
+        <Route
         path="/TraineeProfilePage"
         element={<TraineeProfilePage />}
         />
@@ -216,6 +252,18 @@ function App() {
         <Route
         path="/TraineeReportsPage"
         element={<TraineeReportsPage />}
+        />
+
+
+        <Route
+        path="/AdminResponsesPageTrainee"
+        element={<AdminResponsesPageTrainee />}
+        />
+
+        
+        <Route
+        path="/AdminResponseCurrentReportPageTrainee"
+        element={<AdminResponseCurrentReportPageTrainee />}
         />
 
 
@@ -319,8 +367,10 @@ function App() {
             path="/changePassword"
             element={<ChangePassword/>}
             />
-
-
+    {User && <Route path="/" exact element={<Main2 />} />}
+			<Route path="/signup" exact element={<Signup />} />
+			<Route path="/login" exact element={<Login />} />
+      <Route path="/users/:id/verify/:token" element={<EmailVerify />} />
         <Route
         path="/CurrentCoursePageTrainee"
         element={<CurrentCoursePageTrainee />}
@@ -440,8 +490,38 @@ function App() {
         />
 
 
+ <Route
+        path="/DeliveredReportSingle"
+        element={<DeliveredReportSingle />}
+        />
 
 
+       <Route
+        path="/deliveredReports"
+        element={<DeliveredReportsPage/>}
+        />
+
+       <Route
+        path="/SeenReportSingle"
+        element={<SeenReportSingle />}
+        />
+
+
+       <Route
+        path="/seenReports"
+        element={<SeenReportsPage/>}
+        />
+
+<Route
+        path="/reports"
+        element={<ReportsPage/>}
+        />
+
+
+<Route
+        path="/courseRequests"
+        element={<CourseRequestsPage />}
+        />
 
         </Routes>
       </div>

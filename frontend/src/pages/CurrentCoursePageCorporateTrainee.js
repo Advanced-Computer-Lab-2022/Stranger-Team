@@ -17,8 +17,8 @@
     import CurrentCourseDiscountPage from "../components/CurrentCourseDiscountPage";
     import CurrentCourseSubtitlesPageTrainee from "./CurrentCourseSubtitlesPageTrainee";
     import CurrentCoursePageDetailsCorporateTrainee from "../components/CurrentCoursePageDetailsCorporateTrainee"
-import RadioButtonsRateACourse from "../components/RadioButtonsRateACourse";
-import CorporateTraineeSubtitleTitlesPage from "./CorporateTraineeSubtitleTitlesPage";
+    import RadioButtonsRateACourse from "../components/RadioButtonsRateACourse";
+    import CorporateTraineeSubtitleTitlesPage from "./CorporateTraineeSubtitleTitlesPage";
 
 
 

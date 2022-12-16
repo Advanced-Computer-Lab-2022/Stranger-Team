@@ -7,6 +7,9 @@ const course = require('../Models/Course');
 const instructor = require('../Models/Instructor');
 const discount = require('../Models/CourseDiscount');
 const subtitles = require('../Models/Subtitles');
+const individual_Trainee = require("../Models/Individual Trainee");
+const corporate_Trainee = require("../Models/corporateTrainees");
+
 
 
 const addSubtitle = async(req,res) => {
@@ -353,6 +356,63 @@ const getCurrentCourseInformation = async (req,res) => {
 
             }; 
 
+const isCurrentCourseRegistered = async (req,res) => { 
+            try{
+                const courseId = req.query.CourseId;
+                const traineeId = req.query.TraineeId;
+                const corporateTraineeId = req.query.CorporateTraineeId;
+                let x = false;
+                console.log(corporateTraineeId)
+                if(corporateTraineeId==null)
+                {
+                    const currTrainee=await individual_Trainee.findById({_id:traineeId});
+                    console.log(currTrainee.Registered_Courses)
+                    const registeredCourses = currTrainee.Registered_Courses;
+                    var isFound = 0;
+                    var courseFound=null;
+                    for(let i =0;i<registeredCourses.length;i++)
+                    {
+                        if(registeredCourses[i]._id==courseId)
+                        {
+                            isFound = 1;
+                            courseFound=registeredCourses[i];
+                            x=true;
+                            
+                            break;
+                        }
+                    }
+                    console.log(courseFound)
+                    res.status(200).json(x);
+                }
+                else
+                {
+                    const currTrainee=await corporate_Trainee.findById({_id:corporateTraineeId});
+                    console.log(currTrainee)
+                    console.log(currTrainee.Registered_Courses)
+                    const registeredCourses = currTrainee.Registered_Courses;
+                    var isFound = 0;
+                    var courseFound=null;
+                    for(let i =0;i<registeredCourses.length;i++)
+                    {
+                        if(registeredCourses[i]._id==courseId)
+                        {
+                            isFound = 1;
+                            courseFound=registeredCourses[i];
+                            x=true;
+                            break;
+                        }
+                    }
+                    console.log(courseFound)
+                    res.status(200).json(x);
+                    
+                }
+                
+            }
+            catch(error){
+                res.status(400).json({error:error.message});
+            }
+
+            }; 
 
 
 const Filter_By_Subject_And_Price= async (req,res) => {
@@ -401,4 +461,4 @@ const Filter_By_Subject_And_Rating_And_Price= async (req,res) => {
             res.status(200).json(data);
             };   
 
-module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addANewInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId};
+module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addANewInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered};

@@ -53,16 +53,6 @@ import CurrentNonRegisteredCoursePageDetailsTrainee from "../components/CurrentN
         fetchCourse()
     }, [])
 
-    // let navigate = useNavigate();
-    //     const routeChange = () =>{ 
-    //     const params = new URLSearchParams(window.location.search);
-    //     const courseId = params.get('CourseId');
-    //     const traineeId = params.get('TraineeId');
-    //     // console.log(courseId); 
-    //     let path = `/TraineeReportAProblemPage/?TraineeId=${traineeId}&CourseId=${courseId}`; 
-    //     navigate(path);
-    // }
-
     return (
         <div>
         <TraineeProfileNavBar/>

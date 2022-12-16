@@ -65,7 +65,9 @@
         let navigate = useNavigate();
 
         const routeChange = () =>{ 
-        let path = `/CurrentCourseInstructorPage/?id=${currentInstructorId}`; 
+        const params = new URLSearchParams(window.location.search);
+        const traineeId = params.get('CorporateTraineeId');
+        let path = `/CurrentCourseInstructorPageCorporateTrainee/?CorporateTraineeId=${traineeId}&id=${currentInstructorId}`; 
         navigate(path);
     }
         
@@ -79,9 +81,7 @@
         <p><strong>Subject: </strong>{course.Subject}</p>
         <p><strong>Subtitles Total Hours: </strong>{course.Subtitles_Total_Hours}</p>
         <p><strong>Course Total Hours: </strong>{course.Course_Total_Hours}</p>
-        <p><strong>Price: </strong>{course.Price}</p>
         <p><strong>Rating: </strong>{course.Rating}</p>
-        <p><strong>Dicount: </strong>{course.Discount}</p>
         <p><strong>Course Description: </strong>{course.Course_Description}</p> 
 
         <div className="course-details" onClick={routeChange}>

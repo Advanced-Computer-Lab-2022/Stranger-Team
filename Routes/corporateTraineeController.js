@@ -4,13 +4,14 @@
     const course = require("../Models/Course");
     const corporate_Trainee = require("../Models/corporateTrainees");
     const reportedProblem = require("../Models/CorporateTraineeReports");
+    const courseRequests = require("../Models/CourseRequests");
 
     const addCorporateTrainee = async(req,res) => {
     
     const {Username,Email,Password,First_Name,Last_Name,Gender,Corporate} = req.body;
 
     try{
-    const result = await corporate_Trainee.create({Username,Email,Password,First_Name,Last_Name,Gender,Corporate});
+    const result = await corporate_Trainee.create({Username,Email,Password,First_Name,Last_Name,Gender,Corporate, "Role":"Corporate Trainee"});
     console.log(result)
     res.status(200).json(result)
     }
@@ -184,5 +185,64 @@ const fetchCorporateProblem = async(req,res) => {
     }
 }
 
+const fetchNonRegisteredCorporateTraineeCoursesForInstructor = async(req,res) => {
 
-    module.exports ={corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,addCorporateTrainee,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem};
+    const traineeId = req.query.CorporateTraineeId;
+    const instructorId = req.query.id;
+
+
+    try{
+    const trainee = await corporate_Trainee.findById({_id:traineeId});
+    const traineeRegisteredCourses = trainee.Registered_Courses;
+    const instructorCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId)}).populate('Instructor');
+    const traineeNonRegisteredCourses = [];
+
+    for (let i = 0; i < traineeRegisteredCourses.length; i++) {
+            for(let j=0;j<instructorCourses.length;j++)
+            {
+                console.log(traineeRegisteredCourses[i]._id)
+                console.log(instructorCourses[j]._id)
+                if(traineeRegisteredCourses[i]._id != instructorCourses[j]._id)
+                {
+                    traineeNonRegisteredCourses.push(instructorCourses[j])
+                }
+            }
+
+        }
+
+        console.log(traineeNonRegisteredCourses);
+        res.status(200).json(traineeNonRegisteredCourses)
+
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+
+
+const requestCourseAccess = async(req,res) => {
+    const corporateTraineeId = req.query.CorporateTraineeId;
+    console.log(corporateTraineeId)
+    const courseId = req.query.CourseId;
+    //console.log(courseId)
+    const ct = await corporate_Trainee.findById({_id:corporateTraineeId}).populate();
+    //console.log(ct)
+    const c = await course.findById({_id:courseId}).populate();
+    const CourseTitle = c.Title;
+    const TUsername = ct.Username;
+    const Role = ct.Role;
+
+    try {
+        const data = await courseRequests.create({"CourseId":courseId, "CorporateTraineeId":corporateTraineeId, "CourseTitle":CourseTitle, "TUsername":TUsername, "Role":Role })
+        res.status(200).json(data)
+    }
+    catch(error) {
+        res.status(400).json({error: error.message})
+    }
+
+
+}
+
+
+
+    module.exports ={corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,addCorporateTrainee,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem,fetchNonRegisteredCorporateTraineeCoursesForInstructor, requestCourseAccess};

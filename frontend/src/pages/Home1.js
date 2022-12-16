@@ -18,6 +18,9 @@
     const [courses, setCourses] = useState(null)
     const [searchQuery, setSearchQuery] = useState("")
     const [searchRateQuery, setSearchRateQuery] = useState("");
+    const [isRegistered, setIsRegistered] = useState("");
+    const [currcourseid, setcurrcourseid] = useState("");
+
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -55,6 +58,7 @@
 
         fetchCourses()
     }, [searchQuery,searchRateQuery])
+
 
     let navigate = useNavigate();
     //     const routeChange = () =>{ 
@@ -113,6 +117,47 @@
         navigate(path);
     }
 
+    const handleSubmit = async (courseid) => {
+        const params = new URLSearchParams(window.location.search);
+        const traineeId = params.get('TraineeId');
+        const courseId= params.get('CourseId');
+        console.log(traineeId); 
+
+        console.log("courseid"+courseid); 
+
+        const response = await fetch(`/isCurrentCourseRegistered/?TraineeId=${traineeId}&CourseId=${courseid}`)
+        
+        
+        const json = await response.json()
+        console.log(json)
+        // if(json ==true || json=="true")
+        // {
+
+        // }
+        
+        setIsRegistered(json);
+        console.log("isRegistered"+isRegistered)
+        if(json===true||json==="true")
+        {
+            console.log("kk")
+            const params = new URLSearchParams(window.location.search);
+            const traineeId = params.get('TraineeId');
+            window.location.href=`/FromCurrentNonRegisteredCoursePageTrainee/?CourseId=${courseid}&TraineeId=${traineeId}`;
+        }
+        else
+        {
+            const params = new URLSearchParams(window.location.search);
+            const traineeId = params.get('TraineeId');
+            window.location.href=`/CurrentNonRegisteredCoursePageTrainee?CourseId=${courseid}&TraineeId=${traineeId}`;
+        }
+        
+    }
+
+    // () =>{
+    //             const params = new URLSearchParams(window.location.search);
+    //             const traineeId = params.get('TraineeId');
+    //             window.location.href=`/CurrentNonRegisteredCoursePageTrainee?CourseId=${course._id}&TraineeId=${traineeId}`}
+
     return (
 
         <div >
@@ -136,16 +181,13 @@
                     width: "100%"
                     }
                 }}
-                onClick={() =>{
-                const params = new URLSearchParams(window.location.search);
-                const traineeId = params.get('TraineeId');
-                console.log(traineeId);
-                window.location.href=`/CurrentNonRegisteredCoursePageTrainee?CourseId=${course._id}&TraineeId=${traineeId}`} }
+                
+                onClick={() =>{handleSubmit(course._id)}}
                 key={course._id}>
-            <CourseDetails course={course} key={course.id} />
-            <PreviewCourseVideoPageDetails course={course} key={course.id} />
-            
-            </Container>
+                <CourseDetails course={course} key={course.id} />
+                <PreviewCourseVideoPageDetails course={course} key={course.id} />
+                
+                </Container>
             ))}
         </div>
 

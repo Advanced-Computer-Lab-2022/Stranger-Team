@@ -30,10 +30,12 @@
         const fetchCourse = async () => {
         const params = new URLSearchParams(window.location.search);
         const instructorId = params.get('id');
+        const traineeId = params.get('TraineeId');
         //console.log(courseId); 
         
         
-        const response = await fetch(`/fetchCurrentCourseInstructorCoursesByInstructorId/?id=${instructorId}`)
+        //const response = await fetch(`/fetchCurrentCourseInstructorCoursesByInstructorId/?id=${instructorId}`)
+        const response = await fetch(`/fetchNonRegisteredTraineeCoursesForInstructor/?TraineeId=${traineeId}&id=${instructorId}`)
         
         
         const json = await response.json()
@@ -55,7 +57,7 @@
     return (
         <div>
 
-        <div class="row gutters">
+        <div className="row gutters">
             <div className="courses">
             {courses && courses.map(course => (
             <Container hover
@@ -66,10 +68,15 @@
                     width: "100%"
                     }
                 }}
-                onClick={() => window.location.href=`/CurrentCoursePageTrainee?CourseId=${course._id}`}
+                //onClick={() => window.location.href=`/CurrentCoursePageTrainee?CourseId=${course._id}`}
+                onClick={() =>{
+                const params = new URLSearchParams(window.location.search);
+                const traineeId = params.get('TraineeId');
+                console.log(traineeId);
+                window.location.href=`/CurrentNonRegisteredCoursePageTrainee?CourseId=${course._id}&TraineeId=${traineeId}`} }
                 key={course._id}>
-            <CourseDetails course={course} key={course._id} />
-            <PreviewCourseVideoPageDetails course={course} key={course._id} />
+            <CourseDetails course={course} key={course.id} />
+            <PreviewCourseVideoPageDetails course={course} key={course.id} />
             
             
             </Container>

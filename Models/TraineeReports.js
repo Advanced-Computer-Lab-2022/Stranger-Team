@@ -24,7 +24,8 @@ const traineeReportSchema = new Schema({
     },
     Admin_Response:{
         type:String,
-        required:false
+        required:false,
+        default:""
     },
     Username:{
         type:String,

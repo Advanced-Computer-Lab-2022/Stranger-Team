@@ -64,6 +64,14 @@
         navigate(path);
     }
 
+    const routeChange3 = () =>{ 
+        const params = new URLSearchParams(window.location.search);
+        const traineeId = params.get('TraineeId');
+        console.log(traineeId); 
+        let path = `/AdminResponsesPageTrainee/?TraineeId=${traineeId}`; 
+        navigate(path);
+    }
+
 
     return (
 
@@ -76,6 +84,10 @@
 
             <div className="course-details" onClick={routeChange1}>
             <p><strong>Pending Reports</strong></p> 
+            </div>
+
+            <div className="course-details" onClick={routeChange3}>
+            <p><strong>Admin Responses</strong></p> 
             </div>
 
             <div className="course-details" onClick={routeChange2}>

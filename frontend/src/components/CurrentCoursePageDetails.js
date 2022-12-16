@@ -77,7 +77,9 @@
         let navigate = useNavigate();
 
         const routeChange = () =>{ 
-        let path = `/CurrentCourseInstructorPage/?id=${currentInstructorId}`; 
+        const params = new URLSearchParams(window.location.search);
+        const traineeId = params.get('TraineeId');
+        let path = `/CurrentCourseInstructorPage/?TraineeId=${traineeId}&id=${currentInstructorId}`; 
         navigate(path);
     }
         

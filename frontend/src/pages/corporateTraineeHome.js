@@ -137,6 +137,7 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
     const [courses, setCourses] = useState(null)
     const [searchQuery, setSearchQuery] = useState("")
     const [searchRateQuery, setSearchRateQuery] = useState("")
+    const [isRegistered, setIsRegistered] = useState("");
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -188,7 +189,44 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
         navigate(path);
     }
 
-    
+
+    // {() => {
+    //                 const params = new URLSearchParams(window.location.search);
+    //                 const corporateTraineeId = params.get('CorporateTraineeId');
+    //                 console.log(corporateTraineeId);
+    //                 window.location.href=`/CurrentNonRegisteredCoursePageCorporateTrainee?CourseId=${course._id}&CorporateTraineeId=${corporateTraineeId}`}}
+
+    const handleSubmit = async (courseid) => {
+        const params = new URLSearchParams(window.location.search);
+        const traineeId = params.get('CorporateTraineeId');
+        const courseId= params.get('CourseId');
+        console.log(traineeId); 
+
+        console.log("courseid"+courseid); 
+
+        const response = await fetch(`/isCurrentCourseRegistered/?CorporateTraineeId=${traineeId}&CourseId=${courseid}`)
+        
+        
+        const json = await response.json()
+        console.log(json)
+
+        setIsRegistered(json);
+        console.log("isRegistered"+isRegistered)
+        if(json===true||json==="true")
+        {
+            console.log("kk")
+            const params = new URLSearchParams(window.location.search);
+            const traineeId = params.get('CorporateTraineeId');
+            window.location.href=`/FromCurrentNonRegisteredCoursePageCorporateTrainee/?CourseId=${courseid}&CorporateTraineeId=${traineeId}`;
+        }
+        else
+        {
+            const params = new URLSearchParams(window.location.search);
+            const traineeId = params.get('CorporateTraineeId');
+            window.location.href=`/CurrentNonRegisteredCoursepageCorporateTrainee?CourseId=${courseid}&CorporateTraineeId=${traineeId}`;
+        }
+        
+    }
 
     return (
 
@@ -211,11 +249,7 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
                     width: "100%"
                     }
                 }}
-                onClick={() => {
-                    const params = new URLSearchParams(window.location.search);
-                    const corporateTraineeId = params.get('CorporateTraineeId');
-                    console.log(corporateTraineeId);
-                    window.location.href=`/CurrentNonRegisteredCoursePageCorporateTrainee?CourseId=${course._id}&CorporateTraineeId=${corporateTraineeId}`}}
+                onClick={() =>{handleSubmit(course._id)}}
                 key={course._id}>
             <CourseDetailsCorporateTrainee course={course} key={course.id} />
             <PreviewCourseVideoPageDetails course={course} key={course.id} />

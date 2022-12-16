@@ -15,6 +15,7 @@
     import StarRating from "../components/StarRating";
     import RadioButtonsRateAnInstructor from "../components/RadioButtonsRateAnInstructor";
     import CurrentCourseInstructorProfileDetailsForTrainee from "../components/CurrentCourseInstructorProfileDetailsForTrainee";
+import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
 
 
     const CurrentCourseInstructorPage = () => {
@@ -62,6 +63,7 @@
 
     return (
         <Container >
+            <TraineeProfileNavBar/>
         <form className="create"> 
         <div className="container">
         <div className="row gutters">

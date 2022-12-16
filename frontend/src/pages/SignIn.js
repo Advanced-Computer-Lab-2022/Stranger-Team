@@ -27,8 +27,6 @@
 
     import React from 'react';
     import { useNavigate } from "react-router-dom";
-    import RadioButtonsRateAnInstructor from '../components/RadioButtonsRateAnInstructor';
-    import InitialNavbar from '../components/InitialNavBar';
     const SignIn = () => {
     
     let navigate = useNavigate(); 
@@ -65,13 +63,18 @@
         let path = '/changePassword';
         navigate(path);
     }
+    const routeChange7 = () =>{ 
+        let path = '/signup';
+        navigate(path);
+    }
+    const routeChange8 = () =>{ 
+        let path = '/login';
+        navigate(path);
+    }
+
     
     return (
         <div>
-            <div>
-            <InitialNavbar/>
-            </div>
-
             <form className="signin">
         
             <button onClick={routeChange}> Guest </button>
@@ -80,7 +83,10 @@
             <button onClick={routeChange3}> Corporate Trainee </button>
             <button onClick={routeChange4}> Admin  </button> 
             <button onClick={routeChange5}> Forgot Password  </button> 
+            <button onClick={routeChange7}> Sign up  </button> 
+            <button onClick={routeChange8}> Login  </button> 
             <button onClick={routeChange6}> Change Password  </button> 
+            
             </form>
         </div>
     );

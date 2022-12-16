@@ -35,6 +35,9 @@
     type:[mongoose.Types.ObjectId],
     ref:'course',
     required:false
+    },Role: {
+        type: String,
+        required: true
     }
     }, { timestamps: true });
 

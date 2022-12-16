@@ -28,6 +28,8 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
 
     const CurrentNonRegisteredCoursePageCorporateTrainee = () => {
     const [course, setCourse] = useState(null)
+
+    const [removebutton, setremovebutton] = useState(false)
     
 
     useEffect(() => {
@@ -57,6 +59,20 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
 
     let navigate = useNavigate();
 
+    const handleOnClick = async() => {
+        const queryParams = new URLSearchParams(window.location.search);
+        const courseId = queryParams.get('CourseId');
+        console.log(courseId)
+        const traineeId =  queryParams.get('CorporateTraineeId');
+        const response = await fetch(`/reqAccess?CourseId=${courseId}&CorporateTraineeId=${traineeId}`,  {
+            method: 'POST'
+        })
+        const json = await response.json()
+        console.log("REQUEST:" + json)
+        setremovebutton(true)
+    }
+
+
     return (
         <div>
         <CorporateTraineeProfileNavBar/>
@@ -74,9 +90,10 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
                 <CurrentNonRegisteredCoursePageDetailsCorporateTrainee course={course} key={course._id} />
                 ))[0]}
 
-                <form className="course-details">
+                {/* <form className="course-details">
             <button >Request Access For The Course</button>
-            </form>
+            </form> */}
+            {!removebutton && <button onClick={handleOnClick}>Request Access For The Course</button>}
                 
             </div>
             

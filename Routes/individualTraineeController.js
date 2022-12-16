@@ -196,6 +196,88 @@ const fetchTraineeProfileDetails = async(req,res) => {
     }
 }
 
+const fetchNonRegisteredTraineeCoursesForInstructor = async(req,res) => {
+
+    const traineeId = req.query.TraineeId;
+    const instructorId = req.query.id;
 
 
-    module.exports ={addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports,fetchTraineeProfileDetails,fetchTraineeDeliveredReports,fetchTraineePendingReports,fetchTraineeResolvedReports,fetchProblem};
+    try{
+    const trainee = await individual_Trainee.findById({_id:traineeId});
+    const traineeRegisteredCourses = trainee.Registered_Courses;
+    const instructorCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId)}).populate('Instructor');
+    const traineeNonRegisteredCourses = [];
+
+    for (let i = 0; i < traineeRegisteredCourses.length; i++) {
+            for(let j=0;j<instructorCourses.length;j++)
+            {
+                console.log(traineeRegisteredCourses[i]._id)
+                console.log(instructorCourses[j]._id)
+                if(traineeRegisteredCourses[i]._id != instructorCourses[j]._id)
+                {
+                    traineeNonRegisteredCourses.push(instructorCourses[j])
+                }
+            }
+
+        }
+
+        console.log(traineeNonRegisteredCourses);
+        res.status(200).json(traineeNonRegisteredCourses)
+
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+
+const checkIfAdminRespondedTrainee = async(req,res) => {
+
+    const traineeId = req.query.TraineeId;
+    const reportId = req.query.ReportId;
+
+    try{
+
+    const allReports = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Pending"}).populate('Trainee_Id');
+    
+    const adminResponseArray=[];
+    for(let i=0;i<allReports.length;i++)
+    {
+        
+        const temp = allReports[i].Admin_Response+"";
+        if(allReports[i].Admin_Response ==null || allReports[i].Admin_Response =="" || allReports[i].Admin_Response==undefined) 
+        {
+            console.log("no responses found")
+        }
+        else
+        {
+            adminResponseArray.push(allReports[i])
+        }
+        
+    }
+        console.log("adminResponseArray"+adminResponseArray);
+        res.status(200).json(adminResponseArray)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+
+//updating status from pending to resolved
+        const updateReportStatusFromPendingToResolvedTrainee = async (req, res) => {
+        const RID = req.query.ReportId;
+
+        try{
+            if(RID)
+        {
+            
+            const updatedIR = await reportedProblem.findByIdAndUpdate({_id:RID}, {Status:"Resolved"}, {new : true})
+            res.status(200).json(updatedIR)
+        }
+        }
+        catch(error){
+        res.status(400).json({error:error.message});
+    }
+
+        }
+
+    module.exports ={addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports,fetchTraineeProfileDetails,fetchTraineeDeliveredReports,fetchTraineePendingReports,fetchTraineeResolvedReports,fetchProblem,fetchNonRegisteredTraineeCoursesForInstructor,checkIfAdminRespondedTrainee,updateReportStatusFromPendingToResolvedTrainee};
