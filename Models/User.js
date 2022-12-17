@@ -32,6 +32,7 @@ const userSchema = new Schema({
     Currency: {
         type: String,
         required: false,
+        //default:"USD"
       },
       verified: { type: Boolean, default: false },
 }, { timestamps: true });

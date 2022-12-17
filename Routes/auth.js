@@ -5,6 +5,7 @@ const crypto = require("crypto");
 const sendEmail = require("./Emailer");
 const bcrypt = require("bcrypt");
 const Joi = require("joi");
+const countryToCurrency = require('iso-country-currency');
 const session = require('express-session');
 router.use(session( 
 	{
@@ -20,6 +21,7 @@ router.post("/", async (req, res) => {
 			return res.status(400).send({ message: error.details[0].message });
 
 		const user = await User.findOne({ Email: req.body.Email });
+		
 		if (!user)
 			return res.status(401).send({ message: "Invalid Email or Password" });
 

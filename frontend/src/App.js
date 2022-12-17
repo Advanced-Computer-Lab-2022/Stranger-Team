@@ -94,6 +94,9 @@ import AdminResponsesPageTrainee from './pages/AdminResponsesPageTrainee'
 import AdminResponseCurrentReportPageTrainee from './pages/AdminResponseCurrentReportPageTrainee'
 
 import CourseRequestsPage from './pages/courseRequests'
+import FilteredCoursesPageTrainee from './pages/FilteredCoursesPageTrainee';
+import FilteredCoursesPageCorporateTrainee from './pages/FilteredCoursesPageCorporateTrainee';
+import FilteredCoursesInstructorPage from './pages/FilteredCoursesInstructorPage';
 
 function App() {
    const User = localStorage.getItem("token");
@@ -241,6 +244,24 @@ function App() {
         <Route
         path="/FromCurrentNonRegisteredCoursePageTrainee"
         element={<FromCurrentNonRegisteredCoursePageTrainee />}
+        />
+
+        
+        <Route
+        path="/FilteredCoursesPageTrainee"
+        element={<FilteredCoursesPageTrainee />}
+        />
+
+        
+        <Route
+        path="/FilteredCoursesPageCorporateTrainee"
+        element={<FilteredCoursesPageCorporateTrainee />}
+        />
+
+        
+        <Route
+        path="/FilteredCoursesInstructorPage"
+        element={<FilteredCoursesInstructorPage />}
         />
 
         

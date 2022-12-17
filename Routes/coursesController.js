@@ -11,6 +11,16 @@ const individual_Trainee = require("../Models/Individual Trainee");
 const corporate_Trainee = require("../Models/corporateTrainees");
 
 
+const router = require("express").Router();
+const session = require('express-session');
+router.use(session( 
+	{
+	secret : 'secret-key',
+	resave : false ,
+	saveUninitialized : true,
+	}));
+
+
 
 const addSubtitle = async(req,res) => {
 
@@ -360,14 +370,19 @@ const isCurrentCourseRegistered = async (req,res) => {
             try{
                 const courseId = req.query.CourseId;
                 const traineeId = req.query.TraineeId;
+                const userid= req.session.user._id;
+                console.log("userid"+userid);
                 const corporateTraineeId = req.query.CorporateTraineeId;
                 let x = false;
                 console.log(corporateTraineeId)
                 if(corporateTraineeId==null)
                 {
-                    const currTrainee=await individual_Trainee.findById({_id:traineeId});
-                    console.log(currTrainee.Registered_Courses)
-                    const registeredCourses = currTrainee.Registered_Courses;
+                    //const currTrainee=await individual_Trainee.findById({_id:traineeId});
+                    const usertrainee =await individual_Trainee.findById({_id:userid}); 
+                    //console.log(currTrainee.Registered_Courses)
+                    console.log("usertraineeregcourses"+usertrainee.Registered_Courses)
+                    // const registeredCourses = currTrainee.Registered_Courses;
+                    const registeredCourses = usertrainee.Registered_Courses;
                     var isFound = 0;
                     var courseFound=null;
                     for(let i =0;i<registeredCourses.length;i++)
@@ -459,6 +474,82 @@ const Filter_By_Subject_And_Rating_And_Price= async (req,res) => {
             }
             // const data2= await instructor.find({ },{ _id: 0, Course: 1 } )
             res.status(200).json(data);
-            };   
+            }; 
+            
+            
+const FilteredCourses = async (req,res) => {
+            const subject = req.query.Subject;
+            const rating = req.query.Rating;
+            const price = req.query.Price;
+            var filteredCourses=null;
 
-module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addANewInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered};
+            if(subject==null||subject=="")
+            {
+                if(rating==null||rating=="")
+                {
+                    if(price==null||price=="")
+                    {
+                        filteredCourses = await course.find({});
+
+                        res.status(200).json(filteredCourses);
+                    }
+                    else
+                    {
+                        filteredCourses = await course.find({Price:price});
+
+                        res.status(200).json(filteredCourses);
+                    }
+                }
+                else
+                {
+                    if(price==null||price=="")
+                    {
+                        filteredCourses = await course.find({Rating:rating});
+
+                        res.status(200).json(filteredCourses);
+                    }
+                    else
+                    {
+                        filteredCourses = await course.find({Rating:rating,Price:price});
+
+                        res.status(200).json(filteredCourses);
+                    }
+                }
+            }
+            else
+            {
+                if(rating==null||rating=="")
+                {
+                    if(price==null||price=="")
+                    {
+                        filteredCourses = await course.find({Subject:subject});
+
+                        res.status(200).json(filteredCourses);
+                    }
+                    else
+                    {
+                        filteredCourses = await course.find({Subject:subject,Price:price});
+
+                        res.status(200).json(filteredCourses);
+                    }
+                }
+                else
+                {
+                    if(price==null||price=="")
+                    {
+                        filteredCourses = await course.find({Subject:subject,Rating:rating});
+
+                        res.status(200).json(filteredCourses);
+                    }
+                    else
+                    {
+                        filteredCourses = await course.find({Subject:subject,Rating:rating,Price:price});
+
+                        res.status(200).json(filteredCourses);
+
+                    }
+                }
+            }
+            }; 
+
+module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addANewInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,FilteredCourses};

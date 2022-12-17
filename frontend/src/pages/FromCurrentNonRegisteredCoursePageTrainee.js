@@ -18,8 +18,8 @@
     import CurrentCourseSubtitlesPageTrainee from "./CurrentCourseSubtitlesPageTrainee";
     import RadioButtonsRateACourse from "../components/RadioButtonsRateACourse";
     import TraineeSubtitleTitlesPage from "./TraineeSubtitleTitlesPage";
-import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
-import CurrentNonRegisteredCoursePageDetailsTrainee from "../components/CurrentNonRegisteredCoursePageDetailsTrainee";
+    import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+    import CurrentNonRegisteredCoursePageDetailsTrainee from "../components/CurrentNonRegisteredCoursePageDetailsTrainee";
     
 
 

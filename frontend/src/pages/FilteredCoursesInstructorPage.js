@@ -1,5 +1,7 @@
 
 
+
+
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate } from "react-router-dom";
@@ -13,20 +15,73 @@
 import FilterMyCoursesInstructorComponent from "../components/FilterMyCoursesInstructorComponent";
 
 
-    const InstructorCoursePage = () => {
+    const FilteredCoursesInstructorPage = () => {
     const [courses, setCourses] = useState(null)
     const [searchQuery, setSearchQuery] = useState("")
     const [searchPriceQuery, setSearchPriceQuery] = useState("")
 
     useEffect(() => {
         const fetchInstructor = async () => {
-        //const response = await fetch('/View_My_Courses/Layla')
-        //const response = await fetch(`/View_My_Courses/Layla/?q=${searchQuery}`)
+        
         const params = new URLSearchParams(window.location.search);
         const instructorId = params.get('id');
+        const rating = params.get('Rating');
+        const price = params.get('Price');
+        const subject = params.get('Subject');
         console.log(instructorId); 
 
-        const response = await fetch(`/MyCourses/${instructorId}/?q=${searchQuery}`)
+        var response;
+
+        if(rating==null||rating=="")
+        {
+            if(subject==null||subject=="")
+            {
+                if(price==null||price=="")
+                {
+                    response = await fetch(`/FilterMyCourses/?q=${searchQuery}&id=${instructorId}`)
+                }
+                else
+                {
+                    response = await fetch(`/FilterMyCourses/?Price=${price}&q=${searchQuery}&id=${instructorId}`)
+                }
+            }
+            else
+            {
+                if(price==null||price=="")
+                {
+                    response = await fetch(`/FilterMyCourses/?Subject=${subject}&q=${searchQuery}&id=${instructorId}`)
+                }
+                else
+                {
+                    response = await fetch(`/FilterMyCourses/?Subject=${subject}&Price=${price}&q=${searchQuery}&id=${instructorId}`)
+                }
+            }
+        }
+        else
+        {
+            if(subject==null||subject=="")
+            {
+                if(price==null||price=="")
+                {
+                    response = await fetch(`/FilterMyCourses/?Rating=${rating}&q=${searchQuery}&id=${instructorId}`)
+                }
+                else
+                {
+                    response = await fetch(`/FilterMyCourses/?Rating=${rating}&Price=${price}&q=${searchQuery}&id=${instructorId}`)
+                }
+            }
+            else
+            {
+                if(price==null||price=="")
+                {
+                    response = await fetch(`/FilterMyCourses/?Rating=${rating}&Subject=${subject}&q=${searchQuery}&id=${instructorId}`)
+                }
+                else
+                {
+                    response = await fetch(`/FilterMyCourses/?Rating=${rating}&Subject=${subject}&Price=${price}&q=${searchQuery}&id=${instructorId}`)
+                }
+            }
+        }
         
         
         console.log(searchQuery)
@@ -43,23 +98,7 @@ import FilterMyCoursesInstructorComponent from "../components/FilterMyCoursesIns
     }, [searchQuery])
 
 
-    // const searchMyCourses=  async () => {
-        
-    //     const params = new URLSearchParams(window.location.search);
-    //     const instructorId = params.get('id');
-    //     console.log(instructorId); 
-
-    //     const response = await fetch(`/MyCourses/?id=${instructorId}`)
-        
-    //     const json = await response.json()
-    //     console.log(response)
-    //     console.log( json)
-
-    //     if (response.ok) {
-    //         setCourses(json)
-    //     }
-
-    // }
+    
 
         let navigate = useNavigate();
         const routeChange = () =>{ 
@@ -117,4 +156,4 @@ import FilterMyCoursesInstructorComponent from "../components/FilterMyCoursesIns
     )
     }
 
-    export default InstructorCoursePage
+    export default FilteredCoursesInstructorPage

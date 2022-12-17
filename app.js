@@ -51,7 +51,7 @@ const admins = require('./Models/Administrator');
 const pendingInstructors = require('./Models/pendingInstructors');
 const corporateTrainees = require('./Models/corporateTrainees');
 const individual_Trainee=require('./Models/Individual Trainee');
-const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,addANewInstructor,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered} = require('./Routes/coursesController');
+const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,addANewInstructor,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,FilteredCourses} = require('./Routes/coursesController');
 
 const {addUserRating,saveUserRating} = require('./Routes/usersController');
 
@@ -217,6 +217,7 @@ app.get("/home", data);
 
 app.get("/View_All_Courses/",async (req,res)=>{
 
+
   const q = req.query.q;
   
 
@@ -227,19 +228,198 @@ app.get("/View_All_Courses/",async (req,res)=>{
     );
   };
 
-  if(parseInt(q))
-  {
+  // if(parseInt(q))
+  // {
     
-    const allCourses = await course.find({"Rating":q}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Rating:1,Course_Description:1 }).sort({createdAt:-1}) ;
+  //   const allCourses = await course.find({"Rating":q}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Rating:1,Course_Description:1 }).sort({createdAt:-1}) ;
     
-    res.status(200).json(allCourses);
-  }
-  else{
+  //   res.status(200).json(allCourses);
+  // }
+  // else{
     const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Course_Description:1 }).sort({createdAt:-1}) ;
     res.status(200).json(search(allCourses));
-  }
+  //}
 
 
+
+});
+
+//app.get("/FilteredCourses",FilteredCourses);
+app.get("/FilteredCourses",async (req,res)=>{
+
+
+  const q = req.query.q;
+  
+
+  const keys=["Title","Subject"];
+  const search = (data)=>{
+    return data.filter((item)=>
+    keys.some((key)=>item[key].toLowerCase().includes(q))
+    );
+  };
+
+            const subject = req.query.Subject;
+            const rating = req.query.Rating;
+            const price = req.query.Price;
+            // const filteredCourses=null;
+
+            if(subject==null||subject=="")
+            {
+                if(rating==null||rating=="")
+                {
+                    if(price==null||price=="")
+                    {
+                        const filteredCourses = await course.find({});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                    else
+                    {
+                        const filteredCourses = await course.find({Price:price});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                }
+                else
+                {
+                    if(price==null||price=="")
+                    {
+                        const filteredCourses = await course.find({Rating:rating});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                    else
+                    {
+                        const filteredCourses = await course.find({Rating:rating,Price:price});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                }
+            }
+            else
+            {
+                if(rating==null||rating=="")
+                {
+                    if(price==null||price=="")
+                    {
+                        const filteredCourses = await course.find({Subject:subject});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                    else
+                    {
+                        const filteredCourses = await course.find({Subject:subject,Price:price});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                }
+                else
+                {
+                    if(price==null||price=="")
+                    {
+                        const filteredCourses = await course.find({Subject:subject,Rating:rating});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                    else
+                    {
+                        const filteredCourses = await course.find({Subject:subject,Rating:rating,Price:price});
+
+                        res.status(200).json(search(filteredCourses));
+
+                    }
+                }
+            }
+
+});
+
+app.get("/FilterMyCourses",async (req,res)=>{
+
+
+  const q = req.query.q;
+  const instructorId= req.query.id;
+  // const instData=await course.find({Instructor:mongoose.Types.ObjectId(instructorId),"Price":p},{}).sort({createdAt:-1});
+  
+
+  const keys=["Title","Subject"];
+  const search = (data)=>{
+    return data.filter((item)=>
+    keys.some((key)=>item[key].toLowerCase().includes(q))
+    );
+  };
+
+            const subject = req.query.Subject;
+            const rating = req.query.Rating;
+            const price = req.query.Price;
+            // const filteredCourses=null;
+
+            if(subject==null||subject=="")
+            {
+                if(rating==null||rating=="")
+                {
+                    if(price==null||price=="")
+                    {
+                        const filteredCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId)}).sort({createdAt:-1});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                    else
+                    {
+                        const filteredCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId),Price:price}).sort({createdAt:-1});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                }
+                else
+                {
+                    if(price==null||price=="")
+                    {
+                        const filteredCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId),Rating:rating}).sort({createdAt:-1});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                    else
+                    {
+                        const filteredCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId),Rating:rating,Price:price}).sort({createdAt:-1});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                }
+            }
+            else
+            {
+                if(rating==null||rating=="")
+                {
+                    if(price==null||price=="")
+                    {
+                        const filteredCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId),Subject:subject}).sort({createdAt:-1});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                    else
+                    {
+                        const filteredCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId),Subject:subject,Price:price}).sort({createdAt:-1});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                }
+                else
+                {
+                    if(price==null||price=="")
+                    {
+                        const filteredCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId),Subject:subject,Rating:rating}).sort({createdAt:-1});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                    else
+                    {
+                        const filteredCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId),Subject:subject,Rating:rating,Price:price}).sort({createdAt:-1});
+
+                        res.status(200).json(search(filteredCourses));
+
+                    }
+                }
+            }
 
 });
 
@@ -300,6 +480,8 @@ app.get("/indiviualTraineeRegisterCourse",indiviualTraineeRegisterCourse);
 app.get("/corporateTraineeRegisterCourse",corporateTraineeRegisterCourse);
 
 app.get("/fetchCorporateTraineeProfileDetails",fetchCorporateTraineeProfileDetails);
+
+
 
 
 app.get("/viewMyRegisteredCourses",viewMyRegisteredCourses);

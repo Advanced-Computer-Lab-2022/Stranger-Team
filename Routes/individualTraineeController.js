@@ -43,10 +43,11 @@
     const viewMyRegisteredCourses = async(req,res) => {
     
         const individualTraineeId = req.query.TraineeId;
-        
+        const userid = req.session.user._id;
 
     try{
-    const currTrainee = await individual_Trainee.findById({_id:individualTraineeId});
+    // const currTrainee = await individual_Trainee.findById({_id:individualTraineeId});
+    const currTrainee = await individual_Trainee.findById({_id:userid});
     const coursesArray = currTrainee.Registered_Courses;
     const coursesArray1 = [];
     console.log(coursesArray)
@@ -83,12 +84,17 @@
 const traineeSendReport = async(req,res) => {
 
     const traineeId = req.query.TraineeId;
+    const userid= req.session.user._id;
     const {Reported_Problem,Report_Type} = req.body;
-    const trainee = await individual_Trainee.findById({_id:traineeId});
+    // const trainee = await individual_Trainee.findById({_id:traineeId});
+    const trainee = await individual_Trainee.findById({_id:userid});
     const traineeUsername = trainee.Username;
 
+    console.log("trainee"+trainee);
+    console.log("traineeUsername"+traineeUsername);
+
     try{
-    const result = await reportedProblem.create({Trainee_Id:traineeId,Reported_Problem,Report_Type,Status:"Delivered", Username:traineeUsername});
+    const result = await reportedProblem.create({Trainee_Id:userid,Reported_Problem,Report_Type,Status:"Delivered", Username:traineeUsername});
     console.log(result)
     res.status(200).json(result)
     }
@@ -100,11 +106,13 @@ const traineeSendReport = async(req,res) => {
 const fetchTraineeAllPreviousReports = async(req,res) => {
 
     const traineeId = req.query.TraineeId;
+    const userid = req.session.user._id;
     const allReports=[];
 
     try{
-    const resolvedProblems = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Resolved"}).populate('Trainee_Id');
-    const underSupervisionProblems = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Pending"}).populate('Trainee_Id');
+    // const resolvedProblems = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Resolved"}).populate('Trainee_Id');
+    const resolvedProblems = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(userid),Status:"Resolved"}).populate('Trainee_Id');
+    const underSupervisionProblems = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(userid),Status:"Pending"}).populate('Trainee_Id');
     for (let i = 0; i < resolvedProblems.length; i++) {
                 allReports.push(resolvedProblems[i]);
         }
@@ -124,9 +132,11 @@ const fetchTraineeAllPreviousReports = async(req,res) => {
 const fetchTraineeDeliveredReports = async(req,res) => {
 
     const traineeId = req.query.TraineeId;
+    const userid = req.session.user._id;
 
     try{
-    const deliveredProblems = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Delivered"}).populate('Trainee_Id');
+    // const deliveredProblems = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Delivered"}).populate('Trainee_Id');
+    const deliveredProblems = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(userid),Status:"Delivered"}).populate('Trainee_Id');
 
     console.log(deliveredProblems)
     res.status(200).json(deliveredProblems)
@@ -139,9 +149,11 @@ const fetchTraineeDeliveredReports = async(req,res) => {
 const fetchTraineePendingReports = async(req,res) => {
 
     const traineeId = req.query.TraineeId;
+    const userid = req.session.user._id;
 
     try{
-    const pendingProblems = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Pending"}).populate('Trainee_Id');
+    // const pendingProblems = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Pending"}).populate('Trainee_Id');
+    const pendingProblems = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(userid),Status:"Pending"}).populate('Trainee_Id');
 
     console.log(pendingProblems)
     res.status(200).json(pendingProblems)
@@ -154,9 +166,12 @@ const fetchTraineePendingReports = async(req,res) => {
 const fetchTraineeResolvedReports = async(req,res) => {
 
     const traineeId = req.query.TraineeId;
+    const userid = req.session.user._id;
+
 
     try{
-    const resolvedProblems = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Resolved"}).populate('Trainee_Id');
+    // const resolvedProblems = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Resolved"}).populate('Trainee_Id');
+    const resolvedProblems = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(userid),Status:"Resolved"}).populate('Trainee_Id');
 
     console.log(resolvedProblems)
     res.status(200).json(resolvedProblems)
@@ -185,9 +200,12 @@ const fetchProblem = async(req,res) => {
 const fetchTraineeProfileDetails = async(req,res) => {
 
     const traineeId = req.query.TraineeId;
+    const userid = req.session.user._id;
 
     try{
-    const trainee = await individual_Trainee.findById({_id:traineeId});
+    // const trainee = await individual_Trainee.findById({_id:traineeId});
+    // console.log(trainee)
+    const trainee = await individual_Trainee.findById({_id:userid});
     console.log(trainee)
     res.status(200).json(trainee)
     }
@@ -199,11 +217,13 @@ const fetchTraineeProfileDetails = async(req,res) => {
 const fetchNonRegisteredTraineeCoursesForInstructor = async(req,res) => {
 
     const traineeId = req.query.TraineeId;
+    const userid = req.session.user._id;
     const instructorId = req.query.id;
 
 
     try{
-    const trainee = await individual_Trainee.findById({_id:traineeId});
+    // const trainee = await individual_Trainee.findById({_id:traineeId});
+    const trainee = await individual_Trainee.findById({_id:userid});
     const traineeRegisteredCourses = trainee.Registered_Courses;
     const instructorCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId)}).populate('Instructor');
     const traineeNonRegisteredCourses = [];
@@ -233,11 +253,13 @@ const fetchNonRegisteredTraineeCoursesForInstructor = async(req,res) => {
 const checkIfAdminRespondedTrainee = async(req,res) => {
 
     const traineeId = req.query.TraineeId;
+    const userid = req.session.user._id;
     const reportId = req.query.ReportId;
 
     try{
 
-    const allReports = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Pending"}).populate('Trainee_Id');
+    // const allReports = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Pending"}).populate('Trainee_Id');
+    const allReports = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(userid),Status:"Pending"}).populate('Trainee_Id');
     
     const adminResponseArray=[];
     for(let i=0;i<allReports.length;i++)
@@ -263,7 +285,7 @@ const checkIfAdminRespondedTrainee = async(req,res) => {
 }
 
 //updating status from pending to resolved
-        const updateReportStatusFromPendingToResolvedTrainee = async (req, res) => {
+    const updateReportStatusFromPendingToResolvedTrainee = async (req, res) => {
         const RID = req.query.ReportId;
 
         try{

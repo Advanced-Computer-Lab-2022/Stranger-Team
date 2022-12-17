@@ -15,28 +15,99 @@
     import StarRating from "../components/StarRating";
     import PreviewCourseVideoPageDetails from '../components/PreviewCourseVideoTraineePageDetails'
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+import FilterMyCoursesInstructorComponent from "../components/FilterMyCoursesInstructorComponent";
 
-    const Home1 = () => {
+    const FilteredCoursesPageTrainee = () => {
     const [courses, setCourses] = useState(null)
     const [searchQuery, setSearchQuery] = useState("")
     const [searchRateQuery, setSearchRateQuery] = useState("");
-    const [isRegistered, setIsRegistered] = useState("");
     const [currcourseid, setcurrcourseid] = useState("");
+    const [error, setError] = useState("");
 
 
     useEffect(() => {
         const fetchCourses = async () => {
+
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
-        console.log(traineeId); 
+        const rating = params.get('Rating');
+        const price = params.get('Price');
+        const subject = params.get('Subject');
 
+        var response;
 
-        const response = await fetch(`/View_All_Courses/?q=${searchQuery}`)
-        
+        if(rating==null||rating=="")
+        {
+            if(subject==null||subject=="")
+            {
+                if(price==null||price=="")
+                {
+                    response = await fetch(`/FilteredCourses/?q=${searchQuery}`)
+                }
+                else
+                {
+                    response = await fetch(`/FilteredCourses/?Price=${price}&q=${searchQuery}`)
+                }
+            }
+            else
+            {
+                if(price==null||price=="")
+                {
+                    response = await fetch(`/FilteredCourses/?Subject=${subject}&q=${searchQuery}`)
+                }
+                else
+                {
+                    response = await fetch(`/FilteredCourses/?Subject=${subject}&Price=${price}&q=${searchQuery}`)
+                }
+            }
+        }
+        else
+        {
+            if(subject==null||subject=="")
+            {
+                if(price==null||price=="")
+                {
+                    response = await fetch(`/FilteredCourses/?Rating=${rating}&q=${searchQuery}`)
+                }
+                else
+                {
+                    response = await fetch(`/FilteredCourses/?Rating=${rating}&Price=${price}&q=${searchQuery}`)
+                }
+            }
+            else
+            {
+                if(price==null||price=="")
+                {
+                    response = await fetch(`/FilteredCourses/?Rating=${rating}&Subject=${subject}&q=${searchQuery}`)
+                }
+                else
+                {
+                    response = await fetch(`/FilteredCourses/?Rating=${rating}&Subject=${subject}&Price=${price}&q=${searchQuery}`)
+                }
+            }
+        }
+
+        // const response = await fetch(`/FilteredCourses/?Rating=${rating}&Subject=${subject}&Price=${price}`)
+        console.log(response)
+
         const json = await response.json()
+
+
         console.log(json)
+
+        if (!response.ok) {
+        setError(json.error)
         
+        }
+        if (response.ok) {
+        
+        setError(null)
+        // setRate('')
+        // setSubject('')
+        // setPrice('')
         setCourses(json)
+        
+        
+        }
         
         }
 
@@ -55,16 +126,6 @@
         let path = '/CourseFilterByRate'; 
         navigate(path);
     }
-
-    // const routeChange3 = () =>{ 
-    //     let path = '/CourseSearchByTitle'; 
-    //     navigate(path);
-    // }
-
-    // const routeChange4 = () =>{ 
-    //     let path = '/CourseSearchByInstructorName'; 
-    //     navigate(path);
-    // }
 
     const routeChange5 = () =>{ 
         let path = '/CourseFilterBySubjectAndPrice'; 
@@ -115,11 +176,9 @@
 
         // }
         
-        setIsRegistered(json);
-        console.log("isRegistered"+isRegistered)
         if(json===true||json==="true")
         {
-            console.log("kk")
+            
             const params = new URLSearchParams(window.location.search);
             const traineeId = params.get('TraineeId');
             window.location.href=`/FromCurrentNonRegisteredCoursePageTrainee/?CourseId=${courseid}&TraineeId=${traineeId}`;
@@ -133,10 +192,6 @@
         
     }
 
-    // () =>{
-    //             const params = new URLSearchParams(window.location.search);
-    //             const traineeId = params.get('TraineeId');
-    //             window.location.href=`/CurrentNonRegisteredCoursePageTrainee?CourseId=${course._id}&TraineeId=${traineeId}`}
 
     return (
 
@@ -151,7 +206,7 @@
             </div> */}
             
             <div className="courses">
-            <FilterCoursesByRateComponent/>
+            <FilterMyCoursesInstructorComponent/>
 
 
             {courses && courses.map(course => (
@@ -192,4 +247,4 @@
     )
     }
 
-    export default Home1
+    export default FilteredCoursesPageTrainee

@@ -4,7 +4,7 @@ const Token = require("../Models/Token");
 const crypto = require("crypto");
 const sendEmail = require("./Emailer");
 const bcrypt = require("bcrypt");
-
+const countryToCurrency = require('iso-country-currency');
 
 router.post("/", async (req, res) => {
 	console.log(req.body);
@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
 		const hashPassword = await bcrypt.hash(req.body.Password, salt);
 
 		user = await new User({ ...req.body, Password: hashPassword }).save();
-
+		user.Currency = countryToCurrency.getParamByParam('countryName', user.Country, 'Currency');
 		const token = await new Token({
 			userId: user._id,
 			token: crypto.randomBytes(32).toString("hex"),
@@ -55,7 +55,7 @@ router.get("/:id/verify/:token/", async (req, res) => {
 		
 		if (!token) return res.status(400).send({ message: "Invalid link" });
 
-		 await User.updateOne({ Email: user.Email, verified: true });
+		await User.updateOne({ Email: user.Email, verified: true });
 				console.log("user:");
 
 		await token.remove();
