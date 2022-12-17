@@ -69,14 +69,36 @@
 const corporateTraineeSendReport = async(req,res) => {
 
     const traineeId = req.query.CorporateTraineeId;
-    const {Reported_Problem,Report_Type} = req.body;
+    const {Report_Title,Reported_Problem,Report_Type} = req.body;
     const trainee = await corporate_Trainee.findById({_id:traineeId});
     const traineeUsername = trainee.Username;
 
     try{
-    const result = await reportedProblem.create({Corporate_Trainee_Id:traineeId,Reported_Problem,Report_Type,Status:"Delivered", Username:traineeUsername});
+    const result = await reportedProblem.create({Corporate_Trainee_Id:traineeId,Report_Title,Reported_Problem,Report_Type,Status:"Delivered", Username:traineeUsername,Role:"Corporate Trainee"});
     console.log(result)
     res.status(200).json(result)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+
+const corporateTraineeSendFollowup = async(req,res) => {
+
+    //const traineeId = req.query.TraineeId;
+    const reportId = req.query.ReportId;
+    const {Followup} = req.body;
+    
+
+    try{
+    
+    const currReport = await reportedProblem.findById({_id:reportId});
+    const newtitle = "Followup on: "+currReport.Report_Title;
+    const followupArray = currReport.Followups;
+    followupArray.push(Followup);
+    const updatedReport = await reportedProblem.findByIdAndUpdate({_id:reportId},{Report_Title:newtitle,Status:"Delivered",Followups:followupArray},{new:true})
+    console.log(updatedReport)
+    res.status(200).json(updatedReport)
     }
     catch(error){
         res.status(400).json({error:error.message});
@@ -245,4 +267,4 @@ const requestCourseAccess = async(req,res) => {
 
 
 
-    module.exports ={corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,addCorporateTrainee,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem,fetchNonRegisteredCorporateTraineeCoursesForInstructor, requestCourseAccess};
+    module.exports ={corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,addCorporateTrainee,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem,fetchNonRegisteredCorporateTraineeCoursesForInstructor, requestCourseAccess,corporateTraineeSendFollowup};

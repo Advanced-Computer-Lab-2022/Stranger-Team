@@ -97,6 +97,9 @@ import CourseRequestsPage from './pages/courseRequests'
 import FilteredCoursesPageTrainee from './pages/FilteredCoursesPageTrainee';
 import FilteredCoursesPageCorporateTrainee from './pages/FilteredCoursesPageCorporateTrainee';
 import FilteredCoursesInstructorPage from './pages/FilteredCoursesInstructorPage';
+import TraineeCurrentPendingReportPage from './pages/TraineeCurrentPedningReportPage';
+import CorporateTraineeCurrentPendingReportPage from './pages/CorporateTraineeCurrentPendingReportPage';
+import InstructorCurrentPendingReportPage from './pages/InstructorCurrentPendingReportPage';
 
 function App() {
    const User = localStorage.getItem("token");
@@ -268,6 +271,25 @@ function App() {
         <Route
         path="/TraineeProfilePage"
         element={<TraineeProfilePage />}
+        />
+
+        
+        <Route
+        path="/TraineeCurrentPendingReportPage"
+        element={<TraineeCurrentPendingReportPage />}
+        />
+
+        
+
+        <Route
+        path="/CorporateTraineeCurrentPendingReportPage"
+        element={<CorporateTraineeCurrentPendingReportPage />}
+        />
+
+        
+        <Route
+        path="/InstructorCurrentPendingReportPage"
+        element={<InstructorCurrentPendingReportPage />}
         />
 
         <Route

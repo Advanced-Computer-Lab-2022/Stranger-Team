@@ -29,9 +29,14 @@ const courseSchema = new Schema({
     type: Number,
     required:false
   },
-  // Discount_Period:{
-  //   type:
-  // },
+  Discount_Start_Date:{
+    type: Date,
+    required:false
+  },
+  Discount_End_Date:{
+    type: Date,
+    required:false
+  },
   Course_Description:{
     type:String,
     required:false
@@ -40,10 +45,10 @@ const courseSchema = new Schema({
     type:String,
     required:true
   },
-    Instructor:{
+  Instructor:{
         type: mongoose.Types.ObjectId,
         ref:'instructor'
-    },
+  },
     Rating:{
       type:Number,
       required:false

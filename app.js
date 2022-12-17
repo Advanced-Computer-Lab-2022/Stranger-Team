@@ -51,20 +51,20 @@ const admins = require('./Models/Administrator');
 const pendingInstructors = require('./Models/pendingInstructors');
 const corporateTrainees = require('./Models/corporateTrainees');
 const individual_Trainee=require('./Models/Individual Trainee');
-const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,addANewInstructor,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,FilteredCourses} = require('./Routes/coursesController');
+const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,addANewInstructor,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,FilteredCourses,isDiscountViable} = require('./Routes/coursesController');
 
 const {addUserRating,saveUserRating} = require('./Routes/usersController');
 
-const {insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor,reviewingAnInstructor,getInstructorRatings,instructorSendReport,fetchInstructorAllPreviousReports,fetchInstructorDeliveredReports,fetchInstructorPendingReports,fetchInstructorResolvedReports,fetchInstructorProblem} = require('./Routes/instructorController');
+const {insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor,reviewingAnInstructor,getInstructorRatings,instructorSendReport,fetchInstructorAllPreviousReports,fetchInstructorDeliveredReports,fetchInstructorPendingReports,fetchInstructorResolvedReports,fetchInstructorProblem,instructorSendFollowup} = require('./Routes/instructorController');
 
 const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests} = require('./Routes/adminController');
 
 //solving exercises
 const {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults, viewAnswers,addQuestion} = require('./Routes/solvingExercisesController');
 
-const {addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports,fetchTraineeProfileDetails,fetchTraineeDeliveredReports,fetchTraineePendingReports,fetchTraineeResolvedReports,fetchProblem,fetchNonRegisteredTraineeCoursesForInstructor,checkIfAdminRespondedTrainee,updateReportStatusFromPendingToResolvedTrainee} = require('./Routes/individualTraineeController');
+const {addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports,fetchTraineeProfileDetails,fetchTraineeDeliveredReports,fetchTraineePendingReports,fetchTraineeResolvedReports,fetchProblem,fetchNonRegisteredTraineeCoursesForInstructor,checkIfAdminRespondedTrainee,updateReportStatusFromPendingToResolvedTrainee,traineeSendFollowup} = require('./Routes/individualTraineeController');
 
-const {corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem,fetchNonRegisteredCorporateTraineeCoursesForInstructor, requestCourseAccess} = require('./Routes/corporateTraineeController');
+const {corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem,fetchNonRegisteredCorporateTraineeCoursesForInstructor, requestCourseAccess,corporateTraineeSendFollowup} = require('./Routes/corporateTraineeController');
 
 
 
@@ -445,6 +445,8 @@ app.get("/getInstructorRatings",getInstructorRatings);
 
 app.get("/fetchInstructorAllPreviousReports",fetchInstructorAllPreviousReports);
 
+app.post("/traineeSendFollowup",traineeSendFollowup);
+
 app.get("/fetchTraineeDeliveredReports",fetchTraineeDeliveredReports);
 
 app.get("/fetchTraineePendingReports",fetchTraineePendingReports);
@@ -465,6 +467,8 @@ app.get("/fetchCorporateTraineeResolvedReports",fetchCorporateTraineeResolvedRep
 
 app.get("/fetchCorporateProblem",fetchCorporateProblem);
 
+app.post("/corporateTraineeSendFollowup",corporateTraineeSendFollowup);
+
 app.get("/fetchInstructorDeliveredReports",fetchInstructorDeliveredReports);
 
 app.get("/fetchInstructorPendingReports",fetchInstructorPendingReports);
@@ -472,6 +476,8 @@ app.get("/fetchInstructorPendingReports",fetchInstructorPendingReports);
 app.get("/fetchInstructorResolvedReports",fetchInstructorResolvedReports);
 
 app.get("/fetchInstructorProblem",fetchInstructorProblem);
+
+app.post("/instructorSendFollowup",instructorSendFollowup);
 
 
 
@@ -521,6 +527,8 @@ app.post("/Filter_By_Subject_And_Rating/",Filter_By_Subject_And_Rating);
 app.post("/Filter_By_Subject_And_Rating_And_Price/",Filter_By_Subject_And_Rating_And_Price);
 
 app.post("/createCourse/", createCourse);
+
+app.get("/isDiscountViable",isDiscountViable);
 //app.get("/View_My_Courses/:Instructor_Name",insttitles);
 
 // app.get("/View_My_Courses/:Instructor_Name",async (req,res)=>{

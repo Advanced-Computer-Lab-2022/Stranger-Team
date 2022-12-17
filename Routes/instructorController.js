@@ -147,12 +147,35 @@ const { update } = require("../Models/User");
     const currInstructor = await instructor.findById({_id:instructorId});
     const currInstructorUsername = currInstructor.Username;
     
-    const {Reported_Problem,Report_Type} = req.body;
+    const {Report_Title,Reported_Problem,Report_Type} = req.body;
+
 
     try{
-    const result = await reportedProblem.create({Instructor_Id:instructorId,Reported_Problem,Report_Type,Status:"Delivered",Username:currInstructorUsername});
+    const result = await reportedProblem.create({Instructor_Id:instructorId,Report_Title,Reported_Problem,Report_Type,Status:"Delivered",Username:currInstructorUsername,Role:"From Instructor"});
     console.log(result)
     res.status(200).json(result)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+
+const instructorSendFollowup = async(req,res) => {
+
+    //const traineeId = req.query.TraineeId;
+    const reportId = req.query.ReportId;
+    const {Followup} = req.body;
+    
+
+    try{
+    
+    const currReport = await reportedProblem.findById({_id:reportId});
+    const newtitle = "Followup on: "+currReport.Report_Title;
+    const followupArray = currReport.Followups;
+    followupArray.push(Followup);
+    const updatedReport = await reportedProblem.findByIdAndUpdate({_id:reportId},{Report_Title:newtitle,Status:"Delivered",Followups:followupArray},{new:true})
+    console.log(updatedReport)
+    res.status(200).json(updatedReport)
     }
     catch(error){
         res.status(400).json({error:error.message});
@@ -247,7 +270,7 @@ const fetchInstructorProblem = async(req,res) => {
 
 
 
-    module.exports ={insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor,reviewingAnInstructor,getInstructorRatings,instructorSendReport,fetchInstructorAllPreviousReports,fetchInstructorDeliveredReports,fetchInstructorPendingReports,fetchInstructorResolvedReports,fetchInstructorProblem};
+    module.exports ={insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor,reviewingAnInstructor,getInstructorRatings,instructorSendReport,fetchInstructorAllPreviousReports,fetchInstructorDeliveredReports,fetchInstructorPendingReports,fetchInstructorResolvedReports,fetchInstructorProblem,instructorSendFollowup};
 
     // module.exports =filterTitles;
     //module.exports =createinst;

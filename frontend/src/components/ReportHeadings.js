@@ -12,8 +12,8 @@
     return (
 
         <div className="course-details">
-        <h4><strong>Reported Problem: </strong></h4>
-        <p>{problem.Reported_Problem}</p>
+        <h4><strong>Report Title: </strong></h4>
+        <p><strong>{problem.Report_Title}</strong></p>
         <hr/>
         </div>
         

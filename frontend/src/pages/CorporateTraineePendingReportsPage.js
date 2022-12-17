@@ -66,7 +66,7 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
                     const params = new URLSearchParams(window.location.search);
                     const traineeId = params.get('CorporateTraineeId');
                     console.log(traineeId);
-                    window.location.href=`/CorporateTraineeCurrentReportPage?ReportId=${problem._id}&CorporateTraineeId=${traineeId}`}}
+                    window.location.href=`/CorporateTraineeCurrentPendingReportPage?ReportId=${problem._id}&CorporateTraineeId=${traineeId}`}}
                 key={problem._id}>
             <ReportHeadings problem={problem} key={problem.id} />
             

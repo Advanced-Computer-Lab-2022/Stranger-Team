@@ -10,6 +10,10 @@ const corporateTraineeReportSchema = new Schema({
         ref:'corporateTrainees',
         required:true
     },
+    Report_Title:{
+        type:String,
+        required:true
+    },
     Reported_Problem:{
         type:String,
         required:true
@@ -28,6 +32,14 @@ const corporateTraineeReportSchema = new Schema({
     },
     Username:{
         type:String,
+        required:false
+    },
+    Role:{
+        type:String,
+        required:false
+    },
+    Followups:{
+        type:[String],
         required:false
     }
 }, { timestamps: true });

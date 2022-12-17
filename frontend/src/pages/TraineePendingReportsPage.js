@@ -65,7 +65,7 @@ import ReportHeadings from "../components/ReportHeadings";
                     const params = new URLSearchParams(window.location.search);
                     const traineeId = params.get('TraineeId');
                     console.log(traineeId);
-                    window.location.href=`/TraineeCurrentReportPage?ReportId=${problem._id}&TraineeId=${traineeId}`}}
+                    window.location.href=`/TraineeCurrentPendingReportPage?ReportId=${problem._id}&TraineeId=${traineeId}`}}
                 key={problem._id}>
             <ReportHeadings problem={problem} key={problem.id} />
             

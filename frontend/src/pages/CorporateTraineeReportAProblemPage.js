@@ -1,7 +1,9 @@
     import { useState } from 'react'
+import CorporateTraineeProfileNavBar from '../components/CorporateTraineeProfileNavBar'
 
     const CorporateTraineeReportAProblemPage = () => {
     const [Reported_Problem,setReported_Problem] = useState('')
+    const [Report_Title,setReport_Title] = useState('')
     const[Report_Type,setReport_Type]= useState('')
     const [error, setError] = useState(null)
 
@@ -13,7 +15,7 @@
         const courseId = queryParams.get('CourseId');
 
 
-        const report = {Reported_Problem,Report_Type};
+        const report = {Report_Title,Reported_Problem,Report_Type};
         console.log(report)
 
         const response = await fetch(`/corporateTraineeSendReport/?CorporateTraineeId=${corporateTraineeId}`, {
@@ -34,16 +36,19 @@
         if (response.ok) {
         setError(null)
         setReported_Problem('')
+        setReport_Title('')
         setReport_Type(null)
         
         console.log('report sent:', json)
-        window.location=`http://localhost:3000/CurrentCoursePageTrainee?CorporateTraineeId=${corporateTraineeId}&CourseId=${courseId}`
+        window.location=`http://localhost:3000/CurrentCoursePageCorporateTrainee?CorporateTraineeId=${corporateTraineeId}&CourseId=${courseId}`
         }
 
     }
 
     return (
+        
         <form className="create" onSubmit={handleSubmit}> 
+        <CorporateTraineeProfileNavBar/>
         <h3>Fill In The Following Fields To Send Your Report:</h3>
 
         <div className="form-check">
@@ -64,6 +69,14 @@
             Other
         </label>
         </div>
+
+        <label>Report Title:</label>
+        <input 
+            className='course'
+            type="text" 
+            onChange={(e) => setReport_Title(e.target.value)} 
+            value={Report_Title}
+        />
 
         <label> Please write a brief description of the issue so we could help you to the best of our abilities:</label>
         <input 

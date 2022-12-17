@@ -19,6 +19,7 @@
     import CurrentCoursePageDetailsCorporateTrainee from "../components/CurrentCoursePageDetailsCorporateTrainee"
     import RadioButtonsRateACourse from "../components/RadioButtonsRateACourse";
     import CorporateTraineeSubtitleTitlesPage from "./CorporateTraineeSubtitleTitlesPage";
+import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfileNavBar";
 
 
 
@@ -69,7 +70,7 @@
 
     return (
         <div>
-        <Navbar/>
+        <CorporateTraineeProfileNavBar/>
         <Container >
 
         <div class="row gutters">

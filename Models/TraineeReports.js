@@ -10,6 +10,10 @@ const traineeReportSchema = new Schema({
         ref:'individualTrainee',
         required:true
     },
+    Report_Title:{
+        type:String,
+        required:true
+    },
     Reported_Problem:{
         type:String,
         required:true
@@ -29,6 +33,14 @@ const traineeReportSchema = new Schema({
     },
     Username:{
         type:String,
+        required:false
+    },
+    Role:{
+        type:String,
+        required:false
+    },
+    Followups:{
+        type:[String],
         required:false
     }
 }, { timestamps: true });

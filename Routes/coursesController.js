@@ -48,14 +48,40 @@ const createCourse = async(req,res)=>{
         // const questionId = (await Question.create({QNumber,Q,correctAnswer,ExerciseID:req.query.id}))._id;
         // const currQuestion = await Question.findById({_id:questionId});
 
-        const {Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Course_Description,PreviewLink,Subtitle_Title,Link,Description}= req.body;
+        const {Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Discount_Start_Date,Discount_End_Date,Course_Description,PreviewLink,Subtitle_Title,Link,Description}= req.body;
         const instructorid=req.query.id;
     try{
 
-    const addCourse =await course.create({Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Course_Description,PreviewLink,"Instructor":req.query.id});
-    const newlyAddedCourseId = addCourse._id;
-    console.log(newlyAddedCourseId);
-    
+    var dateEnd = new Date(Discount_End_Date);
+    var dateStart = new Date(Discount_Start_Date)
+
+    const date = new Date();
+
+    if(!(dateStart>=dateEnd))
+    {
+        if(date>=dateEnd)
+    {
+        const addCourse =await course.create({Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Course_Description,PreviewLink,"Instructor":req.query.id});
+        const newlyAddedCourseId = addCourse._id;
+        console.log(newlyAddedCourseId);
+
+    if(newlyAddedCourseId){
+    const newlyAddedSubtitle = await subtitles.create({Subtitle_Title,Link,Description,CourseId:newlyAddedCourseId});
+    console.log(newlyAddedSubtitle)
+    //res.status(200).json(newlyAddedSubtitle)
+    }else{
+        res.status(400).json({error:"courseId is required"})
+    }
+
+    console.log(addCourse);
+    res.status(200).json(addCourse);
+    }
+    else
+    {
+        const addCourse =await course.create({Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Discount_Start_Date,Discount_End_Date,Course_Description,PreviewLink,"Instructor":req.query.id});
+        const newlyAddedCourseId = addCourse._id;
+        console.log(newlyAddedCourseId);
+        
     // const {Subtitle_Title,Link,Description} = req.body;
 
     if(newlyAddedCourseId){
@@ -69,13 +95,68 @@ const createCourse = async(req,res)=>{
     console.log(addCourse);
     res.status(200).json(addCourse);
     }
+
+    }
+    else
+    {
+        res.status(400).json({error:"The dates don't align"});
+    }
+
+    }
     catch(error){
         res.status(400).json({error:error.message});
     }
 
 }
 
+const isDiscountViable = async(req,res) => {
 
+    const courseid = req.query.CourseId;
+    
+    if(courseid){
+    const currCourse = await course.findById({_id:courseid});
+    const currCourseStartDate = currCourse.Discount_Start_Date;
+    const currCourseEndDate = currCourse.Discount_End_Date;
+
+
+    //var display = false;
+    if(currCourseEndDate==null||currCourseEndDate=="")
+    {
+        res.status(200).json(currCourse)
+    }
+    else
+    {
+        const date = new Date();
+        const day = currCourseStartDate.getDate();
+        const month = currCourseStartDate.getMonth();
+        const year = currCourseStartDate.getFullYear();
+
+        var dateStart = new Date(year, month, day);
+
+        
+        const endday = currCourseEndDate.getDate();
+        const endmonth = currCourseEndDate.getMonth();
+        const endyear = currCourseEndDate.getFullYear();
+
+        var dateEnd = new Date(endyear, endmonth, endday);
+
+        if((date >= dateStart && date<= dateEnd))
+    {
+        console.log("jjj");
+        res.status(200).json(currCourse)
+    }
+    else
+    {
+        const finalcourse = await course.findByIdAndUpdate({_id:courseid},{Discount:"",Discount_Start_Date:"",Discount_End_Date:""},{new:true});
+        res.status(200).json(finalcourse)
+    }
+    }
+    
+    
+    }else{
+        res.status(400).json({error:"course is required"})
+    }
+}
 
 
 
@@ -552,4 +633,4 @@ const FilteredCourses = async (req,res) => {
             }
             }; 
 
-module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addANewInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,FilteredCourses};
+module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addANewInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,FilteredCourses,isDiscountViable};

@@ -14,6 +14,7 @@
     import PreviewCourseVideoPageDetails from '../components/PreviewCourseVideoTraineePageDetails'
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
 import ReportHeadings from "../components/ReportHeadings";
+import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfileNavBar";
     
 
     const CorporateTraineeDeliveredReportsPage = () => {
@@ -50,7 +51,7 @@ import ReportHeadings from "../components/ReportHeadings";
     return (
 
         <div >
-            <TraineeProfileNavBar/>
+            <CorporateTraineeProfileNavBar/>
 
             {problems && problems.map(problem => (
             <Container hover

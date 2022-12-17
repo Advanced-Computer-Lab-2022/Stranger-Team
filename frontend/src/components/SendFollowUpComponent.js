@@ -1,22 +1,20 @@
     import { useState } from 'react'
 
-    const TraineeReportAProblemPage = () => {
-    const [Reported_Problem,setReported_Problem] = useState('')
-    const[Report_Type,setReport_Type]= useState('')
-    const[Report_Title,setReport_Title]= useState('')
+    const SendFollowUpComponent = () => {
+    const [followup,setFollowUp] = useState('')
     const [error, setError] = useState(null)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         const queryParams = new URLSearchParams(window.location.search);
+        const reportId = queryParams.get('ReportId');
         const traineeId = queryParams.get('TraineeId');
-        const courseId = queryParams.get('CourseId');
 
 
-        const report = {Report_Title,Reported_Problem,Report_Type};
+        const report = {Followup};
         console.log(report)
 
-        const response = await fetch(`/traineeSendReport/?TraineeId=${traineeId}`, {
+        const response = await fetch(`/traineeSendFollowup/?ReportId=${reportId}`, {
         method: 'POST',
         body: JSON.stringify(report),
         headers: {
@@ -33,9 +31,7 @@
         }
         if (response.ok) {
         setError(null)
-        setReported_Problem('')
-        setReport_Title('')
-        setReport_Type(null)
+        setFollowUp('')
         
         console.log('report sent:', json)
         window.location=`http://localhost:3000/CurrentCoursePageTrainee?TraineeId=${traineeId}&CourseId=${courseId}`
@@ -101,4 +97,4 @@
     )
     }
 
-    export default TraineeReportAProblemPage
+    export default SendFollowUpComponent

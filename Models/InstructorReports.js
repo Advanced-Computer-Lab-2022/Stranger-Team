@@ -10,6 +10,10 @@ const instructorReportSchema = new Schema({
         ref:'instructor',
         required:true
     },
+    Report_Title:{
+        type:String,
+        required:true
+    },
     Reported_Problem:{
         type:String,
         required:true
@@ -28,6 +32,14 @@ const instructorReportSchema = new Schema({
     },
     Username:{
         type:String,
+        required:false
+    },
+    Role:{
+        type:String,
+        required:false
+    },
+    Followups:{
+        type:[String],
         required:false
     }
 }, { timestamps: true });

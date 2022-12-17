@@ -12,13 +12,16 @@
     return (
 
         <div className="course-details">
+        <h4><strong>Report Title: </strong></h4>
+        <p>{problem.Report_Title}</p>
+        <hr/>
         <h4><strong>Reported Problem: </strong></h4>
         <p>{problem.Reported_Problem}</p>
         <hr/>
         <h4><strong>Report Type: </strong></h4>
         <p>{problem.Report_Type}</p>
         <hr/>
-        <h4><strong>Reported Problem: </strong></h4>
+        <h4><strong>Report Status: </strong></h4>
         <p>{problem.Status}</p>
         
         </div>
