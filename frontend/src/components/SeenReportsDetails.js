@@ -18,7 +18,8 @@ let navigate = useNavigate();
     return (
       
       <div className="admin-details">
-        <h4 onClick={routeChange}>FROM <strong>{seenReports.Username}</strong></h4>
+          <h4 onClick={routeChange}><strong>{seenReports.Report_Title}</strong></h4>
+        <h6>{seenReports.Role} <strong>{seenReports.Username}</strong></h6>
         <p><strong>{seenReports.Report_Type}</strong></p>
         <span className="material-symbols-outlined">visibility</span>
       </div>

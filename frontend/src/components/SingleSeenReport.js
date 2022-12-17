@@ -10,6 +10,7 @@ import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
 const SingleSeenReport = ({ irep }) => {
 
+
     const [statusChange, setstatusChange] = useState(false)
     const [Status, setStatus] = useState('')
     const [adminReschange, setadminResChange] = useState(false)
@@ -18,6 +19,7 @@ const SingleSeenReport = ({ irep }) => {
     const [error1, setError1] = useState(null)
     const [emptyFields, setEmptyFields] = useState([])
     const [emptyFieldz, setEmptyFieldz] = useState([])
+    const [drop, setdrop] = useState(false)
    
 
  const handleSubmit = async (e) =>  {
@@ -87,11 +89,19 @@ const SingleSeenReport = ({ irep }) => {
         setadminResChange(false)
         }
 
+
+        
+    function onSelect(){
+         
+        setdrop(!drop)
+  }
+
     return (
         
             
         <div className="admin-details">
-        <h4>FROM <strong>{irep.Username}</strong></h4>
+        <h4><strong>{irep.Report_Title}</strong></h4>
+     <h6>{irep.Role} <strong>{irep.Username}</strong></h6>
         <p>{irep.Reported_Problem}</p>
         <div className="spanni">
         {!statusChange && <span className="material-symbols-outlined" onClick={() => setstatusChange(!statusChange)} >edit</span>}
@@ -112,8 +122,16 @@ const SingleSeenReport = ({ irep }) => {
              </p>
              </div>}
              {error && <div className="error">{error}</div>}
-             
+             {/* <label><strong>Follow-ups</strong></label> */}
+             <p className="material-symbols-outlined" onClick={onSelect}>expand_more</p>
+         {drop &&
+
+irep.Followups.map((q, i) => (
+ <p  id={`q${i}-option`} visible="false">FOLLOW-UP {i+1}: <strong>{irep.Followups[i]}</strong></p>
+                  ))
+                 }
          {!statusChange && <p>STATUS: <strong>{irep.Status}</strong> </p> }
+        
         <p><strong>{irep.Report_Type}</strong></p>
         <div className="nonspanny">
         <span className="material-symbols-outlined">visibility</span>
