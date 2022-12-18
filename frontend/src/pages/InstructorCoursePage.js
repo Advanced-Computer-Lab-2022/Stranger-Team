@@ -79,9 +79,19 @@ import FilterMyCoursesInstructorComponent from "../components/FilterMyCoursesIns
             <ProfileNavBar/>
             <input type="text" placeholder="Search My Courses By Title,Subject..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}></input>
             {/* <input type="text" placeholder="Search My Courses By Price..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}></input> */}
+            {/* <div>
+            
+            <form className="signin">
+        
+            <Button onClick={routeChange2}> Add A Course </Button>
+            </form>
+        </div> */}
             <FilterMyCoursesInstructorComponent/>
+            
+
         <div className="courses">
             <h1>My Courses</h1>
+            <button onClick={routeChange2}>Add A Course</button>
             {courses && courses.map(course => (
             <Container hover
                 sx={{
@@ -103,13 +113,7 @@ import FilterMyCoursesInstructorComponent from "../components/FilterMyCoursesIns
             ))}
         </div>
         
-        <div>
-            
-            <form className="signin">
         
-            <Button onClick={routeChange2}> Add A Course </Button>
-            </form>
-        </div>
 
         
         

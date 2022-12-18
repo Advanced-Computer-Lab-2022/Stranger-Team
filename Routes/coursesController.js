@@ -130,31 +130,78 @@ const isDiscountViable = async(req,res) => {
         const day = currCourseStartDate.getDate();
         const month = currCourseStartDate.getMonth();
         const year = currCourseStartDate.getFullYear();
-
         var dateStart = new Date(year, month, day);
-
         
         const endday = currCourseEndDate.getDate();
         const endmonth = currCourseEndDate.getMonth();
         const endyear = currCourseEndDate.getFullYear();
 
         var dateEnd = new Date(endyear, endmonth, endday);
+        //console.log("date"+date)
+        //console.log("dateStart"+dateStart)
+        //console.log("dateEnd"+dateEnd)
 
-        if((date >= dateStart && date<= dateEnd))
-    {
-        console.log("jjj");
-        res.status(200).json(currCourse)
-    }
-    else
-    {
-        const finalcourse = await course.findByIdAndUpdate({_id:courseid},{Discount:"",Discount_Start_Date:"",Discount_End_Date:""},{new:true});
-        res.status(200).json(finalcourse)
-    }
+        //console.log("dateStart >= date"+dateStart >= date)
+        //console.log("date <= dateEnd"+date <= dateEnd)
+
+        if((date<= dateEnd))
+        {
+            //console.log("jjj");
+            res.status(200).json(currCourse)
+        }
+        else
+        {
+            //console.log("hhhjdk")
+            const finalcourse = await course.findByIdAndUpdate({_id:courseid},{Discount:"",Discount_Start_Date:"",Discount_End_Date:""},{new:true});
+            res.status(200).json(finalcourse)
+        }
     }
     
     
     }else{
         res.status(400).json({error:"course is required"})
+    }
+}
+
+const displayCourseDiscount = async(req,res) => {
+
+    const courseid = req.query.CourseId;
+    
+    if(courseid){
+    const currCourse = await course.findById({_id:courseid});
+    const currCourseStartDate = currCourse.Discount_Start_Date;
+    const currCourseEndDate = currCourse.Discount_End_Date;
+
+
+    var display = false;
+    if(currCourseEndDate==null||currCourseEndDate=="")
+    {
+        res.status(200).json(true)
+    }
+    else
+    {
+        const date = new Date();
+        const day = currCourseStartDate.getDate();
+        const month = currCourseStartDate.getMonth();
+        const year = currCourseStartDate.getFullYear();
+        var dateStart = new Date(year, month, day);
+        
+        if((date.getDate() == day || date.getDate() > day)&&(date.getMonth()==month||date.getMonth()>month)&&(date.getFullYear()==year||date.getFullYear()>year))
+        {
+            console.log("kk")
+                    display = true;
+                    res.status(200).json(display)
+            
+        }
+        else
+        {
+            res.status(200).json(display)
+        }
+    }
+    
+    
+    }else{
+        res.status(400).json({error:"courseid is required"})
     }
 }
 
@@ -176,17 +223,27 @@ const viewMyInstructorCoursesById = async(req,res) => {
 
 const addCourseDiscount = async(req,res)=>{
 
-        const {Discount}= req.body;
+        const {Discount,Discount_Start_Date,Discount_End_Date}= req.body;
         const courseId=req.query.CourseId;
         
     try{
 
-        const currCourse = await course.find({_id:courseId},{});
-        console.log(currCourse);
-        const updatedDiscount= await course.findByIdAndUpdate(req.query.CourseId, { Discount: Discount });
-        console.log(updatedDiscount);
-        res.status(200).json(updatedDiscount);
-
+        
+        const currCourse = await course.findById({_id:courseId});
+        console.log(currCourse.Discount);
+        if(currCourse.Discount==null||currCourse.Discount=="")
+        {
+            console.log("jj")
+            const updatedDiscount= await course.findByIdAndUpdate({_id:req.query.CourseId}, { Discount: Discount,Discount_Start_Date:Discount_Start_Date,Discount_End_Date:Discount_End_Date},{new:true});
+            console.log(updatedDiscount);
+            res.status(200).json(updatedDiscount);
+        }
+        else
+        {
+            console.log("ll");
+            res.status(400).json({error:"There is a discount already defined for this course! Please try at a later time."});
+        }
+        
     }
     catch(error){
         res.status(400).json({error:error.message});
@@ -451,19 +508,19 @@ const isCurrentCourseRegistered = async (req,res) => {
             try{
                 const courseId = req.query.CourseId;
                 const traineeId = req.query.TraineeId;
-                const userid= req.session.user._id;
-                console.log("userid"+userid);
+                //const userid= req.session.user._id;
+                //console.log("userid"+userid);
                 const corporateTraineeId = req.query.CorporateTraineeId;
                 let x = false;
                 console.log(corporateTraineeId)
                 if(corporateTraineeId==null)
                 {
-                    //const currTrainee=await individual_Trainee.findById({_id:traineeId});
-                    const usertrainee =await individual_Trainee.findById({_id:userid}); 
-                    //console.log(currTrainee.Registered_Courses)
-                    console.log("usertraineeregcourses"+usertrainee.Registered_Courses)
-                    // const registeredCourses = currTrainee.Registered_Courses;
-                    const registeredCourses = usertrainee.Registered_Courses;
+                    const currTrainee=await individual_Trainee.findById({_id:traineeId});
+                    //const usertrainee =await individual_Trainee.findById({_id:userid}); 
+                    console.log(currTrainee.Registered_Courses)
+                    //console.log("usertraineeregcourses"+usertrainee.Registered_Courses)
+                    const registeredCourses = currTrainee.Registered_Courses;
+                    //const registeredCourses = usertrainee.Registered_Courses;
                     var isFound = 0;
                     var courseFound=null;
                     for(let i =0;i<registeredCourses.length;i++)
@@ -482,6 +539,7 @@ const isCurrentCourseRegistered = async (req,res) => {
                 }
                 else
                 {
+                    console.log("kjhydui")
                     const currTrainee=await corporate_Trainee.findById({_id:corporateTraineeId});
                     console.log(currTrainee)
                     console.log(currTrainee.Registered_Courses)
@@ -633,4 +691,4 @@ const FilteredCourses = async (req,res) => {
             }
             }; 
 
-module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addANewInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,FilteredCourses,isDiscountViable};
+module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addANewInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,FilteredCourses,isDiscountViable,displayCourseDiscount};

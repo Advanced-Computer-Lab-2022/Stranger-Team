@@ -8,6 +8,8 @@
     const [Subject, setSubject] = useState('')
     const [Subtitles_Total_Hours, setSubtitles_Total_Hours] = useState('')
     const [Discount,setDiscount]= useState('');
+    const [Discount_Start_Date,setDiscount_Start_Date] = useState('')
+    const [Discount_End_Date,setDiscount_End_Date] = useState('')
     const [Course_Total_Hours, setCourse_Total_Hours] = useState('')
     const [Price, setPrice] = useState('')
     const [Course_Description,setCourse_Description]= useState('')
@@ -24,7 +26,7 @@
         const instructorId = queryParams.get('id');
 
 
-        const course = {Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Course_Description,PreviewLink,Subtitle_Title,Link,Description,instructorId}
+        const course = {Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Discount_Start_Date,Discount_End_Date,Course_Description,PreviewLink,Subtitle_Title,Link,Description,instructorId}
         console.log(course)
 
 
@@ -53,6 +55,8 @@
         setCourse_Total_Hours('')
         setPrice('')
         setDiscount('')
+        setDiscount_End_Date('')
+        setDiscount_Start_Date('')
         setCourse_Description('')
         setPreviewLink('')
         setSubtitle_Title('')
@@ -147,6 +151,24 @@
             type="number" 
             onChange={(e) => setDiscount(e.target.value)} 
             value={Discount} 
+        />
+
+        <label>Discount Start Date:</label>
+        <input 
+            className='course'
+            type="Date" 
+            min="2000-01-01" 
+            onChange={(e) => setDiscount_Start_Date(e.target.value)} 
+            value={Discount_Start_Date} 
+        />
+
+        <label>Discount End Date:</label>
+        <input 
+            className='course'
+            type="Date" 
+            min="2000-01-01" 
+            onChange={(e) => setDiscount_End_Date(e.target.value)} 
+            value={Discount_End_Date} 
         />
 
         <label>Course Description:</label>

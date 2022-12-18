@@ -80,6 +80,19 @@
         let path = `/CurrentNonRegisteredCourseInstructorPage/?id=${currentInstructorId}`; 
         navigate(path);
     }
+
+    const fetchCourseDicountDetails = async () => {
+        const courseId = course._id;
+        
+        
+        const response = await fetch(`/isDiscountViable/?CourseId=${courseId}`)
+        
+        
+        const json = await response.json()
+        console.log(json.Discount)
+        
+        }
+        fetchCourseDicountDetails();
         
     return (
 

@@ -13,6 +13,8 @@
     const [Rating, setRating] = useState('')
     const [Instructor_Name, setInstructor_Name] = useState('')
     const [discount,setDiscount] = useState('')
+    const [Discount_Start_Date,setDiscount_Start_Date] = useState('')
+    const [Discount_End_Date,setDiscount_End_Date] = useState('')
     const[Course_Description,setCourse_Description]= useState('')
     const [error, setError] = useState(null)
     //const [instructorId, setInstructorId] = useState("")
@@ -24,7 +26,7 @@
 
         //const instructorId=req.query.id;
 
-        const course = {Title, Subject, Subtitles,Subtitles_Total_Hours,Exercises,Course_Total_Hours,Price,Rating,Instructor_Name,discount,Course_Description,instructorId}
+        const course = {Title, Subject, Subtitles,Subtitles_Total_Hours,Exercises,Course_Total_Hours,Price,Rating,Instructor_Name,discount,Discount_Start_Date,Discount_End_Date,Course_Description,instructorId}
         console.log(course)
 
         //`/View_All_Courses/?q=${searchQuery}`
@@ -64,6 +66,8 @@
         setRating('')
         setInstructor_Name('')
         setDiscount('')
+        setDiscount_End_Date('')
+        setDiscount_Start_Date('')
         setCourse_Description('')
         dispatch({type:'CREATE_COURSE',payload:json})
         
@@ -158,6 +162,22 @@
             type="String" 
             onChange={(e) => setDiscount(e.target.value)} 
             value={discount} 
+        />
+
+        <label>Discount Start Date:</label>
+        <input 
+            className='course'
+            type="Date" 
+            onChange={(e) => setDiscount_Start_Date(e.target.value)} 
+            value={Discount_Start_Date} 
+        />
+
+        <label>Discount End Date:</label>
+        <input 
+            className='course'
+            type="Date" 
+            onChange={(e) => setDiscount_End_Date(e.target.value)} 
+            value={Discount_End_Date} 
         />
 
         <label>Course Description:</label>

@@ -3,7 +3,7 @@
     import { useNavigate,useLocation  } from "react-router-dom";
     
 
-    const InstructorCurrentCoursePageDetails = ({ course }) => {
+    const AdminCurrentCoursePageDetails = ({ course }) => {
 
         const [Discount, setDiscount] = useState(null);
         const [Discount_Start_Date, setDiscount_Start_Date] = useState(null);
@@ -69,4 +69,4 @@
     )
     }
 
-    export default InstructorCurrentCoursePageDetails
+    export default AdminCurrentCoursePageDetails

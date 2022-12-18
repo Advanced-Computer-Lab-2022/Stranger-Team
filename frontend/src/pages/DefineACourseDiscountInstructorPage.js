@@ -151,14 +151,16 @@
     const DefineACourseDiscountInstructorPage = () => {
 
     const [Discount, setDiscount] = useState('')
-	const[Error,setError]= useState('')
+    const [Discount_Start_Date, setDiscount_Start_Date] = useState('')
+    const [Discount_End_Date, setDiscount_End_Date] = useState('')
+	const[error,setError]= useState('')
 
 		const defineCourseDiscount = async (e) => {
         e.preventDefault()
         const queryParams = new URLSearchParams(window.location.search);
         const courseId = queryParams.get('CourseId');
         console.log("courseId"+courseId)
-        const defineddiscount = {Discount};
+        const defineddiscount = {Discount,Discount_Start_Date,Discount_End_Date};
         console.log("definedDiscount"+defineddiscount)
 
         const response = await fetch(`/addCourseDiscount/?CourseId=${courseId}`, {
@@ -180,6 +182,8 @@
         if (response.ok) {
         setError(null)
         setDiscount('')
+        setDiscount_Start_Date('')
+        setDiscount_End_Date('')
         
         
         
@@ -201,8 +205,26 @@
             value={Discount} 
         />
 
+        <label>Discount Start Date:</label>
+        <input 
+            className='course'
+            type="Date" 
+            min="2000-01-01" 
+            onChange={(e) => setDiscount_Start_Date(e.target.value)} 
+            value={Discount_Start_Date} 
+        />
+
+        <label>Discount End Date:</label>
+        <input 
+            className='course'
+            type="Date" 
+            min="2000-01-01" 
+            onChange={(e) => setDiscount_End_Date(e.target.value)} 
+            value={Discount_End_Date} 
+        />
+
         <button>Add Discount</button>
-        {/* {error && <div className="error">{error}</div>} */}
+        {error && <div className="error">{error}</div>} 
         </form>
 
     )

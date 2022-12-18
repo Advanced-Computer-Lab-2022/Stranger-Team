@@ -100,6 +100,11 @@ import FilteredCoursesInstructorPage from './pages/FilteredCoursesInstructorPage
 import TraineeCurrentPendingReportPage from './pages/TraineeCurrentPedningReportPage';
 import CorporateTraineeCurrentPendingReportPage from './pages/CorporateTraineeCurrentPendingReportPage';
 import InstructorCurrentPendingReportPage from './pages/InstructorCurrentPendingReportPage';
+import DefineACourseDiscountAdminPage from './pages/DefineACourseDiscountAdminPage';
+import AdminCurrentCoursePage from './pages/AdminCurrentCoursePage';
+import FilteredCoursesPageAdmin from './pages/FilteredCoursesPageAdmin';
+import AdminAllCourses from './pages/AdminAllCourses';
+import DefineDiscountForAllCoursesAdminPage from './pages/DefineDiscountForAllCoursesAdminPage';
 
 function App() {
    const User = localStorage.getItem("token");
@@ -128,6 +133,38 @@ function App() {
         path="/admins"
         element={<Home />}
         />
+
+        
+        <Route
+        path="/DefineACourseDiscountAdminPage"
+        element={<DefineACourseDiscountAdminPage />}
+        />
+
+        <Route
+        path="/DefineDiscountForAllCoursesAdminPage"
+        element={<DefineDiscountForAllCoursesAdminPage />}
+        />
+
+        
+        <Route
+        path="/AdminCurrentCoursePage"
+        element={<AdminCurrentCoursePage />}
+        />
+
+        
+        <Route
+        path="/FilteredCoursesPageAdmin"
+        element={<FilteredCoursesPageAdmin />}
+        />
+
+        <Route
+        path="/AdminAllCourses"
+        element={<AdminAllCourses />}
+        />
+
+        
+        
+
 
         <Route
         path="/CourseFilterBySubjectAndPrice"

@@ -8,8 +8,9 @@
         const CTraineeReports = require ('../Models/CorporateTraineeReports');
 
         const mongoose = require('mongoose');
-    const { findOneAndUpdate } = require('../Models/pendingInstructors');
-    const courseRequests = require("../Models/CourseRequests");
+        const { findOneAndUpdate } = require('../Models/pendingInstructors');
+        const courseRequests = require("../Models/CourseRequests");
+        const course = require('../Models/Course');
 
 
 
@@ -732,5 +733,118 @@
             }
             res.status(200).json(data)
             };
+
+        //add course discounts to all courses
+        const addCourseDiscountToAllCourses = async(req,res)=>{
+
+        const {Discount,Discount_Start_Date,Discount_End_Date}= req.body;
+        const courseId=req.query.CourseId;
         
-        module.exports = {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests}
+    try{
+
+        const allCourses = await course.find({});
+
+        for(let i = 0;i<allCourses.length;i++)
+        {
+            const currCourse = await course.findById({_id:allCourses[i]._id});
+            console.log(currCourse.Discount);
+            if(currCourse.Discount==null||currCourse.Discount=="")
+            {
+                console.log("jj")
+                const updatedDiscount= await course.findByIdAndUpdate({_id:allCourses[i]._id}, { Discount: Discount,Discount_Start_Date:Discount_Start_Date,Discount_End_Date:Discount_End_Date},{new:true});
+                console.log(updatedDiscount);
+                
+            }
+            // else
+            // {
+            //     console.log("ll");
+            //     res.status(400).json({error:"There is a discount already defined for this course! Please try at a later time."});
+            // }
+        }
+        res.status(200).json("Done");
+
+        
+        
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+
+}
+
+const FilteredCoursesAdmin = async (req,res) => {
+            const subject = req.query.Subject;
+            const rating = req.query.Rating;
+            const price = req.query.Price;
+            var filteredCourses=null;
+
+            if(subject==null||subject=="")
+            {
+                if(rating==null||rating=="")
+                {
+                    if(price==null||price=="")
+                    {
+                        filteredCourses = await course.find({});
+
+                        res.status(200).json(filteredCourses);
+                    }
+                    else
+                    {
+                        filteredCourses = await course.find({Price:price});
+
+                        res.status(200).json(filteredCourses);
+                    }
+                }
+                else
+                {
+                    if(price==null||price=="")
+                    {
+                        filteredCourses = await course.find({Rating:rating});
+
+                        res.status(200).json(filteredCourses);
+                    }
+                    else
+                    {
+                        filteredCourses = await course.find({Rating:rating,Price:price});
+
+                        res.status(200).json(filteredCourses);
+                    }
+                }
+            }
+            else
+            {
+                if(rating==null||rating=="")
+                {
+                    if(price==null||price=="")
+                    {
+                        filteredCourses = await course.find({Subject:subject});
+
+                        res.status(200).json(filteredCourses);
+                    }
+                    else
+                    {
+                        filteredCourses = await course.find({Subject:subject,Price:price});
+
+                        res.status(200).json(filteredCourses);
+                    }
+                }
+                else
+                {
+                    if(price==null||price=="")
+                    {
+                        filteredCourses = await course.find({Subject:subject,Rating:rating});
+
+                        res.status(200).json(filteredCourses);
+                    }
+                    else
+                    {
+                        filteredCourses = await course.find({Subject:subject,Rating:rating,Price:price});
+
+                        res.status(200).json(filteredCourses);
+
+                    }
+                }
+            }
+            }; 
+        
+        module.exports = {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests,addCourseDiscountToAllCourses,FilteredCoursesAdmin}

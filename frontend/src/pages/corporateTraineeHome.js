@@ -88,9 +88,6 @@ import FilterCoursesCorporateTraineeComponent from "../components/FilterCoursesC
         
         const json = await response.json()
         console.log(json)
-
-        setIsRegistered(json);
-        console.log("isRegistered"+isRegistered)
         if(json===true||json==="true")
         {
             console.log("kk")

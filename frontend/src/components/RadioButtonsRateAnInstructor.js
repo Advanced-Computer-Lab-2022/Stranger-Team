@@ -54,7 +54,7 @@
         <input type="radio" value="3" name="rate"/> 3
         <input type="radio" value="4" name="rate"/> 4
         <input type="radio" value="5" name="rate"/> 5 */}
-        <label className="radio-inline">
+        {/* <label className="radio-inline">
         <input type="radio"  classNameName="rate" onChange={(e) => setRate(e.target.value)} 
             /> 1
         </label>
@@ -73,7 +73,39 @@
         <label className="radio-inline">
         <input type="radio"  value="5" classNameName="rate" onChange={(e) => setRate(e.target.value)} 
             /> 5
+        </label> */}
+        <div className="form-check">
+        <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="1" onChange={(e) => setRate(e.target.value)}/>
+        <label className="form-check-label" >
+            1
         </label>
+        </div>
+        <div className="form-check">
+        <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="2" onChange={(e) => setRate(e.target.value)}  />
+        <label className="form-check-label" >
+            2
+        </label>
+        </div>
+        <div className="form-check">
+        <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="3" onChange={(e) => setRate(e.target.value)}/>
+        <label className="form-check-label" >
+            3
+        </label>
+        </div>
+
+        <div className="form-check">
+        <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="4" onChange={(e) => setRate(e.target.value)}/>
+        <label className="form-check-label" >
+            4
+        </label>
+        </div>
+
+        <div className="form-check">
+        <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="5" onChange={(e) => setRate(e.target.value)}/>
+        <label className="form-check-label" >
+            5
+        </label>
+        </div>
         <button >Submit Rating</button>
         {error && <div classNameName="error">{error}</div>}
         </form>

@@ -23,6 +23,14 @@
                 </div> */}
                 <a href='http://localhost:3000/courseRequests'>COURSE REQUESTS</a>
                 </div>
+
+                <div className="button-85">
+                {/* <a href='http://localhost:3000/pendingInstructors'>PENDING REQUESTS</a>
+                </div> */}
+                <a href='http://localhost:3000/AdminAllCourses'>COURSES</a>
+                </div>
+
+                
                 
             </div>
         )
