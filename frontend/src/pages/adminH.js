@@ -4,7 +4,7 @@
     const HomeAdmin = () => {
         return (
             <div className='home'>
-                 <AdminNavbar/>
+                <AdminNavbar/>
                 <h4>Welcome, Admin</h4>
                 <div className="button-85">
                 <a href='http://localhost:3000/admins'>ADMINS</a>

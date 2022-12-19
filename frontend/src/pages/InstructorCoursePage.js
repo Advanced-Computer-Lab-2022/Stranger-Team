@@ -24,7 +24,7 @@ import FilterMyCoursesInstructorComponent from "../components/FilterMyCoursesIns
         //const response = await fetch(`/View_My_Courses/Layla/?q=${searchQuery}`)
         const params = new URLSearchParams(window.location.search);
         const instructorId = params.get('id');
-        console.log(instructorId); 
+        console.log("instructorId"+instructorId); 
 
         const response = await fetch(`/MyCourses/${instructorId}/?q=${searchQuery}`)
         

@@ -772,79 +772,43 @@
 
 }
 
-const FilteredCoursesAdmin = async (req,res) => {
-            const subject = req.query.Subject;
-            const rating = req.query.Rating;
-            const price = req.query.Price;
-            var filteredCourses=null;
+//add course discounts to selected courses
+const addCourseDiscountToSelectedCourses = async(req,res)=>{
 
-            if(subject==null||subject=="")
-            {
-                if(rating==null||rating=="")
-                {
-                    if(price==null||price=="")
-                    {
-                        filteredCourses = await course.find({});
-
-                        res.status(200).json(filteredCourses);
-                    }
-                    else
-                    {
-                        filteredCourses = await course.find({Price:price});
-
-                        res.status(200).json(filteredCourses);
-                    }
-                }
-                else
-                {
-                    if(price==null||price=="")
-                    {
-                        filteredCourses = await course.find({Rating:rating});
-
-                        res.status(200).json(filteredCourses);
-                    }
-                    else
-                    {
-                        filteredCourses = await course.find({Rating:rating,Price:price});
-
-                        res.status(200).json(filteredCourses);
-                    }
-                }
-            }
-            else
-            {
-                if(rating==null||rating=="")
-                {
-                    if(price==null||price=="")
-                    {
-                        filteredCourses = await course.find({Subject:subject});
-
-                        res.status(200).json(filteredCourses);
-                    }
-                    else
-                    {
-                        filteredCourses = await course.find({Subject:subject,Price:price});
-
-                        res.status(200).json(filteredCourses);
-                    }
-                }
-                else
-                {
-                    if(price==null||price=="")
-                    {
-                        filteredCourses = await course.find({Subject:subject,Rating:rating});
-
-                        res.status(200).json(filteredCourses);
-                    }
-                    else
-                    {
-                        filteredCourses = await course.find({Subject:subject,Rating:rating,Price:price});
-
-                        res.status(200).json(filteredCourses);
-
-                    }
-                }
-            }
-            }; 
+        const coursesArray = req.body.coursesArray;
         
-        module.exports = {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests,addCourseDiscountToAllCourses,FilteredCoursesAdmin}
+        const {Discount,Discount_Start_Date,Discount_End_Date}= req.body;
+        
+        
+    try{
+
+        //const allCourses = await course.find({});
+
+        for(let i = 0;i<coursesArray.length;i++)
+        {
+            const currCourse = await course.findById({_id:coursesArray[i]._id});
+            console.log(currCourse.Discount);
+            if(currCourse.Discount==null||currCourse.Discount=="")
+            {
+                console.log("jj")
+                const updatedDiscount= await course.findByIdAndUpdate({_id:coursesArray[i]._id}, { Discount: Discount,Discount_Start_Date:Discount_Start_Date,Discount_End_Date:Discount_End_Date},{new:true});
+                console.log(updatedDiscount);
+                
+            }
+        }
+        res.status(200).json("Done");
+
+        
+        
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+
+}
+
+
+
+        
+        
+        module.exports = {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests,addCourseDiscountToAllCourses,addCourseDiscountToSelectedCourses}

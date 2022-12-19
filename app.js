@@ -57,7 +57,7 @@ const {addUserRating,saveUserRating} = require('./Routes/usersController');
 
 const {insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor,reviewingAnInstructor,getInstructorRatings,instructorSendReport,fetchInstructorAllPreviousReports,fetchInstructorDeliveredReports,fetchInstructorPendingReports,fetchInstructorResolvedReports,fetchInstructorProblem,instructorSendFollowup} = require('./Routes/instructorController');
 
-const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests,addCourseDiscountToAllCourses,FilteredCoursesAdmin} = require('./Routes/adminController');
+const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests,addCourseDiscountToAllCourses,addCourseDiscountToSelectedCourses} = require('./Routes/adminController');
 
 //solving exercises
 const {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults, viewAnswers,addQuestion} = require('./Routes/solvingExercisesController');
@@ -221,7 +221,7 @@ app.get("/View_All_Courses/",async (req,res)=>{
   const q = req.query.q;
   
 
-  const keys=["Title","Subject"];
+  const keys=["Title","Subject","Instructor_Name"];
   const search = (data)=>{
     return data.filter((item)=>
     keys.some((key)=>item[key].toLowerCase().includes(q))
@@ -236,7 +236,7 @@ app.get("/View_All_Courses/",async (req,res)=>{
   //   res.status(200).json(allCourses);
   // }
   // else{
-    const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Course_Description:1 }).sort({createdAt:-1}) ;
+    const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Instructor_Name:1,Course_Description:1 }).sort({createdAt:-1}) ;
     res.status(200).json(search(allCourses));
   //}
 
@@ -251,7 +251,7 @@ app.get("/FilteredCourses",async (req,res)=>{
   const q = req.query.q;
   
 
-  const keys=["Title","Subject"];
+  const keys=["Title","Subject","Instructor_Name"];
   const search = (data)=>{
     return data.filter((item)=>
     keys.some((key)=>item[key].toLowerCase().includes(q))
@@ -332,6 +332,91 @@ app.get("/FilteredCourses",async (req,res)=>{
             }
 
 });
+
+app.get("/FilteredCoursesAdmin" , async (req,res) => {
+            const subject = req.query.Subject;
+            const rating = req.query.Rating;
+            const price = req.query.Price;
+            var filteredCourses=null;
+
+            const q = req.query.q;
+  
+
+  const keys=["Title","Subject","Instructor_Name"];
+  const search = (data)=>{
+    return data.filter((item)=>
+    keys.some((key)=>item[key].toLowerCase().includes(q))
+    );
+  };
+
+            if(subject==null||subject=="")
+            {
+                if(rating==null||rating=="")
+                {
+                    if(price==null||price=="")
+                    {
+                        filteredCourses = await course.find({});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                    else
+                    {
+                        filteredCourses = await course.find({Price:price});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                }
+                else
+                {
+                    if(price==null||price=="")
+                    {
+                        filteredCourses = await course.find({Rating:rating});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                    else
+                    {
+                        filteredCourses = await course.find({Rating:rating,Price:price});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                }
+            }
+            else
+            {
+                if(rating==null||rating=="")
+                {
+                    if(price==null||price=="")
+                    {
+                        filteredCourses = await course.find({Subject:subject});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                    else
+                    {
+                        filteredCourses = await course.find({Subject:subject,Price:price});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                }
+                else
+                {
+                    if(price==null||price=="")
+                    {
+                        filteredCourses = await course.find({Subject:subject,Rating:rating});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                    else
+                    {
+                        filteredCourses = await course.find({Subject:subject,Rating:rating,Price:price});
+
+                        res.status(200).json(search(filteredCourses));
+
+                    }
+                }
+            }
+            }); 
 
 app.get("/FilterMyCourses",async (req,res)=>{
 
@@ -530,56 +615,35 @@ app.post("/createCourse/", createCourse);
 
 app.get("/isDiscountViable",isDiscountViable);
 app.get("/displayCourseDiscount",displayCourseDiscount);
-//app.get("/View_My_Courses/:Instructor_Name",insttitles);
 
-// app.get("/View_My_Courses/:Instructor_Name",async (req,res)=>{
 
-//   const q = req.query.q;
-//   console.log(q);
-
-//   const keys=["Title","Subject"];
-//   const search = (data)=>{
-//     return data.filter((item)=>
-//     keys.some((key)=>item[key].toLowerCase().includes(q))
-//     );
-//   };
-
-//   const instData=await course.find({ Instructor_Name: req.params.Instructor_Name },{});
-
-//     res.status(200).json(search(instData));
-
-// });
-
-//app.get("/MyCourses/",viewMyInstructorCoursesById);
 app.get("/MyCourses/:id",async (req,res)=>{
 
   const q = req.query.q;
-  const p = req.query.p;
   const instructorId = req.params.id;
   console.log(q);
-  console.log(p);
 
-  const keys=["Title","Subject","Price"];
+  const keys=["Title","Subject"];
   const search = (data)=>{
     return data.filter((item)=>
     keys.some((key)=>item[key].toLowerCase().includes(q))
     );
   };
 
-  if(parseInt(p))
-  {
-    const instData=await course.find({Instructor:mongoose.Types.ObjectId(instructorId),"Price":p},{}).sort({createdAt:-1});
-    console.log(instData)
-    console.log(instData)
-    res.status(200).json(instData);
-  }
-  else
-  {
+  // if(parseInt(p))
+  // {
+  //   const instData=await course.find({Instructor:mongoose.Types.ObjectId(instructorId),"Price":p},{}).sort({createdAt:-1});
+  //   console.log(instData)
+  //   console.log(instData)
+  //   res.status(200).json(instData);
+  // }
+  // else
+  // {
     const instData=await course.find({Instructor:mongoose.Types.ObjectId(instructorId)},{});
-    console.log(instData)
+    //console.log(instData)
     console.log(search(instData))
     res.status(200).json(search(instData));
-  }
+  //}
   
 
 });
@@ -606,19 +670,6 @@ app.get("/getCurrentCourseInstructor",getCurrentCourseInstructor);
 app.get("/fetchCurrentCourseInstructorByInstructorId",fetchCurrentCourseInstructorByInstructorId);
 
 app.get("/fetchCurrentCourseInstructorCoursesByInstructorId",fetchCurrentCourseInstructorCoursesByInstructorId);
-
-// const insttitles= async (req,res) => { 
-//             const instructorName = req.body;
-//             const instData=await course.find({ Instructor_Name: req.params.Instructor_Name },{});
-//             //Title:1,Instructor_Name:1
-//             console.log(instData)
-//             if (!instData){ 
-//                 res.status(400)
-//                 console.log("No instructors found")
-//             }
-//             // const data2= await instructor.find({ },{ _id: 0, Course: 1 } )
-//             res.status(200).json(instData);
-//             }; 
 
 
 
@@ -692,6 +743,6 @@ app.get('/viewRequests', viewRequests);
 
 //UPDATE ALL COURSE DISCOUNTS
 app.post("/addCourseDiscountToAllCourses",addCourseDiscountToAllCourses);
+app.post("/addCourseDiscountToSelectedCourses",addCourseDiscountToSelectedCourses);
 
-//FILTER COURSES ADMIN
-app.get("/FilteredCoursesAdmin",FilteredCoursesAdmin);
+

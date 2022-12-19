@@ -15,7 +15,8 @@
     import StarRating from "../components/StarRating";
     import PreviewCourseVideoPageDetails from '../components/PreviewCourseVideoTraineePageDetails'
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
-import FilterCoursesAdminComponent from "../components/FilterCoursesAdminComponent";
+    import FilterCoursesAdminComponent from "../components/FilterCoursesAdminComponent";
+    import AdminNavBar from "../components/AdminNavbar"
 
     const AdminAllCourses = () => {
     const [courses, setCourses] = useState(null)
@@ -48,10 +49,16 @@ import FilterCoursesAdminComponent from "../components/FilterCoursesAdminCompone
         navigate(path);
     }
 
+    // const routeChange1 = () =>{ 
+    //     let path = '/DefineDiscountForAllCoursesAdminPage'; 
+    //     navigate(path);
+    // }
+
 
     return (
 
         <div >
+            <AdminNavBar/>
             <input type="text" placeholder="Search By Course Title,Subject,Instructor..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}>
             
             </input>
@@ -59,6 +66,7 @@ import FilterCoursesAdminComponent from "../components/FilterCoursesAdminCompone
             <div className="courses">
             <FilterCoursesAdminComponent/>
             <button onClick={routeChange}>Define Discount For All Courses</button>
+            {/* <button onClick={routeChange1}>Define Discount For Selected Courses</button> */}
 
 
             {courses && courses.map(course => (

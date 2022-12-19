@@ -15,10 +15,11 @@
     import StarRating from "../components/StarRating";
     import PreviewCourseVideoPageDetails from '../components/PreviewCourseVideoTraineePageDetails'
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
-import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfileNavBar";
-import FilterCoursesCorporateTraineeComponent from "../components/FilterCoursesCorporateTraineeComponent";
-import CourseDetailsCorporateTrainee from "../components/CourseDetailsCorporateTrainee";
-import FilterCoursesAdminComponent from "../components/FilterCoursesAdminComponent";
+    import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfileNavBar";
+    import FilterCoursesCorporateTraineeComponent from "../components/FilterCoursesCorporateTraineeComponent";
+    import CourseDetailsCorporateTrainee from "../components/CourseDetailsCorporateTrainee";
+    import FilterCoursesAdminComponent from "../components/FilterCoursesAdminComponent";
+    import AdminNavbar from "../components/AdminNavbar";
 
     const FilteredCoursesAdminPageAdmin = () => {
     const [courses, setCourses] = useState(null)
@@ -117,12 +118,45 @@ import FilterCoursesAdminComponent from "../components/FilterCoursesAdminCompone
 
     let navigate = useNavigate();
 
+    // const defineDiscount = async (e) => {
+    //     e.preventDefault()
+    //     const queryParams = new URLSearchParams(window.location.search);
+        
+    //     const array = courses;
+
+
+    //     const defineddiscount = {array,Discount,Discount_Start_Date,Discount_End_Date};
+    //     console.log("courses"+courses)
+
+    //     const response = await fetch(`/addCourseDiscountToSelectedCourses`, {
+    //     method: 'POST',
+    //     body: JSON.stringify(defineddiscount),
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     }
+    //     })
+
+        
+
+    //     const json = await response.json()
+    //     console.log(response)
+
+    //     if (!response.ok) {
+    //     setError(json.error)
+    //     }
+    //     if (response.ok) {
+    //     setError(null)
+        
+    //     }
+
+    // }
+
 
 
     return (
 
         <div >
-            
+            <AdminNavbar/>
             <input type="text" placeholder="Search By Course Title,Subject,Instructor..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}>
             
             </input>
@@ -131,6 +165,7 @@ import FilterCoursesAdminComponent from "../components/FilterCoursesAdminCompone
             <div className="courses">
             <FilterCoursesAdminComponent/>
 
+            
 
             {courses && courses.map(course => (
             <Container hover
@@ -148,6 +183,7 @@ import FilterCoursesAdminComponent from "../components/FilterCoursesAdminCompone
             
             </Container>
             ))}
+            {/* <button onClick={defineDiscount}>Define A Discount For These Selected Courses</button> */}
         </div>
 
         </div>

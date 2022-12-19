@@ -50,6 +50,9 @@ const createCourse = async(req,res)=>{
 
         const {Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Discount_Start_Date,Discount_End_Date,Course_Description,PreviewLink,Subtitle_Title,Link,Description}= req.body;
         const instructorid=req.query.id;
+        const currinstructor = await instructor.findById({_id:instructorid});
+        const currInstructorName = currinstructor.First_Name +" "+currinstructor.Last_Name;
+        console.log(currInstructorName)
     try{
 
     var dateEnd = new Date(Discount_End_Date);
@@ -61,7 +64,7 @@ const createCourse = async(req,res)=>{
     {
         if(date>=dateEnd)
     {
-        const addCourse =await course.create({Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Course_Description,PreviewLink,"Instructor":req.query.id});
+        const addCourse =await course.create({Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Course_Description,PreviewLink,Instructor_Name:currInstructorName,"Instructor":req.query.id});
         const newlyAddedCourseId = addCourse._id;
         console.log(newlyAddedCourseId);
 
@@ -78,7 +81,7 @@ const createCourse = async(req,res)=>{
     }
     else
     {
-        const addCourse =await course.create({Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Discount_Start_Date,Discount_End_Date,Course_Description,PreviewLink,"Instructor":req.query.id});
+        const addCourse =await course.create({Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Discount_Start_Date,Discount_End_Date,Course_Description,PreviewLink,Instructor_Name:currInstructorName,"Instructor":req.query.id});
         const newlyAddedCourseId = addCourse._id;
         console.log(newlyAddedCourseId);
         
@@ -185,7 +188,7 @@ const displayCourseDiscount = async(req,res) => {
         const month = currCourseStartDate.getMonth();
         const year = currCourseStartDate.getFullYear();
         var dateStart = new Date(year, month, day);
-        
+
         if((date.getDate() == day || date.getDate() > day)&&(date.getMonth()==month||date.getMonth()>month)&&(date.getFullYear()==year||date.getFullYear()>year))
         {
             console.log("kk")
