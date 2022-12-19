@@ -4,8 +4,8 @@ const changePasswordRoutes = require("./Routes/changePassword");
 const bp = require('body-parser')
 const userRoutes = require("./Routes/users");
 const authRoutes = require("./Routes/auth");
-const express = require("express");
 const session = require('express-session');
+const express = require("express");
 const mongoose = require('mongoose');
 const MongoClient = require('mongodb').MongoClient;
 const MongoURI = 'mongodb+srv://roka:roka@cluster0.9sdu6uc.mongodb.net/test' ;
@@ -31,10 +31,10 @@ app.use(session(
     resave : false ,
     saveUninitialized : true,
   }));
+  app.use("/users", userRoutes);
+app.use("/auth", authRoutes);
 app.use("/passwordReset", passwordResetRoutes);
 app.use("/changePassword", changePasswordRoutes);
-app.use("/users", userRoutes);
-app.use("/auth", authRoutes);
 app.use(express.static("ACL Project/views/"));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -50,16 +50,23 @@ const subtitles = require('./Models/Subtitles');
 const admins = require('./Models/Administrator');
 const pendingInstructors = require('./Models/pendingInstructors');
 const corporateTrainees = require('./Models/corporateTrainees');
-const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink} = require('./Routes/coursesController');
+const individual_Trainee=require('./Models/Individual Trainee');
+const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,addANewInstructor,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,FilteredCourses} = require('./Routes/coursesController');
 
 const {addUserRating,saveUserRating} = require('./Routes/usersController');
 
-const {insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio} = require('./Routes/instructorController');
+const {insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor,reviewingAnInstructor,getInstructorRatings,instructorSendReport,fetchInstructorAllPreviousReports,fetchInstructorDeliveredReports,fetchInstructorPendingReports,fetchInstructorResolvedReports,fetchInstructorProblem} = require('./Routes/instructorController');
 
-const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor} = require('./Routes/adminController');
+const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests} = require('./Routes/adminController');
 
 //solving exercises
-const {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults, viewAnswers} = require('./Routes/solvingExercisesController');
+const {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults, viewAnswers,addQuestion} = require('./Routes/solvingExercisesController');
+
+const {addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports,fetchTraineeProfileDetails,fetchTraineeDeliveredReports,fetchTraineePendingReports,fetchTraineeResolvedReports,fetchProblem,fetchNonRegisteredTraineeCoursesForInstructor,checkIfAdminRespondedTrainee,updateReportStatusFromPendingToResolvedTrainee} = require('./Routes/individualTraineeController');
+
+const {corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem,fetchNonRegisteredCorporateTraineeCoursesForInstructor, requestCourseAccess} = require('./Routes/corporateTraineeController');
+
+
 
 
 const { isNumberObject } = require('util/types');
@@ -210,6 +217,7 @@ app.get("/home", data);
 
 app.get("/View_All_Courses/",async (req,res)=>{
 
+
   const q = req.query.q;
   
 
@@ -220,19 +228,198 @@ app.get("/View_All_Courses/",async (req,res)=>{
     );
   };
 
-  if(parseInt(q))
-  {
+  // if(parseInt(q))
+  // {
     
-    const allCourses = await course.find({"Rating":q}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Course_Description:1 }).sort({createdAt:-1}) ;
+  //   const allCourses = await course.find({"Rating":q}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Rating:1,Course_Description:1 }).sort({createdAt:-1}) ;
     
-    res.status(200).json(allCourses);
-  }
-  else{
+  //   res.status(200).json(allCourses);
+  // }
+  // else{
     const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Course_Description:1 }).sort({createdAt:-1}) ;
     res.status(200).json(search(allCourses));
-  }
+  //}
 
+
+
+});
+
+//app.get("/FilteredCourses",FilteredCourses);
+app.get("/FilteredCourses",async (req,res)=>{
+
+
+  const q = req.query.q;
   
+
+  const keys=["Title","Subject"];
+  const search = (data)=>{
+    return data.filter((item)=>
+    keys.some((key)=>item[key].toLowerCase().includes(q))
+    );
+  };
+
+            const subject = req.query.Subject;
+            const rating = req.query.Rating;
+            const price = req.query.Price;
+            // const filteredCourses=null;
+
+            if(subject==null||subject=="")
+            {
+                if(rating==null||rating=="")
+                {
+                    if(price==null||price=="")
+                    {
+                        const filteredCourses = await course.find({});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                    else
+                    {
+                        const filteredCourses = await course.find({Price:price});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                }
+                else
+                {
+                    if(price==null||price=="")
+                    {
+                        const filteredCourses = await course.find({Rating:rating});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                    else
+                    {
+                        const filteredCourses = await course.find({Rating:rating,Price:price});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                }
+            }
+            else
+            {
+                if(rating==null||rating=="")
+                {
+                    if(price==null||price=="")
+                    {
+                        const filteredCourses = await course.find({Subject:subject});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                    else
+                    {
+                        const filteredCourses = await course.find({Subject:subject,Price:price});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                }
+                else
+                {
+                    if(price==null||price=="")
+                    {
+                        const filteredCourses = await course.find({Subject:subject,Rating:rating});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                    else
+                    {
+                        const filteredCourses = await course.find({Subject:subject,Rating:rating,Price:price});
+
+                        res.status(200).json(search(filteredCourses));
+
+                    }
+                }
+            }
+
+});
+
+app.get("/FilterMyCourses",async (req,res)=>{
+
+
+  const q = req.query.q;
+  const instructorId= req.query.id;
+  // const instData=await course.find({Instructor:mongoose.Types.ObjectId(instructorId),"Price":p},{}).sort({createdAt:-1});
+  
+
+  const keys=["Title","Subject"];
+  const search = (data)=>{
+    return data.filter((item)=>
+    keys.some((key)=>item[key].toLowerCase().includes(q))
+    );
+  };
+
+            const subject = req.query.Subject;
+            const rating = req.query.Rating;
+            const price = req.query.Price;
+            // const filteredCourses=null;
+
+            if(subject==null||subject=="")
+            {
+                if(rating==null||rating=="")
+                {
+                    if(price==null||price=="")
+                    {
+                        const filteredCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId)}).sort({createdAt:-1});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                    else
+                    {
+                        const filteredCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId),Price:price}).sort({createdAt:-1});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                }
+                else
+                {
+                    if(price==null||price=="")
+                    {
+                        const filteredCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId),Rating:rating}).sort({createdAt:-1});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                    else
+                    {
+                        const filteredCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId),Rating:rating,Price:price}).sort({createdAt:-1});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                }
+            }
+            else
+            {
+                if(rating==null||rating=="")
+                {
+                    if(price==null||price=="")
+                    {
+                        const filteredCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId),Subject:subject}).sort({createdAt:-1});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                    else
+                    {
+                        const filteredCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId),Subject:subject,Price:price}).sort({createdAt:-1});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                }
+                else
+                {
+                    if(price==null||price=="")
+                    {
+                        const filteredCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId),Subject:subject,Rating:rating}).sort({createdAt:-1});
+
+                        res.status(200).json(search(filteredCourses));
+                    }
+                    else
+                    {
+                        const filteredCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId),Subject:subject,Rating:rating,Price:price}).sort({createdAt:-1});
+
+                        res.status(200).json(search(filteredCourses));
+
+                    }
+                }
+            }
 
 });
 
@@ -244,6 +431,84 @@ app.post("/addCourseDiscount/",addCourseDiscount);
 
 app.post("/addSubtitle/",addSubtitle);
 
+app.post("/addANewInstructor",addANewInstructor);
+
+app.post("/addIndividualTrainee",addIndividualTrainee);
+
+app.get("/ratingACourse",ratingACourse);
+
+app.get("/ratingAnInstructor",ratingAnInstructor);
+
+app.get("/reviewingAnInstructor",reviewingAnInstructor);
+
+app.get("/getInstructorRatings",getInstructorRatings);
+
+app.get("/fetchInstructorAllPreviousReports",fetchInstructorAllPreviousReports);
+
+app.get("/fetchTraineeDeliveredReports",fetchTraineeDeliveredReports);
+
+app.get("/fetchTraineePendingReports",fetchTraineePendingReports);
+
+app.get("/fetchTraineeResolvedReports",fetchTraineeResolvedReports);
+
+app.get("/checkIfAdminRespondedTrainee",checkIfAdminRespondedTrainee);
+
+app.get("/updateReportStatusFromPendingToResolvedTrainee",updateReportStatusFromPendingToResolvedTrainee);
+
+app.get("/fetchProblem",fetchProblem);
+
+app.get("/fetchCorporateTraineeDeliveredReports",fetchCorporateTraineeDeliveredReports);
+
+app.get("/fetchCorporateTraineePendingReports",fetchCorporateTraineePendingReports);
+
+app.get("/fetchCorporateTraineeResolvedReports",fetchCorporateTraineeResolvedReports);
+
+app.get("/fetchCorporateProblem",fetchCorporateProblem);
+
+app.get("/fetchInstructorDeliveredReports",fetchInstructorDeliveredReports);
+
+app.get("/fetchInstructorPendingReports",fetchInstructorPendingReports);
+
+app.get("/fetchInstructorResolvedReports",fetchInstructorResolvedReports);
+
+app.get("/fetchInstructorProblem",fetchInstructorProblem);
+
+
+
+app.get("/indiviualTraineeRegisterCourse",indiviualTraineeRegisterCourse);
+
+app.get("/corporateTraineeRegisterCourse",corporateTraineeRegisterCourse);
+
+app.get("/fetchCorporateTraineeProfileDetails",fetchCorporateTraineeProfileDetails);
+
+
+
+
+app.get("/viewMyRegisteredCourses",viewMyRegisteredCourses);
+
+app.get("/corporateViewMyRegisteredCourses",corporateViewMyRegisteredCourses);
+
+app.get("/fetchTheSubtitleBySubtitleId",fetchTheSubtitleBySubtitleId);
+
+app.get("/fetchTraineeAllPreviousReports",fetchTraineeAllPreviousReports);
+
+app.get("/fetchTraineeProfileDetails",fetchTraineeProfileDetails);
+
+app.get("/fetchCorporateTraineeAllPreviousReports",fetchCorporateTraineeAllPreviousReports);
+
+app.get("/fetchNonRegisteredTraineeCoursesForInstructor",fetchNonRegisteredTraineeCoursesForInstructor);
+
+app.get("/fetchNonRegisteredCorporateTraineeCoursesForInstructor",fetchNonRegisteredCorporateTraineeCoursesForInstructor);
+
+app.get("/isCurrentCourseRegistered",isCurrentCourseRegistered);
+
+app.post("/traineeSendReport",traineeSendReport);
+
+app.post("/corporateTraineeSendReport",corporateTraineeSendReport);
+
+app.post("/instructorSendReport",instructorSendReport);
+
+app.post("/addQuestion",addQuestion);
 
 
 app.post("/Filter_By_Subject/", Filter_By_Subject);
@@ -327,6 +592,12 @@ app.get("/fetchInstructorById",fetchInstructorById);
 
 app.get("/fetchCoursePreviewLink",fetchCoursePreviewLink);
 
+app.get("/getCurrentCourseInstructor",getCurrentCourseInstructor);
+
+app.get("/fetchCurrentCourseInstructorByInstructorId",fetchCurrentCourseInstructorByInstructorId);
+
+app.get("/fetchCurrentCourseInstructorCoursesByInstructorId",fetchCurrentCourseInstructorCoursesByInstructorId);
+
 // const insttitles= async (req,res) => { 
 //             const instructorName = req.body;
 //             const instData=await course.find({ Instructor_Name: req.params.Instructor_Name },{});
@@ -393,3 +664,19 @@ app.get('/viewAnswers', viewAnswers);
 app.post('/addResults' , addResults);
 app.get('/viewResults', viewResults);
 
+
+//ADMIN SIDE REPORTS
+//app.get('/pendingInstructorReports', fetchInstructorAllPendingReports);
+app.get('/seenReports', fetchSeenReports);
+app.get('/unseenReports', fetchAllDeliveredReports);
+app.get('/viewReport', viewIReport);
+app.put('/updatePending', updateReportStatus);
+app.put('/manualStatus', updateR);
+app.put('/adminRes', adminResponse);
+
+
+//REQUEST COURSE ACCESS
+app.post('/reqAccess', requestCourseAccess);
+app.delete('/deleteReq/:id', deleteRequest);
+app.put('/grantAccess/:id', grantAccess);
+app.get('/viewRequests', viewRequests);

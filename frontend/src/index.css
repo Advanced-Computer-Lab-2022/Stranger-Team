@@ -77,8 +77,8 @@ header a {
 }
 
 div.preview{
-  width:20%;
-  height:10%;
+  width:50%;
+  height:20%;
 }
 
 .course-details h4 {
@@ -110,7 +110,7 @@ input {
   display: block;
 }
 
-input {
+input.course {
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 20px;
@@ -118,6 +118,9 @@ input {
   border: 1px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box;
+}
+div.radioRating{
+  display: inline;
 }
 
 form button {
@@ -256,6 +259,58 @@ div.error {
 
 }
 
+
+
+.spanni {
+  position: absolute;
+  top: 100px;
+  right: 1px;
+  cursor: pointer;
+  background: #f1f1f1;
+  /* padding: 6px; */
+  border-radius: 50%;
+  color: #333;
+
+}
+
+
+.drp {
+  position: absolute;
+  top: 20px;
+  right: 260px;
+  cursor: pointer;
+
+}
+
+
+.drpp {
+  position: absolute;
+  top: 100px;
+  right: 50px;
+  cursor: pointer;
+
+}
+
+
+.spannyyyy {
+  position: absolute;
+  top: 60px;
+  right: 1px;
+  cursor: pointer;
+  background: #f1f1f1;
+  /* padding: 6px; */
+  border-radius: 50%;
+  color: #333;
+
+}
+
+
+
+.nonspanny {
+  cursor: context-menu
+}
+
+
 a {
   color: #147de7;
   text-decoration: none;
@@ -363,9 +418,9 @@ hr .new1 {
   transition: color 200 ms;
 }
 
-input[type="radio"] {
+/* input[type="radio"] {
   display: none;
-}
+} */
 
 .starsLine {
   display: inline-flex;

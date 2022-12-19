@@ -9,7 +9,6 @@ const weekSchema = new Schema({
       type: String,
       required: true
     },
-    
     Hours:{
       type: Number,
       required: true

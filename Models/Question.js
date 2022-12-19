@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 
 const questionSchema = new Schema({
-   
+
   QNumber: {
     type: Number,
     default: 0
@@ -18,8 +18,8 @@ const questionSchema = new Schema({
   },
   
   Answers: {
-    type: Array,
-    default: []
+    type: [String],
+    required:false
   },
   correctAnswer:{
     type: Number,

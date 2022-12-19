@@ -78,6 +78,7 @@
 
         <label> Title:</label>
         <input 
+            className='course'
             type="text" 
             onChange={(e) => setTitle(e.target.value)} 
             value={Title}
@@ -85,6 +86,7 @@
 
         <label> Subject:</label>
         <input 
+            className='course'
             type="text" 
             onChange={(e) => setSubject(e.target.value)} 
             value={Subject}
@@ -93,6 +95,7 @@
 
         <label>Subtitles:</label>
         <input 
+            className='course'
             type="text" 
             onChange={(e) => setSubtitles(e.target.value)} 
             value={Subtitles}
@@ -100,6 +103,7 @@
 
         <label>Subtitles Total Hours:</label>
         <input 
+            className='course'
             type="number" 
             onChange={(e) => setSubtitles_Total_Hours(e.target.value)} 
             value={Subtitles_Total_Hours} 
@@ -107,6 +111,7 @@
 
         <label>Exercises:</label>
         <input 
+            className='course'
             type="text" 
             onChange={(e) => setExercises(e.target.value)} 
             value={Exercises} 
@@ -114,6 +119,7 @@
 
         <label>Course Total Hours:</label>
         <input 
+            className='course'
             type="number" 
             onChange={(e) => setCourse_Total_Hours(e.target.value)} 
             value={Course_Total_Hours} 
@@ -121,6 +127,7 @@
 
         <label>Price:</label>
         <input 
+            className='course'
             type="text" 
             onChange={(e) => setPrice(e.target.value)} 
             value={Price} 
@@ -128,6 +135,7 @@
 
         <label>Rating:</label>
         <input 
+            className='course'
             type="number" 
             onChange={(e) => setRating(e.target.value)} 
             value={Rating} 
@@ -135,6 +143,7 @@
 
         <label>Instructor Name:</label>
         <input 
+            className='course'
             type="String" 
             onChange={(e) => setInstructor_Name(e.target.value)} 
             value={Instructor_Name} 
@@ -145,6 +154,7 @@
 
         <label>Discount :</label>
         <input 
+            className='course'
             type="String" 
             onChange={(e) => setDiscount(e.target.value)} 
             value={discount} 
@@ -152,6 +162,7 @@
 
         <label>Course Description:</label>
         <input 
+            className='course'
             type="String" 
             onChange={(e) => setCourse_Description(e.target.value)} 
             value={Course_Description} 

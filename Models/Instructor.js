@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+const jwt = require("jsonwebtoken");
+const Joi = require("joi");
 const InstructorSchema = new Schema({
     Username: {
       type: String,
@@ -30,10 +31,27 @@ const InstructorSchema = new Schema({
     Bio:{
       type:String,
       required:false
-    }
+    },
+    Rating:{
+      type:Number,
+      required:false
+    },
+    Instructor_Ratings:{
+      type:[Number],
+      required:false
+    },
+    Instructor_Reviews:{
+      type:[String],
+      required:false
+    },
+    verified: { type: Boolean, default: true },
   }, { timestamps: true });
-
-
+  InstructorSchema.methods.generateAuthToken = function () {
+    const token = jwt.sign({ _id: this._id }, "secret", {
+      expiresIn: "7d",
+    });
+    return token;
+  };
 
   const Instructors = mongoose.model('instructor', InstructorSchema);
-module.exports = Instructors;
+module.exports = {Instructors};

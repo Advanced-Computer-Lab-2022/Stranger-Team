@@ -17,31 +17,29 @@
     import CurrentCoursePageDiscountDetails from "../components/CurrentCoursePageDiscountDetails";
     import CurrentCourseInstructorPageSubtitleDetails from "../components/CurrentCourseInstructorPageSubtitlesDetails"
     import CurrentCoursePageSubtitleDetails from "../components/CurrentCourseInstructorPageSubtitlesDetails";
+    import CurrentCourseSubtitlesPageDetailsTrainee from "../components/CurrentCourseSubtitlesPageDetailsTrainee";
 
 
 
     const CurrentCourseSubtitlesPageTrainee = () => {
     
-    const [subtitle,setSubtitle] = useState(null)
+    const [subtitle,setSubtitle] = useState([])
     
 
     useEffect(() => {
         const fetchSubtitles = async () => {
         
         const params = new URLSearchParams(window.location.search);
-        const courseId = params.get('CourseId');
-        console.log(courseId); 
+        const subtitleId = params.get('SubtitleId');
+        console.log(subtitleId); 
         
-        const response = await fetch(`/fetchSubtitlesByCourseId/?CourseId=${courseId}`)
+        const response = await fetch(`/fetchTheSubtitleBySubtitleId/?SubtitleId=${subtitleId}`)
 
-        
-        
         const json = await response.json()
-        console.log("subtitles"+response)
         console.log( json)
 
         if (response.ok) {
-            setSubtitle(json)
+            setSubtitle([json])
         }
 
 
@@ -54,13 +52,34 @@
 
     return (
 
-            <div className="course-details">
+            // <div classNameName="course-details">
 
-                <h4>Available Course Subtitles:</h4>
+            //     <h4>Available Course Videos:</h4>
+            //     {subtitle && subtitle.map(subtitle => (
+            //     <CurrentCourseSubtitlesPageDetailsTrainee subtitle={subtitle} key={subtitle._id} />
+            //     ))[0]}
+            // </div> 
+
+            <div>
+        
+        <Container >
+
+        <div className="row gutters">
+        <div className="card h-100">
+            <div className="card-body">
+                {/* <FetchInstructorNameForTraineeCourseDetails/> */}
                 {subtitle && subtitle.map(subtitle => (
-                <CurrentCoursePageSubtitleDetails subtitle={subtitle} key={subtitle._id} />
-                ))}
+                <CurrentCourseSubtitlesPageDetailsTrainee subtitle={subtitle} key={subtitle._id} />
+                ))[0]}
+                
+                
             </div>
+            
+        </div>
+        </div>
+        
+        </Container>
+        </div>
 
     )
     }

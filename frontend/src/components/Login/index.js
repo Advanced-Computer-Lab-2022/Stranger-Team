@@ -36,12 +36,12 @@ const Login = () => {
 					<form className={styles.form_container} onSubmit={handleSubmit}>
 						<h1>Login to Your Account</h1>
 						<input
-							type="email"
+							type="text"
 							placeholder="Email"
 							name="Email"
 							onChange={handleChange}
 							value={data.Email}
-							required
+							
 							className={styles.input}
 						/>
 						<input

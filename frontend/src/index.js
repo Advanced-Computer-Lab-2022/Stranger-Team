@@ -15,12 +15,18 @@ import store from './redux/store';
 import { Provider } from 'react-redux';
 
 
+import { SeenReportsContextProvider } from './context/SeenReportContext';
+
+
+import { CourseRequestsContextProvider } from './context/courseRequestsContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
     <Provider store={store}>
+      <CourseRequestsContextProvider>
+      <SeenReportsContextProvider>
     <CourseContextProvider>
       <InstructorsContextProvider>
     <CorporateTraineesContextProvider>
@@ -32,6 +38,8 @@ root.render(
     </CorporateTraineesContextProvider>
     </InstructorsContextProvider>
     </CourseContextProvider>
+    </SeenReportsContextProvider>
+    </CourseRequestsContextProvider>
     </Provider>
   // </React.StrictMode>
 );

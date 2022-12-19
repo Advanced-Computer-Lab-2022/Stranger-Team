@@ -10,41 +10,36 @@
 
     import{Button, Alert, Container, Nav} from 'react-bootstrap'
     import Navbar from "../components/Navbar";
-
     import CourseDetails from "../components/CourseDetails";
     import StarRating from "../components/StarRating";
     import CurrentCoursePageDetails from "../components/CurrentCoursePageDetails";
     import CurrentCoursePageDiscountDetails from "../components/CurrentCoursePageDiscountDetails";
     import CurrentCourseDiscountPage from "../components/CurrentCourseDiscountPage";
     import CurrentCourseSubtitlesPageTrainee from "./CurrentCourseSubtitlesPageTrainee";
-    // import FetchInstructorNameForTraineeCourseDetails from "../components/FetchInstructorNameForTraineeCourseDetails";
-
+    import RadioButtonsRateACourse from "../components/RadioButtonsRateACourse";
+    import TraineeSubtitleTitlesPage from "./TraineeSubtitleTitlesPage";
+import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+    
 
 
 
     const CurrentCoursePageTrainee = () => {
     const [course, setCourse] = useState(null)
-    const [discount,setDiscount] = useState(null)
     
 
     useEffect(() => {
         const fetchCourse = async () => {
-        //const response = await fetch('/View_My_Courses/Layla')
-        //const response = await fetch(`/View_My_Courses/Layla/?q=${searchQuery}`)
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        console.log(courseId); 
-        const traineeId = params.get('traineeId');
-        console.log("traineeId "+traineeId);
+        const traineeId = params.get('TraineeId');
         
         
         const response = await fetch(`/CurrentCourse/?CourseId=${courseId}`)
-
         
         
         const json = await response.json()
-        console.log(response)
-        console.log( json)
+        console.log("res "+response)
+        console.log( "json "+json)
 
         if (response.ok) {
             setCourse(json)
@@ -57,22 +52,37 @@
         fetchCourse()
     }, [])
 
+    let navigate = useNavigate();
+        const routeChange = () =>{ 
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get('CourseId');
+        const traineeId = params.get('TraineeId');
+        // console.log(courseId); 
+        let path = `/TraineeReportAProblemPage/?TraineeId=${traineeId}&CourseId=${courseId}`; 
+        navigate(path);
+    }
 
     return (
         <div>
-        <Navbar/>
+        <TraineeProfileNavBar/>
         <Container >
 
-        <div class="row gutters">
-        <div class="card h-100">
-            <div class="card-body">
+        <div className="row gutters">
+        <div className="card h-100">
+            <div className="card-body">
                 {/* <FetchInstructorNameForTraineeCourseDetails/> */}
+                <form className="course-details">
+                    <button  onClick={routeChange}>Report a problem</button>
+                </form>
+                
                 {course && course.map(course => (
                 <CurrentCoursePageDetails course={course} key={course._id} />
                 ))[0]}
                 {/* <CurrentCourseDiscountPage/> */}
-                <CurrentCourseSubtitlesPageTrainee/>
-                {/* <StarRating></StarRating> */}
+                <RadioButtonsRateACourse/>
+                <TraineeSubtitleTitlesPage/>
+                {/* <CurrentCourseSubtitlesPageTrainee/>  */}
+                {/* <StarRating></StarRating>  */}
             </div>
             
         </div>

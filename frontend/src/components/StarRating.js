@@ -1,47 +1,37 @@
-    import React, {useState} from "react";
-    import { FaStar } from "react-icons/fa";
+import React, {useState} from "react";
+import { FaStar } from "react-icons/fa";
 
 
-    const StarRating = () => {
-    const [rating, setRating] = useState(null);
-    const [hover, setHover] = useState(null);
-    const [Error,setError]= useState(null);
-    var newrating=null;
+const StarRating = () => {
+const [rating, setRating] = useState(null);
+const [hover, setHover] = useState(null);
 
-    
+    const handleSubmit = async() => {
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+        
         const params = new URLSearchParams(window.location.search);
-        const userId = params.get('traineeId');
-        console.log("user"+userId); 
-        const courseId = params.get('CourseId');
-        console.log("course"+courseId); 
-        console.log("newrating"+newrating)
-        const response = await fetch(`/saveUserRating/?CourseId=${courseId}&traineeId=${userId}`, {
-        method: 'POST',
-        body: JSON.stringify(rating),
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        const instructorId = params.get('id');
+        console.log(instructorId); 
+        console.log("rating"+rating);
+        const response = await fetch(`/ratingAnInstructor/?id=${instructorId}&rating=${rating}`, {
+            method: 'POST',
+            body: JSON.stringify(rating),
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
 
-        // const response = await fetch(`/saveUserRating/?CourseId=${courseId}&traineeId=${userId}`)
-
         const json = await response.json()
-        console.log(response)
-        console.log( json)
+        console.log(json)
 
-        if (!response.ok) {
-        setError(json.error)
+        if(!response.ok) {
+            
         }
+
         if (response.ok) {
-        
-        
+            console.log(response)
         }
-
     }
-
 
     return (
     <div class="starsLine">
@@ -53,9 +43,8 @@
             <input 
             type="radio" 
             name="rating" 
-            value={ratingValue}  
-            // onClick={() => setRating(ratingValue)}
-            onClick={handleSubmit}
+            value={ratingValue} 
+            onClick={() => {setRating(ratingValue);handleSubmit()}}
             />
             <FaStar 
             className="star" 
@@ -68,9 +57,9 @@
             </label>
             );
         })}
-        
-        </div>
-        );
-    };
+    
+    </div>
+    );
+};
 
-    export default StarRating
+export default StarRating

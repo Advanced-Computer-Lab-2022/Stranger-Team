@@ -10,6 +10,7 @@
 
     import{Button, Alert, Container} from 'react-bootstrap'
     import ProfileNavBar from '../components/ProfileNavBar'
+import FilterMyCoursesInstructorComponent from "../components/FilterMyCoursesInstructorComponent";
 
 
     const InstructorCoursePage = () => {
@@ -77,7 +78,8 @@
         <Container >
             <ProfileNavBar/>
             <input type="text" placeholder="Search My Courses By Title,Subject..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}></input>
-            <input type="text" placeholder="Search My Courses By Price..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}></input>
+            {/* <input type="text" placeholder="Search My Courses By Price..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}></input> */}
+            <FilterMyCoursesInstructorComponent/>
         <div className="courses">
             <h1>My Courses</h1>
             {courses && courses.map(course => (
@@ -89,7 +91,12 @@
                     width: "100%"
                     }
                 }}
-                onClick={() => window.location.href=`/CurrentCourse/?CourseId=${course._id}&id=${new URLSearchParams(window.location.search).get('id')}`}
+                onClick={
+                    
+                    () =>{
+                        const params = new URLSearchParams(window.location.search);
+                        const instructorId = params.get('id'); 
+                        window.location.href=`/CurrentCourse/?id=${instructorId}&CourseId=${course._id}`}}
                 key={course._id}>
             <MyCourses course={course} key={course._id} />
             </Container>
