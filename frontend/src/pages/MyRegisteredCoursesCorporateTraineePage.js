@@ -13,11 +13,11 @@
     import StarRating from "../components/StarRating";
     import PreviewCourseVideoPageDetails from '../components/PreviewCourseVideoTraineePageDetails'
 import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfileNavBar";
+import FilterMyRegisteredCoursesCorporateTraineeComponent from "../components/FilterMyRegisteredCoursesCorporateTraineeComponent";
 
     const MyRegisteredCoursesCorporateTraineePage = () => {
     const [courses, setCourses] = useState(null)
     const [searchQuery, setSearchQuery] = useState("")
-    const [searchRateQuery, setSearchRateQuery] = useState("")
     
     useEffect(() => {
         const fetchCourses = async () => {
@@ -26,8 +26,8 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
         const corporateTraineeId = params.get('CorporateTraineeId');
         console.log(corporateTraineeId); 
         
-
-        const response = await fetch(`/corporateViewMyRegisteredCourses/?CorporateTraineeId=${corporateTraineeId}`)
+        console.log(searchQuery)
+        const response = await fetch(`/corporateViewMyRegisteredCourses/?CorporateTraineeId=${corporateTraineeId}&q=${searchQuery}`)
         
         const json = await response.json()
         console.log(json)
@@ -37,12 +37,16 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
         }
 
         fetchCourses()
-    }, [])
+    }, [searchQuery])
 
     return (
 
         <div >
             <CorporateTraineeProfileNavBar/>
+            <input type="text" placeholder="Search By Course Title,Subject,Instructor..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}>
+            
+            </input>
+            <FilterMyRegisteredCoursesCorporateTraineeComponent/>
             
             <div className="courses">
             {courses && courses.map(course => (

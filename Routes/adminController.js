@@ -12,6 +12,9 @@
         const courseRequests = require("../Models/CourseRequests");
         const course = require('../Models/Course');
 
+        const crypto = require("crypto");
+        const bcrypt = require("bcrypt");
+
 
 
         //to view admins from instructors
@@ -26,7 +29,7 @@
 
         //adding a new Admin
         const addAdmin = async (req, res) => {
-        const {Username, Password} = req.body
+       const {Username, Password} = req.body
 
         let emptyFields = []
         if (!Username) {
@@ -44,7 +47,13 @@
 
 
         try {
-            const admin = await Administrator.create({Username, Password})
+            const salt = await bcrypt.genSalt();
+            const hashPassword = await bcrypt.hash(req.body.Password, salt);
+            console.log("USERNAME: " + req.body.Username)
+            console.log("pass 3ady " + req.body.Password)
+            console.log("hashed " + hashPassword)
+         //   const admin = await Administrator.create({Username, hashPassword})        
+		const admin = await new Administrator({ Username: req.body.Username, Password: hashPassword }).save();
             res.status(200).json(admin)
         }
         catch(error) {
@@ -258,9 +267,9 @@
         if (!Gender) {
             emptyFields.push('Gender')
         }
-        if(!Bio){
-            emptyFields.push('Bio')
-        }
+        // if(!Bio){
+        //     emptyFields.push('Bio')
+        // }
 
         if(emptyFields.length > 0) {
             console.log(emptyFields.length)
@@ -270,7 +279,11 @@
 
 
         try {
-            const instructor = await Instructors.create({Username, Password, First_Name, Last_Name, Email, Gender,Bio})
+            const salt = await bcrypt.genSalt();
+            const hashPassword = await bcrypt.hash(req.body.Password, salt);
+          //  const instructor = await Instructors.create({Username, Password, First_Name, Last_Name, Email, Gender,Bio})
+            const instructor = await new Instructors({ ...req.body, Password: hashPassword}).save();
+
             res.status(200).json(instructor)
         }
         catch(error) {
@@ -383,7 +396,10 @@
 
 
         try {
-            const ct = await corporateTrainees.create({Username, Password, First_Name, Last_Name, Email, Gender, Corporate,"Role":"Corporate Trainee"})
+            const salt = await bcrypt.genSalt();
+            const hashPassword = await bcrypt.hash(req.body.Password, salt);
+          //  const ct = await corporateTrainees.create({Username, hashPassword, First_Name, Last_Name, Email, Gender, Corporate,"Role":"Corporate Trainee"})
+            const ct = await new corporateTrainees({ ...req.body, Password: hashPassword,"Role":"Corporate Trainee" }).save();
             res.status(200).json(ct)
         }
         catch(error) {

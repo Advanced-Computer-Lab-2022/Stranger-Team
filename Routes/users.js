@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User, validate } = require("../Models/User");
+const { Individual_Trainee, validate } = require("../Models/Individual Trainee");
 const Token = require("../Models/Token");
 const crypto = require("crypto");
 const sendEmail = require("./Emailer");
@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
 		if (error)
 			return res.status(400).send({ message: error.details[0].message });
 
-		let user = await User.findOne({ Email: req.body.Email });
+		let user = await Individual_Trainee.findOne({ Email: req.body.Email });
 		if (user)
 			return res
 				.status(409)
@@ -24,10 +24,11 @@ router.post("/", async (req, res) => {
 				const salt = await bcrypt.genSalt();
 		const hashPassword = await bcrypt.hash(req.body.Password, salt);
 
-		user = await new User({ ...req.body, Password: hashPassword }).save();
-		user.Currency = countryToCurrency.getParamByParam('countryName', user.Country, 'Currency');
+		user = await new Individual_Trainee({ ...req.body, Password: hashPassword }).save();
+	//	user.Currency = countryToCurrency.getParamByParam('countryName', user.Country, 'Currency');
 		const token = await new Token({
 			userId: user._id,
+			individualId:user._id,
 			token: crypto.randomBytes(32).toString("hex"),
 		}).save();
 		const url = `localhost:3000/users/${user.id}/verify/${token.token}`;
@@ -44,24 +45,44 @@ router.post("/", async (req, res) => {
 
 router.get("/:id/verify/:token/", async (req, res) => {
 	try {
-		const user = await User.findOne({ _id: req.params.id });
+		const user = await Individual_Trainee.findOne({ _id: req.params.id });
+	//	console.log("object");
+		// if(!user){
+		// 	user = await Individual_Trainee.findOne({ _id: req.params.id });
+		// }
 		//console.log("user:"+user);
 		if (!user) return res.status(400).send({ message: "Invalid link" });
 
 		const token = await Token.findOne({
-			userId: user._id,
+			individualId: user._id,
 			token: req.params.token,
 		});
+		console.log("user"+user);
+		console.log("tokenID"+token);
+		if(!token){
+			token = await Token.findOne({
+				instructorId: user._id,
+				token: req.params.token,
+			});
+		}
+		if(!token){
+			token = await Token.findOne({
+				corporateId: user._id,
+				token: req.params.token,
+			});
+		}
 		
 		if (!token) return res.status(400).send({ message: "Invalid link" });
 
-		await User.updateOne({ Email: user.Email, verified: true });
+		user.verified = true;
+		user.save();
 				console.log("user:");
 
 		await token.remove();
 		res.status(200).send({ message: "Email verified successfully" });
 		
 	} catch (error) {
+		console.log(error);
 		res.status(500).send({ message: "Internal Server Error" });
 	}
 });

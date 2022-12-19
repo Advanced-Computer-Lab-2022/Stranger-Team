@@ -8,7 +8,7 @@
     import { useCourseContext } from "../hooks/useCoursesContext";
     import { useNavigate } from "react-router-dom";
 
-    const FilterCoursesByRateComponent = () => {
+    const FilterMyRegisteredCoursesCorporateTraineeComponent = () => {
 
     const {courses,dispatch} = useCourseContext();
 
@@ -18,6 +18,8 @@
     const [error, setError] = useState(null)
     
 
+
+
     useEffect(() => {
         
     }, [])
@@ -25,7 +27,7 @@
     let navigate = useNavigate();
 
         const routeChange = () =>{ 
-        // window.location.href=`/FilteredCoursesPageTrainee?Rating=${Rating}&Subject=${Subject}&Price=${Price}`;
+        // window.location.href=`/MyRegisteredCoursesFilteredPageCorporateTrainee?Rating=${Rating}&Subject=${Subject}&Price=${Price}`;
         let path; 
 
         if(Rating==null||Rating=="")
@@ -34,22 +36,22 @@
             {
                 if(Price==null||Price=="")
                 {
-                    path = `/FilteredCoursesPageTrainee`; 
+                    path = `/MyRegisteredCoursesFilteredPageCorporateTrainee`; 
                 }
                 else
                 {
-                    path = `/FilteredCoursesPageTrainee?Price=${Price}`; 
+                    path = `/MyRegisteredCoursesFilteredPageCorporateTrainee?Price=${Price}`; 
                 }
             }
             else
             {
                 if(Price==null||Price=="")
                 {
-                    path = `/FilteredCoursesPageTrainee?Subject=${Subject}`; 
+                    path = `/MyRegisteredCoursesFilteredPageCorporateTrainee?Subject=${Subject}`; 
                 }
                 else
                 {
-                    path = `/FilteredCoursesPageTrainee?Subject=${Subject}&Price=${Price}`; 
+                    path = `/MyRegisteredCoursesFilteredPageCorporateTrainee?Subject=${Subject}&Price=${Price}`; 
                 }
             }
         }
@@ -59,27 +61,27 @@
             {
                 if(Price==null||Price=="")
                 {
-                    path = `/FilteredCoursesPageTrainee?Rating=${Rating}`; 
+                    path = `/MyRegisteredCoursesFilteredPageCorporateTrainee?Rating=${Rating}`; 
                 }
                 else
                 {
-                    path = `/FilteredCoursesPageTrainee?Rating=${Rating}&Price=${Price}`; 
+                    path = `/MyRegisteredCoursesFilteredPageCorporateTrainee?Rating=${Rating}&Price=${Price}`; 
                 }
             }
             else
             {
                 if(Price==null||Price=="")
                 {
-                    path = `/FilteredCoursesPageTrainee?Rating=${Rating}&Subject=${Subject}`; 
+                    path = `/MyRegisteredCoursesFilteredPageCorporateTrainee?Rating=${Rating}&Subject=${Subject}`; 
                 }
                 else
                 {
-                    path = `/FilteredCoursesPageTrainee?Rating=${Rating}&Subject=${Subject}&Price=${Price}`; 
+                    path = `/MyRegisteredCoursesFilteredPageCorporateTrainee?Rating=${Rating}&Subject=${Subject}&Price=${Price}`; 
                 }
             }
         }
 
-        // let path = `/FilteredCoursesPageTrainee?Rating=${Rating}&Subject=${Subject}&Price=${Price}`; 
+        // let path = `/MyRegisteredCoursesFilteredPageCorporateTrainee?Rating=${Rating}&Subject=${Subject}&Price=${Price}`; 
         navigate(path);
     }
 
@@ -132,4 +134,4 @@
     )
     }
 
-    export default FilterCoursesByRateComponent
+    export default FilterMyRegisteredCoursesCorporateTraineeComponent

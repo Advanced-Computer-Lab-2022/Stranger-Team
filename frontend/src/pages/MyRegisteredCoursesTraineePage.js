@@ -13,6 +13,7 @@
     import StarRating from "../components/StarRating";
     import PreviewCourseVideoPageDetails from '../components/PreviewCourseVideoTraineePageDetails'
 import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+import FilterMyRegisteredCoursesTraineeComponent from "../components/FilterMyRegisteredCoursesTraineeComponent";
 
     const MyRegisteredCoursesTraineePage = () => {
     const [courses, setCourses] = useState(null)
@@ -27,7 +28,7 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
         console.log(traineeId); 
         
 
-        const response = await fetch(`/viewMyRegisteredCourses/?TraineeId=${traineeId}`)
+        const response = await fetch(`/viewMyRegisteredCourses/?TraineeId=${traineeId}&q=${searchQuery}`)
         
         const json = await response.json()
         console.log(json)
@@ -37,12 +38,17 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
         }
 
         fetchCourses()
-    }, [])
+    }, [searchQuery])
 
     return (
 
         <div >
             <TraineeProfileNavBar/>
+            <input type="text" placeholder="Search By Course Title,Subject,Instructor..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}>
+            
+            </input>
+
+            <FilterMyRegisteredCoursesTraineeComponent/>
             
             <div className="courses">
             {courses && courses.map(course => (

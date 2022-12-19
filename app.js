@@ -575,9 +575,72 @@ app.get("/fetchCorporateTraineeProfileDetails",fetchCorporateTraineeProfileDetai
 
 
 
-app.get("/viewMyRegisteredCourses",viewMyRegisteredCourses);
+// app.get("/viewMyRegisteredCourses",viewMyRegisteredCourses);
+app.get("/viewMyRegisteredCourses" , async(req,res) => {
+    
+        const individualTraineeId = req.query.TraineeId;
+
+        const q = req.query.q;
+  
+
+        const keys=["Title","Subject","Instructor_Name"];
+        const search = (data)=>{
+          return data.filter((item)=>
+          keys.some((key)=>item[key].toLowerCase().includes(q))
+          );
+        };
+
+    try{
+    const currTrainee = await individual_Trainee.findById({_id:individualTraineeId});
+    const coursesArray = currTrainee.Registered_Courses;
+    const coursesArray1 = [];
+    console.log(coursesArray)
+
+    for (let i = 0; i < coursesArray.length; i++) {
+            coursesArray1.push(await course.findById({_id:coursesArray[i]}));
+        }
+    
+    console.log("search(coursesArray1)"+search(coursesArray1))
+    res.status(200).json(search(coursesArray1));
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+});
 
 app.get("/corporateViewMyRegisteredCourses",corporateViewMyRegisteredCourses);
+app.get("/corporateViewMyRegisteredCourses" , async(req,res) => {
+    
+        const corporateTrainee = req.query.CorporateTraineeId;
+
+        const q = req.query.q;
+  
+
+        const keys=["Title","Subject","Instructor_Name"];
+        const search = (data)=>{
+          return data.filter((item)=>
+          keys.some((key)=>item[key].toLowerCase().includes(q))
+          );
+        };
+        
+
+    try{
+    const currTrainee = await corporate_Trainee.findById({_id:corporateTrainee});
+    const coursesArray = currTrainee.Registered_Courses;
+    const coursesArray1 = [];
+    console.log(coursesArray)
+
+    for (let i = 0; i < coursesArray.length; i++) {
+            coursesArray1.push(await course.findById({_id:coursesArray[i]}));
+        }
+    
+    console.log(coursesArray1)
+    res.status(200).json(search(coursesArray1));
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+});
 
 app.get("/fetchTheSubtitleBySubtitleId",fetchTheSubtitleBySubtitleId);
 

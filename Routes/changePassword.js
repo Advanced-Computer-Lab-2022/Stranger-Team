@@ -1,6 +1,9 @@
 const crypto = require("crypto");
 const router = require("express").Router();
-const {User}  = require("../Models/User");
+const { Individual_Trainee } = require("../Models/Individual Trainee");
+const { corporateTrainees } = require("../Models/corporateTrainees");
+const { Instructors } = require("../Models/Instructor");
+const { Administrator } = require("../Models/Administrator");
 const Joi = require("joi");
 const passwordComplexity = require("joi-password-complexity");
 const bcrypt = require("bcrypt");
@@ -12,9 +15,18 @@ router.post("/", async (req, res) => {
 		
 		if (error)
 			return res.status(400).send({ message: error.details[0].message });
-		 // this should be changed to current session logged in account
+		 
 	
-		const user = await User.findOne({Email:req.session.user.Email});
+		let user = await Individual_Trainee.findOne({Email:req.session.user.Email});
+			if(!user){
+				user = await corporateTrainees.findOne({Email:req.session.user.Email});
+			}
+			if(!user){
+				user = await Instructors.findOne({Email:req.session.user.Email});
+			}
+			if(!user){
+				user = await Administrator.findOne({Username:req.session.user.Username});
+			}
 
 		const salt = await bcrypt.genSalt();
 		const hashPassword = await bcrypt.hash(req.query.Password, salt);

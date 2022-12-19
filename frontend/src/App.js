@@ -105,6 +105,8 @@ import AdminCurrentCoursePage from './pages/AdminCurrentCoursePage';
 import FilteredCoursesPageAdmin from './pages/FilteredCoursesPageAdmin';
 import AdminAllCourses from './pages/AdminAllCourses';
 import DefineDiscountForAllCoursesAdminPage from './pages/DefineDiscountForAllCoursesAdminPage';
+import MyRegisteredCoursesFilteredPageTrainee from './pages/MyRegisteredCoursesFilteredPageTrainee';
+import MyRegisteredCoursesFilteredPageCorporateTrainee from './pages/MyRegisteredCoursesFilteredPageCorporateTrainee';
 
 function App() {
    const User = localStorage.getItem("token");
@@ -292,7 +294,16 @@ function App() {
         element={<FilteredCoursesPageTrainee />}
         />
 
+        <Route
+        path="/MyRegisteredCoursesFilteredPageTrainee"
+        element={<MyRegisteredCoursesFilteredPageTrainee />}
+        />
+
         
+        <Route
+        path="/MyRegisteredCoursesFilteredPageCorporateTrainee"
+        element={<MyRegisteredCoursesFilteredPageCorporateTrainee />}
+        />
         <Route
         path="/FilteredCoursesPageCorporateTrainee"
         element={<FilteredCoursesPageCorporateTrainee />}
