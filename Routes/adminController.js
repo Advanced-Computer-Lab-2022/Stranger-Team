@@ -1,8 +1,8 @@
 
-        const Administrator = require ('../Models/Administrator');
+        const {Administrator} = require ('../Models/Administrator');
         const pendingInstructors = require ('../Models/pendingInstructors');
-        const corporateTrainees = require ('../Models/corporateTrainees');
-        const Instructors = require ('../Models/Instructor');
+        const {corporateTrainees} = require ('../Models/corporateTrainees');
+        const {Instructors} = require ('../Models/Instructor');
         const InstructorReports = require ('../Models/InstructorReports');
         const TraineeReports = require ('../Models/TraineeReports');
         const CTraineeReports = require ('../Models/CorporateTraineeReports');

@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { Individual_Trainee, validate } = require("../Models/Individual Trainee");
-const Token = require("../Models/Token");
+const {Token} = require("../Models/Token");
 const crypto = require("crypto");
 const sendEmail = require("./Emailer");
 const bcrypt = require("bcrypt");
@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
 		user = await new Individual_Trainee({ ...req.body, Password: hashPassword }).save();
 	//	user.Currency = countryToCurrency.getParamByParam('countryName', user.Country, 'Currency');
 		const token = await new Token({
-			userId: user._id,
+			//userId: user._id,
 			individualId:user._id,
 			token: crypto.randomBytes(32).toString("hex"),
 		}).save();

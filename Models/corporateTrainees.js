@@ -1,6 +1,7 @@
     const mongoose = require('mongoose');
     const Schema = mongoose.Schema;
-
+    const jwt = require("jsonwebtoken");
+    const Joi = require("joi");
     const corporateTraineeSchema = new Schema({
     Username: {
         type: String,
@@ -38,8 +39,15 @@
     },Role: {
         type: String,
         required: true
-    }
+    },
+    verified: { type: Boolean, default: true },
     }, { timestamps: true });
+    corporateTraineeSchema.methods.generateAuthToken = function () {
+        const token = jwt.sign({ _id: this._id }, "secret", {
+            expiresIn: "7d",
+        });
+        return token;
+    };
 
     const corporateTrainees = mongoose.model('corporateTrainees', corporateTraineeSchema);
-    module.exports = corporateTrainees;
+    module.exports = {corporateTrainees};

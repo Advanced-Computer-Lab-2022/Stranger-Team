@@ -17,6 +17,7 @@ const Login = () => {
 			const url = "http://localhost:3000/auth";
 			const { data: res } = await axios.post(url, data);
 			localStorage.setItem("token", res.data);
+			
 			window.location = "/";
 		} catch (error) {
 			if (
@@ -36,12 +37,12 @@ const Login = () => {
 					<form className={styles.form_container} onSubmit={handleSubmit}>
 						<h1>Login to Your Account</h1>
 						<input
-							type="email"
+							type="text"
 							placeholder="Email"
 							name="Email"
 							onChange={handleChange}
 							value={data.Email}
-							required
+							
 							className={styles.input}
 						/>
 						<input
