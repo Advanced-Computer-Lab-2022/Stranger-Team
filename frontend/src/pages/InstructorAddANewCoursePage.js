@@ -18,6 +18,12 @@
     const [Link,setLink] = useState('')
     const [Description,setDescription] = useState('')
     const [error, setError] = useState(null)
+    const [Q, setQ] = useState('')
+    const [Answer1, setAnswer1] = useState('')
+    const [Answer2, setAnswer2] = useState('')
+    const [Answer3, setAnswer3] = useState('')
+    const [Answer4, setAnswer4] = useState('')
+    const [correctAnswer, setcorrectAnswer] = useState('')
     //const [instructorId, setInstructorId] = useState("")
 
     const handleSubmit = async (e) => {
@@ -26,7 +32,7 @@
         const instructorId = queryParams.get('id');
 
 
-        const course = {Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Discount_Start_Date,Discount_End_Date,Course_Description,PreviewLink,Subtitle_Title,Link,Description,instructorId}
+        const course = {Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Discount_Start_Date,Discount_End_Date,Course_Description,PreviewLink,Subtitle_Title,Link,Description,Q, Answer1, Answer2, Answer3, Answer4, correctAnswer,instructorId}
         console.log(course)
 
 
@@ -62,6 +68,12 @@
         setSubtitle_Title('')
         setLink('')
         setDescription('')
+        setQ('')
+        setAnswer1('')
+        setAnswer2('')
+        setAnswer3('')
+        setAnswer4('')
+        setcorrectAnswer('')
         //dispatch({type:'CREATE_COURSE',payload:json})
         
         console.log('new course added:', json)
@@ -144,6 +156,70 @@
         />
 
         <hr></hr>
+
+
+{/* SUBTITLE QUESTIONS */}
+     
+        <h3>Subtitle Question</h3>
+        <label>Question:</label>
+        <input 
+            type="String" 
+            onChange={(e) => setQ(e.target.value)} 
+            value={Q} 
+        />
+
+        <label>Option 1:</label>
+        <input 
+            type="String" 
+            onChange={(e) => setAnswer1(e.target.value)} 
+            value={Answer1} 
+        />
+
+        <label>Option 2:</label>
+        <input 
+            type="String" 
+            onChange={(e) => setAnswer2(e.target.value)} 
+            value={Answer2} 
+        />
+
+
+        <label>Option 3:</label>
+        <input 
+            type="String" 
+            onChange={(e) => setAnswer3(e.target.value)} 
+            value={Answer3} 
+        />
+
+
+        <label>Option 4:</label>
+        <input 
+            type="String" 
+            onChange={(e) => setAnswer4(e.target.value)} 
+            value={Answer4} 
+        />
+
+        <label>Correct Answer:</label>
+        <input 
+            type="String" 
+            onChange={(e) => setcorrectAnswer(e.target.value)} 
+            value={correctAnswer} 
+        />
+
+        <hr></hr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <h3>Optional Details:</h3>
         <p> </p>
         <label>Discount:</label>

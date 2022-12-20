@@ -5,20 +5,15 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 
-const questionSchema = new Schema({
+const subtitleQuestionSchema = new Schema({
 
+  
 
-  CourseId:
+  SubtitleId:
   {
       type: mongoose.Types.ObjectId,
-      ref:'course'
+      ref:'subtitles'
   },
-
-  QNumber: {
-    type: Number,
-    default: 0
-  },
-
 
   Q: {
     type: String,
@@ -27,14 +22,14 @@ const questionSchema = new Schema({
   
   Answers: {
     type: [String],
-    required:false
+    default:[]
   },
   correctAnswer:{
-    type: Number,
-    default:0
+    type: String,
+    default:''
   }
    
   }, { timestamps: true });
   
-  const question = mongoose.model('question', questionSchema);
-  module.exports = question;
+  const subtitleQuestion = mongoose.model('subtitleQuestion', subtitleQuestionSchema);
+  module.exports = subtitleQuestion;

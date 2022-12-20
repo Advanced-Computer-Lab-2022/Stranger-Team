@@ -28,6 +28,10 @@ const flag = flagResult(totalPoints, earnPoints)
         
     }
 
+    const params = new URLSearchParams(window.location.search);
+    const courseId = params.get('CourseId');
+    console.log(courseId); 
+
     return (
         <div className='container'>
             <h1 className='title'>RESULTS</h1>
@@ -57,7 +61,7 @@ const flag = flagResult(totalPoints, earnPoints)
             </div>
     
             <div className="start">
-                <Link className='btn' to='/mainForQuiz' onClick={onRestart}>Restart</Link>
+                <Link className='btn' to={`/mainForQuiz/?CourseId=${courseId}`} onClick={onRestart}>Restart</Link>
             </div>
     
             <div className="container">

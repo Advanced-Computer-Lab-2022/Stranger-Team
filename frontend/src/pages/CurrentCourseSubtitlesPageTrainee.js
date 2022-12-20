@@ -10,6 +10,7 @@
 
     import{Button, Alert, Container, Nav} from 'react-bootstrap'
     import Navbar from "../components/Navbar";
+    import SubtitleQuestionComponent from "../components/SubtitleQuestionComponent";
 
     import CourseDetails from "../components/CourseDetails";
     import StarRating from "../components/StarRating";
@@ -24,7 +25,7 @@
     const CurrentCourseSubtitlesPageTrainee = () => {
     
     const [subtitle,setSubtitle] = useState([])
-    
+     const [subtitleQuestion, setSubtitleQuestion] = useState(null)
 
     useEffect(() => {
         const fetchSubtitles = async () => {
@@ -34,12 +35,19 @@
         console.log(subtitleId); 
         
         const response = await fetch(`/fetchTheSubtitleBySubtitleId/?SubtitleId=${subtitleId}`)
+        const response1 = await fetch(`/getSubQ/?SubtitleId=${subtitleId}`)
 
         const json = await response.json()
+         const json1 = await response1.json()
         console.log( json)
+         console.log("SUB QUESTION AHO: " + json1)
 
         if (response.ok) {
             setSubtitle([json])
+        }
+
+        if(response1.ok) {
+            setSubtitleQuestion(json1)
         }
 
 
@@ -70,6 +78,11 @@
                 {/* <FetchInstructorNameForTraineeCourseDetails/> */}
                 {subtitle && subtitle.map(subtitle => (
                 <CurrentCourseSubtitlesPageDetailsTrainee subtitle={subtitle} key={subtitle._id} />
+                ))[0]}
+
+
+               {subtitleQuestion && subtitleQuestion.map(subtitleQuestion => (
+                <SubtitleQuestionComponent subtitleQuestion={subtitleQuestion} key={subtitleQuestion._id} />
                 ))[0]}
                 
                 

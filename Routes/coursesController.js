@@ -9,6 +9,7 @@ const discount = require('../Models/CourseDiscount');
 const subtitles = require('../Models/Subtitles');
 const individual_Trainee = require("../Models/Individual Trainee");
 const corporate_Trainee = require("../Models/corporateTrainees");
+const subtitleQuestion = require('../Models/SubtitleQuestion');
 
 
 const router = require("express").Router();
@@ -29,7 +30,23 @@ const addSubtitle = async(req,res) => {
 
     if(courseId){
     const result = await subtitles.create({Subtitle_Title,Link,Description,CourseId:req.query.CourseId});
+    const subtitleId = result._id
+    //console.log(subtitleId)
     console.log(result)
+    if (subtitleId) {
+        console.log("subtitleid: "+subtitleId);
+        const{Q,Answer1,Answer2,Answer3,Answer4,correctAnswer} = req.body;
+
+        const questionId = (await subtitleQuestion.create({Q,correctAnswer,SubtitleId:subtitleId}))._id;
+        const currQuestion = await subtitleQuestion.findById({_id:questionId});
+        const answersArray = currQuestion.Answers;
+        answersArray.push(Answer1);
+        answersArray.push(Answer2);
+        answersArray.push(Answer3);
+        answersArray.push(Answer4);
+        console.log(answersArray)
+        const newQuestion = await subtitleQuestion.findByIdAndUpdate({_id:questionId},{Answers:answersArray},{new:true});
+    }
     res.status(200).json(result)
     }else{
         res.status(400).json({error:"courseId is required"})
@@ -71,6 +88,24 @@ const createCourse = async(req,res)=>{
     if(newlyAddedCourseId){
     const newlyAddedSubtitle = await subtitles.create({Subtitle_Title,Link,Description,CourseId:newlyAddedCourseId});
     console.log(newlyAddedSubtitle)
+    const newlyAddedSubtitleId = newlyAddedSubtitle._id;
+    console.log(newlyAddedSubtitle)
+    if (newlyAddedSubtitle) {
+        //const subtitleId = req.query.SubtitleId;
+        console.log("subtitleid: "+subtitleId);
+        const{Q,Answer1,Answer2,Answer3,Answer4,correctAnswer} = req.body;
+
+        const questionId = (await subtitleQuestion.create({Q,correctAnswer,SubtitleId:newlyAddedSubtitleId}))._id;
+        const currQuestion = await subtitleQuestion.findById({_id:questionId});
+        const answersArray = currQuestion.Answers;
+        answersArray.push(Answer1);
+        answersArray.push(Answer2);
+        answersArray.push(Answer3);
+        answersArray.push(Answer4);
+        console.log(answersArray)
+        const newQuestion = await subtitleQuestion.findByIdAndUpdate({_id:questionId},{Answers:answersArray},{new:true});
+    }
+    //HENA MARA
     //res.status(200).json(newlyAddedSubtitle)
     }else{
         res.status(400).json({error:"courseId is required"})
@@ -89,7 +124,24 @@ const createCourse = async(req,res)=>{
 
     if(newlyAddedCourseId){
     const newlyAddedSubtitle = await subtitles.create({Subtitle_Title,Link,Description,CourseId:newlyAddedCourseId});
+    const newlyAddedSubtitleId = newlyAddedSubtitle._id;
     console.log(newlyAddedSubtitle)
+    if (newlyAddedSubtitle) {
+        const subtitleId = req.query.SubtitleId;
+        console.log("subtitleid: "+subtitleId);
+        const{Q,Answer1,Answer2,Answer3,Answer4,correctAnswer} = req.body;
+
+        const questionId = (await subtitleQuestion.create({Q,correctAnswer,SubtitleId:newlyAddedSubtitleId}))._id;
+        const currQuestion = await subtitleQuestion.findById({_id:questionId});
+        const answersArray = currQuestion.Answers;
+        answersArray.push(Answer1);
+        answersArray.push(Answer2);
+        answersArray.push(Answer3);
+        answersArray.push(Answer4);
+        console.log(answersArray)
+        const newQuestion = await subtitleQuestion.findByIdAndUpdate({_id:questionId},{Answers:answersArray},{new:true});
+    }
+    //HENA MARA
     //res.status(200).json(newlyAddedSubtitle)
     }else{
         res.status(400).json({error:"courseId is required"})
@@ -100,6 +152,10 @@ const createCourse = async(req,res)=>{
     }
 
     }
+
+    
+ 
+    
     else
     {
         res.status(400).json({error:"The dates don't align"});

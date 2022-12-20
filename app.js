@@ -60,7 +60,7 @@ const {insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEm
 const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests,addCourseDiscountToAllCourses,addCourseDiscountToSelectedCourses} = require('./Routes/adminController');
 
 //solving exercises
-const {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults, viewAnswers,addQuestion} = require('./Routes/solvingExercisesController');
+const {addCourse, viewCourses, insertQuestions, viewQuestions, addResults, viewResults, viewAnswers, fetchQuestionsByCID, fetchSubtitleQuestion, subtitleQuestionAnswer} = require('./Routes/solvingExercisesController');
 
 const {addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports,fetchTraineeProfileDetails,fetchTraineeDeliveredReports,fetchTraineePendingReports,fetchTraineeResolvedReports,fetchProblem,fetchNonRegisteredTraineeCoursesForInstructor,checkIfAdminRespondedTrainee,updateReportStatusFromPendingToResolvedTrainee,traineeSendFollowup} = require('./Routes/individualTraineeController');
 
@@ -599,7 +599,7 @@ app.post("/corporateTraineeSendReport",corporateTraineeSendReport);
 
 app.post("/instructorSendReport",instructorSendReport);
 
-app.post("/addQuestion",addQuestion);
+// app.post("/addQuestion",addQuestion);
 
 
 app.post("/Filter_By_Subject/", Filter_By_Subject);
@@ -709,15 +709,16 @@ app.delete('/adminHome/delete/corporateTrainees/:id', deleteCT);
 
 
 // WEEKS
-app.post('/addWeek', addWeek);
-app.get('/viewWeeks', viewWeeks);
+// app.post('/addWeek', addWeek);
+// app.get('/viewWeeks', viewWeeks);
 
 //EXERCISES
-app.post('/addExercise', addExercise);
-app.get('/viewExercises', viewExercises);
+// app.post('/addExercise', addExercise);
+// app.get('/viewExercises', viewExercises);
 
-//QUESTIONS
-app.post('/addQ', addQuestions)
+///QUESTIONS
+app.post('/addQ', insertQuestions);
+app.get('/fetchQ', fetchQuestionsByCID);
 app.get('/viewQuestions', viewQuestions);
 app.get('/viewAnswers', viewAnswers);
 //RESULTS
@@ -745,4 +746,6 @@ app.get('/viewRequests', viewRequests);
 app.post("/addCourseDiscountToAllCourses",addCourseDiscountToAllCourses);
 app.post("/addCourseDiscountToSelectedCourses",addCourseDiscountToSelectedCourses);
 
-
+//SUBTITLE QUESTIONS
+app.get('/getSubQ', fetchSubtitleQuestion);
+app.get('/subQAnswer', subtitleQuestionAnswer);

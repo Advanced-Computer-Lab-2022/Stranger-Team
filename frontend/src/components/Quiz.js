@@ -59,7 +59,15 @@ export default function Quiz() {
 
     /** finished exam after the last question */
     if(result.length && result.length >= queue.length){
-        return <Navigate to={'/results'} replace={true}></Navigate>
+      //  let navigate = useNavigate();
+    //const routeChange = () =>{ 
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get('CourseId');
+        console.log(courseId); 
+       // let path =  `/quiz/?CourseId=${courseId}`; 
+       // navigate(path);
+    //}
+        return <Navigate to={`/results/?CourseId=${courseId}`} replace={true}></Navigate>
     }
 
   return (
