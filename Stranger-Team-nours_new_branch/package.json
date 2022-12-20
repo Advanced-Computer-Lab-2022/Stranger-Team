@@ -1,0 +1,36 @@
+{
+  "name": "acl-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js ",
+    "server": "nodemon app.js "
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@material/radio": "^14.0.0",
+    "@mui/material": "^5.10.17",
+    "@repay/react-credit-card": "^1.0.5",
+    "bcrypt": "^5.1.0",
+    "bootstrap": "^5.2.3",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "ejs": "^3.1.8",
+    "emailer": "^0.0.0",
+    "express": "^4.18.2",
+    "express-graphql": "^0.12.0",
+    "git": "^0.1.5",
+    "graphql": "^16.6.0",
+    "iso-country-currency": "^0.6.0",
+    "joi": "^17.7.0",
+    "joi-password-complexity": "^5.1.0",
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.8.0",
+    "projection": "^1.1.0",
+    "react-bootstrap": "^2.6.0",
+    "react-credit-cards": "^0.8.3",
+    "react-icons": "^4.6.0"
+  }
+}
