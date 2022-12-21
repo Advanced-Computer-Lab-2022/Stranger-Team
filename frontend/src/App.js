@@ -105,6 +105,16 @@ import AdminCurrentCoursePage from './pages/AdminCurrentCoursePage';
 import FilteredCoursesPageAdmin from './pages/FilteredCoursesPageAdmin';
 import AdminAllCourses from './pages/AdminAllCourses';
 import DefineDiscountForAllCoursesAdminPage from './pages/DefineDiscountForAllCoursesAdminPage';
+import CreateQuizPage from './pages/createQuizPage';
+
+import CorporateTraineeNotes from './components/CorporateTraineeAddNotes'
+import MyCertificate from './pages/MyCertificate'
+
+//HANA
+import Pay from './pages/Pay'
+import TraineeHome from './pages/TraineeHome'
+import TraineeWallet from './pages/TraineeWallet'
+
 
 function App() {
    const User = localStorage.getItem("token");
@@ -570,6 +580,12 @@ function App() {
         />
 
 
+<Route
+        path="/createQuiz"
+        element={<CreateQuizPage />}
+        />
+
+
  <Route
         path="/DeliveredReportSingle"
         element={<DeliveredReportSingle />}
@@ -601,6 +617,26 @@ function App() {
 <Route
         path="/courseRequests"
         element={<CourseRequestsPage />}
+        />
+
+<Route
+        path="/addNotes"
+        element={<CorporateTraineeNotes />}
+        />
+        <Route
+        path="/CorporateTraineeCertificate"
+        element={<MyCertificate />}
+        />
+
+        //HANA
+        <Route
+        path="/payment"
+        element={<Pay />}
+        />
+
+         <Route
+        path="/TraineeWallet"
+        element={<TraineeWallet />}
         />
 
         </Routes>

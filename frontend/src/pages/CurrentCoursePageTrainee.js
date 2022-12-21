@@ -60,7 +60,20 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
         // console.log(courseId); 
         let path = `/TraineeReportAProblemPage/?TraineeId=${traineeId}&CourseId=${courseId}`; 
         navigate(path);
+        
     }
+
+
+
+    const routeChange1 = () =>{ 
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get('CourseId');
+        const corporateTraineeId = params.get('CorporateTraineeId');
+        console.log(corporateTraineeId); 
+        let path = `/mainForQuiz/?CorporateTraineeId=${corporateTraineeId}&CourseId=${courseId}`; 
+        navigate(path);
+    }
+
 
     return (
         <div>
@@ -84,7 +97,9 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
                 {/* <CurrentCourseSubtitlesPageTrainee/>  */}
                 {/* <StarRating></StarRating>  */}
             </div>
-            
+            <form className="course-details">
+                    <button  onClick={routeChange1}>Start Exam</button>
+                </form>
         </div>
         </div>
         

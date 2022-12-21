@@ -5,6 +5,9 @@
     const corporate_Trainee = require("../Models/corporateTrainees");
     const reportedProblem = require("../Models/CorporateTraineeReports");
     const courseRequests = require("../Models/CourseRequests");
+    const CorporateTraineeNotes=require("../Models/CorporateTraineeNotes");
+    const CorporateTraineeProgress=require("../Models/CorporateProgress")
+
 
     const addCorporateTrainee = async(req,res) => {
     
@@ -267,4 +270,35 @@ const requestCourseAccess = async(req,res) => {
 
 
 
-    module.exports ={corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,addCorporateTrainee,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem,fetchNonRegisteredCorporateTraineeCoursesForInstructor, requestCourseAccess,corporateTraineeSendFollowup};
+const AddNotes = async(req,res) => {
+    const {Notes} = req.body;
+    const corporateTrainee = req.query.CorporateTraineeId;
+    const SubtitleId = req.query.SubtitleId;
+
+    try{
+    const currTrainee = await CorporateTraineeNotes.create({Corporate_Trainee_Id:corporateTrainee,SubtitleId:SubtitleId, Notes:Notes});
+    res.status(200).json(currTrainee)
+    console.log("Hello from notes",Notes)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+    const getNotes = async(req,res) => {
+   // const {Notes} = req.body;
+    const corporateTrainee = req.query.CorporateTraineeId;
+    const SubtitleId = req.query.SubtitleId;
+    try{
+    const notes = await CorporateTraineeNotes.find({Corporate_Trainee_Id:corporateTrainee,SubtitleId:SubtitleId},{Notes:1});
+    res.status(200).json(notes)
+    //console.log("Hello from notes",notes)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+
+
+
+
+    module.exports ={corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,addCorporateTrainee,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem,fetchNonRegisteredCorporateTraineeCoursesForInstructor, requestCourseAccess,corporateTraineeSendFollowup,AddNotes,getNotes};

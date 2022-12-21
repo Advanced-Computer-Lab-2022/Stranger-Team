@@ -19,7 +19,8 @@
     import CurrentCoursePageDetailsCorporateTrainee from "../components/CurrentCoursePageDetailsCorporateTrainee"
     import RadioButtonsRateACourse from "../components/RadioButtonsRateACourse";
     import CorporateTraineeSubtitleTitlesPage from "./CorporateTraineeSubtitleTitlesPage";
-import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfileNavBar";
+    import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfileNavBar";
+    import { Certificate } from "../components/Certificate";
 
 
 
@@ -68,6 +69,24 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
     }
 
 
+    const routeChange1 = () =>{ 
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get('CourseId');
+        const corporateTraineeId = params.get('CorporateTraineeId');
+        console.log(corporateTraineeId); 
+        let path = `/mainForQuiz/?CorporateTraineeId=${corporateTraineeId}&CourseId=${courseId}`; 
+        navigate(path);
+    }
+    const routeChange2 = () =>{ 
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get('CourseId');
+        const corporateTraineeId = params.get('CorporateTraineeId');
+        let path = `/CorporateTraineeCertificate/?CourseId=${courseId}&CorporateTraineeId=${corporateTraineeId}`; 
+        navigate(path);
+       <Certificate></Certificate>
+    }
+
+
     return (
         <div>
         <CorporateTraineeProfileNavBar/>
@@ -76,6 +95,8 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
         <div class="row gutters">
         <div class="card h-100">
             <div class="card-body">
+            <button onClick={routeChange2}>My Certificate</button>
+                    <button  onClick={routeChange}>Report a problem</button>
                 {/* <FetchInstructorNameForTraineeCourseDetails/> */}
                 <form className="course-details">
                     <button  onClick={routeChange}>Report a problem</button>
@@ -89,6 +110,9 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
                 <CorporateTraineeSubtitleTitlesPage/>
                 {/* <StarRating></StarRating>  */}
             </div>
+            <form className="course-details">
+                    <button  onClick={routeChange1}>Start Exam</button>
+                </form>
             
         </div>
         </div>

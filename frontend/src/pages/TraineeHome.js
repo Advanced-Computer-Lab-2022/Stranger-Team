@@ -6,8 +6,6 @@
     import CourseDetails from "../components/CourseDetails"
 
     import 'bootstrap/dist/css/bootstrap.min.css'
-    import FilterCoursesByRateComponent from "../components/FilterCoursesByRateComponent";
-    
 
     import{Button, Alert, Container} from 'react-bootstrap'
     import ProfileNavBar from '../components/ProfileNavBar'
@@ -15,16 +13,14 @@
     import StarRating from "../components/StarRating";
     import PreviewCourseVideoPageDetails from '../components/PreviewCourseVideoTraineePageDetails'
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
-
+    import TraineeWallet from "./TraineeWallet";
     import { FaWallet } from "react-icons/fa";
 
-    const Home1 = () => {
+
+    const TraineeHome = () => {
     const [courses, setCourses] = useState(null)
     const [searchQuery, setSearchQuery] = useState("")
     const [searchRateQuery, setSearchRateQuery] = useState("");
-    const [isRegistered, setIsRegistered] = useState("");
-    const [currcourseid, setcurrcourseid] = useState("");
-
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -34,6 +30,24 @@
 
 
         const response = await fetch(`/View_All_Courses/?q=${searchQuery}`)
+
+        // if(setSearchQuery == null && setSearchRateQuery == null)
+        // {
+        //     console.log("jjj")
+        //    response = await fetch(`/View_All_Courses/?q=`)
+        //}
+        // if(setSearchRateQuery != null)
+        // {
+        
+        //     response = await fetch(`/Filter_By_Rate/?q=${searchRateQuery}`)
+        // }
+        // else if(setSearchQuery!= null)
+        // {
+        //     response = await fetch(`/View_All_Courses/?q=${searchQuery}`)
+        // }
+        
+        
+        
         
         const json = await response.json()
         console.log(json)
@@ -45,8 +59,11 @@
         fetchCourses()
     }, [searchQuery,searchRateQuery])
 
-
     let navigate = useNavigate();
+    //     const routeChange = () =>{ 
+    //     let path = '/CoursesFilterBySubject'; 
+    //     navigate(path);
+    // }
 
         const routeChange1 = () =>{ 
         let path = '/CoursesFilterByPrice'; 
@@ -88,6 +105,7 @@
         navigate(path);
     }
 
+    
 
     const routeChange9 = () =>{ 
         const params = new URLSearchParams(window.location.search);
@@ -99,70 +117,23 @@
     }
 
     const routeChange10 = () =>{ 
-        let path = '/TraineeWallet'; 
-        navigate(path);
-    }
-  
-
-    const handleSubmit = async (courseid) => {
-        const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
-        const courseId= params.get('CourseId');
-        console.log(traineeId); 
-
-        console.log("courseid"+courseid); 
-
-        const response = await fetch(`/isCurrentCourseRegistered/?TraineeId=${traineeId}&CourseId=${courseid}`)
-        
-        
-        const json = await response.json()
-        console.log(json)
-        // if(json ==true || json=="true")
-        // {
-
-        // }
-        
-        setIsRegistered(json);
-        console.log("isRegistered"+isRegistered)
-        if(json===true||json==="true")
-        {
-            console.log("kk")
-            const params = new URLSearchParams(window.location.search);
-            const traineeId = params.get('TraineeId');
-            window.location.href=`/FromCurrentNonRegisteredCoursePageTrainee/?CourseId=${courseid}&TraineeId=${traineeId}`;
-        }
-        else
-        {
-            const params = new URLSearchParams(window.location.search);
-            const traineeId = params.get('TraineeId');
-            window.location.href=`/CurrentNonRegisteredCoursePageTrainee?CourseId=${courseid}&TraineeId=${traineeId}`;
-        }
-        
-    }
-
-    // () =>{
-    //             const params = new URLSearchParams(window.location.search);
-    //             const traineeId = params.get('TraineeId');
-    //             window.location.href=`/CurrentNonRegisteredCoursePageTrainee?CourseId=${course._id}&TraineeId=${traineeId}`}
+      let path = '/TraineeWallet'; 
+      navigate(path);
+  }
 
     return (
 
         <div >
             <TraineeProfileNavBar/>
             <input type="text" placeholder="Search By Course Title,Subject,Instructor..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}>
+            
             </input>
 
-            {/* <div>
-                <input type="number" placeholder="Filter By Rate..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}></input>
-            </div> */}
             <div>
-                <button onClick={routeChange10}><FaWallet></FaWallet></button>
+                <input type="number" placeholder="Filter By Rate..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}></input>
             </div>
-            
             <div className="courses">
-            <FilterCoursesByRateComponent/>
-
-
+                
             {courses && courses.map(course => (
                 
             <Container hover
@@ -173,13 +144,16 @@
                     width: "100%"
                     }
                 }}
-                
-                onClick={() =>{handleSubmit(course._id)}}
+                onClick={() =>{
+                const params = new URLSearchParams(window.location.search);
+                const traineeId = params.get('TraineeId');
+                console.log(traineeId);
+                window.location.href=`/CurrentCoursePageTrainee?CourseId=${course._id}&TraineeId=${traineeId}`} }
                 key={course._id}>
-                <CourseDetails course={course} key={course.id} />
-                <PreviewCourseVideoPageDetails course={course} key={course.id} />
-                
-                </Container>
+            <CourseDetails course={course} key={course.id} />
+            <PreviewCourseVideoPageDetails course={course} key={course.id} />
+            
+            </Container>
             ))}
         </div>
 
@@ -190,17 +164,16 @@
             {/* <button onClick={routeChange3}> Search By Title </button>
             <button onClick={routeChange4}> Search By Instructor Name </button>
             <button onClick={routeChange}> Filter By Subject </button> */}
-            {/* <button onClick={routeChange2}> Filter By Rate </button>
+            <button onClick={routeChange2}> Filter By Rate </button>
             <button onClick={routeChange8}> Filter By Price </button>
             <button onClick={routeChange5}> Filter By Price And Subject </button>
             <button onClick={routeChange6}> Filter By Rating And Subject </button>
-            <button onClick={routeChange7}> Filter By Subject And Rating And Price </button> */}
+            <button onClick={routeChange7}> Filter By Subject And Rating And Price </button>
+            <button onClick={routeChange10}><FaWallet></FaWallet></button>
             </form>
         </div>
-    </div>
-
-        
+        </div>
     )
     }
 
-    export default Home1
+    export default TraineeHome

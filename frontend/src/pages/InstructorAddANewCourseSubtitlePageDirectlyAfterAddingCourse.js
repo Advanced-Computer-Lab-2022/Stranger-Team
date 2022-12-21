@@ -59,13 +59,22 @@
     }
 
     let navigate = useNavigate();
+    // const routeChange2 = () =>{ 
+    //     const params = new URLSearchParams(window.location.search);
+    //     const instructorId = params.get('id');
+    //     let path = `/InstructorCoursePage/?id=${instructorId}`; 
+    //     navigate(path);
+    // }
+
+
     const routeChange2 = () =>{ 
+        const queryParams = new URLSearchParams(window.location.search);
+        const courseId = queryParams.get('CourseId');
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        let path = `/InstructorCoursePage/?id=${instructorId}`; 
+         const instructorId = params.get('id');
+        let path = `/createQuiz/?CourseId=${courseId}&id=${instructorId}`; 
         navigate(path);
     }
-
 
     return (
 

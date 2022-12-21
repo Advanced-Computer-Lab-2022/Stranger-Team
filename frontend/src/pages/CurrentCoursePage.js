@@ -83,6 +83,16 @@
     }
 
 
+    const routeChange4 = () =>{ 
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get('CourseId');
+        const instructorId = params.get('id');
+        // console.log(courseId); 
+        let path = `/createQuiz/?id=${instructorId}&CourseId=${courseId}`; 
+        navigate(path);
+    }
+
+
     return (
         <div>
         <ProfileNavBar/>
@@ -104,6 +114,7 @@
                 <form className="course-details">
                 <button onClick={routeChange}>Define A New Course Discount</button>
                 <button onClick={routeChange2}>Define A New Course Subtitle</button>
+                <button onClick={routeChange4}>Edit Course Exam</button>
                 </form>
 
                 <CurrentCourseInstructorPageSubtitles/>

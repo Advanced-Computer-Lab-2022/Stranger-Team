@@ -703,6 +703,7 @@
         const grantAccess = async (req, res) => {
             const { id } = req.params //id of the request
             const request = await courseRequests.findById({_id:id}).populate();
+            var c;
             console.log(request)
             const courseId = request.CourseId;
             const traineeId = request.CorporateTraineeId;
@@ -711,13 +712,29 @@
         // console.log(updatedArray);
             updatedArray.push(courseId);
         // console.log(updatedArray);
-        
-
             try{
             const updatedTrainee =  await corporateTrainees.findByIdAndUpdate({_id:traineeId},{Registered_Courses:updatedArray},{new:true});
             console.log(updatedTrainee)
-            res.status(200).json(updatedTrainee)
-            }
+
+     //creating Progress
+    
+     console.log(req.query.CourseId);
+     const sub = await subtitle.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId)});
+     //check if this corporate has this course or not
+     const cop=await corporateTrainee.findById({_id:req.query.CorporateTraineeId})
+     const coursesArray = cop.Registered_Courses;
+     console.log(coursesArray)
+     for (let i = 0; i < coursesArray.length; i++) {
+         //coursesArray1.push(await course.findById({_id:coursesArray[i]},{_id:1}));
+         for (let j = 0; i < (sub.length)-1; j++) {
+             old= await CorporateTraineeProgress.create({"Corporate_Trainee_Id":req.query.CorporateTraineeId,"SubtitleId":mongoose.Types.ObjectId(sub[j]._id),"CourseId":mongoose.Types.ObjectId(coursesArray[i])});
+             }    
+     } 
+        console.log(sub)
+     res.status(200).json(sub);
+     res.status(200).json(updatedTrainee)
+
+         }
             catch(error){
                 res.status(400).json({error:error.message});
             }

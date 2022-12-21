@@ -74,7 +74,41 @@ const viewCourses = async (req, res) => {
     const courseId = req.query.CourseId;
     console.log("courseid"+courseId);
     const{QNumber,Q,Answer1,Answer2,Answer3,Answer4,correctAnswer} = req.body;
-    
+    let emptyFields = []
+        if (!QNumber) {
+            emptyFields.push('QNumber')
+        }
+
+        if (!Q) {
+            emptyFields.push('Q')
+        }
+
+        if (!Answer1) {
+          emptyFields.push('A1')
+      }
+
+      if (!Answer2) {
+        emptyFields.push('A2')
+    }
+
+    if (!Answer3) {
+      emptyFields.push('A3')
+     }
+
+    if (!Answer4) {
+    emptyFields.push('A4')
+    }
+
+
+    if (!correctAnswer) {
+      emptyFields.push('correctAns')
+      }
+
+        if(emptyFields.length > 0) {
+            return res.status(400).json({error: 'Please fill in the missing fields.', emptyFields})
+        }
+
+
     
     try{
         const questionId = (await Question.create({QNumber,Q,correctAnswer,CourseId:req.query.CourseId}))._id;
@@ -173,6 +207,22 @@ const viewSubtitleAnswer = async(req,res) => {
    
   // };
 
+
+
+
+
+  const deleteQuestion = async (req, res) => {
+    const { id } = req.params
+
+    const deletedQuestion = await Question.findOneAndDelete({_id: id})
+
+    if(!deletedQuestion) {
+        return res.status(400).json({error: 'No such question'})
+    }
+
+    res.status(200).json(deletedQuestion) 
+  }
+
 // to add results
 const addResults = async (req, res) => {
     const{Res, Attempts, Points, Achieved} = req.body;
@@ -245,4 +295,4 @@ const subtitleQuestionAnswer = async(req,res) => {
  
 
 
-  module.exports = {addCourse, viewCourses, insertQuestions, viewQuestions, addResults, viewResults, viewAnswers, fetchQuestionsByCID, fetchSubtitleQuestion, subtitleQuestionAnswer}
+  module.exports = {addCourse, viewCourses, insertQuestions, viewQuestions, addResults, viewResults, viewAnswers, fetchQuestionsByCID, fetchSubtitleQuestion, subtitleQuestionAnswer, deleteQuestion}

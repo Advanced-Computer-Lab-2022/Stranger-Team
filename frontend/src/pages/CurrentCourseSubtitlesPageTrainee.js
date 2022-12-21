@@ -19,6 +19,8 @@
     import CurrentCourseInstructorPageSubtitleDetails from "../components/CurrentCourseInstructorPageSubtitlesDetails"
     import CurrentCoursePageSubtitleDetails from "../components/CurrentCourseInstructorPageSubtitlesDetails";
     import CurrentCourseSubtitlesPageDetailsTrainee from "../components/CurrentCourseSubtitlesPageDetailsTrainee";
+    import Progressbar from "../components/progressBar";
+    var p;
 
 
 
@@ -26,6 +28,7 @@
     
     const [subtitle,setSubtitle] = useState([])
      const [subtitleQuestion, setSubtitleQuestion] = useState(null)
+     const [progress,setProgress]=useState([]);
 
     useEffect(() => {
         const fetchSubtitles = async () => {
@@ -52,12 +55,43 @@
 
 
         }
+        const fetchProgress = async () => {
+            const params = new URLSearchParams(window.location.search);
+            const subtitleId = params.get('SubtitleId');
+            const courseId = params.get('CourseId');
+            const Corporate_Trainee_Id = params.get('CorporateTraineeId');
+            console.log(subtitleId); 
+            const response = await fetch(`/getSubtitlesStatus/?CourseId=${courseId}&CorporateTraineeId=${Corporate_Trainee_Id}&SubtitleId=${subtitleId}`)
+            const json = await response.json()
+            console.log( json)
+            if (response.ok) {
+                p=json.Progress;
+                setProgress([json])                  
+            }}
+            console.log(p)      
+            
+            
+      
+        fetchSubtitles();
+        fetchProgress();
+    })
+   
+    const updateProgress = async () => {
+        const params = new URLSearchParams(window.location.search);
+        const subtitleId = params.get('SubtitleId');
+        const courseId = params.get('CourseId');
+        const Corporate_Trainee_Id = params.get('CorporateTraineeId');
 
-
-        fetchSubtitles()
-    }, [])
-
-
+        console.log(subtitleId); 
+        const response = await fetch(`http://localhost:3000/updatetSubtitlesStatus/?CourseId=${courseId}&CorporateTraineeId=${Corporate_Trainee_Id}&SubtitleId=${subtitleId}`)
+        const json = await response.json()
+        console.log( json)
+        if (response.ok) {
+            p=json.Progress;
+            setProgress([json])
+                    
+        }}
+        console.log(p)
     return (
 
             // <div classNameName="course-details">
@@ -75,6 +109,12 @@
         <div className="row gutters">
         <div className="card h-100">
             <div className="card-body">
+            <div>
+                {progress && progress.map(progress => (
+                <Progressbar progress={progress} key={progress._id} />
+                ))[0]
+                }
+                </div>
                 {/* <FetchInstructorNameForTraineeCourseDetails/> */}
                 {subtitle && subtitle.map(subtitle => (
                 <CurrentCourseSubtitlesPageDetailsTrainee subtitle={subtitle} key={subtitle._id} />
@@ -85,10 +125,14 @@
                 <SubtitleQuestionComponent subtitleQuestion={subtitleQuestion} key={subtitleQuestion._id} />
                 ))[0]}
                 
-                
+                <button onClick={updateProgress}  id="NextSub" style={{margin:"20px 640px",padding:"10px 20px",width:"100px"}}>
+            {"NEXT"}
+        </button>
             </div>
             
+            
         </div>
+      
         </div>
         
         </Container>

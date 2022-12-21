@@ -301,5 +301,21 @@ const checkIfAdminRespondedTrainee = async(req,res) => {
     }
 
         }
+        const getWalletBalance =async(req,res)=>{
+            console.log('d5l')
+            
+            const traineeId=req.query.TraineeId;
+            //const balance = await Balance.find({})
+        try{
+            const wallet1=await Traineewallet.findOne({"TraineeId":mongoose.Types.ObjectId(traineeId)},{Balance:1,_id:0});
+            console.log(wallet1)
+            res.status(200).json(wallet1);
+        
+        }
+        catch(error){
+            res.status(400).json({error:error.message});
+        }
+        }
+            
 
-    module.exports ={addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports,fetchTraineeProfileDetails,fetchTraineeDeliveredReports,fetchTraineePendingReports,fetchTraineeResolvedReports,fetchProblem,fetchNonRegisteredTraineeCoursesForInstructor,checkIfAdminRespondedTrainee,updateReportStatusFromPendingToResolvedTrainee,traineeSendFollowup};
+    module.exports ={addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports,fetchTraineeProfileDetails,fetchTraineeDeliveredReports,fetchTraineePendingReports,fetchTraineeResolvedReports,fetchProblem,fetchNonRegisteredTraineeCoursesForInstructor,checkIfAdminRespondedTrainee,updateReportStatusFromPendingToResolvedTrainee,traineeSendFollowup,getWalletBalance};
