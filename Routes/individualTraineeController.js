@@ -122,6 +122,21 @@ const fetchTraineePendingRequests = async(req,res) => {
     }
 }
 
+const fetchTraineeResolvedRequests = async(req,res) => {
+
+    const traineeId = req.query.TraineeId;
+
+    try{
+    const resolvedProblems = await refund.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Resolved"}).populate('Trainee_Id');
+
+    console.log(resolvedProblems)
+    res.status(200).json(resolvedProblems)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+
 const getCurrentCourse = async(req,res) => {
 
     const courseId = req.query.CourseId;
@@ -447,6 +462,8 @@ const checkIfAdminRespondedTrainee = async(req,res) => {
             res.status(400).json({error:error.message});
         }
         }
+
+        
             
 
-    module.exports ={addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports,fetchTraineeProfileDetails,fetchTraineeDeliveredReports,fetchTraineePendingReports,fetchTraineeResolvedReports,fetchProblem,fetchNonRegisteredTraineeCoursesForInstructor,checkIfAdminRespondedTrainee,updateReportStatusFromPendingToResolvedTrainee,traineeSendFollowup,getWalletBalance,viewMyWalletBalance,payByWalletBalance,traineeRefundRequest,fetchTraineePendingRequests,fetchCurrentRequest,getCurrentCourse};
+    module.exports ={addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports,fetchTraineeProfileDetails,fetchTraineeDeliveredReports,fetchTraineePendingReports,fetchTraineeResolvedReports,fetchProblem,fetchNonRegisteredTraineeCoursesForInstructor,checkIfAdminRespondedTrainee,updateReportStatusFromPendingToResolvedTrainee,traineeSendFollowup,getWalletBalance,viewMyWalletBalance,payByWalletBalance,traineeRefundRequest,fetchTraineePendingRequests,fetchCurrentRequest,getCurrentCourse,fetchTraineeResolvedRequests};

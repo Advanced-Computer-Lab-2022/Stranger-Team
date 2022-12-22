@@ -36,7 +36,7 @@
         const params = new URLSearchParams(window.location.search);
         const traineeId = params.get('TraineeId');
         console.log(traineeId); 
-        let path = `/TraineeResolvedReportsPage/?TraineeId=${traineeId}`; 
+        let path = `/TraineeResolvedRefundRequestsPage/?TraineeId=${traineeId}`; 
         navigate(path);
     }
 

@@ -95,8 +95,7 @@
         <div class="row gutters">
         <div class="card h-100">
             <div class="card-body">
-            <button onClick={routeChange2}>My Certificate</button>
-                    <button  onClick={routeChange}>Report a problem</button>
+            <button className="course-details" onClick={routeChange2}>My Certificate</button>
                 {/* <FetchInstructorNameForTraineeCourseDetails/> */}
                 <form className="course-details">
                     <button  onClick={routeChange}>Report a problem</button>

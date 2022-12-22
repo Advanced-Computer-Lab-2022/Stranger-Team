@@ -2,7 +2,6 @@
     import CorporateTraineeNotes from "./CorporateTraineeAddNotes"
     //import Progressbar from "./progressBar"
     import  "../styles//progressBar.css";
-import TraineeNotes from "./TraineeAddNotes";
 
     const CurrentCourseSubtitlesPageDetailsTrainee = ({ subtitle }) => {
 
@@ -16,7 +15,6 @@ import TraineeNotes from "./TraineeAddNotes";
         <YoutubeEmbed embedId={subtitle.Link}/>
         <div>
         <CorporateTraineeNotes > Add your Notes</CorporateTraineeNotes>
-        {/* <TraineeNotes>Add your Notes</TraineeNotes> */}
         </div>
         </div>
     )

@@ -33,6 +33,7 @@ function App() {
   const onSubmit = async (values) => {
     await sleep(300);
     try {
+  
       window.Stripe.card.createToken(
         {
           number: values.number,
@@ -49,13 +50,23 @@ function App() {
                 email: values.email,
                 amount: values.amount,
               })
-              .then((res) => window.alert(JSON.stringify(res.data, 0, 2)))
+              //.then((res) => window.alert(JSON.stringify(res.data, 0, 2)))
+              .then((res) =>window.location.href=`/CurrentCoursePageTrainee?CourseId=${res.courseId}}&TraineeId=${res.traineeIs}`)
               .catch((err) => console.log(err));
           } else {
             console.log(response.error.message);
           }
         }
       );
+            // const params = new URLSearchParams(window.location.search);
+            // const traineeId= params.get('TraineeId');
+            // const courseId = params.get('CourseId');
+            // const fetching = await fetch(`/indiviualTraineeRegisterCourse/?CourseId=${courseId}&Trainee=${traineeId}`)
+            // const json = await fetching.json()
+            // console.log( json)
+            // if (fetching.ok) {
+            //   window.location.href=`/CurrentCoursePageTrainee?CourseId=${courseId}}&TraineeId=${traineeId}`                  
+            // }
     } catch (error) {}
   };
 

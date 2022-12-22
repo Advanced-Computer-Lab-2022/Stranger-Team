@@ -120,6 +120,9 @@ import RequestARefundPageTrainee from './pages/RequestARefundPageTrainee';
 import TraineeCurrentRefundRequestPage from './pages/TraineeCurrentRefundRequestPage';
 import TraineeRefundRequestsPage from './pages/TraineeRefundRequestsPage';
 import TraineePendingRefundRequestsPage from './pages/TraineePendingRefundRequestsPage';
+import CurrentCourseSubtitlesPageCorporateTrainee from './pages/CurrentCourseSubtitlesPageCorporateTrainee';
+import TraineeResolvedRefundRequestsPage from './pages/TraineeResolvedRefundRequestsPage';
+import TraineeCurrentResolvedRefundRequestPage from './pages/TraineeCurrentResolvedRefundRequestPage';
 
 
 function App() {
@@ -367,9 +370,26 @@ function App() {
         element={<TraineeCurrentRefundRequestPage />}
         />
 
+        <Route
+        path="/TraineeResolvedRefundRequestsPage"
+        element={<TraineeResolvedRefundRequestsPage />}
+        />
+
+        
+        <Route
+        path="/TraineeCurrentResolvedRefundRequestPage"
+        element={<TraineeCurrentResolvedRefundRequestPage />}
+        />
+
+        
+
 
 
         
+        <Route
+        path="/CurrentCourseSubtitlesPageCorporateTrainee"
+        element={<CurrentCourseSubtitlesPageCorporateTrainee />}
+        />
 
         
 

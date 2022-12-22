@@ -75,7 +75,10 @@
                 const params = new URLSearchParams(window.location.search);
                 const corporateTraineeId = params.get('CorporateTraineeId');
                 const courseId = params.get('CourseId');
-                window.location.href=`/CurrentCourseSubtitlesPageTrainee?CourseId=${courseId}&SubtitleId=${subtitle._id}&CorporateTraineeId=${corporateTraineeId}`} }
+                // window.location.href=`/CurrentCourseSubtitlesPageTrainee?CourseId=${courseId}&SubtitleId=${subtitle._id}&CorporateTraineeId=${corporateTraineeId}`
+            //he should reference
+            window.location.href=`/CurrentCourseSubtitlesPageCorporateTrainee?CourseId=${courseId}&SubtitleId=${subtitle._id}&CorporateTraineeId=${corporateTraineeId}`
+        } }
                 key={subtitle._id}>
                 <CorporateTraineeSubtitleTitlesDetailsPage subtitle={subtitle} key={subtitle._id} />
             
