@@ -23,16 +23,17 @@ const ForgotPassword = () => {
         const json = await response.json()
 		console.log(json);
         if (!response.ok) {
-        setError(json.error)
+        setError(json.message)
         }
         if (response.ok) {
         setError(null)
         setEmail('')
-        setMsg("");
+		setMsg(json.message);
 		
         }
 		const { data } = await axios.post(`/passwordReset/?Email=${Email}`, { Email});
-		setMsg(data.message);
+		console.log("data:"+data);
+		//setMsg(data.message);
 		// try {
 		// 	console.log("email is "+Email);
 		// 	const url = `http://localhost:3000/passwordReset`;

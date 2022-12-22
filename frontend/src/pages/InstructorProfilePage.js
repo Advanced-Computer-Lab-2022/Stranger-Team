@@ -11,7 +11,6 @@
     import{Button, Alert, Container} from 'react-bootstrap'
     import ProfileNavBar from '../components/ProfileNavBar'
     import InstructorProfileDetails from "../components/InstructorProfileDetails";
-    import InstructorEditProfile from "../components/InstructorEditProfile";
 
 
     const InstructorProfilePage = () => {
@@ -57,7 +56,10 @@
 
         let navigate = useNavigate();
         const routeChange = () =>{ 
-        let path = '/EditMyProfile'; 
+        const params = new URLSearchParams(window.location.search);
+        const instructorId = params.get('id');
+        console.log(instructorId); 
+        let path = `/InstructorEditMyProfilePage/?id=${instructorId}`; 
         navigate(path);
     }
 
@@ -65,25 +67,29 @@
         <Container >
             <ProfileNavBar/>
         
-        
-        <div class="container">
-        <div class="row gutters">
-        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-        <div class="card h-100">
-            <div class="card-body">
+        <form className="create"> 
+        <div className="container">
+        <div className="row gutters">
+        <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+        <div className="card h-100">
+            <div className="card-body">
                 {instructors && instructors.map(instructor => (
                 <InstructorProfileDetails instructor={instructor} key={instructor._id} />
                 ))[0]}
+                {/* {instructors && instructors.map(instructor => (
+                <InstructorRatingsDetails instructor={instructor.Instructor_Ratings} key={instructor._id} />
+                ))[0]} */}
             </div>
         </div>
         </div>
         </div>
         </div>
+        <button className="create" onClick={routeChange}>Edit Profile</button>
         
-        <InstructorEditProfile/>
+        {/* <InstructorEditProfile/> */}
 
         
-        
+        </form>
         </Container>
     )
     }

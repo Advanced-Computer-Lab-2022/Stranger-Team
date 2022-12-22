@@ -7,16 +7,48 @@ const course = require('../Models/Course');
 const instructor = require('../Models/Instructor');
 const discount = require('../Models/CourseDiscount');
 const subtitles = require('../Models/Subtitles');
+const individual_Trainee = require("../Models/Individual Trainee");
+const corporate_Trainee = require("../Models/corporateTrainees");
+const subtitleQuestion = require('../Models/SubtitleQuestion');
+const CorporateTraineeProgress=require("../Models/CorporateProgress")
+
+
+
+const router = require("express").Router();
+const session = require('express-session');
+router.use(session( 
+	{
+	secret : 'secret-key',
+	resave : false ,
+	saveUninitialized : true,
+	}));
+
 
 
 const addSubtitle = async(req,res) => {
 
     const courseId = req.query.CourseId;
-    const {Title,Link,Description} = req.body;
+    const {Subtitle_Title,Link,Description} = req.body;
 
     if(courseId){
-    const result = await subtitles.create({Title,Link,Description,CourseId:req.query.CourseId});
+    const result = await subtitles.create({Subtitle_Title,Link,Description,CourseId:req.query.CourseId});
+    const subtitleId = result._id
+    //console.log(subtitleId)
     console.log(result)
+    if (subtitleId) {
+        console.log("subtitleid: "+subtitleId);
+        const{Q,Answer1,Answer2,Answer3,Answer4,correctAnswer} = req.body;
+
+        const questionId = (await subtitleQuestion.create({Q,correctAnswer,SubtitleId:subtitleId}))._id;
+        const currQuestion = await subtitleQuestion.findById({_id:questionId});
+        const answersArray = currQuestion.Answers;
+        answersArray.push(Answer1);
+        answersArray.push(Answer2);
+        answersArray.push(Answer3);
+        answersArray.push(Answer4);
+        console.log(answersArray)
+        const newQuestion = await subtitleQuestion.findByIdAndUpdate({_id:questionId},{Answers:answersArray},{new:true});
+    }
     res.status(200).json(result)
     }else{
         res.status(400).json({error:"courseId is required"})
@@ -29,34 +61,107 @@ const data = (req, res) => {
     }
 
 
-//     const createCourse = async(req,res)=>{
-
-//         const {Title, Subject, Subtitles,Subtitles_Total_Hours,Exercises,Course_Total_Hours,Price,Rating,Instructor_Name,discount,Course_Description}= req.body;
-//         const instructorid=req.query.id;
-//     try{
-
-//     const addCourse =await course.create({Title, Subject, Subtitles,Subtitles_Total_Hours,Exercises,Course_Total_Hours,Price,Rating,Instructor_Name,discount,Course_Description,"Instructor":req.query.id});
-//     console.log(addCourse);
-//     res.status(200).json(addCourse);
-
-//     }
-//     catch(error){
-//         res.status(400).json({error:error.message});
-//     }
-
-// }
-
 //new addCourse
 
 const createCourse = async(req,res)=>{
+        // const questionId = (await Question.create({QNumber,Q,correctAnswer,ExerciseID:req.query.id}))._id;
+        // const currQuestion = await Question.findById({_id:questionId});
 
-        const {Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Course_Description,PreviewLink}= req.body;
+        const {Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Discount_Start_Date,Discount_End_Date,Course_Description,PreviewLink,Subtitle_Title,Link,Description}= req.body;
         const instructorid=req.query.id;
+        const currinstructor = await instructor.findById({_id:instructorid});
+        const currInstructorName = currinstructor.First_Name +" "+currinstructor.Last_Name;
+        console.log(currInstructorName)
     try{
 
-    const addCourse =await course.create({Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Course_Description,PreviewLink,"Instructor":req.query.id});
+    var dateEnd = new Date(Discount_End_Date);
+    var dateStart = new Date(Discount_Start_Date)
+
+    const date = new Date();
+
+    if(!(dateStart>=dateEnd))
+    {
+        if(date>=dateEnd)
+    {
+        const addCourse =await course.create({Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Course_Description,PreviewLink,Instructor_Name:currInstructorName,"Instructor":req.query.id});
+        const newlyAddedCourseId = addCourse._id;
+        console.log(newlyAddedCourseId);
+
+    if(newlyAddedCourseId){
+    const newlyAddedSubtitle = await subtitles.create({Subtitle_Title,Link,Description,CourseId:newlyAddedCourseId});
+    console.log(newlyAddedSubtitle)
+    const newlyAddedSubtitleId = newlyAddedSubtitle._id;
+    console.log(newlyAddedSubtitle)
+    if (newlyAddedSubtitle) {
+        //const subtitleId = req.query.SubtitleId;
+        console.log("subtitleid: "+subtitleId);
+        const{Q,Answer1,Answer2,Answer3,Answer4,correctAnswer} = req.body;
+
+        const questionId = (await subtitleQuestion.create({Q,correctAnswer,SubtitleId:newlyAddedSubtitleId}))._id;
+        const currQuestion = await subtitleQuestion.findById({_id:questionId});
+        const answersArray = currQuestion.Answers;
+        answersArray.push(Answer1);
+        answersArray.push(Answer2);
+        answersArray.push(Answer3);
+        answersArray.push(Answer4);
+        console.log(answersArray)
+        const newQuestion = await subtitleQuestion.findByIdAndUpdate({_id:questionId},{Answers:answersArray},{new:true});
+    }
+    //HENA MARA
+    //res.status(200).json(newlyAddedSubtitle)
+    }else{
+        res.status(400).json({error:"courseId is required"})
+    }
+
     console.log(addCourse);
     res.status(200).json(addCourse);
+    }
+    else
+    {
+        const addCourse =await course.create({Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Discount_Start_Date,Discount_End_Date,Course_Description,PreviewLink,Instructor_Name:currInstructorName,"Instructor":req.query.id});
+        const newlyAddedCourseId = addCourse._id;
+        console.log(newlyAddedCourseId);
+        
+    // const {Subtitle_Title,Link,Description} = req.body;
+
+    if(newlyAddedCourseId){
+    const newlyAddedSubtitle = await subtitles.create({Subtitle_Title,Link,Description,CourseId:newlyAddedCourseId});
+    const newlyAddedSubtitleId = newlyAddedSubtitle._id;
+    console.log(newlyAddedSubtitle)
+    if (newlyAddedSubtitle) {
+        const subtitleId = req.query.SubtitleId;
+        console.log("subtitleid: "+subtitleId);
+        const{Q,Answer1,Answer2,Answer3,Answer4,correctAnswer} = req.body;
+
+        const questionId = (await subtitleQuestion.create({Q,correctAnswer,SubtitleId:newlyAddedSubtitleId}))._id;
+        const currQuestion = await subtitleQuestion.findById({_id:questionId});
+        const answersArray = currQuestion.Answers;
+        answersArray.push(Answer1);
+        answersArray.push(Answer2);
+        answersArray.push(Answer3);
+        answersArray.push(Answer4);
+        console.log(answersArray)
+        const newQuestion = await subtitleQuestion.findByIdAndUpdate({_id:questionId},{Answers:answersArray},{new:true});
+    }
+    //HENA MARA
+    //res.status(200).json(newlyAddedSubtitle)
+    }else{
+        res.status(400).json({error:"courseId is required"})
+    }
+
+    console.log(addCourse);
+    res.status(200).json(addCourse);
+    }
+
+    }
+
+    
+ 
+    
+    else
+    {
+        res.status(400).json({error:"The dates don't align"});
+    }
 
     }
     catch(error){
@@ -65,7 +170,101 @@ const createCourse = async(req,res)=>{
 
 }
 
+const isDiscountViable = async(req,res) => {
 
+    const courseid = req.query.CourseId;
+    
+    if(courseid){
+    const currCourse = await course.findById({_id:courseid});
+    const currCourseStartDate = currCourse.Discount_Start_Date;
+    const currCourseEndDate = currCourse.Discount_End_Date;
+
+
+    //var display = false;
+    if(currCourseEndDate==null||currCourseEndDate=="")
+    {
+        res.status(200).json(currCourse)
+    }
+    else
+    {
+        const date = new Date();
+        const day = currCourseStartDate.getDate();
+        const month = currCourseStartDate.getMonth();
+        const year = currCourseStartDate.getFullYear();
+        var dateStart = new Date(year, month, day);
+        
+        const endday = currCourseEndDate.getDate();
+        const endmonth = currCourseEndDate.getMonth();
+        const endyear = currCourseEndDate.getFullYear();
+
+        var dateEnd = new Date(endyear, endmonth, endday);
+        //console.log("date"+date)
+        //console.log("dateStart"+dateStart)
+        //console.log("dateEnd"+dateEnd)
+
+        //console.log("dateStart >= date"+dateStart >= date)
+        //console.log("date <= dateEnd"+date <= dateEnd)
+
+        if((date<= dateEnd))
+        {
+            //console.log("jjj");
+            res.status(200).json(currCourse)
+        }
+        else
+        {
+            //console.log("hhhjdk")
+            const finalcourse = await course.findByIdAndUpdate({_id:courseid},{Discount:"",Discount_Start_Date:"",Discount_End_Date:""},{new:true});
+            res.status(200).json(finalcourse)
+        }
+    }
+    
+    
+    }else{
+        res.status(400).json({error:"course is required"})
+    }
+}
+
+const displayCourseDiscount = async(req,res) => {
+
+    const courseid = req.query.CourseId;
+    
+    if(courseid){
+    const currCourse = await course.findById({_id:courseid});
+    const currCourseStartDate = currCourse.Discount_Start_Date;
+    const currCourseEndDate = currCourse.Discount_End_Date;
+
+
+    var display = false;
+    if(currCourseEndDate==null||currCourseEndDate=="")
+    {
+        res.status(200).json(true)
+    }
+    else
+    {
+        const date = new Date();
+        const day = currCourseStartDate.getDate();
+        const month = currCourseStartDate.getMonth();
+        const year = currCourseStartDate.getFullYear();
+        var dateStart = new Date(year, month, day);
+
+        if((date.getDate() == day || date.getDate() > day)&&(date.getMonth()==month||date.getMonth()>month)&&(date.getFullYear()==year||date.getFullYear()>year))
+        {
+            console.log("kk")
+                    display = true;
+                    res.status(200).json(display)
+            
+        }
+        else
+        {
+            res.status(200).json(display)
+        }
+    }
+    
+    
+    }else{
+        res.status(400).json({error:"courseid is required"})
+    }
+}
 
 
 
@@ -82,52 +281,30 @@ const viewMyInstructorCoursesById = async(req,res) => {
     }
 }
 
-// const addCourseDiscount = async(req,res)=>{
-
-//         const {discountAmount}= req.body;
-//         const courseId=req.query.CourseId;
-        
-//     try{
-
-        
-//         const result = await discount.find({courseId:mongoose.Types.ObjectId(courseId)}).populate('courseId');
-//         console.log(result);
-//         if(result !=null || result !=[] || result != "")
-//         {
-//             const delet = await discount.deleteMany({courseId:courseId})
-//             const addCourseDiscount =await discount.create({discountAmount,"courseId":req.query.CourseId});
-//             console.log(addCourseDiscount);
-//             res.status(200).json(addCourseDiscount);
-//         }
-//         else
-//         {
-//             const addCourseDiscount =await discount.create({discountAmount,"courseId":req.query.CourseId});
-//             console.log(addCourseDiscount);
-//             res.status(200).json(addCourseDiscount);
-//         }
-
-
-
-//     }
-//     catch(error){
-//         res.status(400).json({error:error.message});
-//     }
-
-// }
 
 const addCourseDiscount = async(req,res)=>{
 
-        const {Discount}= req.body;
+        const {Discount,Discount_Start_Date,Discount_End_Date}= req.body;
         const courseId=req.query.CourseId;
         
     try{
 
-        const currCourse = await course.find({_id:courseId},{});
-        console.log(currCourse);
-        const updatedDiscount= await course.findByIdAndUpdate(req.query.CourseId, { Discount: Discount });
-        console.log(updatedDiscount);
-        res.status(200).json(updatedDiscount);
-
+        
+        const currCourse = await course.findById({_id:courseId});
+        console.log(currCourse.Discount);
+        if(currCourse.Discount==null||currCourse.Discount=="")
+        {
+            console.log("jj")
+            const updatedDiscount= await course.findByIdAndUpdate({_id:req.query.CourseId}, { Discount: Discount,Discount_Start_Date:Discount_Start_Date,Discount_End_Date:Discount_End_Date},{new:true});
+            console.log(updatedDiscount);
+            res.status(200).json(updatedDiscount);
+        }
+        else
+        {
+            console.log("ll");
+            res.status(400).json({error:"There is a discount already defined for this course! Please try at a later time."});
+        }
+        
     }
     catch(error){
         res.status(400).json({error:error.message});
@@ -171,6 +348,18 @@ const fetchSubtitlesByCourseId = async(req,res) => {
     }
 }
 
+const fetchTheSubtitleBySubtitleId= async(req,res) => {
+
+    const subtitleId = req.query.SubtitleId;
+
+    if(subtitleId){
+    const result = await subtitles.findById({_id:subtitleId});
+    res.status(200).json(result)
+    }else{
+        res.status(400).json({error:"subtitleId is required"})
+    }
+}
+
 const fetchCoursePreviewLink = async(req,res) => {
 
     const courseId = req.query.CourseId;
@@ -181,6 +370,50 @@ const fetchCoursePreviewLink = async(req,res) => {
     }else{
         res.status(400).json({error:"courseId is required"})
     }
+}
+
+const getCurrentCourseInstructor = async(req,res) => {
+
+    const instructorId = req.query.id;
+
+    if(instructorId){
+    const currInstructor = await instructor.findById({_id:instructorId},{First_Name:1,Last_Name:1});
+    res.status(200).json(currInstructor)
+    }else{
+        res.status(400).json({error:"instructorId is required"})
+    }
+}
+
+const fetchCurrentCourseInstructorByInstructorId = async(req,res) => {
+
+    const instructorId = req.query.id;
+    if(instructorId)
+    {
+        const currInstructor = await instructor.find({_id:instructorId});
+        
+        res.status(200).json(currInstructor)
+    }
+    else
+    {
+        res.status(400).json({error:"courseId is required"})
+    }
+
+}
+
+const fetchCurrentCourseInstructorCoursesByInstructorId = async(req,res) => {
+
+    const instructorId = req.query.id;
+    if(instructorId)
+    {
+        const currInstructorCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId)});
+        
+        res.status(200).json(currInstructorCourses)
+    }
+    else
+    {
+        res.status(400).json({error:"courseId is required"})
+    }
+
 }
 
 const fetchInstructorById = async(req,res) => {
@@ -212,12 +445,12 @@ const fetchInstructorById = async(req,res) => {
 
 
 
-const addInstructor = async(req,res)=>{
+const addANewInstructor = async(req,res)=>{
         
-    const {Username, Password,First_Name} = req.body;
+    const {Username, Password,First_Name,Last_Name,Email,Gender,Bio} = req.body;
     try{
-    const addInstructor =await instructor.create({Username,Password,First_Name});
-    res.status(200).json(addInstructor);
+    const addANewInstructor =await instructor.create({Username,Password,First_Name,Last_Name,Email,Gender,Bio});
+    res.status(200).json(addANewInstructor);
 
     }
     catch(error){
@@ -226,9 +459,38 @@ const addInstructor = async(req,res)=>{
 
 }
 
+    const ratingACourse = async (req,res) => { 
+            try{
+
+                const courseId= req.query.CourseId;
+                const courseRating = req.query.rating;
+                const currCourse = await course.findById({_id:courseId});
+                
+                const array = currCourse.Course_Ratings;
+                console.log(array);
+                array.push(courseRating);
+                console.log(array);
+                const updatedCourse =  await course.findByIdAndUpdate({_id:courseId},{Course_Ratings:array},{new:true});
+                const updatedarray = updatedCourse.Course_Ratings;
+                var x = 0;
+                for (let i = 0; i < updatedarray.length; i++) {
+                    x += updatedarray[i];
+                }
+                x= x / updatedarray.length;
+                console.log(x);
+                const finalUpdatedCourse = await course.findByIdAndUpdate({_id:courseId},{"Rating":x},{new:true});
+                res.status(200).json(finalUpdatedCourse);
+
+            }
+            catch(error){
+                res.status(400).json({error:error.message});
+            }
+
+            };
 
 
-const View_All_Courses = async(req,res) =>{
+
+    const View_All_Courses = async(req,res) =>{
     const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles:1,Subtitles_Total_Hours:1,Exercises:1, Course_Total_Hours:1,Price:1,Rating:1,Instructor_Name:1,discout:1,Course_Description:1 }).sort({createdAt:-1}) ;
     res.status(200).json(allCourses);
 }
@@ -236,7 +498,8 @@ const View_All_Courses = async(req,res) =>{
 const getCurrentCourseDetails  = async(req,res) =>{
     const currentCourse = req.query.CourseId;
 
-    const currentCourseDetails = await course.find({_id:currentCourse}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Course_Description:1 }).sort({createdAt:-1}) ;
+    
+    const currentCourseDetails = await course.find({_id:currentCourse}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Rating:1,Course_Description:1,Instructor:1 }).sort({createdAt:-1}) ;
 
 
     console.log(currentCourseDetails)
@@ -244,21 +507,6 @@ const getCurrentCourseDetails  = async(req,res) =>{
     res.status(200).json(currentCourseDetails); 
 
 }
-
-// const View_All_Courses = async(req,res) =>{
-//     const q = req.query.q;
-//     console.log(q);
-
-//     const keys=["Title","Subject","Instructor_Name"];
-//     const search = (data)=>{
-//         return data.filter((item)=>
-//         keys.some((key)=>item[key].toLowerCase().includes(q))
-//         );
-//     };
-//         const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles:1,Subtitles_Total_Hours:1,Exercises:1, Course_Total_Hours:1,Price:1,Rating:1,Instructor_Name:1,discout:1,Course_Description:1 }).sort({createdAt:-1}) ;
-//         res.status(200).json(allCourses);
-//     }
-
 
 
 
@@ -317,6 +565,69 @@ const getCurrentCourseInformation = async (req,res) => {
 
             }; 
 
+const isCurrentCourseRegistered = async (req,res) => { 
+            try{
+                const courseId = req.query.CourseId;
+                const traineeId = req.query.TraineeId;
+                //const userid= req.session.user._id;
+                //console.log("userid"+userid);
+                const corporateTraineeId = req.query.CorporateTraineeId;
+                let x = false;
+                console.log(corporateTraineeId)
+                if(corporateTraineeId==null)
+                {
+                    const currTrainee=await individual_Trainee.findById({_id:traineeId});
+                    //const usertrainee =await individual_Trainee.findById({_id:userid}); 
+                    console.log(currTrainee.Registered_Courses)
+                    //console.log("usertraineeregcourses"+usertrainee.Registered_Courses)
+                    const registeredCourses = currTrainee.Registered_Courses;
+                    //const registeredCourses = usertrainee.Registered_Courses;
+                    var isFound = 0;
+                    var courseFound=null;
+                    for(let i =0;i<registeredCourses.length;i++)
+                    {
+                        if(registeredCourses[i]._id==courseId)
+                        {
+                            isFound = 1;
+                            courseFound=registeredCourses[i];
+                            x=true;
+                            
+                            break;
+                        }
+                    }
+                    console.log(courseFound)
+                    res.status(200).json(x);
+                }
+                else
+                {
+                    console.log("kjhydui")
+                    const currTrainee=await corporate_Trainee.findById({_id:corporateTraineeId});
+                    console.log(currTrainee)
+                    console.log(currTrainee.Registered_Courses)
+                    const registeredCourses = currTrainee.Registered_Courses;
+                    var isFound = 0;
+                    var courseFound=null;
+                    for(let i =0;i<registeredCourses.length;i++)
+                    {
+                        if(registeredCourses[i]._id==courseId)
+                        {
+                            isFound = 1;
+                            courseFound=registeredCourses[i];
+                            x=true;
+                            break;
+                        }
+                    }
+                    console.log(courseFound)
+                    res.status(200).json(x);
+                    
+                }
+                
+            }
+            catch(error){
+                res.status(400).json({error:error.message});
+            }
+
+            }; 
 
 
 const Filter_By_Subject_And_Price= async (req,res) => {
@@ -363,6 +674,133 @@ const Filter_By_Subject_And_Rating_And_Price= async (req,res) => {
             }
             // const data2= await instructor.find({ },{ _id: 0, Course: 1 } )
             res.status(200).json(data);
-            };   
+            }; 
+            
+            
+const FilteredCourses = async (req,res) => {
+            const subject = req.query.Subject;
+            const rating = req.query.Rating;
+            const price = req.query.Price;
+            var filteredCourses=null;
 
-module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink};
+            if(subject==null||subject=="")
+            {
+                if(rating==null||rating=="")
+                {
+                    if(price==null||price=="")
+                    {
+                        filteredCourses = await course.find({});
+
+                        res.status(200).json(filteredCourses);
+                    }
+                    else
+                    {
+                        filteredCourses = await course.find({Price:price});
+
+                        res.status(200).json(filteredCourses);
+                    }
+                }
+                else
+                {
+                    if(price==null||price=="")
+                    {
+                        filteredCourses = await course.find({Rating:rating});
+
+                        res.status(200).json(filteredCourses);
+                    }
+                    else
+                    {
+                        filteredCourses = await course.find({Rating:rating,Price:price});
+
+                        res.status(200).json(filteredCourses);
+                    }
+                }
+            }
+            else
+            {
+                if(rating==null||rating=="")
+                {
+                    if(price==null||price=="")
+                    {
+                        filteredCourses = await course.find({Subject:subject});
+
+                        res.status(200).json(filteredCourses);
+                    }
+                    else
+                    {
+                        filteredCourses = await course.find({Subject:subject,Price:price});
+
+                        res.status(200).json(filteredCourses);
+                    }
+                }
+                else
+                {
+                    if(price==null||price=="")
+                    {
+                        filteredCourses = await course.find({Subject:subject,Rating:rating});
+
+                        res.status(200).json(filteredCourses);
+                    }
+                    else
+                    {
+                        filteredCourses = await course.find({Subject:subject,Rating:rating,Price:price});
+
+                        res.status(200).json(filteredCourses);
+
+                    }
+                }
+            }
+            }; 
+
+
+
+            const getStatusOfSubtitlie = async (req,res) => { 
+                try{
+                    console.log(req.query.CourseId);
+                    old= await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Corporate_Trainee_Id":mongoose.Types.ObjectId(req.query.CorporateTraineeId)},{Progress:1,_id:0});
+                    console.log("Progress",old[0])
+                    res.status(200).json(old[0]);
+                }
+                catch(error){
+                    res.status(400).json({error:error.message});
+                }
+                }; 
+            const UpdateProgressOfSubtitlie = async (req,res) => { 
+                try{
+                    console.log(req.query.CourseId);
+                    const flag=true;
+                    let data;
+                    let updateP;
+                    let updated;
+                    let old
+                    //get number of subtitles of a course
+                    const NumberofSubtitlies=await subtitle.find({ "CourseId":req.query.CourseId}).count();
+                    const n =1/NumberofSubtitlies;
+                    //get progress of that course
+                   //old= await CorporateTraineeProgress.findOne({"_id":req.query.CourseId},{Progress:1,_id:0});
+            
+                    //get status of this subtitle for the course for that specific trainee
+                    const checkStatus=await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Corporate_Trainee_Id":mongoose.Types.ObjectId(req.query.CorporateTraineeId),"SubtitleId":mongoose.Types.ObjectId(req.query.SubtitleId)},{ProgressStatus:1})
+                    old=await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Corporate_Trainee_Id":mongoose.Types.ObjectId(req.query.CorporateTraineeId),"SubtitleId":mongoose.Types.ObjectId(req.query.SubtitleId)},{Progress:1,ProgressStatus:1})
+            
+                    if(checkStatus[0].ProgressStatus==false){
+                    data=await CorporateTraineeProgress.updateMany({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Corporate_Trainee_Id:mongoose.Types.ObjectId(req.query.CorporateTraineeId),SubtitleId:mongoose.Types.ObjectId(req.query.SubtitleId)},{$set:{ProgressStatus:flag}})
+                    const p= await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Corporate_Trainee_Id":mongoose.Types.ObjectId(req.query.CorporateTraineeId),"SubtitleId":mongoose.Types.ObjectId(req.query.SubtitleId)},{Progress:1})
+                    const pp=p[0].Progress;
+                    const ppp=pp+n*100;
+                    updateP=await CorporateTraineeProgress.updateMany({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Corporate_Trainee_Id:mongoose.Types.ObjectId(req.query.CorporateTraineeId)},{$set:{Progress:ppp}})
+                    updated=await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Corporate_Trainee_Id":mongoose.Types.ObjectId(req.query.CorporateTraineeId)},{Progress:1})
+                    res.status(200).json(updated);
+                    console.log(updated);
+                    }
+                    else{
+                        console.log(old[0])
+                        res.status(200).json(old[0]);
+                    }
+                }
+                catch(error){
+                    res.status(400).json({error:error.message});
+                }
+                }; 
+
+module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addANewInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,FilteredCourses,isDiscountViable,displayCourseDiscount, UpdateProgressOfSubtitlie, getStatusOfSubtitlie};

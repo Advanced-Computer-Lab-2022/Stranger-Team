@@ -13,18 +13,10 @@ const courseSchema = new Schema({
     type: String,
     required: true
   },
-  // Subtitles:{
-  //   type: String,
-  //   required: true
-  // },
   Subtitles_Total_Hours:{
     type: Number,
     required: true
   },
-  // Exercises:{
-  //   type: String,
-  //   required: true
-  // },
   Course_Total_Hours:{
     type: Number,
     required: true
@@ -33,16 +25,16 @@ const courseSchema = new Schema({
     type: String,
     required: true
   }, 
-  // Rating:{
-  //   type: Number,
-  //   required: true
-  // },
-  // Instructor_Name:{
-  //       type:String,
-  //       required:true
-  //   },
   Discount:{
     type: Number,
+    required:false
+  },
+  Discount_Start_Date:{
+    type: Date,
+    required:false
+  },
+  Discount_End_Date:{
+    type: Date,
     required:false
   },
   Course_Description:{
@@ -53,9 +45,22 @@ const courseSchema = new Schema({
     type:String,
     required:true
   },
-    Instructor:{
+  Instructor_Name:{
+    type:String,
+    required:true,
+    default:""
+  },
+  Instructor:{
         type: mongoose.Types.ObjectId,
         ref:'instructor'
+  },
+    Rating:{
+      type:Number,
+      required:false
+    },
+    Course_Ratings:{
+      type:[Number],
+      required:false
     },
 }, { timestamps: true });
 

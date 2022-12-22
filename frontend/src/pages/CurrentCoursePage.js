@@ -11,6 +11,7 @@
 
     import{Button, Alert, Container, Nav} from 'react-bootstrap'
     import Navbar from "../components/Navbar";
+    import ProfileNavBar from "../components/ProfileNavBar"
 
     import CourseDetails from "../components/CourseDetails";
     import StarRating from "../components/StarRating";
@@ -18,6 +19,7 @@
     import CurrentCourseDiscountPage from "../components/CurrentCourseDiscountPage";
     import InstructorAddNewSubtitleForm from "../components/InstructorAddNewSubtitleForm";
     import CurrentCourseInstructorPageSubtitles from "../components/CurrentCourseInstructorPageSubtitles"
+    import InstructorCurrentCoursePageDetails from "../components/InstructorCurrentCoursePageDetails";
 
 
     const CurrentCoursePage = () => {
@@ -63,32 +65,61 @@
 
     const routeChange2 = () =>{ 
         const params = new URLSearchParams(window.location.search);
+        const instructorId = params.get('id');
         const courseId = params.get('CourseId');
         // console.log(courseId); 
-        let path = `/AddANewSubtitle/?CourseId=${courseId}`; 
+        let path = `/AddANewSubtitle/?id=${instructorId}&CourseId=${courseId}`; 
         console.log("CourseId"+courseId)
+        navigate(path);
+    }
+
+    const routeChange3 = () =>{ 
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get('CourseId');
+        const instructorId = params.get('id');
+        // console.log(courseId); 
+        let path = `/InstructorReportAProblemPage/?id=${instructorId}&CourseId=${courseId}`; 
+        navigate(path);
+    }
+
+
+    const routeChange4 = () =>{ 
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get('CourseId');
+        const instructorId = params.get('id');
+        // console.log(courseId); 
+        let path = `/createQuiz/?id=${instructorId}&CourseId=${courseId}`; 
         navigate(path);
     }
 
 
     return (
         <div>
-        <Navbar/>
+        <ProfileNavBar/>
         <form className="create">
 
-        {/* <div class="container"> */}
-        <div class="row gutters">
-        {/* <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12"> */}
-        <div class="card h-100">
-            <div class="card-body">
+        {/* <div className="container"> */}
+        <div className="row gutters">
+        {/* <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12"> */}
+        <div className="card h-100">
+            <div className="card-body">
+                <form className="course-details">
+                    <button  onClick={routeChange3}>Report a problem</button>
+                </form>
                 {course && course.map(course => (
-                <CurrentCoursePageDetails course={course} key={course._id} />
+                <InstructorCurrentCoursePageDetails course={course} key={course._id} />
                 ))[0]}
                 {/* <CurrentCourseDiscountPage/> */}
-                <CurrentCourseInstructorPageSubtitles/>
 
+                <form className="course-details">
                 <button onClick={routeChange}>Define A New Course Discount</button>
                 <button onClick={routeChange2}>Define A New Course Subtitle</button>
+                <button onClick={routeChange4}>Edit Course Exam</button>
+                </form>
+
+                <CurrentCourseInstructorPageSubtitles/>
+
+                
             </div>
             
             

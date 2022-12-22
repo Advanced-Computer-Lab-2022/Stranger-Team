@@ -16,9 +16,13 @@ export const useFetchQestion = () => {
         /** async function fetch backend data */
         (async () => {
             try {
-                const response = await fetch('/viewQuestions')
+
+                const queryParams = new URLSearchParams(window.location.search);
+                 const courseId = queryParams.get('CourseId');
+                const response = await fetch(`/fetchQ/?CourseId=${courseId}`)
                 const question = await response.json()
-                const ans =  await fetch('/viewAnswers')
+                console.log(question)
+                const ans =  await fetch(`/viewAnswers/?CourseId=${courseId}`)
                 const answers = await ans.json()
                 if(question.length > 0){
                     setGetData(prev => ({...prev, isLoading : false}));

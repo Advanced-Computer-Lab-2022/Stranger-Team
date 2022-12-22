@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const User  = require("../Models/User");
+const {User}  = require("../Models/User");
 const Token = require("../Models/Token");
 const crypto = require("crypto");
 const sendEmail = require("./Emailer");
@@ -13,15 +13,21 @@ router.post("/", async (req, res) => {
 		const emailSchema = Joi.object({
 			Email: Joi.string().email().required().label("Email"),
 		});
-		const { error } = emailSchema.validate(req.body);
 		
+		const { error } = emailSchema.validate(req.body);
+	//	console.log(error);
 		if (error)
-			return res.status(400).send({ message: error.details[0].message });
+		{
+		
+		
+		return res.status(400).send({ message: error.details[0].message });
+		}
 			
 		const em = req.query.Email;
-	
-		let user = await User.findOne({Email:em});
-		
+	//	console.log(em);
+
+		const user = await User.findOne({Email:em});
+	//	console.log("user:");
 		if (!user)
 			return res
 				.status(409)
@@ -68,13 +74,16 @@ router.get("/:id/:token", async (req, res) => {
 router.post("/:id/:token", async (req, res) => {
 	try {
 		const passwordSchema = Joi.object({
-			password: passwordComplexity().required().label("Password"),
+			Password: passwordComplexity().required().label("Password"),
 		});
+		
 		const { error } = passwordSchema.validate(req.body);
+		
 		if (error)
 			return res.status(400).send({ message: error.details[0].message });
-
+		
 		const user = await User.findOne({ _id: req.params.id });
+		
 		if (!user) return res.status(400).send({ message: "Invalid link" });
 
 		const token = await Token.findOne({
@@ -82,8 +91,9 @@ router.post("/:id/:token", async (req, res) => {
 			token: req.params.token,
 		});
 		if (!token) return res.status(400).send({ message: "Invalid link" });
-
-		user.Password = req.query.Password;
+		const salt = await bcrypt.genSalt();
+		const hashPassword = await bcrypt.hash(req.query.Password, salt);
+		user.Password = hashPassword;
 		await user.save();
 		await token.remove();
 

@@ -1,0 +1,23 @@
+.mainC{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+}
+.Cert{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+img{
+width: 60%;
+align-items: center;
+
+}
+#myC{
+   font-size: x-large;
+   font-family: 'Courier New', Courier, monospace;
+}
