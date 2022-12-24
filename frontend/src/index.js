@@ -9,6 +9,9 @@ import { PendingInstructorsContextProvider } from './context/pendingInstructorCo
 import { CorporateTraineesContextProvider } from './context/corporateTraineeContext';
 import { InstructorsContextProvider } from './context/InstructorContext';
 import { QuizContextProvider } from './context/QuizContext';
+import { ARefundsContextProvider } from './context/ARefundsContext';
+import { RRefundsContextProvider } from './context/RRefundsContext';
+import { PRefundsContextProvider } from './context/PRefundsContext';
 
 
 //redux store
@@ -26,6 +29,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
     <Provider store={store}>
+      <RRefundsContextProvider>
+      <PRefundsContextProvider>
+      <ARefundsContextProvider>
       <QuizContextProvider>
       <CourseRequestsContextProvider>
       <SeenReportsContextProvider>
@@ -43,6 +49,9 @@ root.render(
     </SeenReportsContextProvider>
     </CourseRequestsContextProvider>
     </QuizContextProvider>
+    </ARefundsContextProvider>
+    </PRefundsContextProvider>
+    </RRefundsContextProvider>
     </Provider>
   // </React.StrictMode>
 );

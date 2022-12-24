@@ -125,6 +125,14 @@ import TraineeResolvedRefundRequestsPage from './pages/TraineeResolvedRefundRequ
 import TraineeCurrentResolvedRefundRequestPage from './pages/TraineeCurrentResolvedRefundRequestPage';
 
 
+
+//ADMIN REFUND PAGES
+import PendingRefundsPage from './pages/pendingRefundsPage';
+import AcceptedRefundsPage from './pages/acceptedRefundsPage';
+import RejectedRefundsPage from './pages/rejectedRefundsPage';
+import SingleRefund from './components/SingleRefund';
+
+
 function App() {
    const User = localStorage.getItem("token");
   return (
@@ -702,6 +710,30 @@ function App() {
          <Route
         path="/TraineeWallet"
         element={<TraineeWallet />}
+        />
+
+
+        <Route
+        path="/acceptedRefunds"
+        element={<AcceptedRefundsPage />}
+        />
+
+
+        <Route
+        path="/rejectedRefunds"
+        element={<RejectedRefundsPage />}
+        />
+
+
+        <Route
+        path="/pendingRefunds"
+        element={<PendingRefundsPage />}
+        />
+
+
+        <Route
+        path="/refund"
+        element={<SingleRefund />}
         />
 
         </Routes>

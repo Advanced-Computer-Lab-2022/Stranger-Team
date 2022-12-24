@@ -23,6 +23,7 @@ useEffect(() => {
 
       if (response.ok) {
         setirep(json)
+        console.log(irep)
         const response0 = await fetch(`/updatePending/?RID=${repId}`, {
           method: 'PUT'
       })

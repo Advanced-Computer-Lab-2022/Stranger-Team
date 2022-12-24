@@ -54,9 +54,9 @@ const CourseRequestsDetails = ({ courserequests }) => {
             <p><strong>{courserequests.Role}</strong></p>
             <p>Sent {formatDistanceToNow(new Date(courserequests.createdAt), {addSuffix: true})}</p>
             {/* <p>Updated {formatDistanceToNow(new Date(pendinginstructors.updatedAt), {addSuffix: true})}</p> */}
-            <span class="material-symbols-outlined" onClick={handleClickAccept}>how_to_reg</span>
+            <span className="material-symbols-outlined" onClick={handleClickAccept}>how_to_reg</span>
             <div className="spannyyyy">
-            <span class="material-symbols-outlined" onClick={handleClick}>block</span>
+            <span className="material-symbols-outlined" onClick={handleClick}>block</span>
             </div>
         </div>
         
