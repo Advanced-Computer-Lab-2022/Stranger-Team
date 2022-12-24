@@ -29,6 +29,7 @@ import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTrain
 
     const CurrentNonRegisteredCoursePageCorporateTrainee = () => {
     const [course, setCourse] = useState(null)
+    const [accessLabel, setAccessLabel] = useState(false)
 
     const [removebutton, setremovebutton] = useState(false)
     
@@ -56,6 +57,7 @@ import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTrain
 
 
         fetchCourse()
+        handleOnClick()
     }, [])
 
     let navigate = useNavigate();
@@ -65,12 +67,43 @@ import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTrain
         const courseId = queryParams.get('CourseId');
         console.log(courseId)
         const traineeId =  queryParams.get('CorporateTraineeId');
-        const response = await fetch(`/reqAccess?CourseId=${courseId}&CorporateTraineeId=${traineeId}`,  {
-            method: 'POST'
+        const response = await fetch(`/req?CourseId=${courseId}&CorporateTraineeId=${traineeId}`,  {
+            method: 'GET'
         })
         const json = await response.json()
-        console.log("REQUEST:" + json)
-        setremovebutton(true)
+        if (response.ok) {
+
+        }
+        if (!response.ok) {
+            setAccessLabel(true)
+        }
+    }
+
+    const checkAccess = async() => {
+        const queryParams = new URLSearchParams(window.location.search);
+        const courseId = queryParams.get('CourseId');
+        console.log(courseId)
+        const traineeId =  queryParams.get('CorporateTraineeId');
+        const response = await fetch(`/req?CourseId=${courseId}&CorporateTraineeId=${traineeId}`,  {
+            method: 'GET'
+        })
+        const json = await response.json()
+        console.log(json)
+        if (response.ok) {
+            const response1 = await fetch(`/reqAccess?CourseId=${courseId}&CorporateTraineeId=${traineeId}`,  {
+                method: 'POST'
+            })
+            const json1 = await response1.json()
+            console.log(accessLabel)
+            setAccessLabel(true)
+        }
+
+        if (!response.ok) {
+            setAccessLabel(true)
+        }
+
+       
+        
     }
 
 
@@ -95,7 +128,11 @@ import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTrain
                 {/* <form className="course-details">
             <button >Request Access For The Course</button>
             </form> */}
-            {!removebutton && <button onClick={handleOnClick}>Request Access For The Course</button>}
+            {/* {!removebutton && <button onClick={handleOnClick}>Request Access For The Course</button>} */}
+
+            {!accessLabel && <button onClick={checkAccess}>Request Access For The Course</button>}
+
+            {accessLabel && <label><strong>You've requested access to this course.</strong></label>}
                 
             </div>
             

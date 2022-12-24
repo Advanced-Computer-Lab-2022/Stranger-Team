@@ -84,7 +84,7 @@
         </div>
         </div>
         </div>
-        <button className="create" onClick={routeChange}>Edit Profile</button>
+        {/* <button className="create" onClick={routeChange}>Edit Profile</button> */}
         
         {/* <InstructorEditProfile/> */}
 

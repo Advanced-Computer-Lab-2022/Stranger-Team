@@ -3,7 +3,7 @@
     const instructor = require("../Models/Instructor");
     const adminstrator = require("../Models/Administrator");
     const course = require("../Models/Course");
-    const individual_Trainee = require("../Models/Individual Trainee");
+    const {Individual_Trainee} = require("../Models/Individual Trainee");
     const corporate_Trainee = require("../Models/corporateTrainees");
     const reportedProblem = require("../Models/TraineeReports");
     const refund = require("../Models/TraineeRefunds");
@@ -14,7 +14,7 @@
     const {Username,Email,Password,First_Name,Last_Name,Gender} = req.body;
 
     try{
-    const result = await individual_Trainee.create({Username,Email,Password,First_Name,Last_Name,Gender,Role:"Individual Trainee"});
+    const result = await Individual_Trainee.create({Username,Email,Password,First_Name,Last_Name,Gender,Role:"Individual Trainee"});
     console.log(result)
     res.status(200).json(result)
     }
@@ -29,7 +29,7 @@ const viewMyWalletBalance = async(req,res) => {
     const traineeId = req.query.TraineeId;
 
     try{
-    const result = await individual_Trainee.findById({_id:traineeId});
+    const result = await Individual_Trainee.findById({_id:traineeId});
     const wallet = result.Wallet;
     console.log(wallet)
     res.status(200).json(wallet)
@@ -50,7 +50,7 @@ const payByWalletBalance = async(req,res) => {
     {
         const currCourse = await course.findById({_id:courseId});
         const currCoursePrice = currCourse.Price;
-        const currTrainee = await individual_Trainee.findById({_id:traineeId});
+        const currTrainee = await Individual_Trainee.findById({_id:traineeId});
         const balance = currTrainee.Wallet;
         if(balance>=currCoursePrice)
         {
@@ -59,7 +59,7 @@ const payByWalletBalance = async(req,res) => {
             newArray.push(courseId)
             console.log("newArray"+newArray)
 
-            const updatedBalance = await individual_Trainee.findByIdAndUpdate({_id:traineeId},{Registered_Courses:newArray,Wallet:newBalance},{new:true});
+            const updatedBalance = await Individual_Trainee.findByIdAndUpdate({_id:traineeId},{Registered_Courses:newArray,Wallet:newBalance},{new:true});
 
             res.status(200).json(updatedBalance)
         }
@@ -78,6 +78,38 @@ const payByWalletBalance = async(req,res) => {
     }
 }
 
+// const traineeRefundRequest = async(req,res) => {
+    
+//     //const traineeId = req.session.user._id;
+//     const traineeId = req.query.TraineeId;
+//     const courseId = req.query.CourseId;
+//     const{Problem}= req.body;
+
+//     try{
+//     if(traineeId)
+//     {
+//         var newRefund=null;
+//         const currTrainee = await Individual_Trainee.findById({_id:traineeId});
+//         const currUsername = currTrainee.Username;
+//         const currRole = currTrainee.Role;
+//         if(Problem==null||Problem=="")
+//         {
+//             newRefund= await refund.create({Trainee_Id:traineeId,Course_Id:courseId,Problem:"",Status:"Pending",Username:currUsername,Role:currRole});
+//         }
+//         else
+//         {
+//             newRefund= await refund.create({Trainee_Id:traineeId,Course_Id:courseId,Problem:Problem,Status:"Pending",Username:currUsername,Role:currRole});
+//         }
+//         res.status(200).json(newRefund)
+        
+        
+//     }
+// }
+//     catch(error){
+//         res.status(400).json({error:error.message});
+//     }
+// }
+
 const traineeRefundRequest = async(req,res) => {
     
     //const traineeId = req.session.user._id;
@@ -89,16 +121,19 @@ const traineeRefundRequest = async(req,res) => {
     if(traineeId)
     {
         var newRefund=null;
-        const currTrainee = await individual_Trainee.findById({_id:traineeId});
+        const currTrainee = await Individual_Trainee.findById({_id:traineeId});
         const currUsername = currTrainee.Username;
         const currRole = currTrainee.Role;
+        const currCourse = await course.findById({_id: courseId});
+        const Title = currCourse.Title;
+        const Amount = currCourse.Price
         if(Problem==null||Problem=="")
         {
-            newRefund= await refund.create({Trainee_Id:traineeId,Course_Id:courseId,Problem:"",Status:"Pending",Username:currUsername,Role:currRole});
+            newRefund= await refund.create({Trainee_Id:traineeId,Course_Id:courseId,Title:Title, Problem:"", Amount:Amount,Status:"Pending",Username:currUsername,Role:currRole});
         }
         else
         {
-            newRefund= await refund.create({Trainee_Id:traineeId,Course_Id:courseId,Problem:Problem,Status:"Pending",Username:currUsername,Role:currRole});
+            newRefund= await refund.create({Trainee_Id:traineeId,Course_Id:courseId,Title:Title,Problem:Problem,Amount:Amount, Status:"Pending",Username:currUsername,Role:currRole});
         }
         res.status(200).json(newRefund)
         
@@ -130,7 +165,7 @@ const fetchTraineeResolvedRequests = async(req,res) => {
     const traineeId = req.query.TraineeId;
 
     try{
-    const resolvedProblems = await refund.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Resolved"}).populate('Trainee_Id');
+    const resolvedProblems = await refund.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Accepted"}).populate('Trainee_Id');
 
     console.log(resolvedProblems)
     res.status(200).json(resolvedProblems)
@@ -174,13 +209,13 @@ const fetchCurrentRequest = async(req,res) => {
         const courseId = req.query.CourseId;
 
     try{
-    const currTrainee = await individual_Trainee.findById({_id:individualTraineeId});
+    const currTrainee = await Individual_Trainee.findById({_id:individualTraineeId});
     const updatedArray = currTrainee.Registered_Courses;
     console.log(updatedArray);
     updatedArray.push(courseId);
     console.log(updatedArray)
 
-    const updatedTrainee =  await individual_Trainee.findByIdAndUpdate({_id:individualTraineeId},{Registered_Courses:updatedArray},{new:true});
+    const updatedTrainee =  await Individual_Trainee.findByIdAndUpdate({_id:individualTraineeId},{Registered_Courses:updatedArray},{new:true});
     console.log(updatedTrainee)
     res.status(200).json(updatedTrainee)
     }
@@ -195,7 +230,7 @@ const fetchCurrentRequest = async(req,res) => {
         
 
     try{
-    const currTrainee = await individual_Trainee.findById({_id:individualTraineeId});
+    const currTrainee = await Individual_Trainee.findById({_id:individualTraineeId});
     const coursesArray = currTrainee.Registered_Courses;
     const coursesArray1 = [];
     console.log(coursesArray)
@@ -233,7 +268,7 @@ const traineeSendReport = async(req,res) => {
 
     const traineeId = req.query.TraineeId;
     const {Report_Title,Reported_Problem,Report_Type} = req.body;
-    const trainee = await individual_Trainee.findById({_id:traineeId});
+    const trainee = await Individual_Trainee.findById({_id:traineeId});
     const traineeUsername = trainee.Username;
 
     try{
@@ -358,7 +393,7 @@ const fetchTraineeProfileDetails = async(req,res) => {
     const traineeId = req.query.TraineeId;
 
     try{
-    const trainee = await individual_Trainee.findById({_id:traineeId});
+    const trainee = await Individual_Trainee.findById({_id:traineeId});
     console.log(trainee)
     res.status(200).json(trainee)
     }
@@ -374,7 +409,7 @@ const fetchNonRegisteredTraineeCoursesForInstructor = async(req,res) => {
 
 
     try{
-    const trainee = await individual_Trainee.findById({_id:traineeId});
+    const trainee = await Individual_Trainee.findById({_id:traineeId});
     const traineeRegisteredCourses = trainee.Registered_Courses;
     const instructorCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId)}).populate('Instructor');
     const traineeNonRegisteredCourses = [];
@@ -477,6 +512,8 @@ const checkIfAdminRespondedTrainee = async(req,res) => {
                 const email = req.body.Email;
 
                 
+
+                
                     if(corporateTraineeId==null)
                     {
                         if(traineeId==null)
@@ -498,7 +535,44 @@ const checkIfAdminRespondedTrainee = async(req,res) => {
                             }
                             else
                             {
-                                updatedprofile =await individual_Trainee.findByIdAndUpdate({_id:traineeId},{Username:username,Email:email},{new:true});
+                                if(email == null)
+                                {
+                                    updatedprofile =await Individual_Trainee.findByIdAndUpdate({_id:traineeId},{Username:username,Email:email},{new:true});
+                                }
+                                else
+                                {
+                                    let user = await Individual_Trainee.findOne({ Email: req.body.Email });
+                                    if (user)
+                                        return res
+                                        .status(409)
+                                        .send({ error: "User with given email already Exist!" }); 
+                                    else
+                                    {
+                                        user = await instructor.findOne({ Email: req.body.Email });
+                                        if(user)
+                                        {
+                                            return res
+                                            .status(409)
+                                            .send({ error: "User with given email already Exist!" }); 
+                                        }
+                                        else
+                                        {
+                                            user = await corporate_Trainee.findOne({ Email: req.body.Email });
+                                            if(user)
+                                            {
+                                                return res
+                                                .status(409)
+                                                .send({ error: "User with given email already Exist!" }); 
+                                            }
+                                            else
+                                            {
+                                                updatedprofile =await Individual_Trainee.findByIdAndUpdate({_id:traineeId},{Username:username,Email:email},{new:true});
+                                            }
+                                        }
+                                    }
+                                        
+                                }
+                                
                             }
                             
                         }
@@ -511,7 +585,43 @@ const checkIfAdminRespondedTrainee = async(req,res) => {
                         }
                         else
                         {
-                            updatedprofile =await corporate_Trainee.findByIdAndUpdate({_id:corporateTraineeId},{Username:username,Email:email},{new:true});
+                            if(email==null)
+                            {
+                                updatedprofile =await corporate_Trainee.findByIdAndUpdate({_id:corporateTraineeId},{Username:username,Email:email},{new:true});
+                            }
+                            else
+                            {
+                                let user = await corporate_Trainee.findOne({ Email: req.body.Email });
+                                if (user)
+                                    return res
+                                    .status(409)
+                                    .send({ error: "User with given email already Exist!" });
+                                else
+                                {
+                                    user = await instructor.findOne({ Email: req.body.Email })
+                                    if(user)
+                                    {
+                                        return res
+                                        .status(409)
+                                        .send({ error: "User with given email already Exist!" });
+                                    }
+                                    else{
+                                        user = await Individual_Trainee.findOne({ Email: req.body.Email })
+                                        if(user)
+                                        {
+                                            return res
+                                            .status(409)
+                                            .send({ error: "User with given email already Exist!" });
+                                        }
+                                        else
+                                        {
+                                            updatedprofile =await corporate_Trainee.findByIdAndUpdate({_id:corporateTraineeId},{Username:username,Email:email},{new:true});
+                                        }
+                                    }
+                                }
+                                
+                            }
+                            
                         }
                         
                     }

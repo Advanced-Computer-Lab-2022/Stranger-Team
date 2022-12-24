@@ -61,7 +61,7 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
                 window.location.href=`/CurrentCoursePageCorporateTrainee?CourseId=${course._id}&CorporateTraineeId=${corporateTraineeId}`} }
                 key={course._id}>
             <CourseDetails course={course} key={course.id} />
-            <PreviewCourseVideoPageDetails course={course} key={course.id} />
+            {/* <PreviewCourseVideoPageDetails course={course} key={course.id} /> */}
             
             </Container>
             ))}

@@ -3,7 +3,9 @@
     const instructor = require("../Models/Instructor");
     const course = require("../Models/Course");
     const reportedProblem = require("../Models/InstructorReports");
-const { update } = require("../Models/User");
+    const corporate_Trainee = require("../Models/corporateTrainees");
+    const { update } = require("../Models/User");
+    const { Individual_Trainee } = require("../Models/Individual Trainee");
     var instTitles = [];
     let instname;
 
@@ -74,11 +76,52 @@ const { update } = require("../Models/User");
 
             const editInstructorProfileEmailAndBio = async (req,res) => { 
             try{
-
                 const instructorId= req.query.id;
-                const updatedprofile =await instructor.findByIdAndUpdate(instructorId,{First_Name:req.body.First_Name,Last_Name:req.body.Last_Name,Email:req.body.Email,Bio:req.body.Bio},{new:true});
-                console.log(updatedprofile)
-                res.status(200).json(updatedprofile);
+
+                if(req.body.Email ==null || req.body.Email=="")
+                {
+                    const updatedprofile =await instructor.findByIdAndUpdate(instructorId,{First_Name:req.body.First_Name,Last_Name:req.body.Last_Name,Email:req.body.Email,Bio:req.body.Bio},{new:true});
+                    console.log(updatedprofile)
+                    res.status(200).json(updatedprofile);
+                }
+                else
+                {
+                    let user = await instructor.findOne({ Email: req.body.Email });
+                if (user)
+                    return res
+                    .status(409)
+                    .send({ error: "User with given email already Exist!" });
+                else
+                {
+                    user = await Individual_Trainee.findOne({ Email: req.body.Email });
+                    if(user)
+                    {
+                        return res
+                        .status(409)
+                        .send({ error: "User with given email already Exist!" });
+                    }
+                    else
+                    {
+                        user = await corporate_Trainee.findOne({ Email: req.body.Email });
+                        if(user)
+                        {
+                            return res
+                            .status(409)
+                            .send({ error: "User with given email already Exist!" });
+                        }
+                        else
+                        {
+                            
+                            const updatedprofile =await instructor.findByIdAndUpdate(instructorId,{First_Name:req.body.First_Name,Last_Name:req.body.Last_Name,Email:req.body.Email,Bio:req.body.Bio},{new:true});
+                            console.log(updatedprofile)
+                            res.status(200).json(updatedprofile);
+                        }
+                    }
+                }
+                }
+
+                
+                
 
                 
             }

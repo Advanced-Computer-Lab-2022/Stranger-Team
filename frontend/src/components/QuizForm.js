@@ -14,19 +14,45 @@ const QuizForm = () => {
     const [Answer4 , setAnswer4] = useState('')
     const [correctAnswer , setCorrectAnswer] = useState('')
     const [error, setError] = useState(null)
+    const [error1, setError1] = useState(null)
     const [emptyFields, setEmptyFields] = useState([])
 
 
 
 
     let navigate = useNavigate();
-    const routeChange2 = () =>{ 
-        const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        let path = `/InstructorCoursePage/?id=${instructorId}`; 
-        navigate(path);
-    }
+    // const routeChange2 = () =>{ 
+    //     const params = new URLSearchParams(window.location.search);
+    //     const instructorId = params.get('id');
+    //     let path = `/InstructorCoursePage/?id=${instructorId}`; 
+    //     navigate(path);
+    // }
 
+
+
+
+    const handleClick = async () =>  {
+
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get('CourseId');
+        const response = await fetch(`/quizSize/?CourseId=${courseId}`,  {
+            method: 'GET'
+        })
+
+        if (!response.ok) {
+            setError1("A quiz of any course should have a minimum of 3 questions.")
+            console.log(error1)
+        }
+
+        if (response.ok) {
+            const params = new URLSearchParams(window.location.search);
+            const instructorId = params.get('id');
+            let path = `/InstructorCoursePage/?id=${instructorId}`; 
+            navigate(path);
+        }
+        
+        
+    }
 
 
     const handleSubmit = async(e) => {
@@ -53,6 +79,7 @@ const QuizForm = () => {
 
         if (response.ok) {
             setError(null)
+            setError1(null)
             setQNumber('')
             setQ('')
             setAnswer1('')
@@ -67,7 +94,8 @@ const QuizForm = () => {
     }
 
     return (
-        <form className="create" onSubmit={handleSubmit}>
+        <div> 
+             <form className="create" onSubmit={handleSubmit}>
             <h3>Add a new question</h3>
 
             <label>Question number: </label>
@@ -123,19 +151,35 @@ const QuizForm = () => {
             />
 
 
-            <label>Option which holds the correct answer </label>
+            {/* <label>Option which holds the correct answer </label>
             <input 
             type="number" 
             onChange={(e) => setCorrectAnswer(e.target.value)}
             value={correctAnswer}
             className={emptyFields.includes('correctAns') ? 'error':''}
-            />
+            /> */}
 
+             <label>Option which holds the correct answer </label>  
+             <select id="RID" name="correctAnswer" onChange={(e) => setCorrectAnswer(e.target.value)}
+            value={correctAnswer} type="number">
+             <option value=""></option>
+             <option value="0">0</option>
+             <option value="1">1</option>
+             <option value="2">2</option>
+             <option value="3">3</option>
+             className={emptyFields.includes('correctAns') ? 'error':''}
+             </select> 
+            
+             <hr></hr>
             <button>Add question</button>
             {error && <div className="error">{error}</div>}
 
-            <button onClick={routeChange2}>Done</button>
+            {error1 && <div className="error">{error1}</div>}
         </form>
+        <button onClick={handleClick}>Done</button>
+       
+        </div>
+       
     )
 }
 

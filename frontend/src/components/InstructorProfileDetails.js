@@ -16,6 +16,19 @@
         navigate(path);
     }
 
+    const routeChange1 = () =>{  
+        let path = `/changePassword`; 
+        navigate(path);
+    }
+
+    const routeChange2 = () =>{ 
+        const params = new URLSearchParams(window.location.search);
+        // const instructorId = params.get('id');
+        // console.log(instructorId); 
+        let path = `/InstructorEditMyProfilePage/?id=${instructor._id}`; 
+        navigate(path);
+    }
+
     return (
 
         
@@ -127,10 +140,35 @@
                     <p className="mb-0"></p>
                 </div>
                 <div className="col-sm-9">
+                    <label className="mb-0" onClick={routeChange2}>Edit My Profile</label>
+                </div>
+                </div>
+                <hr/>
+
+
+                <hr/>
+                <div className="row">
+                    <div className="col-sm-3">
+                    <p className="mb-0"></p>
+                </div>
+                <div className="col-sm-9">
+                    <label className="mb-0" onClick={routeChange1}>Change Password </label>
+                </div>
+                </div>
+                <hr/>
+
+                <hr/>
+                <div className="row">
+                    <div className="col-sm-3">
+                    <p className="mb-0"></p>
+                </div>
+                <div className="col-sm-9">
                     <label className="mb-0" onClick={routeChange}>My Problem Reports</label>
                 </div>
                 </div>
                 <hr/>
+
+                
     </div>
         
         

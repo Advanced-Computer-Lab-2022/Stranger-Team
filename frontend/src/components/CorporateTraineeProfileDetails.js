@@ -22,6 +22,11 @@
         navigate(path);
     }
 
+    const routeChange4 = () =>{  
+        let path = `/changePassword`; 
+        navigate(path);
+    }
+
 
     return (
 
@@ -86,6 +91,17 @@
                 </div>
                 <div className="col-sm-9">
                     <label className="mb-0" onClick={routeChange1}>Edit My Profile</label>
+                </div>
+                </div>
+                <hr/>
+
+                <hr/>
+                <div className="row">
+                    <div className="col-sm-3">
+                    <p className="mb-0"></p>
+                </div>
+                <div className="col-sm-9">
+                    <label className="mb-0" onClick={routeChange4}>Change Password </label>
                 </div>
                 </div>
                 <hr/>

@@ -62,6 +62,11 @@ const courseSchema = new Schema({
       type:[Number],
       required:false
     },
+    Views:{
+      type:Number,
+      required:false,
+      default:0
+    },
 }, { timestamps: true });
 
 const Course = mongoose.model('course', courseSchema);

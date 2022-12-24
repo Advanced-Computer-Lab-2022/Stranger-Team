@@ -57,14 +57,14 @@ const {addUserRating,saveUserRating} = require('./Routes/usersController');
 
 const {insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor,reviewingAnInstructor,getInstructorRatings,instructorSendReport,fetchInstructorAllPreviousReports,fetchInstructorDeliveredReports,fetchInstructorPendingReports,fetchInstructorResolvedReports,fetchInstructorProblem,instructorSendFollowup} = require('./Routes/instructorController');
 
-const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests,addCourseDiscountToAllCourses,addCourseDiscountToSelectedCourses,fetchAdminProfileDetails} = require('./Routes/adminController');
+const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests,addCourseDiscountToAllCourses,addCourseDiscountToSelectedCourses,fetchAdminProfileDetails, acceptRefund, rejectRefund, viewPendingRefunds, viewAcceptedRefunds, viewRejectedRefunds, viewSingleRefund} = require('./Routes/adminController');
 
 //solving exercises
-const {addCourse, viewCourses, insertQuestions, viewQuestions, addResults, viewResults, viewAnswers, fetchQuestionsByCID, fetchSubtitleQuestion, subtitleQuestionAnswer, deleteQuestion} = require('./Routes/solvingExercisesController');
+const {addCourse, viewCourses, insertQuestions, viewQuestions, addResults, viewResults, viewAnswers, fetchQuestionsByCID, fetchSubtitleQuestion, subtitleQuestionAnswer, deleteQuestion, quizSize} = require('./Routes/solvingExercisesController');
 
 const {addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports,fetchTraineeProfileDetails,fetchTraineeDeliveredReports,fetchTraineePendingReports,fetchTraineeResolvedReports,fetchProblem,fetchNonRegisteredTraineeCoursesForInstructor,checkIfAdminRespondedTrainee,updateReportStatusFromPendingToResolvedTrainee,traineeSendFollowup,getWalletBalance,viewMyWalletBalance,payByWalletBalance,traineeRefundRequest,fetchTraineePendingRequests,fetchCurrentRequest,getCurrentCourse,fetchTraineeResolvedRequests,editProfileDetails,checkIfRefundEligible} = require('./Routes/individualTraineeController');
 
-const {corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem,fetchNonRegisteredCorporateTraineeCoursesForInstructor, requestCourseAccess,corporateTraineeSendFollowup,AddNotes,getNotes} = require('./Routes/corporateTraineeController');
+const {corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem,fetchNonRegisteredCorporateTraineeCoursesForInstructor, requestCourseAccess,corporateTraineeSendFollowup,AddNotes,getNotes, courseRequestCheck} = require('./Routes/corporateTraineeController');
 
 
 
@@ -243,6 +243,84 @@ app.get("/View_All_Courses/",async (req,res)=>{
 
 
 });
+
+// app.get("/View_All_Courses/",async (req,res)=>{
+//   const endpoint = "https://api.exchangerate-api.com/v4/latest/USD";
+//   const result = await fetch(`${endpoint}?base=${req.session.user.Currency}`);
+//   const rates = await result.json();
+//   const q = req.query.q;
+//   const keys=["Title","Subject"];
+//   const search = (data)=>{
+//     return data.filter((item)=>
+//     keys.some((key)=>item[key].toLowerCase().includes(q))
+//     );
+//   };
+//   const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Instructor_Name:1,Course_Description:1 }).sort({createdAt:-1}) ;
+//   const allCourses2 = allCourses.map(async coursaya => {
+//     //  let insCurrency= await Instructors.findOne({_id : coursaya.Instructor})
+//       const x= rates.rates.USD;
+//    //   console.log(coursaya.Instructor.Currency);
+//       coursaya.Price = coursaya.Price/x + req.session.user.Currency;
+//       //Do somethign with the user
+//   });
+//   res.status(200).json(search(allCourses));
+// });
+// app.get("/View_Most_Viewed/",async (req,res)=>{
+//  // console.log(req.session.user.Currency);
+//  // const x= await fetchRates(req.session.user.Currency);
+//  const endpoint = "https://api.exchangerate-api.com/v4/latest/USD";
+//   const result = await fetch(`${endpoint}?base=${req.session.user.Currency}`);
+//   const rates = await result.json();
+//  // console.log("object");
+//   console.log(rates.rates[req.session.user.Currency]);
+//   const q = req.query.q;
+  
+
+//   const keys=["Title","Subject"];
+//   const search = (data)=>{
+//     return data.filter((item)=>
+//     keys.some((key)=>item[key].toLowerCase().includes(q))
+//     );
+//   };
+
+//   // if(parseInt(q))
+//   // {
+    
+//   //   const allCourses = await course.find({"Rating":q}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Rating:1,Course_Description:1 }).sort({createdAt:-1}) ;
+    
+//   //   res.status(200).json(allCourses);
+//   // }
+//   // else{
+//     // const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Course_Description:1,Instructor:1 }).sort({Views:-1}).limit(5) ;
+//     //  const allCourses2 =  allCourses.map(async coursaya => {
+//     //   let insCurrency= await Instructors.findOne({_id : coursaya.Instructor})
+//     //  console.log(insCurrency.Currency);
+//     //  coursaya.Price = coursaya.Price/rates.rates[insCurrency.Currency];
+//     const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Course_Description:1,Instructor:1 }).sort({Views:-1}).limit(5) ;
+//      const allCourses2 = allCourses.map(async coursaya => {
+//    //   let insCurrency= await Instructors.findById({_id : coursaya.Instructor})
+//     //  const currCurrency = insCurrency.Currency;
+//    //   console.log(currCurrency)
+//       const x= rates.rates.USD;
+//     //  console.log(x);
+      
+//       coursaya.Price = coursaya.Price/x + req.session.user.Currency;
+
+      
+//       //Do somethign with the user
+//   });
+//     // //allCourses2=allCourses2.Price*rates.rates.USD;
+//    //  console.log("all courses"+allCourses2);
+    
+//     res.status(200).json(search(allCourses));
+    
+//   //}
+
+
+
+// });
+
+
 
 //app.get("/FilteredCourses",FilteredCourses);
 app.get("/FilteredCourses",async (req,res)=>{
@@ -766,6 +844,7 @@ app.post('/reqAccess', requestCourseAccess);
 app.delete('/deleteReq/:id', deleteRequest);
 app.put('/grantAccess/:id', grantAccess);
 app.get('/viewRequests', viewRequests);
+app.get('/req', courseRequestCheck);
 
 //UPDATE ALL COURSE DISCOUNTS
 app.post("/addCourseDiscountToAllCourses",addCourseDiscountToAllCourses);
@@ -774,6 +853,18 @@ app.post("/addCourseDiscountToSelectedCourses",addCourseDiscountToSelectedCourse
 //SUBTITLE QUESTIONS
 app.get('/getSubQ', fetchSubtitleQuestion);
 app.get('/subQAnswer', subtitleQuestionAnswer);
+
+//ADMIN REFUNDS
+app.put('/acceptRefund', acceptRefund);
+app.put('/rejectRefund', rejectRefund);
+app.get('/pendingRefunds', viewPendingRefunds);
+app.get('/acceptedRefunds', viewAcceptedRefunds);
+app.get('/rejectedRefunds', viewRejectedRefunds);
+app.get('/refund', viewSingleRefund);
+app.get('/quizSize', quizSize);
+
+
+
 
 //BASBOSAAAAAA
 

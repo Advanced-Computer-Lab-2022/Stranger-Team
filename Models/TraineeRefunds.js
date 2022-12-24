@@ -23,6 +23,10 @@ const traineeRefundSchema = new Schema({
         type:String,
         required:false
     },
+    Amount:{
+        type:Number,
+        required:true
+    },
     Status:{
         type:String,
         required:false

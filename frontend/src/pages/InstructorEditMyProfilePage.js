@@ -4,6 +4,7 @@
     import React from 'react';
     import { useNavigate } from "react-router-dom";
 	import { useState } from 'react'
+	import ProfileNavBar from '../components/ProfileNavBar'
 
     const InstructorEditMyProfilePage = () => {
 
@@ -11,7 +12,7 @@
     const [Last_Name, setLast_Name] = useState('')
     const [Email, setEmail] = useState('')
     const [Bio, setBio] = useState('')
-	const[Error,setError]= useState('')
+	const[error,setError]= useState('')
 
 		const updateInstructorProfile = async (e) => {
         e.preventDefault()
@@ -180,6 +181,7 @@
 
         
         <div className="course-details">
+			<ProfileNavBar/>
         <form className="create" onSubmit={updateInstructorProfile}> 
         <h3>Edit Profile Details:</h3>
 
@@ -209,7 +211,7 @@
         />
 
         <button>Update</button>
-        {/* {error && <div className="error">{error}</div>} */}
+        {error && <div className="error">{error}</div>}
         </form>
         </div>
         

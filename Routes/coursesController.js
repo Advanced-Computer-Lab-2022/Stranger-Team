@@ -7,10 +7,13 @@ const course = require('../Models/Course');
 const instructor = require('../Models/Instructor');
 const discount = require('../Models/CourseDiscount');
 const subtitles = require('../Models/Subtitles');
-const individual_Trainee = require("../Models/Individual Trainee");
+const {Individual_Trainee} = require("../Models/Individual Trainee");
 const corporate_Trainee = require("../Models/corporateTrainees");
 const subtitleQuestion = require('../Models/SubtitleQuestion');
-const CorporateTraineeProgress=require("../Models/CorporateProgress")
+const CorporateTraineeProgress=require("../Models/CorporateProgress");
+
+const fetch = require("node-fetch");
+
 
 
 
@@ -509,14 +512,40 @@ const addANewInstructor = async(req,res)=>{
     res.status(200).json(allCourses);
 }
 
+// const getCurrentCourseDetails  = async(req,res) =>{
+//     const currentCourse = req.query.CourseId;
+//     const endpoint = "https://api.exchangerate-api.com/v4/latest/USD";
+//     const result = await fetch(`${endpoint}?base=${req.session.user.Currency}`);
+//     const rates = await result.json();
+//    // const max= await course.find({$max : "$Views" });
+//    //const max = await course.find( {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Rating:1,Course_Description:1,Instructor:1 }).sort({Views: -1}) ;
+
+//     const currCourse = await course.findById({_id:currentCourse}).populate();
+//     const currentCourseDetails = await course.find({_id:currentCourse}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Rating:1,Course_Description:1,Instructor:1 }).sort({createdAt:-1}) ;
+//     const courseViews = currCourse.Views
+//     const updatedViews = courseViews + 1
+//  //  console.log("max views is "+max);
+//     console.log(courseViews)
+//     const updatedCourse = await course.findByIdAndUpdate({_id:currentCourse}, {"Views": updatedViews}, {new:true});
+
+//     const allCourses2 = currentCourseDetails.map(async coursaya => {
+//         //  let insCurrency= await Instructors.findOne({_id : coursaya.Instructor})
+//             const x= rates.rates.USD;
+//         //   console.log(coursaya.Instructor.Currency);
+//             coursaya.Price = coursaya.Price/x + req.session.user.Currency;
+//             //Do somethign with the user
+//         });
+//    // console.log("updatedcourse " + currentCourseDetails.Price)
+//     res.status(200).json(currentCourseDetails); 
+
+// }
+
 const getCurrentCourseDetails  = async(req,res) =>{
-    const currentCourse = req.query.CourseId;
+
+    const courseId = req.query.CourseId;
 
     
-    const currentCourseDetails = await course.find({_id:currentCourse}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Rating:1,Course_Description:1,Instructor:1 }).sort({createdAt:-1}) ;
-
-
-    console.log(currentCourseDetails)
+    const currentCourseDetails = await course.find({_id:courseId}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Rating:1,Course_Description:1,Instructor:1 }).sort({createdAt:-1}) ;
 
     res.status(200).json(currentCourseDetails); 
 
@@ -590,8 +619,8 @@ const isCurrentCourseRegistered = async (req,res) => {
                 console.log(corporateTraineeId)
                 if(corporateTraineeId==null)
                 {
-                    const currTrainee=await individual_Trainee.findById({_id:traineeId});
-                    //const usertrainee =await individual_Trainee.findById({_id:userid}); 
+                    const currTrainee=await Individual_Trainee.findById({_id:traineeId});
+                    //const usertrainee =await Individual_Trainee.findById({_id:userid}); 
                     console.log(currTrainee.Registered_Courses)
                     //console.log("usertraineeregcourses"+usertrainee.Registered_Courses)
                     const registeredCourses = currTrainee.Registered_Courses;

@@ -297,8 +297,25 @@ const AddNotes = async(req,res) => {
         res.status(400).json({error:error.message});
     }
 }
+const courseRequestCheck = async(req,res) => {
+    const corporateTraineeId = req.query.CorporateTraineeId;
+   // console.log(corporateTraineeId)
+    const courseId = req.query.CourseId;
+    //console.log(courseId)
+    
 
+   
+       const reqAvailable = await courseRequests.find({CorporateTraineeId:corporateTraineeId, CourseId:courseId})
+     //  const reqAvailable =  allRequestedCourses.find({CourseId:courseId})
 
+     if (reqAvailable.length == 0) {
+        res.json({ msg: "REQUEST CAN BE SENT"})
+     }
 
+     else {
+        res.status(400).json({error1:"REQUEST ALREADY SENT"})
+     }
 
-    module.exports ={corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,addCorporateTrainee,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem,fetchNonRegisteredCorporateTraineeCoursesForInstructor, requestCourseAccess,corporateTraineeSendFollowup,AddNotes,getNotes};
+    }
+
+    module.exports ={corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,addCorporateTrainee,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem,fetchNonRegisteredCorporateTraineeCoursesForInstructor, requestCourseAccess,corporateTraineeSendFollowup,AddNotes,getNotes, courseRequestCheck};

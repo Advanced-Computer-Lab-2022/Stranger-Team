@@ -6,12 +6,16 @@
         const InstructorReports = require ('../Models/InstructorReports');
         const TraineeReports = require ('../Models/TraineeReports');
         const CTraineeReports = require ('../Models/CorporateTraineeReports');
+        const {Individual_Trainee} = require ('../Models/Individual Trainee');
 
         const mongoose = require('mongoose');
-        const { findOneAndUpdate } = require('../Models/pendingInstructors');
         const courseRequests = require("../Models/CourseRequests");
         const course = require('../Models/Course');
+        const refund = require("../Models/TraineeRefunds");
 
+        const crypto = require("crypto");
+        const bcrypt = require("bcrypt");
+        const countryToCurrency = require('iso-country-currency');
 
 
         //to view admins from instructors
@@ -44,7 +48,13 @@
 
 
         try {
-            const admin = await Administrator.create({Username, Password})
+            const salt = await bcrypt.genSalt();
+            const hashPassword = await bcrypt.hash(req.body.Password, salt);
+            console.log("USERNAME: " + req.body.Username)
+            console.log("pass 3ady " + req.body.Password)
+            console.log("hashed " + hashPassword)
+         //   const admin = await Administrator.create({Username, hashPassword})        
+		const admin = await new Administrator({ Username: req.body.Username, Password: hashPassword }).save();
             res.status(200).json(admin)
         }
         catch(error) {
@@ -258,9 +268,9 @@
         if (!Gender) {
             emptyFields.push('Gender')
         }
-        if(!Bio){
-            emptyFields.push('Bio')
-        }
+        // if(!Bio){
+        //     emptyFields.push('Bio')
+        // }
 
         if(emptyFields.length > 0) {
             console.log(emptyFields.length)
@@ -270,7 +280,11 @@
 
 
         try {
-            const instructor = await Instructors.create({Username, Password, First_Name, Last_Name, Email, Gender,Bio})
+            const salt = await bcrypt.genSalt();
+            const hashPassword = await bcrypt.hash(req.body.Password, salt);
+          //  const instructor = await Instructors.create({Username, Password, First_Name, Last_Name, Email, Gender,Bio})
+            const instructor = await new Instructors({ ...req.body, Password: hashPassword}).save();
+
             res.status(200).json(instructor)
         }
         catch(error) {
@@ -383,8 +397,14 @@
 
 
         try {
-            const ct = await corporateTrainees.create({Username, Password, First_Name, Last_Name, Email, Gender, Corporate,"Role":"Corporate Trainee"})
+            const salt = await bcrypt.genSalt();
+            const hashPassword = await bcrypt.hash(req.body.Password, salt);
+          //  const ct = await corporateTrainees.create({Username, hashPassword, First_Name, Last_Name, Email, Gender, Corporate,"Role":"Corporate Trainee"})
+            const ct = await new corporateTrainees({ ...req.body, Password: hashPassword,"Role":"Corporate Trainee" }).save();
+            ct.Currency = await countryToCurrency.getParamByParam('countryName', ct.Country, 'currency');
             res.status(200).json(ct)
+          
+
         }
         catch(error) {
             res.status(400).json({error: error.message})
@@ -669,7 +689,6 @@
                     const updatedIR = await InstructorReports.findByIdAndUpdate({_id:RID},{Admin_Response}, {new : true})
                     res.status(200).json(updatedIR)
                 }
-        
                 if (currRep == 0) {
                     // console.log("here1")
                     const currRep1 = await TraineeReports.find({_id:RID}).populate();
@@ -715,25 +734,24 @@
             try{
             const updatedTrainee =  await corporateTrainees.findByIdAndUpdate({_id:traineeId},{Registered_Courses:updatedArray},{new:true});
             console.log(updatedTrainee)
-
+            res.status(200).json(updatedTrainee);
      //creating Progress
     
-     console.log(req.query.CourseId);
-     const sub = await subtitle.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId)});
-     //check if this corporate has this course or not
-     const cop=await corporateTrainee.findById({_id:req.query.CorporateTraineeId})
-     const coursesArray = cop.Registered_Courses;
-     console.log(coursesArray)
-     for (let i = 0; i < coursesArray.length; i++) {
-         //coursesArray1.push(await course.findById({_id:coursesArray[i]},{_id:1}));
-         for (let j = 0; i < (sub.length)-1; j++) {
-             old= await CorporateTraineeProgress.create({"Corporate_Trainee_Id":req.query.CorporateTraineeId,"SubtitleId":mongoose.Types.ObjectId(sub[j]._id),"CourseId":mongoose.Types.ObjectId(coursesArray[i])});
-             }    
-     } 
-        console.log(sub)
-     res.status(200).json(sub);
-     res.status(200).json(updatedTrainee)
-
+    //  console.log(req.query.CourseId);
+    //  const sub = await subtitle.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId)});
+    //  //check if this corporate has this course or not
+    //  const cop=await corporateTrainee.findById({_id:req.query.CorporateTraineeId})
+    //  const coursesArray = cop.Registered_Courses;
+    //  console.log(coursesArray)
+    //  for (let i = 0; i < coursesArray.length; i++) {
+    //      //coursesArray1.push(await course.findById({_id:coursesArray[i]},{_id:1}));
+    //      for (let j = 0; i < (sub.length)-1; j++) {
+    //          old= await CorporateTraineeProgress.create({"Trainee_Id":req.query.CorporateTraineeId,"SubtitleId":mongoose.Types.ObjectId(sub[j]._id),"CourseId":mongoose.Types.ObjectId(coursesArray[i])});
+    //          }    
+    //  } 
+    //     console.log(sub)
+    //  res.status(200).json(sub);
+    //  res.status(200).json(updatedTrainee)
          }
             catch(error){
                 res.status(400).json({error:error.message});
@@ -839,7 +857,105 @@ const fetchAdminProfileDetails = async(req,res) => {
 }
 
 
+const acceptRefund = async(req,res)=>{
+const refid = req.query.refId
+const currRefund = await refund.findById({_id: refid})
+// console.log("REFUND " + currRefund)
+const currCourse = currRefund.Course_Id +"";
+const trainee = currRefund.Trainee_Id
+const currTrainee = await Individual_Trainee.findById({_id: trainee})
+// console.log("currCourse"+currCourse)
+const wallet = currTrainee.Wallet
+
+const amountToBeRefunded = currRefund.Amount
+const updatedWallet = wallet + amountToBeRefunded
+
+try {
+    const updatedTrainee = await Individual_Trainee.findByIdAndUpdate({_id: trainee}, {Wallet: updatedWallet}, {new: true})
+    const oldCourses = updatedTrainee.Registered_Courses;
+    let newArray = [];
+    for(let i=0;i<oldCourses.length;i++)
+    {
+        if(oldCourses[i]._id!=currCourse)
+        {
+            newArray.push(oldCourses[i])
+        }
+    }
+    // console.log("newArray"+newArray);
+    const updatedTrainee2 = await Individual_Trainee.findByIdAndUpdate({_id: trainee}, {Registered_Courses: newArray}, {new: true})
+    // console.log("updatedTrainee2"+updatedTrainee2);
+    const updatedRefund = await refund.findByIdAndUpdate({_id: refid}, {Status:"Accepted"}, {new: true})
+    res.status(200).json(updatedRefund);
+}
+
+catch(error) {
+    res.status(400).json({error:error.message});
+}
+
+
+
+}
+
+
+
+const rejectRefund = async(req,res)=>{
+    const refid = req.query.refId
+    const currRefund = await refund.findById({_id: refid})
+    //console.log("REFUND " + currRefund)
+    const Admin_Response = req.body
+    // const trainee = currRefund.Trainee_Id
+    // const currTrainee = await Individual_Trainee.findById({_id: trainee})
+    // const wallet = currTrainee.Wallet
+    // const amountToBeRefunded = currRefund.Amount
+    // const updatedWallet = wallet + amountToBeRefunded
+    
+    try {
+       // const updatedTrainee = await Individual_Trainee.findByIdAndUpdate({_id: trainee}, {Wallet: updatedWallet}, {new: true})
+      // const updatedRefund1 = await refund.findByIdAndUpdate({_id: id}, {Admin_Response:Admin_Response}, {new: true})
+        const updatedRefund = await refund.findByIdAndUpdate({_id: refid}, {Status:"Rejected"}, {new: true})
+        res.status(200).json(updatedRefund);
+    }
+    
+    catch(error) {
+        res.status(400).json({error:error.message});
+    }
+    
+    
+    
+    }
+
+
+    const viewPendingRefunds = async (req, res) => {
+        const data = await refund.find({Status: "Pending"})
+        res.status(200).json(data)
+        // console.log(data)
+        
+        };
+
+
+    const viewAcceptedRefunds = async (req, res) => {
+            const data = await refund.find({Status: "Accepted"})
+            res.status(200).json(data)
+            // console.log(data)
+            
+            };
+
+
+    const viewRejectedRefunds = async (req, res) => {
+                const data = await refund.find({Status: "Rejected"})
+                res.status(200).json(data)
+                // console.log(data)
+                
+                };
+
+
+const viewSingleRefund = async(req,res) => {
+    const id = req.query.refId
+    const data = await refund.findById({_id: id})
+    res.status(200).json(data)
+}
+
 
         
         
-        module.exports = {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests,addCourseDiscountToAllCourses,addCourseDiscountToSelectedCourses,fetchAdminProfileDetails}
+        module.exports = {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests,addCourseDiscountToAllCourses,addCourseDiscountToSelectedCourses,fetchAdminProfileDetails,acceptRefund, rejectRefund, viewPendingRefunds, viewAcceptedRefunds, viewRejectedRefunds, viewSingleRefund}

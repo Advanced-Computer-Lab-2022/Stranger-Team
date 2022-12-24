@@ -130,7 +130,7 @@ irep.Followups.map((q, i) => (
  <p  id={`q${i}-option`} visible="false">FOLLOW-UP {i+1}: <strong>{irep.Followups[i]}</strong></p>
                   ))
                  }
-         {!statusChange && <p>STATUS: <strong>{irep.Status}</strong> </p> }
+         {/* {!statusChange && <p>STATUS: <strong>{irep.Status}</strong> </p> } */}
         
         <p><strong>{irep.Report_Type}</strong></p>
         <div className="nonspanny">

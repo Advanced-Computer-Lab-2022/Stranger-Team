@@ -19,7 +19,7 @@
 
             case 'DELETE_QUESTION':
                 return {
-                    admins: state.quiz.filter((q) => q._id !== action.payload._id )
+                    quiz: state.quiz.filter((q) => q._id !== action.payload._id )
                 }
 
             default: 

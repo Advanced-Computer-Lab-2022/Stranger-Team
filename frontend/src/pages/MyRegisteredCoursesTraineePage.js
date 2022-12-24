@@ -62,7 +62,7 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
                 window.location.href=`/CurrentCoursePageTrainee?CourseId=${course._id}&TraineeId=${traineeId}`} }
                 key={course._id}>
             <CourseDetails course={course} key={course.id} />
-            <PreviewCourseVideoPageDetails course={course} key={course.id} />
+            {/* <PreviewCourseVideoPageDetails course={course} key={course.id} /> */}
             
             </Container>
             ))}

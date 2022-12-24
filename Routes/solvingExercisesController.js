@@ -292,7 +292,24 @@ const subtitleQuestionAnswer = async(req,res) => {
 }
 
 
- 
+ const quizSize = async(req,res) => {
+
+  const courseid = req.query.CourseId;
+  console.log("courseid: "+courseid);
+
+  if(courseid){
+  const result = await Question.find({CourseId:mongoose.Types.ObjectId(courseid)}).populate('CourseId');
+  console.log(result)
+  if (result.length < 3) {
+    res.status(400).json({error1:"A quiz of a minimum of 3 questions should be created for each course."})
+  }
+
+  else {
+    res.json({ msg: "Quiz questions are enough."})
+  }
+
+  }
+}
 
 
-  module.exports = {addCourse, viewCourses, insertQuestions, viewQuestions, addResults, viewResults, viewAnswers, fetchQuestionsByCID, fetchSubtitleQuestion, subtitleQuestionAnswer, deleteQuestion}
+  module.exports = {addCourse, viewCourses, insertQuestions, viewQuestions, addResults, viewResults, viewAnswers, fetchQuestionsByCID, fetchSubtitleQuestion, subtitleQuestionAnswer, deleteQuestion, quizSize}

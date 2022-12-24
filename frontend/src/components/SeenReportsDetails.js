@@ -20,7 +20,8 @@ let navigate = useNavigate();
       <div className="admin-details">
           <h4 onClick={routeChange}><strong>{seenReports.Report_Title}</strong></h4>
         <h6>{seenReports.Role} <strong>{seenReports.Username}</strong></h6>
-        <p><strong>{seenReports.Report_Type}</strong></p>
+        <p><strong>{seenReports.Status}</strong></p>
+        <h4><strong>{seenReports.Report_Type}</strong></h4>
         <span className="material-symbols-outlined">visibility</span>
       </div>
       
