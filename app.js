@@ -1,3 +1,4 @@
+//import fetch from "node-fetch";
 const { appendFile } = require('fs');
 const passwordResetRoutes = require("./Routes/passwordReset");
 const changePasswordRoutes = require("./Routes/changePassword");
@@ -8,6 +9,7 @@ const session = require('express-session');
 const express = require("express");
 const mongoose = require('mongoose');
 const MongoClient = require('mongodb').MongoClient;
+const fetch = require("node-fetch");
 const MongoURI = 'mongodb+srv://roka:roka@cluster0.9sdu6uc.mongodb.net/test' ;
 //const MongoURI = 'mongodb+srv://ACL123:ACL123@aclcluster.1uihlnr.mongodb.net/ACL?retryWrites=true&w=majority' ;
 
@@ -43,7 +45,7 @@ app.engine('ejs', require('ejs').__express);
 
 
 const course = require('./Models/Course');
-const instructor = require('./Models/Instructor');
+const {Instructors} = require('./Models/Instructor');
 const userRating = require('./Models/UserRating');
 const courseDiscount = require('./Models/CourseDiscount');
 const subtitles = require('./Models/Subtitles');
@@ -51,7 +53,7 @@ const admins = require('./Models/Administrator');
 const pendingInstructors = require('./Models/pendingInstructors');
 const corporateTrainees = require('./Models/corporateTrainees');
 const individual_Trainee=require('./Models/Individual Trainee');
-const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,addANewInstructor,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,FilteredCourses} = require('./Routes/coursesController');
+const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,addANewInstructor,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,FilteredCourses,fetchRatePrice} = require('./Routes/coursesController');
 
 const {addUserRating,saveUserRating} = require('./Routes/usersController');
 
@@ -70,6 +72,8 @@ const {corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corpor
 
 
 const { isNumberObject } = require('util/types');
+
+app.get("/fetchRatePrice",fetchRatePrice);
 
 
 const cs1 = new course({
@@ -215,9 +219,46 @@ mongoose.connect(MongoURI)
 app.get("/home", data);
 //app.get("/View_All_Courses/", View_All_Courses);
 
+async function fetchRates(base ) {  
+
+  console.log(base);
+
+  const endpoint = "https://api.exchangerate-api.com/v4/latest/USD";
+  const res = await fetch(`${endpoint}?base=${base}`);
+  const rates = await res.json();
+ // console.log("object");
+  console.log(rates.rates[base]);
+}
+//    const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Course_Description:1 }).sort({Views:-1}).limit(5) ;
 app.get("/View_All_Courses/",async (req,res)=>{
-
-
+  const endpoint = "https://api.exchangerate-api.com/v4/latest/USD";
+  const result = await fetch(`${endpoint}?base=${req.session.user.Currency}`);
+  const rates = await result.json();
+  const q = req.query.q;
+  const keys=["Title","Subject"];
+  const search = (data)=>{
+    return data.filter((item)=>
+    keys.some((key)=>item[key].toLowerCase().includes(q))
+    );
+  };
+  const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Course_Description:1 }).sort({createdAt:-1}) ;
+  const allCourses2 = allCourses.map(async coursaya => {
+    //  let insCurrency= await Instructors.findOne({_id : coursaya.Instructor})
+      const x= rates.rates.USD;
+   //   console.log(coursaya.Instructor.Currency);
+      coursaya.Price = coursaya.Price/x + req.session.user.Currency;
+      //Do somethign with the user
+  });
+  res.status(200).json(search(allCourses));
+});
+app.get("/View_Most_Viewed/",async (req,res)=>{
+ // console.log(req.session.user.Currency);
+ // const x= await fetchRates(req.session.user.Currency);
+ const endpoint = "https://api.exchangerate-api.com/v4/latest/USD";
+  const result = await fetch(`${endpoint}?base=${req.session.user.Currency}`);
+  const rates = await result.json();
+ // console.log("object");
+  console.log(rates.rates[req.session.user.Currency]);
   const q = req.query.q;
   
 
@@ -236,8 +277,29 @@ app.get("/View_All_Courses/",async (req,res)=>{
   //   res.status(200).json(allCourses);
   // }
   // else{
-    const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Course_Description:1 }).sort({createdAt:-1}) ;
+    // const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Course_Description:1,Instructor:1 }).sort({Views:-1}).limit(5) ;
+    //  const allCourses2 =  allCourses.map(async coursaya => {
+    //   let insCurrency= await Instructors.findOne({_id : coursaya.Instructor})
+    //  console.log(insCurrency.Currency);
+    //  coursaya.Price = coursaya.Price/rates.rates[insCurrency.Currency];
+    const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Course_Description:1,Instructor:1 }).sort({Views:-1}).limit(5) ;
+     const allCourses2 = allCourses.map(async coursaya => {
+   //   let insCurrency= await Instructors.findById({_id : coursaya.Instructor})
+    //  const currCurrency = insCurrency.Currency;
+   //   console.log(currCurrency)
+      const x= rates.rates.USD;
+    //  console.log(x);
+      
+      coursaya.Price = coursaya.Price/x + req.session.user.Currency;
+
+      
+      //Do somethign with the user
+  });
+    // //allCourses2=allCourses2.Price*rates.rates.USD;
+   //  console.log("all courses"+allCourses2);
+    
     res.status(200).json(search(allCourses));
+    
   //}
 
 

@@ -48,6 +48,11 @@ const courseSchema = new Schema({
       type:Number,
       required:false
     },
+    Views:{
+      type:Number,
+      required:false,
+      default:0
+    },
     Course_Ratings:{
       type:[Number],
       required:false

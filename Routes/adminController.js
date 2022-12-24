@@ -8,6 +8,7 @@
         const CTraineeReports = require ('../Models/CorporateTraineeReports');
         const crypto = require("crypto");
         const bcrypt = require("bcrypt");
+        const countryToCurrency = require('iso-country-currency');
         
         const courseRequests = require("../Models/CourseRequests");
 
@@ -396,7 +397,10 @@
             const hashPassword = await bcrypt.hash(req.body.Password, salt);
           //  const ct = await corporateTrainees.create({Username, hashPassword, First_Name, Last_Name, Email, Gender, Corporate,"Role":"Corporate Trainee"})
             const ct = await new corporateTrainees({ ...req.body, Password: hashPassword,"Role":"Corporate Trainee" }).save();
+            ct.Currency = await countryToCurrency.getParamByParam('countryName', ct.Country, 'currency');
             res.status(200).json(ct)
+          
+
         }
         catch(error) {
             res.status(400).json({error: error.message})

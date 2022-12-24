@@ -12,7 +12,8 @@ import FilterCoursesByRateComponent from "../FilterCoursesByRateComponent";
 
 const Main = () => {
 
-	const [courses, setCourses] = useState(null)
+	const [mostViewedCourses, setmostViewedCourses] = useState(null)
+    const [courses, setCourses] = useState(null)
     const [searchQuery, setSearchQuery] = useState("")
 
 	const handleLogout = () => {
@@ -25,16 +26,29 @@ const Main = () => {
         const params = new URLSearchParams(window.location.search);
 
 
-        const response = await fetch(`/View_All_Courses/?q=${searchQuery}`)
+        const response = await fetch(`/View_Most_Viewed/?q=${searchQuery}`)
         
         const json = await response.json()
         console.log(json)
         
-        setCourses(json)
+        setmostViewedCourses(json)
         
         }
+        const fetchCourses2 = async () => {
+            const params = new URLSearchParams(window.location.search);
+    
+    
+            const response = await fetch(`/View_All_Courses/?q=${searchQuery}`)
+            
+            const json = await response.json()
+            console.log(json)
+            
+            setCourses(json)
+            
+            }
 
         fetchCourses()
+        fetchCourses2()
     }, [searchQuery])
 
 	const handleSubmit = async (courseid) => {
@@ -94,9 +108,12 @@ const Main = () => {
             <div>
                 <input type="number" placeholder="Filter By Rate..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}></input>
             </div>
-			
+			<div>
+<h1>OUR MOST POPULAR COURSES</h1>
+</div>
+          
                 
-            {courses && courses.map(course => (
+            {mostViewedCourses && mostViewedCourses.map(course => (
                 
             <Container hover
                 sx={{
@@ -114,6 +131,27 @@ const Main = () => {
                 
                 </Container>
             ))}
+            			<div>
+<h1>ALL OUR COURSES</h1>
+</div>
+                {courses && courses.map(course => (
+                
+                <Container hover
+                    sx={{
+                        "&:hover":{
+                        cursor: "pointer",
+                        backgroundColor: "#f5f5f5",
+                        width: "100%"
+                        }
+                    }}
+                    
+                    onClick={() =>{handleSubmit(course._id)}}
+                    key={course._id}>
+                    <CourseDetails course={course} key={course.id} />
+                    <PreviewCourseVideoPageDetails course={course} key={course.id} />
+                    
+                    </Container>
+                ))}
         </div>
 		</div>
 	);

@@ -41,6 +41,15 @@
         required: true
     },
     verified: { type: Boolean, default: true },
+    Country: {
+        type: String,
+        required: true
+      },
+    Currency: {
+        type: String,
+        required: false,
+        //default:"USD"
+      },
     }, { timestamps: true });
     corporateTraineeSchema.methods.generateAuthToken = function () {
         const token = jwt.sign({ _id: this._id }, "secret", {

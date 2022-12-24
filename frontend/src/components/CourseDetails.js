@@ -1,5 +1,23 @@
     const CourseDetails = ({ course }) => {
+        console.log("outside");
+        
 
+        //    const componentDidMount= () => {
+        //     fetch(`https://api.exchangerate-api.com/v4/latest/USD`)
+        //           .then(res => res.json())
+        //           .then(json => this.setState({ data: json }));
+        //           console.log("here");
+        //       }
+           
+                
+            // const endpoint = "https://api.exchangerate-api.com/v4/latest/USD";
+            // const res = await fetch(`${endpoint}?base=${base}`);
+            // const rates = await res.json();
+           // console.log("object");
+         //   console.log(rates);
+        //    console.log("inside");
+          
+          
         
     return (
         <div className="course-details">

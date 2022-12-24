@@ -45,6 +45,11 @@ const InstructorSchema = new Schema({
       required:false
     },
     verified: { type: Boolean, default: true },
+    Currency: {
+      type: String,
+      required: false,
+      default:"USD"
+    },
   }, { timestamps: true });
   InstructorSchema.methods.generateAuthToken = function () {
     const token = jwt.sign({ _id: this._id }, "secret", {

@@ -153,7 +153,6 @@
             <div className="courses">
             <FilterCoursesByRateComponent/>
 
-
             {courses && courses.map(course => (
                 
             <Container hover
