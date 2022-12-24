@@ -4,6 +4,7 @@
     import React from 'react';
     import { useNavigate } from "react-router-dom";
     import { useEffect, useState } from "react"
+    import { FaWallet } from "react-icons/fa";
     import profile from '../images/profile.png'
 
 
@@ -24,6 +25,11 @@
 
     const routeChange2 = () =>{  
         let path = `/TraineeRefundRequestsPage/?TraineeId=${trainee._id}`; 
+        navigate(path);
+    }
+
+    const routeChange3 = () =>{  
+        let path = `/TraineeEditMyProfilePage/?TraineeId=${trainee._id}`; 
         navigate(path);
     }
 
@@ -100,7 +106,18 @@
                     <p className="mb-0"></p>
                 </div>
                 <div className="col-sm-9">
-                    <label className="mb-0" onClick={routeChange1}>My Wallet</label>
+                    <label className="mb-0" onClick={routeChange3}>Edit My Profile </label>
+                </div>
+                </div>
+                <hr/>
+
+                <hr/>
+                <div className="row">
+                    <div className="col-sm-3">
+                    <p className="mb-0"></p>
+                </div>
+                <div className="col-sm-9">
+                    <label className="mb-0" onClick={routeChange1}>My Wallet <FaWallet></FaWallet></label>
                 </div>
                 </div>
                 <hr/>

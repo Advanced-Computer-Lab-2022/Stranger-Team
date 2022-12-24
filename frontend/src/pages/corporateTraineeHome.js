@@ -129,7 +129,7 @@ import FilterCoursesCorporateTraineeComponent from "../components/FilterCoursesC
                 onClick={() =>{handleSubmit(course._id)}}
                 key={course._id}>
             <CourseDetailsCorporateTrainee course={course} key={course.id} />
-            <PreviewCourseVideoPageDetails course={course} key={course.id} />
+            {/* <PreviewCourseVideoPageDetails course={course} key={course.id} /> */}
             
             
             </Container>

@@ -1,4 +1,5 @@
     import { useState } from 'react'
+import TraineeProfileNavBar from '../components/TraineeProfilNavBar'
 
     const RequestARefundPageTrainee = () => {
     const [Problem,setProblem] = useState('')
@@ -41,6 +42,8 @@
     }
 
     return (
+        <>
+        <TraineeProfileNavBar/>
         <form className="create" onSubmit={handleSubmit}> 
         <h3>Please write a brief explanation as to why you are requesting a refund so we could help provide for your convenience: </h3>
 
@@ -57,6 +60,8 @@
         <button>Request Refund</button>
         {error && <div className="error">{error}</div>}
         </form>
+
+        </>
     )
     }
 

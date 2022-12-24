@@ -21,6 +21,7 @@
     import CurrentCourseInstructorPageSubtitles from "../components/CurrentCourseInstructorPageSubtitles"
     import InstructorCurrentCoursePageDetails from "../components/InstructorCurrentCoursePageDetails";
 import AdminCurrentCoursePageDetails from "../components/AdminCurrentCoursePageDetails";
+import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
 
 
     const AdminCurrentCoursePage = () => {
@@ -71,13 +72,15 @@ import AdminCurrentCoursePageDetails from "../components/AdminCurrentCoursePageD
         <div className="row gutters">
         <div className="card h-100">
             <div className="card-body">
-                {course && course.map(course => (
-                <AdminCurrentCoursePageDetails course={course} key={course._id} />
-                ))[0]}
-
                 <form className="course-details">
                 <button onClick={routeChange}>Define A New Course Discount</button>
                 </form>
+                {course && course.map(course => (
+                <AdminCurrentCoursePageDetails course={course} key={course._id} />
+                ))[0]}
+                <PreviewCourseVideoPageDetails/>
+
+                
 
 
                 

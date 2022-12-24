@@ -20,6 +20,7 @@
     import CurrentCoursePageSubtitleDetails from "../components/CurrentCourseInstructorPageSubtitlesDetails";
     import CurrentCourseSubtitlesPageDetailsTrainee from "../components/CurrentCourseSubtitlesPageDetailsTrainee";
     import Progressbar from "../components/progressBar";
+import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfileNavBar";
     var p;
 
 
@@ -103,7 +104,7 @@
             // </div> 
 
             <div>
-        
+        <CorporateTraineeProfileNavBar/>
         <Container >
 
         <div className="row gutters">

@@ -1,10 +1,13 @@
     const express = require("express");
     const mongoose = require('mongoose');
     const instructor = require("../Models/Instructor");
+    const adminstrator = require("../Models/Administrator");
     const course = require("../Models/Course");
     const individual_Trainee = require("../Models/Individual Trainee");
+    const corporate_Trainee = require("../Models/corporateTrainees");
     const reportedProblem = require("../Models/TraineeReports");
     const refund = require("../Models/TraineeRefunds");
+    const progress = require("../Models/CorporateProgress");
 
     const addIndividualTrainee = async(req,res) => {
     
@@ -62,7 +65,7 @@ const payByWalletBalance = async(req,res) => {
         }
         else
         {
-            res.status(400).json({error:"There isn't enough balance to pay for the course!"});
+            res.status(400).json({error:"There isn't enough balance to pay for the course!Please choose another payment method."});
         }
     }
     else
@@ -461,9 +464,99 @@ const checkIfAdminRespondedTrainee = async(req,res) => {
         catch(error){
             res.status(400).json({error:error.message});
         }
-        }
+        };
+
+        const editProfileDetails = async (req,res) => { 
+            try{
+
+                const corporateTraineeId = req.query.CorporateTraineeId;
+                const traineeId = req.query.TraineeId;
+                const adminId = req.query.AdminId;
+                var updatedprofile = null;
+                const username = req.body.Username;
+                const email = req.body.Email;
+
+                
+                    if(corporateTraineeId==null)
+                    {
+                        if(traineeId==null)
+                        {
+                            if(username==null || username=="")
+                            {
+                                res.status(400).json({error:"All the fields are empty! Please fill in the fields to update your profile."});
+                            }
+                            else
+                            {
+                                updatedprofile =await adminstrator.findByIdAndUpdate({_id:adminId},{Username:username},{new:true});
+                            }
+                        }
+                        else
+                        {
+                            if((username==null && email ==null)||(username=="" && email ==""))
+                            {
+                                res.status(400).json({error:"All the fields are empty! Please fill in either one of the fields to update your profile."});
+                            }
+                            else
+                            {
+                                updatedprofile =await individual_Trainee.findByIdAndUpdate({_id:traineeId},{Username:username,Email:email},{new:true});
+                            }
+                            
+                        }
+                    }
+                    else
+                    {
+                        if((username==null && email ==null)||(username=="" && email ==""))
+                        {
+                            res.status(400).json({error:"All the fields are empty! Please fill in either one of the fields to update your profile."});
+                        }
+                        else
+                        {
+                            updatedprofile =await corporate_Trainee.findByIdAndUpdate({_id:corporateTraineeId},{Username:username,Email:email},{new:true});
+                        }
+                        
+                    }
+                
+                
+
+                
+                console.log(updatedprofile)
+                res.status(200).json(updatedprofile);
+
+                
+            }
+            catch(error){
+                res.status(400).json({error:error.message});
+            }
+
+            };
 
         
             
+        const checkIfRefundEligible =async(req,res)=>{
+        
+            
+            const traineeId=req.query.TraineeId;
+            const courseId = req.query.CourseId;
+            
+        try{
+            const currtraineeProgress = (await progress.find({Trainee_Id:traineeId,CourseId:courseId}))[0];
+            const currprogress = currtraineeProgress.Progress;
+            console.log("currtraineeProgress"+currtraineeProgress)
+            console.log("currprogress"+currprogress)
+            if(currprogress>=50)
+            {
+                res.status(200).json(true);
+            }
+            else
+            {
+                res.status(400).json({error:"You still haven't covered 50% of the course to be eligible of requesting a refund!"});
+            }
+            
+        
+        }
+        catch(error){
+            res.status(400).json({error:error.message});
+        }
+        };
 
-    module.exports ={addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports,fetchTraineeProfileDetails,fetchTraineeDeliveredReports,fetchTraineePendingReports,fetchTraineeResolvedReports,fetchProblem,fetchNonRegisteredTraineeCoursesForInstructor,checkIfAdminRespondedTrainee,updateReportStatusFromPendingToResolvedTrainee,traineeSendFollowup,getWalletBalance,viewMyWalletBalance,payByWalletBalance,traineeRefundRequest,fetchTraineePendingRequests,fetchCurrentRequest,getCurrentCourse,fetchTraineeResolvedRequests};
+    module.exports ={addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports,fetchTraineeProfileDetails,fetchTraineeDeliveredReports,fetchTraineePendingReports,fetchTraineeResolvedReports,fetchProblem,fetchNonRegisteredTraineeCoursesForInstructor,checkIfAdminRespondedTrainee,updateReportStatusFromPendingToResolvedTrainee,traineeSendFollowup,getWalletBalance,viewMyWalletBalance,payByWalletBalance,traineeRefundRequest,fetchTraineePendingRequests,fetchCurrentRequest,getCurrentCourse,fetchTraineeResolvedRequests,editProfileDetails,checkIfRefundEligible};

@@ -4,6 +4,8 @@
     import React from 'react';
     import { useNavigate } from "react-router-dom";
     import { useEffect, useState } from "react"
+    import profile from '../images/profile.png'
+
 
 
     const   CurrentCourseInstructorProfileDetailsForTrainee= ({ instructor }) => {
@@ -12,8 +14,8 @@
     return (
 
         
-        <div className=" image d-flex flex-column justify-content-center align-items-center"> <button className="btn btn-secondary"> 
-        <img src="https://i.imgur.com/wvxPV9S.png" height="100" width="100" /></button>
+        <div className=" image d-flex flex-column justify-content-center align-items-center"> 
+        <img src={profile} width="50" height="50" className="d-inline-block align-top" alt=""></img>
         <span className="name mt-3"><strong>Instructor Name:</strong></span>
         <span className="name mt-3"><strong>{instructor.First_Name} {instructor.Last_Name}</strong></span>
         <span className="idd">{instructor.Email}</span> 

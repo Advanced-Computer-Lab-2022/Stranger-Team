@@ -21,6 +21,7 @@
     import CorporateTraineeSubtitleTitlesPage from "./CorporateTraineeSubtitleTitlesPage";
     import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfileNavBar";
     import { Certificate } from "../components/Certificate";
+import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
 
 
 
@@ -104,6 +105,7 @@
                 <CurrentCoursePageDetailsCorporateTrainee course={course} key={course._id} />
                 ))[0]}
                 <RadioButtonsRateACourse/>
+                <PreviewCourseVideoPageDetails/>
                 {/* <CurrentCourseDiscountPage/> */}
                 {/* <CurrentCourseSubtitlesPageTrainee/> */}
                 <CorporateTraineeSubtitleTitlesPage/>

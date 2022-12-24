@@ -15,13 +15,16 @@
     import StarRating from "../components/StarRating";
     import RadioButtonsRateAnInstructor from "../components/RadioButtonsRateAnInstructor";
     import CurrentCourseInstructorProfileDetailsForTrainee from "../components/CurrentCourseInstructorProfileDetailsForTrainee";
-import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+    import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+    import TraineeReviewAnInstructor from "../components/TraineeReviewAnInstructor";
 
 
     const CurrentCourseInstructorPage = () => {
     const [instructors, setInstructor] = useState(null)
+    const[error,setError] = useState('');
 
     useEffect(() => {
+        
         const fetchInstructor = async () => {
         //const response = await fetch('/View_My_Courses/Layla')
         //const response = await fetch(`/View_My_Courses/Layla/?q=${searchQuery}`)
@@ -38,6 +41,10 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
 
         if (response.ok) {
             setInstructor(json)
+        }
+        if(!response.ok)
+        {
+            setError(json.error);
         }
         }
 
@@ -62,32 +69,73 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     }
 
     return (
+
+        <div>
+        <TraineeProfileNavBar/>
         <Container >
-            <TraineeProfileNavBar/>
-        <form className="create"> 
-        <div className="container">
+
         <div className="row gutters">
-        <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
         <div className="card h-100">
             <div className="card-body">
+                {/* <FetchInstructorNameForTraineeCourseDetails/> */}
+                {/* {error && <div className="error">{error}</div>} */}
                 {instructors && instructors.map(instructor => (
                 <CurrentCourseInstructorProfileDetailsForTrainee instructor={instructor} key={instructor._id} />
                 ))[0]}
+                
+                
+                {/* <button onClick={routeChange1}>Review Instructor</button> */}
             </div>
+                    
+            <form className="course-details">
+                    <RadioButtonsRateAnInstructor/>
+            </form>
+
+            <form className="course-details">
+                    <TraineeReviewAnInstructor/>
+            </form>
+
+            <form className="course-details">
+                <h3>Explore More of The Instructor's Courses:</h3>
+                <CurrentCourseInstructorCoursesComponent/>
+            </form>
+
         </div>
         </div>
+        
+        </Container>
         </div>
-        </div>
-        <button onClick={routeChange}>Rate Instructor</button>
-        <button onClick={routeChange1}>Review Instructor</button>
-        {/* <RadioButtonsRateAnInstructor/> */}
-        {/* <StarRating/> */}
-        <h3>Instructor Available Courses:</h3>
-        <CurrentCourseInstructorCoursesComponent/>
+
+
+        // <Container >
+        //     <TraineeProfileNavBar/>
+        // <form className="create"> 
+        // <div className="container">
+        // <div className="row gutters">
+        // <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+        // <div className="card h-100">
+        //     <div className="card-body">
+        //         {instructors && instructors.map(instructor => (
+        //         <CurrentCourseInstructorProfileDetailsForTrainee instructor={instructor} key={instructor._id} />
+        //         ))[0]}
+                
+        //     </div>
+            
+        // </div>
+        // </div>
+        // </div>
+        // </div>
+        // <RadioButtonsRateAnInstructor/>
+        // {/* <button onClick={routeChange}>Rate Instructor</button> */}
+        // <button onClick={routeChange1}>Review Instructor</button>
+        // {/* <RadioButtonsRateAnInstructor/> */}
+        // {/* <StarRating/> */}
+        // <h3>Instructor Available Courses:</h3>
+        // <CurrentCourseInstructorCoursesComponent/>
 
         
-        </form>
-        </Container>
+        // </form>
+        // </Container>
     )
     }
 

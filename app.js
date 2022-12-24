@@ -51,18 +51,18 @@ const admins = require('./Models/Administrator');
 const pendingInstructors = require('./Models/pendingInstructors');
 const corporateTrainees = require('./Models/corporateTrainees');
 const individual_Trainee=require('./Models/Individual Trainee');
-const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,addANewInstructor,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,FilteredCourses,isDiscountViable,displayCourseDiscount,UpdateProgressOfSubtitlie,getStatusOfSubtitlie} = require('./Routes/coursesController');
+const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,addANewInstructor,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,FilteredCourses,isDiscountViable,displayCourseDiscount,UpdateProgressOfSubtitlie,getStatusOfSubtitlie,fetchThePreviewByCourseId} = require('./Routes/coursesController');
 
 const {addUserRating,saveUserRating} = require('./Routes/usersController');
 
 const {insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor,reviewingAnInstructor,getInstructorRatings,instructorSendReport,fetchInstructorAllPreviousReports,fetchInstructorDeliveredReports,fetchInstructorPendingReports,fetchInstructorResolvedReports,fetchInstructorProblem,instructorSendFollowup} = require('./Routes/instructorController');
 
-const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests,addCourseDiscountToAllCourses,addCourseDiscountToSelectedCourses} = require('./Routes/adminController');
+const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests,addCourseDiscountToAllCourses,addCourseDiscountToSelectedCourses,fetchAdminProfileDetails} = require('./Routes/adminController');
 
 //solving exercises
 const {addCourse, viewCourses, insertQuestions, viewQuestions, addResults, viewResults, viewAnswers, fetchQuestionsByCID, fetchSubtitleQuestion, subtitleQuestionAnswer, deleteQuestion} = require('./Routes/solvingExercisesController');
 
-const {addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports,fetchTraineeProfileDetails,fetchTraineeDeliveredReports,fetchTraineePendingReports,fetchTraineeResolvedReports,fetchProblem,fetchNonRegisteredTraineeCoursesForInstructor,checkIfAdminRespondedTrainee,updateReportStatusFromPendingToResolvedTrainee,traineeSendFollowup,getWalletBalance,viewMyWalletBalance,payByWalletBalance,traineeRefundRequest,fetchTraineePendingRequests,fetchCurrentRequest,getCurrentCourse,fetchTraineeResolvedRequests} = require('./Routes/individualTraineeController');
+const {addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports,fetchTraineeProfileDetails,fetchTraineeDeliveredReports,fetchTraineePendingReports,fetchTraineeResolvedReports,fetchProblem,fetchNonRegisteredTraineeCoursesForInstructor,checkIfAdminRespondedTrainee,updateReportStatusFromPendingToResolvedTrainee,traineeSendFollowup,getWalletBalance,viewMyWalletBalance,payByWalletBalance,traineeRefundRequest,fetchTraineePendingRequests,fetchCurrentRequest,getCurrentCourse,fetchTraineeResolvedRequests,editProfileDetails,checkIfRefundEligible} = require('./Routes/individualTraineeController');
 
 const {corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem,fetchNonRegisteredCorporateTraineeCoursesForInstructor, requestCourseAccess,corporateTraineeSendFollowup,AddNotes,getNotes} = require('./Routes/corporateTraineeController');
 
@@ -573,7 +573,7 @@ app.get("/corporateTraineeRegisterCourse",corporateTraineeRegisterCourse);
 app.get("/fetchCorporateTraineeProfileDetails",fetchCorporateTraineeProfileDetails);
 
 
-
+app.get("/fetchAdminProfileDetails",fetchAdminProfileDetails);
 
 app.get("/viewMyRegisteredCourses",viewMyRegisteredCourses);
 
@@ -600,6 +600,8 @@ app.post("/corporateTraineeSendReport",corporateTraineeSendReport);
 app.post("/instructorSendReport",instructorSendReport);
 
 // app.post("/addQuestion",addQuestion);
+
+app.post("/editProfileDetails",editProfileDetails);
 
 
 app.post("/Filter_By_Subject/", Filter_By_Subject);
@@ -665,6 +667,8 @@ app.get("/fetchInstructorById",fetchInstructorById);
 
 app.get("/fetchCoursePreviewLink",fetchCoursePreviewLink);
 
+app.get("/fetchThePreviewByCourseId",fetchThePreviewByCourseId);
+
 app.get("/getCurrentCourseInstructor",getCurrentCourseInstructor);
 
 app.get("/fetchCurrentCourseInstructorByInstructorId",fetchCurrentCourseInstructorByInstructorId);
@@ -683,6 +687,8 @@ app.get("/fetchTraineeResolvedRequests",fetchTraineeResolvedRequests);
 app.get("/fetchCurrentRequest",fetchCurrentRequest);
 
 app.get("/getCurrentCourse",getCurrentCourse);
+
+app.get("/checkIfRefundEligible",checkIfRefundEligible);
 
 
 app.post("/traineeRefundRequest",traineeRefundRequest);
@@ -787,69 +793,123 @@ const course_price=require('./Models/Course');
 app.get('/ViewBalance', getWalletBalance);
 
 
-app.post("/api/stripe-payment", (req, res) => {
-  const stripe = require("stripe")(
-    "sk_test_51MDnmRA1yEL5EJbENdbcmKmYkqssvZWFhhRFlgGEL4wfhyqQ940KHCYXEq0CbQ12Phm6qGln9DP5bpO8sxPhNI30006fYbIEV7"
-  );
+// app.post("/api/stripe-payment", (req, res) => {
+//   const stripe = require("stripe")(
+//     "sk_test_51MDnmRA1yEL5EJbENdbcmKmYkqssvZWFhhRFlgGEL4wfhyqQ940KHCYXEq0CbQ12Phm6qGln9DP5bpO8sxPhNI30006fYbIEV7"
+//   );
 
-  const { email} = req.body;
-  const token = req.query.TraineeId;
-  const courseId = req.query.CourseId;
-  const coursePrice = course_price.findById({_id:courseId},{Price:1,_id:0})
-  const traineebalance = TraineeWalletSchema.findById({_id:mongoose.Types.ObjectId(req.query.TraineeId)},{Balance:1,_id:0})
-  let alert=require('alert');
 
-  if(coursePrice<traineebalance){
+//   const { email} = req.body;
+//   const token = req.query.TraineeId;
+//   const courseId = req.query.CourseId;
+//   const coursePrice = course_price.findById({_id:courseId},{Price:1,_id:0})
+//   const traineebalance = TraineeWalletSchema.findById({_id:mongoose.Types.ObjectId(req.query.TraineeId)},{Balance:1,_id:0})
+//   let alert=require('alert');
 
-    alert("Amount withdrawn from wallet");
-    traineebalance -= coursePrice
+//   if(coursePrice<traineebalance){
 
-  }
-  else{
+//     alert("Amount withdrawn from wallet");
+//     traineebalance -= coursePrice
 
-    if(traineebalance !=0){
+//   }
+//   else{
 
-      alert("Amount withdrawn partially from wallet");
-      traineebalance = 0;
+//     if(traineebalance !=0){
 
-      stripe.customers
-    .create({
-      email: email,
-      source: token.id,
-      name: token.card.name,
-    })
-    .then((customer) => {
-      return stripe.charges.create({
-        // amount: parseFloat(amount) * 100,
-        // description: `Payment for USD ${amount}`,
-        currency: "USD",
-        customer: customer.id,
-      });
-    })
-    .then((charge) => res.status(200).send(charge))
-    .catch((err) => console.log(err));
-  }
-  else{
+//       alert("Amount withdrawn partially from wallet");
+//       traineebalance = 0;
 
-    stripe.customers
-    .create({
-      email: email,
-      source: token.id,
-      name: token.card.name,
-    })
-    .then((customer) => {
-      return stripe.charges.create({
-        // amount: parseFloat(amount) * 100,
-        // description: `Payment for USD ${amount}`,
-        currency: "USD",
-        customer: customer.id,
-      });
-    })
-    .then((charge) => res.status(200).send(charge))
-    .catch((err) => console.log(err));
-  }
+//       stripe.customers
+//     .create({
+//       email: email,
+//       source: token.id,
+//       name: token.card.name,
+//     })
+//     .then((customer) => {
+//       return stripe.charges.create({
+//         // amount: parseFloat(amount) * 100,
+//         // description: `Payment for USD ${amount}`,
+//         currency: "USD",
+//         customer: customer.id,
+//       });
+//     })
+//     .then((charge) => res.status(200).send(charge))
+//     .catch((err) => console.log(err));
+//   }
+//   else{
+
+//     stripe.customers
+//     .create({
+//       email: email,
+//       source: token.id,
+//       name: token.card.name,
+//     })
+//     .then((customer) => {
+//       return stripe.charges.create({
+//         // amount: parseFloat(amount) * 100,
+//         // description: `Payment for USD ${amount}`,
+//         currency: "USD",
+//         customer: customer.id,
+//       });
+//     })
+//     .then((charge) => res.status(200).send(charge))
+//     .catch((err) => console.log(err));
+//   }
    
-} 
-  const new_balance = TraineeWalletSchema.findByIdAndUpdate({_id:mongoose.Types.ObjectId(req.query.TraineeId)},{Balance:traineebalance})
+// } 
+//   const new_balance = TraineeWalletSchema.findByIdAndUpdate({_id:mongoose.Types.ObjectId(req.query.TraineeId)},{Balance:traineebalance})
+
+// });
+
+const env = require("dotenv").config({ path: "./.env" });
+
+app.use(express.static(process.env.STATIC_DIR));
+
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: "2022-08-01",
+});
+
+app.get("/config", (req, res) => {
+  res.send({
+    publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+  });
+});
+
+app.post("/create-payment-intent", async (req, res) => {
+
+    const courseId = req.query.CourseId;
+    const traineeId = req.query.TraineeId;
+    //const traineeId = req.session.user._id;
+    const currCourse = await course.findById({_id:courseId});
+    const currPrice = parseInt(currCourse.Price);
+    console.log(currPrice);
+    
+
+  try{
+    
+    const paymentIntent = await stripe.paymentIntents.create({
+      currency:"usd",
+      amount:currPrice,
+      automatic_payment_methods:{
+        enabled:true,
+      },
+    })
+
+    // const currTrainee = await individual_Trainee.findById({_id:traineeId});
+    // const updatedArray = currTrainee.Registered_Courses;
+    // console.log(updatedArray);
+    // updatedArray.push(courseId);
+    // console.log(updatedArray)
+    // const updatedTrainee =  await individual_Trainee.findByIdAndUpdate({_id:traineeId},{Registered_Courses:updatedArray},{new:true});
+    // console.log("updatedTrainee"+updatedTrainee)
+    
+    res.send({clientSecret:paymentIntent.client_secret});
+    
+  }
+  catch(e){
+    return res.status(400).send({
+      error:{message:e.message,}
+    })
+  }
 
 });

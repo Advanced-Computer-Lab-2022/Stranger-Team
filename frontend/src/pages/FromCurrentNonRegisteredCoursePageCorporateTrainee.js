@@ -20,7 +20,8 @@
     import TraineeSubtitleTitlesPage from "./TraineeSubtitleTitlesPage";
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     import CurrentNonRegisteredCoursePageDetailsTrainee from "../components/CurrentNonRegisteredCoursePageDetailsTrainee";
-import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfileNavBar";
+    import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfileNavBar";
+    import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
 
 
 
@@ -82,6 +83,7 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
             {course && course.map(course => (
                 <CurrentNonRegisteredCoursePageDetailsTrainee course={course} key={course._id} />
                 ))[0]}
+            <PreviewCourseVideoPageDetails/>
                 
             </div>
             

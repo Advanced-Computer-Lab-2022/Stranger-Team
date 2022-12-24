@@ -1,6 +1,7 @@
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
+import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     
 
     const ProceedToPaymentPageTrainee = ({}) => {
@@ -65,7 +66,7 @@
 
         
         <div className="course-details">
-
+        <TraineeProfileNavBar/>
 
         <h4>Please Choose How You Would Like To Proceed For Your Payement: </h4>
 

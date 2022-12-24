@@ -20,6 +20,7 @@
     import TraineeSubtitleTitlesPage from "./TraineeSubtitleTitlesPage";
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     import CurrentNonRegisteredCoursePageDetailsTrainee from "../components/CurrentNonRegisteredCoursePageDetailsTrainee";
+import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
     
 
 
@@ -100,6 +101,7 @@
             {course && course.map(course => (
                 <CurrentNonRegisteredCoursePageDetailsTrainee course={course} key={course._id} />
                 ))[0]}
+            <PreviewCourseVideoPageDetails/>
                 
             </div>
             

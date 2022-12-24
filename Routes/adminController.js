@@ -824,8 +824,22 @@ const addCourseDiscountToSelectedCourses = async(req,res)=>{
 
 }
 
+const fetchAdminProfileDetails = async(req,res) => {
+
+    const adminId = req.query.AdminId;
+
+    try{
+    const currAdmin = await Administrator.findById({_id:adminId});
+    console.log(currAdmin)
+    res.status(200).json(currAdmin)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+
 
 
         
         
-        module.exports = {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests,addCourseDiscountToAllCourses,addCourseDiscountToSelectedCourses}
+        module.exports = {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests,addCourseDiscountToAllCourses,addCourseDiscountToSelectedCourses,fetchAdminProfileDetails}

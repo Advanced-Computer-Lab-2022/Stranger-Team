@@ -18,13 +18,16 @@
     import CurrentCourseSubtitlesPageTrainee from "./CurrentCourseSubtitlesPageTrainee";
     import RadioButtonsRateACourse from "../components/RadioButtonsRateACourse";
     import TraineeSubtitleTitlesPage from "./TraineeSubtitleTitlesPage";
-import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
-    
+    import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+    import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
+        
 
 
 
     const CurrentCoursePageTrainee = () => {
-    const [course, setCourse] = useState(null)
+    const [course, setCourse] = useState(null);
+    const[error,setError] = useState('');
+    const[enableRefundButton, setEnableRefundButton]=useState(false);
     
 
     useEffect(() => {
@@ -68,13 +71,13 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     const routeChange1 = () =>{ 
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        const corporateTraineeId = params.get('CorporateTraineeId');
-        console.log(corporateTraineeId); 
-        let path = `/mainForQuiz/?CorporateTraineeId=${corporateTraineeId}&CourseId=${courseId}`; 
+        // const corporateTraineeId = params.get('CorporateTraineeId');
+        // console.log(corporateTraineeId); 
+        let path = `/mainForQuiz/?CourseId=${courseId}`; 
         navigate(path);
     }
 
-    
+
 
     const routeChange2 = () =>{ 
         const params = new URLSearchParams(window.location.search);
@@ -84,6 +87,41 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
         let path = `/RequestARefundPageTrainee/?TraineeId=${traineeId}&CourseId=${courseId}`; 
         navigate(path);
     }
+
+    const checkIfRefundEligible = async (e) => {
+        e.preventDefault()
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get('CourseId');
+        const traineeId = params.get('TraineeId');
+        
+        
+        const response = await fetch(`/checkIfRefundEligible/?CourseId=${courseId}&TraineeId=${traineeId}`)
+        
+        
+        const json = await response.json()
+        console.log("res "+response)
+        console.log( "json "+json)
+
+        if(!response.ok)
+        {
+            setError(json.error);
+        }
+
+        if (response.ok) {
+            if(json == true)
+            {
+                window.location.href=`/RequestARefundPageTrainee/?TraineeId=${traineeId}&CourseId=${courseId}`;
+            }
+            else
+            {
+                setError(json.error);
+            }
+
+            
+        }
+
+
+        }
 
 
     return (
@@ -97,15 +135,24 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
                 {/* <FetchInstructorNameForTraineeCourseDetails/> */}
                 <form className="course-details">
                     <button  onClick={routeChange}>Report a problem</button>
-                    <button  onClick={routeChange2}>Request A Refund</button>
+                    
+                    
                 </form>
-                
+
+                <form  className="course-details" onSubmit={checkIfRefundEligible}> 
+                <button >Request A Refund</button>
+                {error && <div className="error">{error}</div>}
+                </form>
+
+                {/* {error && <div className="error">{error}</div>} */}
                 {course && course.map(course => (
                 <CurrentCoursePageDetails course={course} key={course._id} />
                 ))[0]}
                 {/* <CurrentCourseDiscountPage/> */}
                 <RadioButtonsRateACourse/>
+                <PreviewCourseVideoPageDetails/>
                 <TraineeSubtitleTitlesPage/>
+                
                 {/* <CurrentCourseSubtitlesPageTrainee/>  */}
                 {/* <StarRating></StarRating>  */}
             </div>

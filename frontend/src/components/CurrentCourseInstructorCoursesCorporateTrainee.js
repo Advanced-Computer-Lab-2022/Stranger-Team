@@ -76,7 +76,7 @@
                 window.location.href=`/CurrentNonRegisteredCoursePageCorporateTrainee?CourseId=${course._id}&CorporateTraineeId=${traineeId}`} }
                 key={course._id}>
             <CourseDetails course={course} key={course.id} />
-            <PreviewCourseVideoPageDetails course={course} key={course.id} />
+            {/* <PreviewCourseVideoPageDetails course={course} key={course.id} /> */}
             
             
             </Container>

@@ -155,9 +155,9 @@
             {/* <div>
                 <input type="number" placeholder="Filter By Rate..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}></input>
             </div> */}
-            <div>
+            {/* <div>
                 <button onClick={routeChange10}><FaWallet></FaWallet></button>
-            </div>
+            </div> */}
             
             <div className="courses">
             <FilterCoursesByRateComponent/>
@@ -177,7 +177,7 @@
                 onClick={() =>{handleSubmit(course._id)}}
                 key={course._id}>
                 <CourseDetails course={course} key={course.id} />
-                <PreviewCourseVideoPageDetails course={course} key={course.id} />
+                {/* <PreviewCourseVideoPageDetails course={course} key={course.id} /> */}
                 
                 </Container>
             ))}

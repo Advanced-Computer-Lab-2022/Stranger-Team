@@ -20,6 +20,7 @@
     import TraineeSubtitleTitlesPage from "./TraineeSubtitleTitlesPage";
 import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
 import CurrentNonRegisteredCoursePageDetailsTrainee from "../components/CurrentNonRegisteredCoursePageDetailsTrainee";
+import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
     
 
 
@@ -87,6 +88,7 @@ import CurrentNonRegisteredCoursePageDetailsTrainee from "../components/CurrentN
                 {course && course.map(course => (
                 <CurrentNonRegisteredCoursePageDetailsTrainee course={course} key={course._id} />
                 ))[0]}
+                <PreviewCourseVideoPageDetails/>
 
                 <form className="course-details">
             <button onClick={routeChange1}>Register For The Course</button>

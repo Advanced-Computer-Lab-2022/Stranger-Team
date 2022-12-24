@@ -110,9 +110,7 @@ import CreateQuizPage from './pages/createQuizPage';
 import CorporateTraineeNotes from './components/CorporateTraineeAddNotes'
 import MyCertificate from './pages/MyCertificate'
 
-//HANA
-import Pay from './pages/Pay'
-import TraineeHome from './pages/TraineeHome'
+
 import TraineeWallet from './pages/TraineeWallet'
 import MyWalletTraineePage from './pages/MyWalletTraineePage';
 import ProceedToPaymentPageTrainee from './pages/ProceedToPaymentPageTrainee';
@@ -123,6 +121,12 @@ import TraineePendingRefundRequestsPage from './pages/TraineePendingRefundReques
 import CurrentCourseSubtitlesPageCorporateTrainee from './pages/CurrentCourseSubtitlesPageCorporateTrainee';
 import TraineeResolvedRefundRequestsPage from './pages/TraineeResolvedRefundRequestsPage';
 import TraineeCurrentResolvedRefundRequestPage from './pages/TraineeCurrentResolvedRefundRequestPage';
+import Completion from './pages/Paying/Completion';
+import Payment from './pages/Paying/Payment';
+import TraineeEditMyProfilePage from './pages/TraineeEditMyProfilePage';
+import CorporateTraineeEditMyProfilePage from './pages/CorporateTraineeEditMyProfilePage';
+import AdminProfilePage from './pages/AdminProfilePage';
+import AdminEditMyProfilePage from './pages/AdminEditMyProfilePage';
 
 
 function App() {
@@ -136,6 +140,25 @@ function App() {
         <Route
         path="/adminHome"
         element={<HomeAdmin/>}
+        />
+
+        <Route
+        path="/AdminProfilePage"
+        element={<AdminProfilePage/>}
+        />
+
+        <Route
+        path="/AdminEditMyProfilePage"
+        element={<AdminEditMyProfilePage/>}
+        />
+
+        <Route
+        path="/Payment"
+        element={<Payment/>}
+        />
+        <Route
+        path="/completion"
+        element={<Completion/>}
         />
 
         <Route
@@ -216,6 +239,11 @@ function App() {
         <Route
         path="/CorporateTraineeProfilePage"
         element={<CorporateTraineeProfilePage />}
+        />
+
+        <Route
+        path="/CorporateTraineeEditMyProfilePage"
+        element={<CorporateTraineeEditMyProfilePage />}
         />
 
         
@@ -328,6 +356,13 @@ function App() {
         path="/TraineeProfilePage"
         element={<TraineeProfilePage />}
         />
+
+        <Route
+        path="/TraineeEditMyProfilePage"
+        element={<TraineeEditMyProfilePage />}
+        />
+
+        
 
         
         <Route
@@ -693,13 +728,8 @@ function App() {
         element={<MyCertificate />}
         />
 
-        //HANA
-        <Route
-        path="/payment"
-        element={<Pay />}
-        />
 
-         <Route
+        <Route
         path="/TraineeWallet"
         element={<TraineeWallet />}
         />

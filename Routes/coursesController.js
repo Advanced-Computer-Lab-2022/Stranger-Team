@@ -372,6 +372,20 @@ const fetchCoursePreviewLink = async(req,res) => {
     }
 }
 
+const fetchThePreviewByCourseId= async(req,res) => {
+
+    // const subtitleId = req.query.SubtitleId;
+    const courseId = req.query.CourseId;
+
+    if(courseId){
+    const result = await course.findById({_id:courseId});
+    const preview = result.PreviewLink;
+    res.status(200).json(preview)
+    }else{
+        res.status(400).json({error:"subtitleId is required"})
+    }
+}
+
 const getCurrentCourseInstructor = async(req,res) => {
 
     const instructorId = req.query.id;
@@ -803,4 +817,4 @@ const FilteredCourses = async (req,res) => {
                 }
                 }; 
 
-module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addANewInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,FilteredCourses,isDiscountViable,displayCourseDiscount, UpdateProgressOfSubtitlie, getStatusOfSubtitlie};
+module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addANewInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,FilteredCourses,isDiscountViable,displayCourseDiscount, UpdateProgressOfSubtitlie, getStatusOfSubtitlie,fetchThePreviewByCourseId};

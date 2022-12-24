@@ -2,6 +2,7 @@
     import { useCourseContext } from "../hooks/useCoursesContext";
     import InstructorAddNewSubtitlePage from './InstructorAddANewSubtitlePage';
     import DefineACourseDiscountInstructorPage from './DefineACourseDiscountInstructorPage';
+    import ProfileNavBar from "../components/ProfileNavBar"
 
     const InstructorAddANewCoursePage = () => {
     const [Title, setTitle] = useState('')
@@ -84,6 +85,7 @@
 
     return (
         <div>
+            <ProfileNavBar/>
         <form className="create" onSubmit={handleSubmit}> 
         <h3>Add a New Course</h3>
 
@@ -206,18 +208,6 @@
         />
 
         <hr></hr>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         <h3>Optional Details:</h3>

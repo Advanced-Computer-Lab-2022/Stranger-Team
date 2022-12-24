@@ -20,6 +20,7 @@
     import InstructorAddNewSubtitleForm from "../components/InstructorAddNewSubtitleForm";
     import CurrentCourseInstructorPageSubtitles from "../components/CurrentCourseInstructorPageSubtitles"
     import InstructorCurrentCoursePageDetails from "../components/InstructorCurrentCoursePageDetails";
+import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
 
 
     const CurrentCoursePage = () => {
@@ -116,6 +117,7 @@
                 <button onClick={routeChange2}>Define A New Course Subtitle</button>
                 <button onClick={routeChange4}>Edit Course Exam</button>
                 </form>
+                <PreviewCourseVideoPageDetails/>
 
                 <CurrentCourseInstructorPageSubtitles/>
 
