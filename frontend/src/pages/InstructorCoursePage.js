@@ -67,10 +67,17 @@ import FilterMyCoursesInstructorComponent from "../components/FilterMyCoursesIns
         navigate(path);
     }
 
+    // const routeChange2 = () =>{ 
+    //     const params = new URLSearchParams(window.location.search);
+    //     const instructorId = params.get('id');
+    //     let path = `/InstructorAddANewCoursePage/?id=${instructorId}`; 
+    //     navigate(path);
+    // }
     const routeChange2 = () =>{ 
         const params = new URLSearchParams(window.location.search);
         const instructorId = params.get('id');
-        let path = `/InstructorAddANewCoursePage/?id=${instructorId}`; 
+        //let path = `/InstructorAddANewCoursePage/?id=${instructorId}`; 
+        let path = `/InstructorContract/?id=${instructorId}`; 
         navigate(path);
     }
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 //import RichTextEditor from "./Components/RichTextEditor";
-import AddNotes from "./AddNotesC";
+import AddNotes from "./AddNotes";
 //import 'bootstrap/dist/css/bootstrap.min.css'
 
 // const config = {
@@ -25,7 +25,7 @@ import AddNotes from "./AddNotesC";
 //             extraButtons: ["uploadImage", "codeBlock"]
 //   };
   
-const CorporateTraineeNotes = () => {
+const IndTraineeNotes = () => {
   const [value, setValue] = useState("");
   const getValue = (value) => {
     setValue(value);
@@ -39,12 +39,12 @@ const CorporateTraineeNotes = () => {
           <h3>Add Your Notes:</h3>
         </div>
         
-      <br/>
+        <div>
         <AddNotes initialValue="" getValue={getValue}
         // config={config} 
          />
           <br />
-        
+        </div>
        
       </div>
 
@@ -52,4 +52,4 @@ const CorporateTraineeNotes = () => {
   );
 };
 
-export default CorporateTraineeNotes;
+export default IndTraineeNotes;

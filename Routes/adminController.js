@@ -12,10 +12,11 @@
         const courseRequests = require("../Models/CourseRequests");
         const course = require('../Models/Course');
         const refund = require("../Models/TraineeRefunds");
-
+        const TraineeProgress=require("../Models/TraineeProgress");
         const crypto = require("crypto");
         const bcrypt = require("bcrypt");
         const countryToCurrency = require('iso-country-currency');
+const Subtitles = require('../Models/Subtitles');
 
 
         //to view admins from instructors
@@ -723,6 +724,10 @@
             const { id } = req.params //id of the request
             const request = await courseRequests.findById({_id:id}).populate();
             var c;
+            var already=[];
+            let a=[];
+            let i;
+            let j;
             console.log(request)
             const courseId = request.CourseId;
             const traineeId = request.CorporateTraineeId;
@@ -735,23 +740,46 @@
             const updatedTrainee =  await corporateTrainees.findByIdAndUpdate({_id:traineeId},{Registered_Courses:updatedArray},{new:true});
             console.log(updatedTrainee)
             res.status(200).json(updatedTrainee);
+
+
      //creating Progress
     
-    //  console.log(req.query.CourseId);
-    //  const sub = await subtitle.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId)});
-    //  //check if this corporate has this course or not
-    //  const cop=await corporateTrainee.findById({_id:req.query.CorporateTraineeId})
-    //  const coursesArray = cop.Registered_Courses;
-    //  console.log(coursesArray)
-    //  for (let i = 0; i < coursesArray.length; i++) {
-    //      //coursesArray1.push(await course.findById({_id:coursesArray[i]},{_id:1}));
-    //      for (let j = 0; i < (sub.length)-1; j++) {
-    //          old= await CorporateTraineeProgress.create({"Trainee_Id":req.query.CorporateTraineeId,"SubtitleId":mongoose.Types.ObjectId(sub[j]._id),"CourseId":mongoose.Types.ObjectId(coursesArray[i])});
-    //          }    
-    //  } 
-    //     console.log(sub)
-    //  res.status(200).json(sub);
-    //  res.status(200).json(updatedTrainee)
+  
+     console.log(req.query.CourseId);
+   
+     const sub = await Subtitles.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId)});
+     //check if this corporate has this course or not
+     const cop=await corporateTrainees.findById({_id:req.query.TraineeId})
+     const coursesArray = cop.Registered_Courses;
+
+     console.log(coursesArray)
+     if(coursesArray.length>0){
+     for ( i = 0; i < coursesArray.length; i++) {
+         //Check if this course is already in traineeProgress DB
+     already=await TraineeProgress.find({"Trainee_Id":req.query.TraineeId,CourseId:mongoose.Types.ObjectId(coursesArray[i])});
+     console.log(already[0]);
+     //console.log(arrayIsEmpty(already.length));
+     console.log("ASLUN!!!!")
+     if(!arrayIsEmpty(already) ){
+      //coursesArray1.push(await course.findById({_id:coursesArray[i]},{_id:1}));
+      res.status(200).json(already)
+      console.log("Hi et3ml abl keda")
+     } 
+     else{  
+         for ( j = 0; i < (sub.length); j++) {
+         old= await TraineeProgress.create({"Trainee_Id":req.query.TraineeId,"SubtitleId":mongoose.Types.ObjectId(sub[j]._id),"CourseId":mongoose.Types.ObjectId(coursesArray[i])});
+         console.log(" NEW here,Bye")
+         }   
+        res.status(200).json(old)
+         }
+  } }
+  else{
+     res.status(400).json({error:"There is no registred"})
+
+  }
+  const old= await course.findById({_id:req.query.CourseId},{NumberOfPaid:1})
+  old=old++;
+ const counter=await course.findByIdAndUpdate({_id:req.query.CourseId},{NumberOfPaid:old});
          }
             catch(error){
                 res.status(400).json({error:error.message});
@@ -886,6 +914,9 @@ try {
     // console.log("updatedTrainee2"+updatedTrainee2);
     const updatedRefund = await refund.findByIdAndUpdate({_id: refid}, {Status:"Accepted"}, {new: true})
     res.status(200).json(updatedRefund);
+    const old= await course.findById({_id:req.query.CourseId},{NumberOfPaid:1})
+  old=old--;
+ const counter=await course.findByIdAndUpdate({_id:req.query.CourseId},{NumberOfPaid:old});
 }
 
 catch(error) {

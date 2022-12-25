@@ -55,16 +55,20 @@ const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data
 
 const {addUserRating,saveUserRating} = require('./Routes/usersController');
 
-const {insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor,reviewingAnInstructor,getInstructorRatings,instructorSendReport,fetchInstructorAllPreviousReports,fetchInstructorDeliveredReports,fetchInstructorPendingReports,fetchInstructorResolvedReports,fetchInstructorProblem,instructorSendFollowup} = require('./Routes/instructorController');
+const {insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor,reviewingAnInstructor,getInstructorRatings,instructorSendReport,fetchInstructorAllPreviousReports,fetchInstructorDeliveredReports,fetchInstructorPendingReports,fetchInstructorResolvedReports,
+  fetchInstructorProblem,instructorSendFollowup,AllmoneyOwed} = require('./Routes/instructorController');
 
 const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests,addCourseDiscountToAllCourses,addCourseDiscountToSelectedCourses,fetchAdminProfileDetails, acceptRefund, rejectRefund, viewPendingRefunds, viewAcceptedRefunds, viewRejectedRefunds, viewSingleRefund} = require('./Routes/adminController');
 
 //solving exercises
-const {addCourse, viewCourses, insertQuestions, viewQuestions, addResults, viewResults, viewAnswers, fetchQuestionsByCID, fetchSubtitleQuestion, subtitleQuestionAnswer, deleteQuestion, quizSize} = require('./Routes/solvingExercisesController');
+const {addCourse, viewCourses, insertQuestions, viewQuestions,
+   addResults, viewResults, viewAnswers, fetchQuestionsByCID, 
+   fetchSubtitleQuestion, subtitleQuestionAnswer, deleteQuestion,
+    quizSize,viewAllQuestions} = require('./Routes/solvingExercisesController');
 
 const {addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports,fetchTraineeProfileDetails,fetchTraineeDeliveredReports,fetchTraineePendingReports,fetchTraineeResolvedReports,fetchProblem,fetchNonRegisteredTraineeCoursesForInstructor,checkIfAdminRespondedTrainee,updateReportStatusFromPendingToResolvedTrainee,traineeSendFollowup,getWalletBalance,viewMyWalletBalance,payByWalletBalance,traineeRefundRequest,fetchTraineePendingRequests,fetchCurrentRequest,getCurrentCourse,fetchTraineeResolvedRequests,editProfileDetails,checkIfRefundEligible} = require('./Routes/individualTraineeController');
 
-const {corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem,fetchNonRegisteredCorporateTraineeCoursesForInstructor, requestCourseAccess,corporateTraineeSendFollowup,AddNotes,getNotes, courseRequestCheck} = require('./Routes/corporateTraineeController');
+const {corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem,fetchNonRegisteredCorporateTraineeCoursesForInstructor, requestCourseAccess,corporateTraineeSendFollowup,AddNotes,getNotes, courseRequestCheck,check} = require('./Routes/corporateTraineeController');
 
 
 
@@ -867,7 +871,10 @@ app.get('/quizSize', quizSize);
 
 
 //BASBOSAAAAAA
-
+//test
+app.get("/checkTest",check);
+app.get("/viewAllQuestions",viewAllQuestions)
+app.get("/allMoneyOwed",AllmoneyOwed)
 
 app.get("/fetchCorporateTraineeNotes",getNotes);
 app.get("/getSubtitlesStatus",getStatusOfSubtitlie);
@@ -952,9 +959,9 @@ app.get('/ViewBalance', getWalletBalance);
 
 // });
 
-const env = require("dotenv").config({ path: "./.env" });
+//const env = require("dotenv").config({ path: "./.env" });
 
-app.use(express.static(process.env.STATIC_DIR));
+//app.use(express.static(process.env.STATIC_DIR));
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2022-08-01",

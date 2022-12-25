@@ -255,7 +255,7 @@ const viewResults = async (req, res) => {
 const fetchSubtitleQuestion = async(req,res) => {
 
   const subtitleId = req.query.SubtitleId;
-  console.log("subtitleid: "+subtitleId);
+ // console.log("subtitleid: "+subtitleId);
 
   if(subtitleId){
   const result = await subtitleQuestion.find({SubtitleId:mongoose.Types.ObjectId(subtitleId)}).populate('SubtitleId');
@@ -310,6 +310,18 @@ const subtitleQuestionAnswer = async(req,res) => {
 
   }
 }
+//VIEW ALL QUESTIONS OF BIG EXAM WITH CORRECT ANSWERS
+const viewAllQuestions=async(req,res)=>{
+  const courseId=req.query.CourseId
+  try{
+    const data=await Question.find({"CourseId":mongoose.Types.ObjectId(courseId)},{QNumber:1,Q:1,Answers:1,correctAnswer:1,_id:0});
+    res.status(200).json(data);
+  }
+  catch(error){
+    res.status(400).json({error:"No Questions Found"})
+  }
+}
 
 
-  module.exports = {addCourse, viewCourses, insertQuestions, viewQuestions, addResults, viewResults, viewAnswers, fetchQuestionsByCID, fetchSubtitleQuestion, subtitleQuestionAnswer, deleteQuestion, quizSize}
+  module.exports = {addCourse, viewCourses, insertQuestions, viewQuestions, addResults, viewResults, viewAnswers, fetchQuestionsByCID, fetchSubtitleQuestion,
+     subtitleQuestionAnswer, deleteQuestion, quizSize,viewAllQuestions}

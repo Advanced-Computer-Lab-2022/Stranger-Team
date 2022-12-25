@@ -16,7 +16,7 @@ const generatePDF = () => {
 const TraineeViewWithNotes = () => {
     const params = new URLSearchParams(window.location.search);  
     const [Notes, setNotes] = useState([])
-    const TraineeId = params.get('TraineeId');
+    const TraineeId = params.get('CorporateTraineeId');
     const SubtitleId = params.get('SubtitleId');
 
     useEffect(() => {
@@ -55,7 +55,7 @@ return (
         <div className="Mynotes">
         <div>
          </div>
-         <div>
+         {/* <div>
         {Notes.map((Notes) => (
          <div>
             <div>
@@ -65,7 +65,7 @@ return (
          </div> 
                  ))
                  }
-                 </div>  
+                 </div>   */}
             </div>   
         <button onClick={generatePDF}> Save as PDF</button>
     </div>

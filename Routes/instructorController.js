@@ -311,9 +311,46 @@ const fetchInstructorProblem = async(req,res) => {
     }
 }
 
+const AllmoneyOwed = async (req,res)=>{
+    const instId=req.query.id
+    var C= await course.find({"Instructor":mongoose.Types.ObjectId(instId)},{NumberOfPaid:1,Price:1,Discount:1,Discount_Start_Date:1,Discount_End_Date:1,_id:0});
+    var money=0;
+    try{
+        for(let i = 0; i < C.length;i++){
+            var HmPeople=C[i].NumberOfPaid;
+            var price=C[i].Price;
+            var discount=C[i].Discount;
+            var DiscountSart=C[i].Discount_Start_Date;
+            var DiscountEnd=C[i].Discount_End_Date;
+            console.log(C[i])
+            if(discount==null){
+            //----------------------->>>>>> WHO SET THIS DISCOUNT>????????????????
+            //-------------------------------------------------->>>>>>>>>>>Do i Need to calculate for each month???????????
+            //say that website take 30% from instructor
+            money=money+((price) * (HmPeople) * (70/100));
+            }
+            else{
+             money=money+((price)*(HmPeople)*((70/100)*((100-discount)/100)));
+            }
+        }
+        res.status(200).json(money)
+    }
+    catch(error){
+        res.status(400).json({error:"No such Instructor"});
+    }
 
 
-    module.exports ={insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor,reviewingAnInstructor,getInstructorRatings,instructorSendReport,fetchInstructorAllPreviousReports,fetchInstructorDeliveredReports,fetchInstructorPendingReports,fetchInstructorResolvedReports,fetchInstructorProblem,instructorSendFollowup};
+
+}
+
+
+
+    module.exports ={insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,
+        ratingAnInstructor,reviewingAnInstructor,getInstructorRatings,
+        instructorSendReport,fetchInstructorAllPreviousReports,
+        fetchInstructorDeliveredReports,fetchInstructorPendingReports,
+        fetchInstructorResolvedReports,fetchInstructorProblem,
+        instructorSendFollowup,AllmoneyOwed};
 
     // module.exports =filterTitles;
     //module.exports =createinst;

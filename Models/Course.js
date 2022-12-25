@@ -62,6 +62,10 @@ const courseSchema = new Schema({
       type:[Number],
       required:false
     },
+    NumberOfPaid:{
+      type:Number,
+      default:0
+    },
     Views:{
       type:Number,
       required:false,

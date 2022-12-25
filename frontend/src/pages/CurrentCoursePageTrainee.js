@@ -21,7 +21,7 @@
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
         
-
+import { Certificate } from "../components/Certificate";
 
 
     const CurrentCoursePageTrainee = () => {
@@ -87,6 +87,23 @@
         let path = `/RequestARefundPageTrainee/?TraineeId=${traineeId}&CourseId=${courseId}`; 
         navigate(path);
     }
+    const routeChange3 = () =>{ 
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get('CourseId');
+        const corporateTraineeId = params.get('TraineeId');
+        let path = `/TraineeCertificate/?CourseId=${courseId}&TraineeId=${corporateTraineeId}`; 
+        navigate(path);
+       <Certificate></Certificate>
+    }
+    const routeChange4 = () =>{ 
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get('CourseId');
+        const corporateTraineeId = params.get('TraineeId');
+        let path = `/viewqwizanswers/?CourseId=${courseId}&CorporateTraineeId=${corporateTraineeId}`; 
+        navigate(path);
+       
+    }
+
 
     const checkIfRefundEligible = async (e) => {
         e.preventDefault()
@@ -132,6 +149,9 @@
         <div className="row gutters">
         <div className="card h-100">
             <div className="card-body">
+            <button className="course-details" onClick={routeChange4}>Quiz Answer</button>
+            <button className="course-details" onClick={routeChange3}>My Certificate</button>
+
                 {/* <FetchInstructorNameForTraineeCourseDetails/> */}
                 <form className="course-details">
                     <button  onClick={routeChange}>Report a problem</button>

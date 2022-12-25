@@ -108,7 +108,7 @@ import DefineDiscountForAllCoursesAdminPage from './pages/DefineDiscountForAllCo
 import CreateQuizPage from './pages/createQuizPage';
 
 import CorporateTraineeNotes from './components/CorporateTraineeAddNotes'
-import MyCertificate from './pages/MyCertificate'
+//import MyCertificate from './pages/MyCertificate'
 
 
 import TraineeWallet from './pages/TraineeWallet'
@@ -135,6 +135,16 @@ import PendingRefundsPage from './pages/pendingRefundsPage';
 import AcceptedRefundsPage from './pages/acceptedRefundsPage';
 import RejectedRefundsPage from './pages/rejectedRefundsPage';
 import SingleRefund from './components/SingleRefund';
+
+
+import MyCertificateT from './components/cT';
+import MyCertificate from './components/c';
+import TraineeNotes from './components/TraineeAddNotes';
+import Terms from './components/InstructorContract';
+import AddNotes from './components/AddNotes';
+import AddNotesC from './components/AddNotesC';
+import ViewQuestionsWizAnswers from './pages/ViewQwizAnswers';
+import ViewMoney from './components/InstructorMoneyOwed';
 
 function App() {
    const User = localStorage.getItem("token");
@@ -741,20 +751,47 @@ function App() {
         />
 
 
-<Route
+    <Route
         path="/courseRequests"
         element={<CourseRequestsPage />}
         />
-
-<Route
+        <Route
         path="/addNotes"
         element={<CorporateTraineeNotes />}
+        />
+        <Route
+        path="/addNotesTrainee"
+        element={<TraineeNotes />}
         />
         <Route
         path="/CorporateTraineeCertificate"
         element={<MyCertificate />}
         />
-
+        <Route
+        path="/TraineeCertificate"
+        element={<MyCertificateT />}
+        />
+        <Route
+        path="/InstructorContract"
+        element={<Terms />}
+        />
+        <Route
+        path="/notes"
+        element={<AddNotesC />}
+        />
+        <Route
+        path="/notesTrainee"
+        element={<AddNotes />}
+        />
+        <Route
+        path="/viewqwizanswers"
+        element={<ViewQuestionsWizAnswers />}
+        />
+        <Route
+        path="/viewMoney"
+        element={<ViewMoney />}
+        />
+      
 
         <Route
         path="/TraineeWallet"

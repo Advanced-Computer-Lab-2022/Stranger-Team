@@ -10,7 +10,7 @@ const subtitles = require('../Models/Subtitles');
 const {Individual_Trainee} = require("../Models/Individual Trainee");
 const corporate_Trainee = require("../Models/corporateTrainees");
 const subtitleQuestion = require('../Models/SubtitleQuestion');
-const CorporateTraineeProgress=require("../Models/CorporateProgress");
+const CorporateTraineeProgress=require("../Models/TraineeProgress");
 
 const fetch = require("node-fetch");
 
@@ -796,12 +796,11 @@ const FilteredCourses = async (req,res) => {
             }; 
 
 
-
             const getStatusOfSubtitlie = async (req,res) => { 
                 try{
-                    console.log(req.query.CourseId);
-                    old= await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Corporate_Trainee_Id":mongoose.Types.ObjectId(req.query.CorporateTraineeId)},{Progress:1,_id:0});
-                    console.log("Progress",old[0])
+                    //console.log(req.query.CourseId);
+                    old= await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Trainee_Id":req.query.TraineeId},{Progress:1,_id:0});
+                    //console.log("Progress",old[0])
                     res.status(200).json(old[0]);
                 }
                 catch(error){
@@ -810,34 +809,35 @@ const FilteredCourses = async (req,res) => {
                 }; 
             const UpdateProgressOfSubtitlie = async (req,res) => { 
                 try{
-                    console.log(req.query.CourseId);
+                   // console.log(req.query.CourseId);
                     const flag=true;
                     let data;
                     let updateP;
                     let updated;
                     let old
                     //get number of subtitles of a course
-                    const NumberofSubtitlies=await subtitle.find({ "CourseId":req.query.CourseId}).count();
+                    const NumberofSubtitlies=await subtitles.find({ "CourseId":mongoose.Types.ObjectId(req.query.CourseId)}).count();
                     const n =1/NumberofSubtitlies;
+                    console.log("# sub",n);
                     //get progress of that course
-                   //old= await CorporateTraineeProgress.findOne({"_id":req.query.CourseId},{Progress:1,_id:0});
-            
-                    //get status of this subtitle for the course for that specific trainee
-                    const checkStatus=await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Corporate_Trainee_Id":mongoose.Types.ObjectId(req.query.CorporateTraineeId),"SubtitleId":mongoose.Types.ObjectId(req.query.SubtitleId)},{ProgressStatus:1})
-                    old=await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Corporate_Trainee_Id":mongoose.Types.ObjectId(req.query.CorporateTraineeId),"SubtitleId":mongoose.Types.ObjectId(req.query.SubtitleId)},{Progress:1,ProgressStatus:1})
-            
+                    var checkStatus=await CorporateTraineeProgress.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.query.TraineeId,SubtitleId:mongoose.Types.ObjectId(req.query.SubtitleId)},{ProgressStatus:1})
+                    old=await CorporateTraineeProgress.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.query.TraineeId,SubtitleId:mongoose.Types.ObjectId(req.query.SubtitleId)},{Progress:1,ProgressStatus:1})
+                    console.log("HIIIIIIIIIII",checkStatus[0].ProgressStatus);
                     if(checkStatus[0].ProgressStatus==false){
-                    data=await CorporateTraineeProgress.updateMany({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Corporate_Trainee_Id:mongoose.Types.ObjectId(req.query.CorporateTraineeId),SubtitleId:mongoose.Types.ObjectId(req.query.SubtitleId)},{$set:{ProgressStatus:flag}})
-                    const p= await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Corporate_Trainee_Id":mongoose.Types.ObjectId(req.query.CorporateTraineeId),"SubtitleId":mongoose.Types.ObjectId(req.query.SubtitleId)},{Progress:1})
+                    data=await CorporateTraineeProgress.updateOne({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.query.TraineeId,SubtitleId:mongoose.Types.ObjectId(req.query.SubtitleId)},{$set:{ProgressStatus:flag}})
+                    const p= await CorporateTraineeProgress.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.query.TraineeId,SubtitleId:mongoose.Types.ObjectId(req.query.SubtitleId)},{Progress:1})
                     const pp=p[0].Progress;
-                    const ppp=pp+n*100;
-                    updateP=await CorporateTraineeProgress.updateMany({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Corporate_Trainee_Id:mongoose.Types.ObjectId(req.query.CorporateTraineeId)},{$set:{Progress:ppp}})
-                    updated=await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Corporate_Trainee_Id":mongoose.Types.ObjectId(req.query.CorporateTraineeId)},{Progress:1})
+                    console.log("pp",pp)
+                    const ppp=pp+(n*100);
+                    console.log("ppp",ppp)
+
+                    updateP=await CorporateTraineeProgress.updateMany({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.query.TraineeId},{$set:{Progress:ppp}})
+                    updated=await CorporateTraineeProgress.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.query.TraineeId},{Progress:1})
                     res.status(200).json(updated);
-                    console.log(updated);
+                   // console.log(updated);
                     }
                     else{
-                        console.log(old[0])
+                       // console.log(old[0])
                         res.status(200).json(old[0]);
                     }
                 }
@@ -846,4 +846,16 @@ const FilteredCourses = async (req,res) => {
                 }
                 }; 
 
-module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,addANewInstructor,Search_By_Instructor_Name,Search_By_Title,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,FilteredCourses,isDiscountViable,displayCourseDiscount, UpdateProgressOfSubtitlie, getStatusOfSubtitlie,fetchThePreviewByCourseId};
+module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, 
+    Filter_By_Price,data,createCourse,addANewInstructor
+    ,Search_By_Instructor_Name,Search_By_Title
+    ,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating
+    ,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,
+    getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount
+    ,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,
+    fetchInstructorById,fetchCoursePreviewLink,getCurrentCourseInstructor
+    ,fetchCurrentCourseInstructorByInstructorId
+    ,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse
+    ,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,
+    FilteredCourses,isDiscountViable,displayCourseDiscount,
+     UpdateProgressOfSubtitlie, getStatusOfSubtitlie,fetchThePreviewByCourseId};

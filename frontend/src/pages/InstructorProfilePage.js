@@ -11,6 +11,7 @@
     import{Button, Alert, Container} from 'react-bootstrap'
     import ProfileNavBar from '../components/ProfileNavBar'
     import InstructorProfileDetails from "../components/InstructorProfileDetails";
+    import ViewMoney from "../components/InstructorMoneyOwed";
 
 
     const InstructorProfilePage = () => {
@@ -73,6 +74,9 @@
         <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
         <div className="card h-100">
             <div className="card-body">
+            <div >
+         <ViewMoney ></ViewMoney>
+             </div>
                 {instructors && instructors.map(instructor => (
                 <InstructorProfileDetails instructor={instructor} key={instructor._id} />
                 ))[0]}

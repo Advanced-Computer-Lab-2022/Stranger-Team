@@ -86,6 +86,14 @@ import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTrain
         navigate(path);
        <Certificate></Certificate>
     }
+    const routeChange3 = () =>{ 
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get('CourseId');
+        const corporateTraineeId = params.get('CorporateTraineeId');
+        let path = `/viewqwizanswers/?CourseId=${courseId}&CorporateTraineeId=${corporateTraineeId}`; 
+        navigate(path);
+       
+    }
 
 
     return (
@@ -96,6 +104,7 @@ import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTrain
         <div class="row gutters">
         <div class="card h-100">
             <div class="card-body">
+            <button className="course-details" onClick={routeChange3}>Quiz Answer</button>
             <button className="course-details" onClick={routeChange2}>My Certificate</button>
                 {/* <FetchInstructorNameForTraineeCourseDetails/> */}
                 <form className="course-details">

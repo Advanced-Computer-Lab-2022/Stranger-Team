@@ -2,10 +2,9 @@ const mongoose = require('mongoose');
 //const { getNumberofSubtitlies } = require('../Routes/coursesController');
 const Schema = mongoose.Schema;
 
-const corporateTraineeProgress = new Schema({
-    Corporate_Trainee_Id:{
-        type:mongoose.Types.ObjectId,
-        ref:'corporatetrainee',
+const TraineeProgress = new Schema({
+    Trainee_Id:{
+        type:String,
         required:true
     },
     SubtitleId:{
@@ -30,5 +29,5 @@ const corporateTraineeProgress = new Schema({
     
 }, { timestamps: true });
 
-const CorporateTraineeProgress = mongoose.model('corporateTraineeProgress', corporateTraineeProgress);
-module.exports = CorporateTraineeProgress;
+const traineeProgress = mongoose.model('corporateTraineeProgress', TraineeProgress);
+module.exports = traineeProgress;

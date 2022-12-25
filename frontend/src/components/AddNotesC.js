@@ -3,11 +3,11 @@ import JoditEditor from "jodit-react";
 import { Jodit } from "jodit-react";
 import axios from "axios";
 import parse from 'html-react-parser'
-import TraineeViewWithNotes from "./FetchTraineeNotes";
+import TraineeViewWithNotes from "./fetchCorporateNotes";
 //let adjustedText = conversion('<p>Your string of HTML code here</p>');
  var Notes;
 
-const AddNotes = ({ placeholder}) => {
+const AddNotesC = ({ placeholder}) => {
   const[notes,setNotes]=useState("");
   const[list,setlist]=useState([]);
   const editor = useRef(null);
@@ -56,7 +56,7 @@ const AddNotes = ({ placeholder}) => {
     e.preventDefault()
     console.log("on submit",Notes)
     const params = new URLSearchParams(window.location.search);
-    const TraineeId = params.get('TraineeId');
+    const TraineeId = params.get('CorporateTraineeId');
     const SubtitleId = params.get('SubtitleId');
     console.log(TraineeId);
      var data={Notes}
@@ -107,4 +107,4 @@ const AddNotes = ({ placeholder}) => {
   );
 };
 
-export default AddNotes;
+export default AddNotesC;

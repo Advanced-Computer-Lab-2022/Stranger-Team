@@ -5,8 +5,10 @@
     const corporate_Trainee = require("../Models/corporateTrainees");
     const reportedProblem = require("../Models/CorporateTraineeReports");
     const courseRequests = require("../Models/CourseRequests");
-    const CorporateTraineeNotes=require("../Models/CorporateTraineeNotes");
-    const CorporateTraineeProgress=require("../Models/CorporateProgress")
+    const TraineeNotes=require("../Models/TraineeNotes");
+    const TraineeProgress=require("../Models/TraineeProgress");
+const corporateTrainees = require("../Models/corporateTrainees");
+const Subtitles = require("../Models/Subtitles");
 
 
     const addCorporateTrainee = async(req,res) => {
@@ -272,11 +274,11 @@ const requestCourseAccess = async(req,res) => {
 
 const AddNotes = async(req,res) => {
     const {Notes} = req.body;
-    const corporateTrainee = req.query.CorporateTraineeId;
+    const Trainee = req.query.TraineeId;
     const SubtitleId = req.query.SubtitleId;
 
     try{
-    const currTrainee = await CorporateTraineeNotes.create({Corporate_Trainee_Id:corporateTrainee,SubtitleId:SubtitleId, Notes:Notes});
+    const currTrainee = await TraineeNotes.create({"Trainee_Id":Trainee,SubtitleId:SubtitleId, Notes:Notes});
     res.status(200).json(currTrainee)
     console.log("Hello from notes",Notes)
     }
@@ -286,10 +288,10 @@ const AddNotes = async(req,res) => {
 }
     const getNotes = async(req,res) => {
    // const {Notes} = req.body;
-    const corporateTrainee = req.query.CorporateTraineeId;
+    const Trainee = req.query.TraineeId;
     const SubtitleId = req.query.SubtitleId;
     try{
-    const notes = await CorporateTraineeNotes.find({Corporate_Trainee_Id:corporateTrainee,SubtitleId:SubtitleId},{Notes:1});
+    const notes = await TraineeNotes.find({Trainee_Id:Trainee,SubtitleId:SubtitleId},{Notes:1});
     res.status(200).json(notes)
     //console.log("Hello from notes",notes)
     }
@@ -297,6 +299,7 @@ const AddNotes = async(req,res) => {
         res.status(400).json({error:error.message});
     }
 }
+
 const courseRequestCheck = async(req,res) => {
     const corporateTraineeId = req.query.CorporateTraineeId;
    // console.log(corporateTraineeId)
@@ -317,5 +320,61 @@ const courseRequestCheck = async(req,res) => {
      }
 
     }
+    function arrayIsEmpty(array) {
+        //If it's not an array, return FALSE.
+        if (!Array.isArray(array)) {
+            return FALSE;
+        }
+        //If it is an array, check its length property
+        if (array.length == 0) {
+            //Return TRUE if the array is empty
+            return true;
+        }
+        //Otherwise, return FALSE.
+        return false;
+    }
+    const check=async(req,res)=>{
+        var already=[];
+        let a=[];
+        let i;
+        let j;
+        console.log(req.query.CourseId);
+        try{
+        const sub = await Subtitles.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId)});
+        //check if this corporate has this course or not
+        const cop=await corporateTrainees.findById({_id:req.query.TraineeId})
+        const coursesArray = cop.Registered_Courses;
 
-    module.exports ={corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,addCorporateTrainee,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem,fetchNonRegisteredCorporateTraineeCoursesForInstructor, requestCourseAccess,corporateTraineeSendFollowup,AddNotes,getNotes, courseRequestCheck};
+        console.log(coursesArray)
+        if(coursesArray.length>0){
+        for ( i = 0; i < coursesArray.length; i++) {
+            //Check if this course is already in traineeProgress DB
+        already=await TraineeProgress.find({"Trainee_Id":req.query.TraineeId,CourseId:mongoose.Types.ObjectId(coursesArray[i])});
+        console.log(already[0]);
+        //console.log(arrayIsEmpty(already.length));
+        console.log("ASLUN!!!!")
+        if(!arrayIsEmpty(already) ){
+         //coursesArray1.push(await course.findById({_id:coursesArray[i]},{_id:1}));
+         res.status(200).json(already)
+         console.log("Hi et3ml abl keda")
+        } 
+        else{  
+            for ( j = 0; i < (sub.length); j++) {
+            old= await TraineeProgress.create({"Trainee_Id":req.query.TraineeId,"SubtitleId":mongoose.Types.ObjectId(sub[j]._id),"CourseId":mongoose.Types.ObjectId(coursesArray[i])});
+            console.log(" NEW here,Bye")
+            }   
+           res.status(200).json(old)
+            }
+     } }
+     else{
+        res.status(400).json({error:"There is no registred"})
+
+     }
+        }
+        catch(error){
+        res.status(400).json({error:error.message})
+
+     }
+    }
+
+    module.exports ={check,corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,addCorporateTrainee,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem,fetchNonRegisteredCorporateTraineeCoursesForInstructor, requestCourseAccess,corporateTraineeSendFollowup,AddNotes,getNotes, courseRequestCheck};
