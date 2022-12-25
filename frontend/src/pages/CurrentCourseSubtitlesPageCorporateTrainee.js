@@ -20,6 +20,7 @@ import CurrentCourseInstructorPageSubtitleDetails from "../components/CurrentCou
 import CurrentCoursePageSubtitleDetails from "../components/CurrentCourseInstructorPageSubtitlesDetails";
 import CurrentCourseSubtitlesPageDetailsTrainee from "../components/CurrentCourseSubtitlesPageDetailsTrainee";
 import Progressbar from "../components/progressBar";
+import CurrentCourseSubtitlesPageDetailsCTrainee from "../components/CurrentCourseSubtitlesPageDetailsCorporateTrainee";
 var p;
 
 
@@ -122,7 +123,7 @@ return (
             </div>
             {/* <FetchInstructorNameForTraineeCourseDetails/> */}
             {subtitle && subtitle.map(subtitle => (
-            <CurrentCourseSubtitlesPageDetailsTrainee subtitle={subtitle} key={subtitle._id} />
+            <CurrentCourseSubtitlesPageDetailsCTrainee subtitle={subtitle} key={subtitle._id} />
             ))[0]}
 
 

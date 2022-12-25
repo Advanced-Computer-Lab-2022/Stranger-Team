@@ -3,11 +3,11 @@ import JoditEditor from "jodit-react";
 import { Jodit } from "jodit-react";
 import axios from "axios";
 import parse from 'html-react-parser'
-import TraineeViewWithNotes from "./fetchCorporateNotes";
+import CTraineeViewWithNotes from "./fetchCorporateNotes";
 //let adjustedText = conversion('<p>Your string of HTML code here</p>');
  var Notes;
 
-const AddNotesC = ({ placeholder}) => {
+const AddNotesCorporate = ({ placeholder}) => {
   const[notes,setNotes]=useState("");
   const[list,setlist]=useState([]);
   const editor = useRef(null);
@@ -54,19 +54,20 @@ const AddNotesC = ({ placeholder}) => {
   );
   const handleSubmit = async(e) => {
     e.preventDefault()
-    console.log("on submit",Notes)
+    console.log("on submit----------------------->>>>>>>>>>>>>>>>>>>",Notes)
     const params = new URLSearchParams(window.location.search);
-    const TraineeId = params.get('CorporateTraineeId');
     const SubtitleId = params.get('SubtitleId');
+    const TraineeId = params.get('CorporateTraineeId');
     console.log(TraineeId);
      var data={Notes}
-     const response = await fetch(`fetchCorporateTraineeAddNotes?TraineeId=${TraineeId}&SubtitleId=${SubtitleId}`, {
+     const response = await fetch(`/fetchCorporateTraineeAddNotes?TraineeId=${TraineeId}&SubtitleId=${SubtitleId}`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
-            'Content-Type': 'application/json'
+          'Content-Type': 'application/json'
         }
     })
+
     //  await axios.post(`/fetchCorporateTraineeAddNotes/?TraineeId=${TraineeId}&SubtitleId=${SubtitleId}`,data).then(
     //   console.log("Axios:",Notes) )
     //   if(Notes){
@@ -100,11 +101,11 @@ const AddNotesC = ({ placeholder}) => {
     </li>
     </div>
            ) } */}
-           <TraineeViewWithNotes></TraineeViewWithNotes>
+           <CTraineeViewWithNotes></CTraineeViewWithNotes>
     </div>
     </div>
     
   );
 };
 
-export default AddNotesC;
+export default AddNotesCorporate;

@@ -13,16 +13,18 @@ const generatePDF = () => {
     report.save('report.pdf');
         });
     }
-const TraineeViewWithNotes = () => {
+const CTraineeViewWithNotes = () => {
     const params = new URLSearchParams(window.location.search);  
     const [Notes, setNotes] = useState([])
     const TraineeId = params.get('CorporateTraineeId');
     const SubtitleId = params.get('SubtitleId');
+   // console.log("Trainee ID :---------------------------------->>>>>>>>>>>>>>>>>>>>>>",TraineeId)
 
     useEffect(() => {
     const fetchNotes = async () => {
     const response = await fetch(`/fetchCorporateTraineeNotes/?TraineeId=${TraineeId}&SubtitleId=${SubtitleId}`)
     const notes = await response.json();
+    //console.log("Trainee ID :---------------------------------->>>>>>>>>>>>>>>>>>>>>>",TraineeId)
     console.log(notes);
    // console.log(notes[1].Notes);
     if (response.ok) {
@@ -55,7 +57,7 @@ return (
         <div className="Mynotes">
         <div>
          </div>
-         {/* <div>
+         <div>
         {Notes.map((Notes) => (
          <div>
             <div>
@@ -65,7 +67,7 @@ return (
          </div> 
                  ))
                  }
-                 </div>   */}
+                 </div>   
             </div>   
         <button onClick={generatePDF}> Save as PDF</button>
     </div>
@@ -75,4 +77,4 @@ return (
 )
 }
 
-export default TraineeViewWithNotes
+export default CTraineeViewWithNotes

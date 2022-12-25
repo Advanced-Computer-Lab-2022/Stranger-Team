@@ -35,12 +35,14 @@ const TraineeNotes = () => {
   return (
     <div className="row">
       <div className="col-md-12" style={{ margin: "auto", marginTop: "50px" }}>
-        <div style={{ textAlign: "center" }}>
+        <div>
           <h3>Add Your Notes:</h3>
         </div>
-        <div>
-        <AddNotes initialValue="" getValue={getValue} config={config} />
-        </div>
+        <br/>
+        <AddNotes initialValue="" getValue={getValue} 
+      //  config={config} 
+        />
+        
         <br />
       </div>
 

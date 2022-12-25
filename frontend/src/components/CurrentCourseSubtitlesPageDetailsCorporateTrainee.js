@@ -3,7 +3,7 @@ import CorporateTraineeNotes from "./CorporateTraineeAddNotes"
 //import Progressbar from "./progressBar"
 import  "../styles//progressBar.css";
 
-const CurrentCourseSubtitlesPageDetailsTrainee = ({ subtitle }) => {
+const CurrentCourseSubtitlesPageDetailsCTrainee = ({ subtitle }) => {
 
 
 return (
@@ -15,10 +15,11 @@ return (
     <p>{subtitle.Description}</p>
     <YoutubeEmbed embedId={subtitle.Link}/>
     </div>
+ 
     <CorporateTraineeNotes > Add your Notes</CorporateTraineeNotes>
-
+   
     </div>
 )
 }
 
-export default CurrentCourseSubtitlesPageDetailsTrainee
+export default CurrentCourseSubtitlesPageDetailsCTrainee

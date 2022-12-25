@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 //import RichTextEditor from "./Components/RichTextEditor";
-import AddNotes from "./AddNotesC";
+import AddNotesCorporate from "./AddNotesC";
 //import 'bootstrap/dist/css/bootstrap.min.css'
 
 // const config = {
@@ -35,14 +35,14 @@ const CorporateTraineeNotes = () => {
   return (
     <div className="row">
       <div className="col-md-12" style={{ margin: "auto", marginTop: "50px" }}>
-        <div style={{ textAlign: "center" }}>
+        <div >
           <h3>Add Your Notes:</h3>
         </div>
         
       <br/>
-        <AddNotes initialValue="" getValue={getValue}
+        <AddNotesCorporate initialValue="" getValue={getValue} 
         // config={config} 
-         />
+        />
           <br />
         
        

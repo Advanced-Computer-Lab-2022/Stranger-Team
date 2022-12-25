@@ -60,7 +60,7 @@ const AddNotes = ({ placeholder}) => {
     const SubtitleId = params.get('SubtitleId');
     console.log(TraineeId);
      var data={Notes}
-     const response = await fetch(`fetchCorporateTraineeAddNotes?TraineeId=${TraineeId}&SubtitleId=${SubtitleId}`, {
+     const response = await fetch(`/fetchCorporateTraineeAddNotes?TraineeId=${TraineeId}&SubtitleId=${SubtitleId}`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

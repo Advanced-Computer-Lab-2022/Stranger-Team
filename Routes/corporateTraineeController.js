@@ -278,7 +278,7 @@ const AddNotes = async(req,res) => {
     const SubtitleId = req.query.SubtitleId;
 
     try{
-    const currTrainee = await TraineeNotes.create({"Trainee_Id":Trainee,SubtitleId:SubtitleId, Notes:Notes});
+    const currTrainee = await TraineeNotes.create({Trainee_Id:req.query.TraineeId,SubtitleId:SubtitleId, Notes:Notes});
     res.status(200).json(currTrainee)
     console.log("Hello from notes",Notes)
     }
