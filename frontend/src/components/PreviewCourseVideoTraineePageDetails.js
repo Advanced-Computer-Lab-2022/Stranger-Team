@@ -28,7 +28,7 @@
     return (
         <div className="course-details">
         <div className="preview">
-        <h3><strong>Short Video Description:</strong></h3>
+        <h3><strong>Short Course Preview:</strong></h3>
         <YoutubeEmbed embedId={subtitle}/>
         </div>
         </div>

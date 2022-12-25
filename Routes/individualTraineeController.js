@@ -83,32 +83,32 @@ const payByWalletBalance = async(req,res) => {
      const cop=await Individual_Trainee.findById({_id:req.query.TraineeId})
      const coursesArray = cop.Registered_Courses;
 
-     console.log(coursesArray)
-     if(coursesArray.length>0){
-     for ( i = 0; i < coursesArray.length; i++) {
-         //Check if this course is already in traineeProgress DB
-     already=await TraineeProgress.find({"Trainee_Id":req.query.TraineeId,CourseId:mongoose.Types.ObjectId(coursesArray[i])});
-     console.log(already[0]);
-     //console.log(arrayIsEmpty(already.length));
-     console.log("ASLUN!!!!")
-     if(!arrayIsEmpty(already) ){
-      //coursesArray1.push(await course.findById({_id:coursesArray[i]},{_id:1}));
-      res.status(200).json(already)
-      console.log("Hi et3ml abl keda")
-     } 
-     else{  
-         for ( j = 0; i < (sub.length); j++) {
-         old= await TraineeProgress.create({"Trainee_Id":req.query.TraineeId,"SubtitleId":mongoose.Types.ObjectId(sub[j]._id),"CourseId":mongoose.Types.ObjectId(coursesArray[i])});
-         console.log(" NEW here,Bye")
-         }   
-        res.status(200).json(old)
-         }
-  } }
-  else{
-     res.status(400).json({error:"There is no registred Courses"})
+//      console.log(coursesArray)
+//      if(coursesArray.length>0){
+//      for ( i = 0; i < coursesArray.length; i++) {
+//          //Check if this course is already in traineeProgress DB
+//      already=await TraineeProgress.find({"Trainee_Id":req.query.TraineeId,CourseId:mongoose.Types.ObjectId(coursesArray[i])});
+//      console.log(already[0]);
+//      //console.log(arrayIsEmpty(already.length));
+//      console.log("ASLUN!!!!")
+//      if(!arrayIsEmpty(already) ){
+//       //coursesArray1.push(await course.findById({_id:coursesArray[i]},{_id:1}));
+//       res.status(200).json(already)
+//       console.log("Hi et3ml abl keda")
+//      } 
+//      else{  
+//          for ( j = 0; i < (sub.length); j++) {
+//          old= await TraineeProgress.create({"Trainee_Id":req.query.TraineeId,"SubtitleId":mongoose.Types.ObjectId(sub[j]._id),"CourseId":mongoose.Types.ObjectId(coursesArray[i])});
+//          console.log(" NEW here,Bye")
+//          }   
+//         res.status(200).json(old)
+//          }
+//   } }
+//   else{
+//      res.status(400).json({error:"There is no registred Courses"})
 
-  }
-  //after he pays,number of people in that course++
+//   }
+//   //after he pays,number of people in that course++
   const old= await course.findById({_id:req.query.CourseId},{NumberOfPaid:1})
   old=old++;
  const counter=await course.findByIdAndUpdate({_id:req.query.CourseId},{NumberOfPaid:old});

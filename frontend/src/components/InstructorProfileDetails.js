@@ -5,6 +5,8 @@
     import { useNavigate } from "react-router-dom";
     import { useEffect, useState } from "react"
     import profile from '../images/profile.png'
+    import ViewMoney from "../components/InstructorMoneyOwed";
+
 
 
     const InstructorProfileDetails = ({ instructor }) => {
@@ -108,6 +110,15 @@
                 <hr/>
                 <div className="row">
                 <div className="col-sm-3">
+                    <p className="mb-0">About</p>
+                </div>
+                <div className="col-sm-9">
+                    <p className="text-muted mb-0">{instructor.Bio}</p>
+                </div>
+                </div>
+                <hr/>
+                <div className="row">
+                <div className="col-sm-3">
                     <p className="mb-0">Email</p>
                 </div>
                 <div className="col-sm-9">
@@ -133,6 +144,19 @@
                 </div>
                 </div>
                 <hr/>
+
+
+                <ViewMoney/>
+                {/* <hr/>
+                <div className="row">
+                    <div className="col-sm-3">
+                    <p className="mb-0"></p>
+                </div>
+                <div className="col-sm-9">
+                    <label className="mb-0"></label>
+                </div>
+                </div>
+                <hr/> */}
 
                 <hr/>
                 <div className="row">

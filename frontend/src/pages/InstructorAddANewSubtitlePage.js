@@ -4,6 +4,7 @@
     import React from 'react';
     import { useNavigate } from "react-router-dom";
 	import { useState } from 'react'
+    import ProfileNavBar from '../components/ProfileNavBar'
 
     const InstructorAddNewSubtitlePage = () => {
 
@@ -69,7 +70,8 @@
 
     return (
 
-
+        <>
+        <ProfileNavBar/>
         <div className="course-details">
         <form className="create" onSubmit={defineCourseSubtitle}> 
         <h3>Please enter the link to the new subtitle you would like to define for your course:</h3>
@@ -150,7 +152,7 @@
         </form>
         
         </div>
-        
+        </>
 
     )
     }

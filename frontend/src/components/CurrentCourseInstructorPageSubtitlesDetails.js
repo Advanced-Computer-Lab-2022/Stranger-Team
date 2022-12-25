@@ -6,8 +6,8 @@
 
     return (
         <div className="course-details">
-        <h4>{subtitle.Title}</h4> 
-        <h3><strong>Shot Video Description:</strong></h3>
+        <h3>{subtitle.Subtitle_Title}</h3> 
+        <h4><strong>Short Video Description:</strong></h4>
         <p>{subtitle.Description}</p>
         {/* <iframe
         width="853"

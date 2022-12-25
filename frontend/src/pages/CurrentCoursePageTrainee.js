@@ -20,8 +20,8 @@
     import TraineeSubtitleTitlesPage from "./TraineeSubtitleTitlesPage";
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
-        
-import { Certificate } from "../components/Certificate";
+            
+    import { Certificate } from "../components/Certificate";
 
 
     const CurrentCoursePageTrainee = () => {
@@ -149,8 +149,8 @@ import { Certificate } from "../components/Certificate";
         <div className="row gutters">
         <div className="card h-100">
             <div className="card-body">
-            <button className="course-details" onClick={routeChange4}>Quiz Answer</button>
-            <button className="course-details" onClick={routeChange3}>My Certificate</button>
+            <button  onClick={routeChange4}>Quiz Answer</button>
+            <button  onClick={routeChange3}>My Certificate</button>
 
                 {/* <FetchInstructorNameForTraineeCourseDetails/> */}
                 <form className="course-details">

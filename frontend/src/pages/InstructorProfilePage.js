@@ -75,8 +75,8 @@
         <div className="card h-100">
             <div className="card-body">
             <div >
-         <ViewMoney ></ViewMoney>
-             </div>
+         {/* <ViewMoney ></ViewMoney> */}
+            </div>
                 {instructors && instructors.map(instructor => (
                 <InstructorProfileDetails instructor={instructor} key={instructor._id} />
                 ))[0]}

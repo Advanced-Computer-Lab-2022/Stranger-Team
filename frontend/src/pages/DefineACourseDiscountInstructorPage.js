@@ -147,6 +147,7 @@
     import React from 'react';
     import { useNavigate } from "react-router-dom";
 	import { useState } from 'react'
+    import ProfileNavBar from '../components/ProfileNavBar'
 
     const DefineACourseDiscountInstructorPage = () => {
 
@@ -195,6 +196,8 @@
 
     return (
 
+        <>
+        <ProfileNavBar/>
         <form className="create" onSubmit={defineCourseDiscount}> 
         <h3>Please enter the discount amount you would like to define for your course:</h3>
 
@@ -226,6 +229,7 @@
         <button>Add Discount</button>
         {error && <div className="error">{error}</div>} 
         </form>
+        </>
 
     )
     }

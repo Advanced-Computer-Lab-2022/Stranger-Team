@@ -20,7 +20,7 @@
     import InstructorAddNewSubtitleForm from "../components/InstructorAddNewSubtitleForm";
     import CurrentCourseInstructorPageSubtitles from "../components/CurrentCourseInstructorPageSubtitles"
     import InstructorCurrentCoursePageDetails from "../components/InstructorCurrentCoursePageDetails";
-import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
+    import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
 
 
     const CurrentCoursePage = () => {

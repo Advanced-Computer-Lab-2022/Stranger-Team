@@ -49,8 +49,9 @@ const courseDiscount = require('./Models/CourseDiscount');
 const subtitles = require('./Models/Subtitles');
 const admins = require('./Models/Administrator');
 const pendingInstructors = require('./Models/pendingInstructors');
-const corporateTrainees = require('./Models/corporateTrainees');
-const individual_Trainee=require('./Models/Individual Trainee');
+const corporate_Trainee = require('./Models/corporateTrainees');
+const {Individual_Trainee}=require('./Models/Individual Trainee');
+// const individual_Trainee=require('./Models/Individual Trainee');
 const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,addANewInstructor,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,FilteredCourses,isDiscountViable,displayCourseDiscount,UpdateProgressOfSubtitlie,getStatusOfSubtitlie,fetchThePreviewByCourseId} = require('./Routes/coursesController');
 
 const {addUserRating,saveUserRating} = require('./Routes/usersController');
@@ -657,9 +658,77 @@ app.get("/fetchCorporateTraineeProfileDetails",fetchCorporateTraineeProfileDetai
 
 app.get("/fetchAdminProfileDetails",fetchAdminProfileDetails);
 
-app.get("/viewMyRegisteredCourses",viewMyRegisteredCourses);
+// app.get("/viewMyRegisteredCourses",viewMyRegisteredCourses);
 
-app.get("/corporateViewMyRegisteredCourses",corporateViewMyRegisteredCourses);
+// app.get("/corporateViewMyRegisteredCourses",corporateViewMyRegisteredCourses);
+
+app.get("/viewMyRegisteredCourses" , async(req,res) => {
+    
+        //const individualTraineeId = req.query.TraineeId;
+        // const individualTraineeId = req.session.user._id;
+        const individualTraineeId = req.query.TraineeId;
+
+        const q = req.query.q;
+  
+
+        const keys=["Title","Subject","Instructor_Name"];
+        const search = (data)=>{
+          return data.filter((item)=>
+          keys.some((key)=>item[key].toLowerCase().includes(q))
+          );
+        };
+
+    try{
+    const currTrainee = await Individual_Trainee.findById({_id:individualTraineeId});
+    const coursesArray = currTrainee.Registered_Courses;
+    const coursesArray1 = [];
+    console.log("coursesarray"+coursesArray)
+
+    for (let i = 0; i < coursesArray.length; i++) {
+            coursesArray1.push(await course.findById({_id:coursesArray[i]}));
+        }
+
+    console.log("coursesArray1"+coursesArray1)
+    res.status(200).json(search(coursesArray1));
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+});
+
+app.get("/corporateViewMyRegisteredCourses" , async(req,res) => {
+    
+        const corporateTrainee = req.query.CorporateTraineeId;
+        //const corporateTrainee = req.session.user._id;
+
+        const q = req.query.q;
+  
+
+        const keys=["Title","Subject","Instructor_Name"];
+        const search = (data)=>{
+          return data.filter((item)=>
+          keys.some((key)=>item[key].toLowerCase().includes(q))
+          );
+        };
+        
+
+    try{
+    const currTrainee = await corporate_Trainee.findById({_id:corporateTrainee});
+    const coursesArray = currTrainee.Registered_Courses;
+    const coursesArray1 = [];
+    console.log(coursesArray)
+
+    for (let i = 0; i < coursesArray.length; i++) {
+            coursesArray1.push(await course.findById({_id:coursesArray[i]}));
+        }
+    
+    console.log(coursesArray1)
+    res.status(200).json(search(coursesArray1));
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+});
 
 app.get("/fetchTheSubtitleBySubtitleId",fetchTheSubtitleBySubtitleId);
 
@@ -959,9 +1028,9 @@ app.get('/ViewBalance', getWalletBalance);
 
 // });
 
-//const env = require("dotenv").config({ path: "./.env" });
+const env = require("dotenv").config({ path: "./.env" });
 
-//app.use(express.static(process.env.STATIC_DIR));
+app.use(express.static(process.env.STATIC_DIR));
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2022-08-01",

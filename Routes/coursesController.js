@@ -254,7 +254,7 @@ const displayCourseDiscount = async(req,res) => {
         {
             console.log("kk")
                     display = true;
-                    res.status(200).json(display)
+                    res.status(200).json({startDate: currCourse.Discount_Start_Date,endDate:currCourse.Discount_End_Date})
             
         }
         else

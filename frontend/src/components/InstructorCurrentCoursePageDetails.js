@@ -27,22 +27,26 @@
         const response = await fetch(`/displayCourseDiscount/?CourseId=${courseId}`)
         const json = await response.json()
 
+        console.log("json"+json)
+
         
         if(response.ok)
         {
-            if(json == true)
-            {
-                const courseStart = json.Discount_Start_Date.slice(0, 10);
-                const courseEnd = json.Discount_End_Date.slice(0, 10);
-                setDiscount_Start_Date(courseStart);
-                setDiscount_End_Date(courseEnd);
-                setDiscount(course.Discount);
-            }
-            else
+            if(json == false)
             {
                 setDiscount_Start_Date("");
                 setDiscount_End_Date("");
                 setDiscount("");
+                
+            }
+            else
+            {
+                const courseStart = json.startDate.slice(0, 10);
+                const courseEnd = json.endDate.slice(0, 10);
+                setDiscount_Start_Date(courseStart);
+                setDiscount_End_Date(courseEnd);
+                setDiscount(course.Discount);
+                console.log("start "+courseStart)
             }
         }
         
