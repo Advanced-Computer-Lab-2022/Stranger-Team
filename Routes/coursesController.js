@@ -1045,7 +1045,7 @@ const isCourseFree= async (req,res) => {
             const checkFinished=async(req,res)=>{
                 let f=false
                 try{
-                var finished=await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Trainee_Id":mongoose.Types.ObjectId(req.query.TraineeId)},{Finished:1,_id:0})
+                var finished=await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Trainee_Id":req.query.TraineeId},{Finished:1,_id:0})
                  f=finished[0].toJSON();
                  const ff=f.Finished
 
@@ -1059,12 +1059,20 @@ const isCourseFree= async (req,res) => {
             
                }      
                const updateFinished=async(req,res)=>{
-                let f=false
-                const finished=await CorporateTraineeProgress.updateMany({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Trainee_Id":mongoose.Types.ObjectId(req.query.TraineeId)},{Finished:true})
-                const finishedU=await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Trainee_Id":mongoose.Types.ObjectId(req.query.TraineeId)},{Finished:1,_id:0})
-                f=finished[0].toJSON();
-                const ff=f.Finished
-                res.status(200).json(ff);
+                let updateP;
+                const flag=true;
+                try{
+                   updateP=await CorporateTraineeProgress.updateMany({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.query.TraineeId},{"$set":{Finished: true}} );
+                 //const finished=await CorporateTraineeProgress.updateMany({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.query.TraineeId},{$set:{Finished:ffff}})
+                const finishedU=await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Trainee_Id":req.query.TraineeId},{Finished:1,_id:0})
+                    const f=finishedU[0].toJSON();
+                    const ff=f.Finished
+                    console.log("----------------->>>>>>>>>>>",ff)
+                    res.status(200).json(ff);
+                }
+                catch(error){
+                 res.status(400).json({error:error.message});
+                }
                    
                }
 

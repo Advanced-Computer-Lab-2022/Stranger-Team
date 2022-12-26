@@ -49,9 +49,8 @@ const fetchStatus=async()=>{
     f=finished;
     p=questions;
     fetchStatus()
-
     fetchQ();
-},[])
+})
 console.log(p)
 return (
  <div>    

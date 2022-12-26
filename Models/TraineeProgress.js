@@ -26,6 +26,10 @@ const TraineeProgress = new Schema({
         ref:'course',
         required:true
     },
+     Finished:{
+        type:Boolean,
+        default:false
+        },
     
 }, { timestamps: true });
 
