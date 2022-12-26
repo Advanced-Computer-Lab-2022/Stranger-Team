@@ -111,7 +111,7 @@ const Main = () => {
 			<div>
 <h1>OUR MOST POPULAR COURSES</h1>
 </div>
-
+          
                 
             {mostViewedCourses && mostViewedCourses.map(course => (
                 
@@ -127,7 +127,7 @@ const Main = () => {
                 onClick={() =>{handleSubmit(course._id)}}
                 key={course._id}>
                 <CourseDetails course={course} key={course.id} />
-                {/* <PreviewCourseVideoPageDetails course={course} key={course.id} /> */}
+                <PreviewCourseVideoPageDetails course={course} key={course.id} />
                 
                 </Container>
             ))}
@@ -148,7 +148,7 @@ const Main = () => {
                     onClick={() =>{handleSubmit(course._id)}}
                     key={course._id}>
                     <CourseDetails course={course} key={course.id} />
-                    {/* <PreviewCourseVideoPageDetails course={course} key={course.id} /> */}
+                    <PreviewCourseVideoPageDetails course={course} key={course.id} />
                     
                     </Container>
                 ))}

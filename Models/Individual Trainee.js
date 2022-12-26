@@ -57,7 +57,7 @@ const individualTraineeSchema = new Schema({
 }, { timestamps: true });
 
 individualTraineeSchema.methods.generateAuthToken = function () {
-	const token = jwt.sign({ _id: this._id }, "secret", {
+	const token = jwt.sign({ individualId: this._id }, "secret", {
 		expiresIn: "7d",
 	});
 	return token;
@@ -69,6 +69,7 @@ const validate = (data) => {
     Username: Joi.string().required().label("Username"),
 		Email: Joi.string().email().required().label("Email"),
 		Password: passwordComplexity().required().label("Password"),
+    confirmPassword: passwordComplexity().required().label("confirmPassword"),
 		First_Name: Joi.string().required().label("First_Name"),
 		Last_Name: Joi.string().required().label("Last_Name"),
     Gender: Joi.string().required().label("Gender"),
