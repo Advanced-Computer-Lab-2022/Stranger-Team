@@ -1,0 +1,75 @@
+.navbar {
+    width: 100%;
+    height: 70px;
+    background-color: #00008B;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* bg="#00008B" */
+
+.navbar h1 {
+    color: white;
+    font-size: 30px;
+    margin-left: 45px;
+    margin-right:10px;
+}
+
+.navbar h2 {
+    color: white;
+    font-size: 20px;
+    margin-top:10px;
+    margin-left: 45px;
+    margin-right: 10px;
+}
+
+.search_navbar{
+    width: 350px;
+    height: 70px;
+    background-color: #00008B;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.white_btn {
+    border: none;
+    outline: none;
+    /* padding: 12px 0; */
+    background-color: white;
+    color:black;
+    border-radius: 20px;
+    width: 120px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    margin:5px;
+    float:right;
+}
+
+.courseDetails {
+    font-size: medium;
+    width:400px;
+    margin-left: 50px;
+    margin-right: 50px;
+    /* margin-bottom: 1000px; */
+    margin-bottom: 500px;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    
+    justify-content: space-between;
+}
+
+.grid {
+    display: grid;
+    width:400px;
+    margin:50px;
+    margin-bottom: 200px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 200px;
+    gap: 5rem;
+    /* grid-auto-flow: column;
+    grid-template-columns: repeat(auto-fit, minmax(min-content, 1fr)); */
+}

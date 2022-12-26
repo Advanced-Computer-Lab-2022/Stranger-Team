@@ -7,7 +7,7 @@
   --radius: 3px;
 }
 
-body {
+.paymentbody {
   padding: 20px;
   font-family: "Raleway";
   display: flex;
@@ -16,19 +16,19 @@ body {
   color: var(--dark-terminal-color);
 }
 
-main {
+.paymentmain {
   width: 480px;
 }
 
-form > * {
+.paymentform > * {
   margin: 10px 0;
 }
 
-button {
+.paymentbutton {
   background-color: var(--accent-color);
 }
 
-button {
+.paymentbutton {
   background: var(--accent-color);
   border-radius: var(--radius);
   color: white;
@@ -40,19 +40,19 @@ button {
   transition: all 0.2s ease;
   display: block;
 }
-button:hover {
+.paymentbutton:hover {
   filter: contrast(115%);
 }
-button:active {
+.paymentbutton:active {
   transform: translateY(0px) scale(0.98);
   filter: brightness(0.9);
 }
-button:disabled {
+.paymentbutton:disabled {
   opacity: 0.5;
   cursor: none;
 }
 
-input,
+.paymentinput,
 select {
   display: block;
   font-size: 1.1em;
@@ -60,20 +60,20 @@ select {
   margin-bottom: 10px;
 }
 
-label {
+.paymentlabel {
   display: block;
 }
 
-a {
+.paymentbuttona {
   color: var(--accent-color);
   font-weight: 900;
 }
 
-small {
+.paymentsmall {
   font-size: 0.6em;
 }
 
-fieldset,
+.paymentfieldset,
 input,
 select {
   border: 1px solid #efefef;

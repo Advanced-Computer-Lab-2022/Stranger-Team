@@ -146,6 +146,10 @@ import AddNotesC from './components/AddNotesC';
 import ViewQuestionsWizAnswers from './pages/ViewQwizAnswers';
 import ViewMoney from './components/InstructorMoneyOwed';
 
+//guest pages
+import GuestHomePage from './components/Guest/GuestHomePage';
+import GuestCurrentCoursePage from './components/Guest/GuestCurrentCoursePage';
+
 function App() {
    const User = localStorage.getItem("token");
   return (
@@ -154,6 +158,17 @@ function App() {
       {/* <Navbar/> */}
       <div className="pages">
         <Routes>
+
+        <Route
+        path="/GuestHome"
+        element={<GuestHomePage/>}
+        />
+
+        <Route
+        path="/GuestCurrentCoursePage"
+        element={<GuestCurrentCoursePage/>}
+        />
+
         <Route
         path="/adminHome"
         element={<HomeAdmin/>}

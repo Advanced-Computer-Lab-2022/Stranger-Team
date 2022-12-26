@@ -54,7 +54,7 @@ export default function CheckoutForm() {
     <form id={paymentStyles.paymentform} onSubmit={handleSubmit}>
       <PaymentElement/>
       <button disabled={isProcessing} id={paymentStyles.submit}>
-        <span id={paymentStyles.button}>
+        <span id={paymentStyles.paymentbutton}>
           {isProcessing ? "Processing ... " : "Pay now"}
         </span>
       </button>
