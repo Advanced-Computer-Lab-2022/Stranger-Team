@@ -148,20 +148,25 @@
         <div className="row gutters">
         <div className="card h-100">
             <div className="card-body">
-            <button  onClick={routeChange4}>Quiz Answer</button>
-            <button  onClick={routeChange3}>My Certificate</button>
+
+                <form className="course-details">
+                    <button  onClick={routeChange4}>Quiz Answer</button>
+                    <button  onClick={routeChange3}>My Certificate</button>
+                </form>
+            
 
                 {/* <FetchInstructorNameForTraineeCourseDetails/> */}
                 <form className="course-details">
                     <button  onClick={routeChange}>Report a problem</button>
+                    <button >Request A Refund</button>
+                    {error && <div className="error">{error}</div>}
                     
                     
                 </form>
 
-                <form  className="course-details" onSubmit={checkIfRefundEligible}> 
-                <button >Request A Refund</button>
-                {error && <div className="error">{error}</div>}
-                </form>
+                {/* <form  className="course-details" onSubmit={checkIfRefundEligible}> 
+                
+                </form> */}
 
                 {/* {error && <div className="error">{error}</div>} */}
                 {course && course.map(course => (

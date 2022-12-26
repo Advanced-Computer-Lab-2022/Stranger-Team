@@ -21,6 +21,11 @@ import CurrentCoursePageSubtitleDetails from "../components/CurrentCourseInstruc
 import CurrentCourseSubtitlesPageDetailsTrainee from "../components/CurrentCourseSubtitlesPageDetailsTrainee";
 import Progressbar from "../components/progressBar";
 import CurrentCourseSubtitlesPageDetailsCTrainee from "../components/CurrentCourseSubtitlesPageDetailsCorporateTrainee";
+import CorporateTraineeProfileNavBar from '../components/CorporateTraineeProfileNavBar'
+
+
+
+
 var p;
 
 
@@ -109,6 +114,7 @@ return (
         // </div> 
 
         <div>
+        <CorporateTraineeProfileNavBar/>
     
     <Container >
 

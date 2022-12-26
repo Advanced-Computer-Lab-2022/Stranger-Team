@@ -16,7 +16,7 @@
         const crypto = require("crypto");
         const bcrypt = require("bcrypt");
         const countryToCurrency = require('iso-country-currency');
-const Subtitles = require('../Models/Subtitles');
+        const Subtitles = require('../Models/Subtitles');
 
 
         //to view admins from instructors

@@ -20,8 +20,8 @@
     import InstructorAddNewSubtitleForm from "../components/InstructorAddNewSubtitleForm";
     import CurrentCourseInstructorPageSubtitles from "../components/CurrentCourseInstructorPageSubtitles"
     import InstructorCurrentCoursePageDetails from "../components/InstructorCurrentCoursePageDetails";
-import AdminCurrentCoursePageDetails from "../components/AdminCurrentCoursePageDetails";
-import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
+    import AdminCurrentCoursePageDetails from "../components/AdminCurrentCoursePageDetails";
+    import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
 
 
     const AdminCurrentCoursePage = () => {
