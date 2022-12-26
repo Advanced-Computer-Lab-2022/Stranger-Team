@@ -58,12 +58,12 @@ const flag = flagResult(totalPoints, earnPoints)
 
     }
     const update= async()=>{
-        let response;
+        var response;
         let params = new URLSearchParams(window.location.search);
         let courseId = params.get('CourseId');
         let TraineeId=params.get('TraineeId');
         let CTraineeId=params.get('CorporateTraineeId');
-    
+
          if(CTraineeId==null){
           response = await fetch(`/updateFinished/?CourseId=${courseId}&TraineeId=${TraineeId}`)
         }
@@ -74,7 +74,7 @@ const flag = flagResult(totalPoints, earnPoints)
         if(response.ok){
         setFinished(json)
     }
-        u=finished;
+        u=("----------------------------->",finished);
         console.log(u);
         console.log(courseId); 
 }
@@ -136,7 +136,8 @@ const flag = flagResult(totalPoints, earnPoints)
         {!corpTrainee && <Link className='btn' to={`/CurrentCoursePageTrainee/?CourseId=${courseId}&TraineeId=${traineeId}`}>Back To Course</Link>}
         {corpTrainee && <Link className='btn' to={`/CurrentCoursePageCorporateTrainee/?CourseId=${courseId}&CorporateTraineeId=${ctrainee}`}>Back To Course</Link>}
         {!corpTrainee && <Link className='btn' to={`/Traineeviewqwizanswers/?CourseId=${courseId}&TraineeId=${traineeId}`}onClick={update}>Done</Link>}
-        {corpTrainee && <Link className='btn' to={`/viewqwizanswers/?CourseId=${courseId}&CorporateTraineeId=${ctrainee}`} onClick={update}>Done </Link>}
+        {/* {corpTrainee && <Link className='btn' to={`/viewqwizanswers/?CourseId=${courseId}&CorporateTraineeId=${ctrainee}`} onClick={update}>Done </Link>} */}
+        {corpTrainee && <button onClick={update}>Done</button>}
             
     
             <div className="container">
