@@ -26,7 +26,7 @@
         
     return (
 
-        // <Card style={{ width: '18rem' }}>
+        // <Card style={{ width: '30rem'}}>
         // <Card.Body>
         <div className={styles.courseDetails}>
         <h4>{course.Title}</h4>
