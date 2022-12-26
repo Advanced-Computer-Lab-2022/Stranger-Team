@@ -6,6 +6,7 @@
         const [discount, setDiscount] = useState(null)
         const [discountStart, setDiscountStart] = useState(null)
         const [discountEnd, setDiscountEnd] = useState(null)
+        const [price, setPrice] = useState("")
         
         
         const fetchCourseDicountDetails = async () => {
@@ -20,6 +21,31 @@
         
         }
         fetchCourseDicountDetails();
+
+        const fetchPrice = async () => {
+        const courseId = course._id;
+        
+        
+        const response = await fetch(`/isCourseFree/?CourseId=${courseId}`)
+        
+        
+        const json = await response.json()
+        console.log(json)
+        if(response.ok)
+        {
+            if(json==true)
+            {
+                setPrice("Free");
+            }
+            else
+            {
+                setPrice(json);
+            }
+        }
+        
+        
+        }
+        fetchPrice();
         
     return (
         <div className="course-details">
@@ -30,7 +56,7 @@
         <p><strong>Subtitles Total Hours: </strong>{course.Subtitles_Total_Hours}</p>
         <p><strong>Exercises: </strong>{course.Exercises}</p>
         <p><strong>Course Total Hours: </strong>{course.Course_Total_Hours}</p> */}
-        <p><strong>Price: </strong>{course.Price}</p>
+        <p><strong>Price: </strong>{price}</p>
         <p><strong>Discount: </strong>{course.Discount}</p> 
         {/* <p><strong>Rating: </strong>{course.Rating}</p> */}
         <p><strong>Course Description: </strong>{course.Course_Description}</p> 

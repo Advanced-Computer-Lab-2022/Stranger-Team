@@ -181,12 +181,12 @@ The best way to get in touch with us is to contact our Support Team. We'd love t
 </ol>
 
     </div>
-  <div className='buttonsTerms'>
+    <div >
         <div>
-        <button onClick={routeChange1} className='terms'> Reject</button>
+        <button  onClick={routeChange1} className='course-details'> Reject</button>
         </div>
         <div>
-        <button onClick={routeChange2} className='terms1'> Accept</button>
+        <button onClick={routeChange2} className='course-details'> Accept</button>
     </div>
     </div>
     </header>

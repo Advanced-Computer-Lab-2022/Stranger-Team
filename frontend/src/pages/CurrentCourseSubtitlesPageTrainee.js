@@ -20,6 +20,7 @@ import CurrentCourseInstructorPageSubtitleDetails from "../components/CurrentCou
 import CurrentCoursePageSubtitleDetails from "../components/CurrentCourseInstructorPageSubtitlesDetails";
 import CurrentCourseSubtitlesPageDetailsTrainee from "../components/CurrentCourseSubtitlesPageDetailsTrainee";
 import Progressbar from "../components/progressBar";
+import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
 var p;
 
 
@@ -103,6 +104,7 @@ return (
         // </div> 
 
         <div>
+            <TraineeProfileNavBar/>
     
     <Container >
 

@@ -46,13 +46,15 @@ const course = require('./Models/Course');
 const instructor = require('./Models/Instructor');
 const userRating = require('./Models/UserRating');
 const courseDiscount = require('./Models/CourseDiscount');
-const subtitles = require('./Models/Subtitles');
 const admins = require('./Models/Administrator');
 const pendingInstructors = require('./Models/pendingInstructors');
 const corporate_Trainee = require('./Models/corporateTrainees');
 const {Individual_Trainee}=require('./Models/Individual Trainee');
+const progress = require("./Models/TraineeProgress");
+const Subtitles = require('./Models/Subtitles');
+const TraineeProgress=require("./Models/TraineeProgress");
 // const individual_Trainee=require('./Models/Individual Trainee');
-const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,addANewInstructor,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,FilteredCourses,isDiscountViable,displayCourseDiscount,UpdateProgressOfSubtitlie,getStatusOfSubtitlie,fetchThePreviewByCourseId} = require('./Routes/coursesController');
+const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,addANewInstructor,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,FilteredCourses,isDiscountViable,displayCourseDiscount,UpdateProgressOfSubtitlie,getStatusOfSubtitlie,fetchThePreviewByCourseId,isCourseFree} = require('./Routes/coursesController');
 
 const {addUserRating,saveUserRating} = require('./Routes/usersController');
 
@@ -593,6 +595,8 @@ app.get("/FilterMyCourses",async (req,res)=>{
 
 app.get("/CurrentCourse/",getCurrentCourseDetails);
 
+app.get("/isCourseFree",isCourseFree);
+
 app.post("/addUserCourseRating/",addUserRating);
 
 app.post("/addCourseDiscount/",addCourseDiscount);
@@ -1042,14 +1046,72 @@ app.get("/config", (req, res) => {
   });
 });
 
+function arrayIsEmpty(array) {
+            //If it's not an array, return FALSE.
+            if (!Array.isArray(array)) {
+                return FALSE;
+            }
+            //If it is an array, check its length property
+            if (array.length == 0) {
+                //Return TRUE if the array is empty
+                return true;
+            }
+            //Otherwise, return FALSE.
+            return false;
+        }
+
 app.post("/create-payment-intent", async (req, res) => {
 
     const courseId = req.query.CourseId;
     const traineeId = req.query.TraineeId;
+    var c;
+    var already=[];
+    let a=[];
+    let i;
+    let j;
+    var sub;
     //const traineeId = req.session.user._id;
     const currCourse = await course.findById({_id:courseId});
     const currPrice = parseInt(currCourse.Price);
     console.log(currPrice);
+
+    //creating Progress
+
+                sub = await Subtitles.find({CourseId:mongoose.Types.ObjectId(courseId)});
+                console.log("SUB ARRAY------->>>>",sub)
+                //check if this corporate has this course or not
+                const cop=await Individual_Trainee.findById({_id:traineeId})
+                const coursesArray =  cop.Registered_Courses;
+        
+                console.log("CourseArray",coursesArray)
+                
+                if(coursesArray.length>0){
+                    console.log("dakhalt")
+                for ( i = 0; i < coursesArray.length; i++) {
+                    //Check if this course is already in traineeProgress DB
+                already=await TraineeProgress.find({"Trainee_Id":traineeId,CourseId:mongoose.Types.ObjectId(coursesArray[i])});
+                console.log(arrayIsEmpty(already));
+                //console.log(arrayIsEmpty(already.length));
+                console.log("ASLUN!!!!")
+
+                if(!arrayIsEmpty(already) ){
+                //coursesArray1.push(await course.findById({_id:coursesArray[i]},{_id:1}));
+                console.log("Hi, et3ml abl keda")
+                } 
+                else{  
+                    for ( j = 0; j < (sub.length); j++) {
+                    old= await TraineeProgress.create({"Trainee_Id":traineeId,"SubtitleId":mongoose.Types.ObjectId(sub[j]._id),"CourseId":mongoose.Types.ObjectId(coursesArray[i])});
+                    console.log(" NEW here,Bye")
+                    }  
+                    
+            const bb= await course.findById({_id:courseId},{NumberOfPaid:1})
+            const b=(bb.NumberOfPaid)+1;
+            console.log("Number of people ------->>>>>>>>>>>",bb);
+            const counter=await course.findByIdAndUpdate({_id:courseId},{NumberOfPaid:b}); 
+                    }
+            }
+
+            }
     
 
   try{

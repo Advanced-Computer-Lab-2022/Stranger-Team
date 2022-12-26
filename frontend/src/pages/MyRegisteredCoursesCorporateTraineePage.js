@@ -27,7 +27,7 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
         console.log(corporateTraineeId); 
         
 
-        const response = await fetch(`/corporateViewMyRegisteredCourses/?CorporateTraineeId=${corporateTraineeId}`)
+        const response = await fetch(`/corporateViewMyRegisteredCourses/?CorporateTraineeId=${corporateTraineeId}&q=${searchQuery}`)
         
         const json = await response.json()
         console.log(json)
@@ -43,6 +43,9 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
 
         <div >
             <CorporateTraineeProfileNavBar/>
+            <input type="text" placeholder="Search By Course Title,Subject,Instructor..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}>
+            
+            </input>
             
             <div className="courses">
             {courses && courses.map(course => (

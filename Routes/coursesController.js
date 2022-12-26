@@ -65,7 +65,6 @@ const data = (req, res) => {
 
 
 //new addCourse
-
 const createCourse = async(req,res)=>{
         // const questionId = (await Question.create({QNumber,Q,correctAnswer,ExerciseID:req.query.id}))._id;
         // const currQuestion = await Question.findById({_id:questionId});
@@ -91,27 +90,45 @@ const createCourse = async(req,res)=>{
         console.log(newlyAddedCourseId);
 
     if(newlyAddedCourseId){
-    const newlyAddedSubtitle = await subtitles.create({Subtitle_Title,Link,Description,CourseId:newlyAddedCourseId});
-    console.log(newlyAddedSubtitle)
-    const newlyAddedSubtitleId = newlyAddedSubtitle._id;
-    console.log(newlyAddedSubtitle)
-    if (newlyAddedSubtitle) {
+    
+    if((Subtitle_Title==null||Link==null||Description==null)||(Subtitle_Title==""||Link==""||Description==""))
+    {
+        const deletedCourse = await course.findByIdAndDelete({_id:newlyAddedCourseId})
+        res.status(400).json({error:"Fill in the subtitles required fields"});
+    }   
+    else
+    {
+        const newlyAddedSubtitle = await subtitles.create({Subtitle_Title,Link,Description,CourseId:newlyAddedCourseId});
+        console.log(newlyAddedSubtitle)
+        const newlyAddedSubtitleId = newlyAddedSubtitle._id;
+        console.log(newlyAddedSubtitle)
+        if (newlyAddedSubtitle) {
         //const subtitleId = req.query.SubtitleId;
-        console.log("subtitleid: "+subtitleId);
+        //console.log("subtitleid: "+subtitleId);
         const{Q,Answer1,Answer2,Answer3,Answer4,correctAnswer} = req.body;
+        if((Q==null||Answer1==null||Answer2==null||Answer3==null||Answer4==null||correctAnswer==null)||(Q==""||Answer1==""||Answer2==""||Answer3==""||Answer4==""||correctAnswer==""))
+        {
+            const deletedCourse = await course.findByIdAndDelete({_id:newlyAddedCourseId})
+            const deletedSubtitle = await subtitles.findByIdAndDelete({_id:newlyAddedSubtitleId})
+            res.status(400).json({error:"Fill in the quiz required fields"});
+        }
+        else
+        {
+            const questionId = (await subtitleQuestion.create({Q,correctAnswer,SubtitleId:newlyAddedSubtitleId}))._id;
+            const currQuestion = await subtitleQuestion.findById({_id:questionId});
+            const answersArray = currQuestion.Answers;
+            answersArray.push(Answer1);
+            answersArray.push(Answer2);
+            answersArray.push(Answer3);
+            answersArray.push(Answer4);
+            console.log(answersArray)
+            const newQuestion = await subtitleQuestion.findByIdAndUpdate({_id:questionId},{Answers:answersArray},{new:true});
+        }
 
-        const questionId = (await subtitleQuestion.create({Q,correctAnswer,SubtitleId:newlyAddedSubtitleId}))._id;
-        const currQuestion = await subtitleQuestion.findById({_id:questionId});
-        const answersArray = currQuestion.Answers;
-        answersArray.push(Answer1);
-        answersArray.push(Answer2);
-        answersArray.push(Answer3);
-        answersArray.push(Answer4);
-        console.log(answersArray)
-        const newQuestion = await subtitleQuestion.findByIdAndUpdate({_id:questionId},{Answers:answersArray},{new:true});
     }
-    //HENA MARA
-    //res.status(200).json(newlyAddedSubtitle)
+    
+    }
+    
     }else{
         res.status(400).json({error:"courseId is required"})
     }
@@ -128,50 +145,184 @@ const createCourse = async(req,res)=>{
     // const {Subtitle_Title,Link,Description} = req.body;
 
     if(newlyAddedCourseId){
-    const newlyAddedSubtitle = await subtitles.create({Subtitle_Title,Link,Description,CourseId:newlyAddedCourseId});
-    const newlyAddedSubtitleId = newlyAddedSubtitle._id;
-    console.log(newlyAddedSubtitle)
-    if (newlyAddedSubtitle) {
-        const subtitleId = req.query.SubtitleId;
-        console.log("subtitleid: "+subtitleId);
-        const{Q,Answer1,Answer2,Answer3,Answer4,correctAnswer} = req.body;
-
-        const questionId = (await subtitleQuestion.create({Q,correctAnswer,SubtitleId:newlyAddedSubtitleId}))._id;
-        const currQuestion = await subtitleQuestion.findById({_id:questionId});
-        const answersArray = currQuestion.Answers;
-        answersArray.push(Answer1);
-        answersArray.push(Answer2);
-        answersArray.push(Answer3);
-        answersArray.push(Answer4);
-        console.log(answersArray)
-        const newQuestion = await subtitleQuestion.findByIdAndUpdate({_id:questionId},{Answers:answersArray},{new:true});
+        if((Subtitle_Title==null||Link==null||Description==null)||(Subtitle_Title==""||Link==""||Description==""))
+    {
+        const deletedCourse = await course.findByIdAndDelete({_id:newlyAddedCourseId})
+        res.status(400).json({error:"Fill in the subtitles required fields"});
     }
-    //HENA MARA
-    //res.status(200).json(newlyAddedSubtitle)
+    else
+    {
+        const newlyAddedSubtitle = await subtitles.create({Subtitle_Title,Link,Description,CourseId:newlyAddedCourseId});
+        const newlyAddedSubtitleId = newlyAddedSubtitle._id;
+        console.log(newlyAddedSubtitle)
+        if (newlyAddedSubtitle) {
+            const subtitleId = req.query.SubtitleId;
+            console.log("subtitleid: "+subtitleId);
+            const{Q,Answer1,Answer2,Answer3,Answer4,correctAnswer} = req.body;
+            if((Q==null||Answer1==null||Answer2==null||Answer3==null||Answer4==null||correctAnswer==null)||(Q==""||Answer1==""||Answer2==""||Answer3==""||Answer4==""||correctAnswer==""))
+            {
+                const deletedCourse = await course.findByIdAndDelete({_id:newlyAddedCourseId})
+                const deletedSubtitle = await subtitles.findByIdAndDelete({_id:newlyAddedSubtitleId})
+                res.status(400).json({error:"Fill in the quiz required fields"});
+            }
+        else
+        {
+            const questionId = (await subtitleQuestion.create({Q,correctAnswer,SubtitleId:newlyAddedSubtitleId}))._id;
+            const currQuestion = await subtitleQuestion.findById({_id:questionId});
+            const answersArray = currQuestion.Answers;
+            answersArray.push(Answer1);
+            answersArray.push(Answer2);
+            answersArray.push(Answer3);
+            answersArray.push(Answer4);
+            console.log(answersArray)
+            const newQuestion = await subtitleQuestion.findByIdAndUpdate({_id:questionId},{Answers:answersArray},{new:true});
+        }
+
+        
+    }
+    
+    }
     }else{
         res.status(400).json({error:"courseId is required"})
     }
 
-    console.log(addCourse);
-    res.status(200).json(addCourse);
+    // console.log(addCourse);
+    // res.status(200).json(addCourse);
     }
-
     }
-
-    
- 
     
     else
     {
         res.status(400).json({error:"The dates don't align"});
     }
-
     }
     catch(error){
         res.status(400).json({error:error.message});
     }
 
 }
+
+// const createCourse = async(req,res)=>{
+//         // const questionId = (await Question.create({QNumber,Q,correctAnswer,ExerciseID:req.query.id}))._id;
+//         // const currQuestion = await Question.findById({_id:questionId});
+
+//         const {Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Discount_Start_Date,Discount_End_Date,Course_Description,PreviewLink,Subtitle_Title,Link,Description}= req.body;
+//         const instructorid=req.query.id;
+//         const currinstructor = await instructor.findById({_id:instructorid});
+//         const currInstructorName = currinstructor.First_Name +" "+currinstructor.Last_Name;
+//         console.log(currInstructorName)
+//     try{
+
+//     var dateEnd = new Date(Discount_End_Date);
+//     var dateStart = new Date(Discount_Start_Date)
+
+//     const date = new Date();
+
+//     if(!(dateStart>=dateEnd))
+//     {
+//         if(date>=dateEnd)
+//     {
+//         const addCourse =await course.create({Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Course_Description,PreviewLink,Instructor_Name:currInstructorName,"Instructor":req.query.id});
+//         const newlyAddedCourseId = addCourse._id;
+//         console.log(newlyAddedCourseId);
+
+//     if(newlyAddedCourseId){
+//         if((Subtitle_Title==null||Link==null||Description==null)||(Subtitle_Title==""||Link==""||Description==""))
+//         {
+//             res.status(400).json({error:"Fill in the subtitles required fields"});
+//         }
+//         else
+//         {
+//             const newlyAddedSubtitle = await subtitles.create({Subtitle_Title,Link,Description,CourseId:newlyAddedCourseId});
+//             console.log(newlyAddedSubtitle)
+//             const newlyAddedSubtitleId = newlyAddedSubtitle._id;
+//             console.log(newlyAddedSubtitle);
+//             if (newlyAddedSubtitle) {
+//                 //const subtitleId = req.query.SubtitleId;
+//                 //console.log("subtitleid: "+subtitleId);
+//                 const{Q,Answer1,Answer2,Answer3,Answer4,correctAnswer} = req.body;
+//                 if((Q==null||Answer1==null||Answer2==null||Answer3==null||Answer4==null||correctAnswer==null)||(Q==""||Answer1==""||Answer2==""||Answer3==""||Answer4==""||correctAnswer==""))
+//                 {
+//                     res.status(400).json({error:"Fill in the quiz required fields"});
+//                 }
+//                 else
+//                 {
+//                     const questionId = (await subtitleQuestion.create({Q,correctAnswer,SubtitleId:newlyAddedSubtitleId}))._id;
+//                     const currQuestion = await subtitleQuestion.findById({_id:questionId});
+//                     const answersArray = currQuestion.Answers;
+//                     answersArray.push(Answer1);
+//                     answersArray.push(Answer2);
+//                     answersArray.push(Answer3);
+//                     answersArray.push(Answer4);
+//                     console.log(answersArray)
+//                     const newQuestion = await subtitleQuestion.findByIdAndUpdate({_id:questionId},{Answers:answersArray},{new:true});
+//                 }
+
+//     }
+//         }
+    
+    
+    
+//     }else{
+//         res.status(400).json({error:"courseId is required"})
+//     }
+
+//     console.log(addCourse);
+//     res.status(200).json(addCourse);
+//     }
+//     else
+//     {
+//         const addCourse =await course.create({Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Discount_Start_Date,Discount_End_Date,Course_Description,PreviewLink,Instructor_Name:currInstructorName,"Instructor":req.query.id});
+//         const newlyAddedCourseId = addCourse._id;
+//         console.log(newlyAddedCourseId);
+        
+//     // const {Subtitle_Title,Link,Description} = req.body;
+
+//     if(newlyAddedCourseId){
+//     const newlyAddedSubtitle = await subtitles.create({Subtitle_Title,Link,Description,CourseId:newlyAddedCourseId});
+//     const newlyAddedSubtitleId = newlyAddedSubtitle._id;
+//     console.log(newlyAddedSubtitle)
+//     if (newlyAddedSubtitle) {
+//         const subtitleId = req.query.SubtitleId;
+//         console.log("subtitleid: "+subtitleId);
+//         const{Q,Answer1,Answer2,Answer3,Answer4,correctAnswer} = req.body;
+
+//         const questionId = (await subtitleQuestion.create({Q,correctAnswer,SubtitleId:newlyAddedSubtitleId}))._id;
+//         const currQuestion = await subtitleQuestion.findById({_id:questionId});
+//         const answersArray = currQuestion.Answers;
+//         answersArray.push(Answer1);
+//         answersArray.push(Answer2);
+//         answersArray.push(Answer3);
+//         answersArray.push(Answer4);
+//         console.log(answersArray)
+//         const newQuestion = await subtitleQuestion.findByIdAndUpdate({_id:questionId},{Answers:answersArray},{new:true});
+//     }
+//     //HENA MARA
+//     //res.status(200).json(newlyAddedSubtitle)
+//     }else{
+//         res.status(400).json({error:"courseId is required"})
+//     }
+
+//     console.log(addCourse);
+//     res.status(200).json(addCourse);
+//     }
+
+//     }
+
+    
+ 
+    
+//     else
+//     {
+//         res.status(400).json({error:"The dates don't align"});
+//     }
+
+//     }
+//     catch(error){
+//         res.status(400).json({error:error.message});
+//     }
+
+// }
 
 const isDiscountViable = async(req,res) => {
 
@@ -297,10 +448,30 @@ const addCourseDiscount = async(req,res)=>{
         console.log(currCourse.Discount);
         if(currCourse.Discount==null||currCourse.Discount=="")
         {
-            console.log("jj")
-            const updatedDiscount= await course.findByIdAndUpdate({_id:req.query.CourseId}, { Discount: Discount,Discount_Start_Date:Discount_Start_Date,Discount_End_Date:Discount_End_Date},{new:true});
-            console.log(updatedDiscount);
-            res.status(200).json(updatedDiscount);
+            if((Discount==null&&Discount_Start_Date==null&&Discount_End_Date==null)||(Discount==""&&Discount_Start_Date==""&&Discount_End_Date==""))
+            {
+                console.log("here")
+                res.status(400).json({error:"Please fill in the specified fields"});
+            }
+            else if((Discount!=null&&Discount_Start_Date==null&&Discount_End_Date==null)||(Discount!=""&&Discount_Start_Date==""&&Discount_End_Date==""))
+            {
+                res.status(400).json({error:"Please fill in the dates if you want to add a course discount!"});
+            }
+            else if((Discount!=null&&Discount_Start_Date!=null&&Discount_End_Date==null)||(Discount!=""&&Discount_Start_Date!=""&&Discount_End_Date==""))
+            {
+                res.status(400).json({error:"Please fill in the specified fields"});
+            }
+            else if((Discount!=null&&Discount_Start_Date==null&&Discount_End_Date!=null)||(Discount!=""&&Discount_Start_Date==""&&Discount_End_Date!=""))
+            {
+                res.status(400).json({error:"Please fill in the specified fields"});
+            }
+            else
+            {
+                const updatedDiscount= await course.findByIdAndUpdate({_id:req.query.CourseId}, { Discount: Discount,Discount_Start_Date:Discount_Start_Date,Discount_End_Date:Discount_End_Date},{new:true});
+                console.log(updatedDiscount);
+                res.status(200).json(updatedDiscount);
+            }
+
         }
         else
         {
@@ -846,6 +1017,32 @@ const FilteredCourses = async (req,res) => {
                 }
                 }; 
 
+const isCourseFree= async (req,res) => {
+            const courseId = req.query.CourseId;
+
+            if(courseId)
+            {
+                const currCourse = await course.findById({_id:courseId});
+                const currPrice = currCourse.Price;
+
+            if(currPrice == 0)
+            {
+                res.status(200).json(true);
+            }
+            else
+            {
+                res.status(200).json(currPrice);
+            }
+            
+            }
+            else
+            {
+                res.status(400).json({error:"CourseId is not valid"});
+            }
+
+            
+            }; 
+
 module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, 
     Filter_By_Price,data,createCourse,addANewInstructor
     ,Search_By_Instructor_Name,Search_By_Title
@@ -858,4 +1055,4 @@ module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate,
     ,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse
     ,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,
     FilteredCourses,isDiscountViable,displayCourseDiscount,
-     UpdateProgressOfSubtitlie, getStatusOfSubtitlie,fetchThePreviewByCourseId};
+    UpdateProgressOfSubtitlie, getStatusOfSubtitlie,fetchThePreviewByCourseId,isCourseFree};

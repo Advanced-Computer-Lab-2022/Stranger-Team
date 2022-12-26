@@ -336,8 +336,8 @@ const AllmoneyOwed = async (req,res)=>{
 
             }
         }
-        //res.status(200).json(money)
-        res.status(200).json(Inst)
+        res.status(200).json(money)
+        //res.status(200).json(Inst)
     }
     catch(error){
         res.status(400).json({error:"No such Instructor"});
