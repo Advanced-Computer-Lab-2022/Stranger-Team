@@ -1,5 +1,4 @@
-
-    import { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate } from "react-router-dom";
     // components
@@ -27,7 +26,7 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
         console.log(traineeId); 
         
 
-        const response = await fetch(`/viewMyRegisteredCourses/?TraineeId=${traineeId}`)
+        const response = await fetch(`/viewMyRegisteredCourses/?TraineeId=${traineeId}&q=${searchQuery}`)
         
         const json = await response.json()
         console.log(json)
@@ -43,6 +42,10 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
 
         <div >
             <TraineeProfileNavBar/>
+
+            <input type="text" placeholder="Search By Course Title,Subject,Instructor..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}>
+            
+            </input>
             
             <div className="courses">
             {courses && courses.map(course => (

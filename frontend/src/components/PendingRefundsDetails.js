@@ -77,8 +77,8 @@ const PendingRefundsDetails = ({ prefunds }) => {
         // </div>
 
 
-        <div className="admin-details">
-        <h4 onClick={routeChange}>FROM <strong>{prefunds.Username}</strong></h4>
+        <div className="admin-details" onClick={routeChange}>
+        <h4>FROM <strong>{prefunds.Username}</strong></h4>
         <p>Requesting refund of amount from course <strong>{prefunds.Title}</strong></p>
         <p><strong>{prefunds.Status}</strong></p>
         <p><strong>{prefunds.Role}</strong></p>

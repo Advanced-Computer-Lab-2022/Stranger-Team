@@ -71,9 +71,8 @@
     const routeChange1 = () =>{ 
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        // const corporateTraineeId = params.get('CorporateTraineeId');
-        // console.log(corporateTraineeId); 
-        let path = `/mainForQuiz/?CourseId=${courseId}`; 
+        const traineeId = params.get('TraineeId');
+        let path = `/mainForQuiz/?TraineeId=${traineeId}&CourseId=${courseId}`; 
         navigate(path);
     }
 

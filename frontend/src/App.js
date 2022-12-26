@@ -135,6 +135,7 @@ import PendingRefundsPage from './pages/pendingRefundsPage';
 import AcceptedRefundsPage from './pages/acceptedRefundsPage';
 import RejectedRefundsPage from './pages/rejectedRefundsPage';
 import SingleRefund from './components/SingleRefund';
+import RefundsPage from './pages/Refunds';
 
 
 import MyCertificateT from './components/cT';
@@ -202,6 +203,12 @@ function App() {
         <Route
         path="/refund"
         element={<SingleRefund />}
+        />
+
+        
+<Route
+        path="/refunds"
+        element={<RefundsPage />}
         />
 
         <Route

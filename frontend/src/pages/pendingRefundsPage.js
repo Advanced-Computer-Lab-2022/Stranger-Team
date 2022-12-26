@@ -4,6 +4,7 @@ import { useEffect } from "react";
 //components
 import PendingRefundsDetails from "../components/PendingRefundsDetails";
 //import AdminForm from "../components/AdminForm";
+import AdminNavbar from "../components/AdminNavbar";
 
 //hooks
 import { usePRContext } from "../hooks/UsePRContext";
@@ -29,6 +30,7 @@ const {prefunds, dispatch} = usePRContext()
     return (
     <div className="home">
     <div className="admins">
+        <AdminNavbar></AdminNavbar>
         {prefunds && prefunds.map((prefunds) => (
             <PendingRefundsDetails key={prefunds._id} prefunds={prefunds}/>
         ))}

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 //components
 import AcceptedRefundsDetails from "../components/AcceptedRefundsDetails";
 //import AdminForm from "../components/AdminForm";
+import AdminNavbar from "../components/AdminNavbar";
 
 //hooks
 import { useARContext } from "../hooks/UseARContext";
@@ -29,6 +30,7 @@ const {arefunds, dispatch} = useARContext()
     return (
     <div className="home">
     <div className="admins">
+    <AdminNavbar></AdminNavbar>
         {arefunds && arefunds.map((arefunds) => (
             <AcceptedRefundsDetails key={arefunds._id} arefunds={arefunds}/>
         ))}

@@ -1,9 +1,10 @@
-import React ,{ useEffect }from 'react'
+import React ,{ useEffect, useState }from 'react'
 import '../styles/Result.css'
 import { Link } from 'react-router-dom';
 import { earnPoints_Number,flagResult } from '../helper/helper';
 
 import ResultTable from './ResultTable';
+import { useNavigate } from 'react-router-dom';
 
 
 import { useDispatch,useSelector } from 'react-redux';
@@ -13,11 +14,13 @@ import { resetAllAction } from '../redux/question_reducer';
 
 export default function Result() {
 
+const [corpTrainee, setCorpTrainee] = useState(false)
 
    const dispatch = useDispatch();
    const {ques: { queue,answers}, result: { result,userId}}=useSelector(state =>state)
    useEffect (() =>{
     //   console.log("a8esonaaa"+result);
+    checkTrainee();
    })
 const totalPoints = queue.length *10;
 const earnPoints = earnPoints_Number(result,answers,10);
@@ -30,7 +33,50 @@ const flag = flagResult(totalPoints, earnPoints)
 
     const params = new URLSearchParams(window.location.search);
     const courseId = params.get('CourseId');
+    const traineeId = params.get('TraineeId');
+    const ctrainee = params.get('CorporateTraineeId');
     console.log(courseId); 
+
+    const checkTrainee = async() => {
+    
+        const response = await fetch(`/routeCheck?CourseId=${courseId}&TraineeId=${traineeId}&CorporateTraineeId=${ctrainee}`,  {
+            method: 'GET'
+        })
+        const json = await response.json()
+        console.log(json)
+        if (response.ok) {
+            setCorpTrainee(true)
+            console.log("OK" + corpTrainee)
+        }
+
+        if (!response.ok) {
+            console.log("NOT OK" + corpTrainee)
+        }
+
+    }
+
+    let navigate = useNavigate();
+    const routeChangeCT = () =>{ 
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get('CourseId');
+       // const traineeId = params.get('TraineeId');
+        const ctrainee = params.get('CorporateTraineeId');
+        console.log(courseId); 
+        let path =  `/CurrentCoursePageCorporateTrainee/?CourseId=${courseId}&CorporateTraineeId=${ctrainee}`; 
+        navigate(path);
+    }
+
+
+    const routeChangeT = () =>{ 
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get('CourseId');
+        const traineeId = params.get('TraineeId');
+        //const ctrainee = params.get('CorporateTraineeId');
+        console.log(courseId); 
+        let path =  `/CurrentCoursePageTrainee/?CourseId=${courseId}&TraineeId=${traineeId}`; 
+        navigate(path);
+    }
+    
 
     return (
         <div className='container'>
@@ -61,8 +107,11 @@ const flag = flagResult(totalPoints, earnPoints)
             </div>
     
             <div className="start">
-                <Link className='btn' to={`/mainForQuiz/?CourseId=${courseId}`} onClick={onRestart}>Restart</Link>
+                <Link className='btn' to={`/mainForQuiz/?CourseId=${courseId}&TraineeId=${traineeId}&CorporateTraineeId=${ctrainee}`} onClick={onRestart}>Restart</Link>
             </div>
+{!corpTrainee && <Link className='btn' to={`/CurrentCoursePageTrainee/?CourseId=${courseId}&TraineeId=${traineeId}`}>Back To Course</Link>}
+{corpTrainee && <Link className='btn' to={`/CurrentCoursePageCorporateTrainee/?CourseId=${courseId}&CorporateTraineeId=${ctrainee}`}>Back To Course</Link>}
+            
     
             <div className="container">
                 {/* result table */}

@@ -172,7 +172,3 @@ input[type=radio]:checked ~ .text-primary{
 .checked::before{
   background: var(--primary-color)
 }
-
-/* input[type=radio]:checked ~ .text-primaryy{
-  color: #0DFF92
-}  */

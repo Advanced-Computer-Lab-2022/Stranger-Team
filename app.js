@@ -65,7 +65,7 @@ const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingIns
 const {addCourse, viewCourses, insertQuestions, viewQuestions,
    addResults, viewResults, viewAnswers, fetchQuestionsByCID, 
    fetchSubtitleQuestion, subtitleQuestionAnswer, deleteQuestion,
-    quizSize,viewAllQuestions} = require('./Routes/solvingExercisesController');
+    quizSize,viewAllQuestions, routeCheck} = require('./Routes/solvingExercisesController');
 
 const {addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports,fetchTraineeProfileDetails,fetchTraineeDeliveredReports,fetchTraineePendingReports,fetchTraineeResolvedReports,fetchProblem,fetchNonRegisteredTraineeCoursesForInstructor,checkIfAdminRespondedTrainee,updateReportStatusFromPendingToResolvedTrainee,traineeSendFollowup,getWalletBalance,viewMyWalletBalance,payByWalletBalance,traineeRefundRequest,fetchTraineePendingRequests,fetchCurrentRequest,getCurrentCourse,fetchTraineeResolvedRequests,editProfileDetails,checkIfRefundEligible} = require('./Routes/individualTraineeController');
 
@@ -897,9 +897,11 @@ app.get('/viewQuestions', viewQuestions);
 app.get('/viewAnswers', viewAnswers);
 app.delete('/deleteQ/:id', deleteQuestion);
 
+
 //RESULTS
 app.post('/addResults' , addResults);
 app.get('/viewResults', viewResults);
+app.get('/routeCheck', routeCheck);
 
 
 //ADMIN SIDE REPORTS

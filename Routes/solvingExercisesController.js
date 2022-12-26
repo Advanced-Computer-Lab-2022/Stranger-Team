@@ -323,5 +323,34 @@ const viewAllQuestions=async(req,res)=>{
 }
 
 
+
+const routeCheck = async(req,res) => {
+
+  const traineeid = req.query.TraineeId;
+  console.log("TRAINEE: "+traineeid);
+  const ctraineeid = req.query.CorporateTraineeId;
+  console.log("CORP TRAINEE: "+ctraineeid);
+
+  if(traineeid !== "null"){
+    // console.log('here1')
+    // if (ctraineeid === null) {
+      console.log('here2')
+      res.status(400).json({error:"TRAINEE"})
+      //law trainee hadee error ---> !response.ok
+    // }
+   
+  }
+
+  else {
+    // if (!traineeid) {
+      console.log('here4')
+      res.status(200).json(ctraineeid)
+    // }
+    
+  }
+
+  }
+
+
   module.exports = {addCourse, viewCourses, insertQuestions, viewQuestions, addResults, viewResults, viewAnswers, fetchQuestionsByCID, fetchSubtitleQuestion,
-     subtitleQuestionAnswer, deleteQuestion, quizSize,viewAllQuestions}
+     subtitleQuestionAnswer, deleteQuestion, quizSize,viewAllQuestions, routeCheck}

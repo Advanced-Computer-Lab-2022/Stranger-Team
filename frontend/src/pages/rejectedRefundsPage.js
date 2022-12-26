@@ -4,6 +4,7 @@ import { useEffect } from "react";
 //components
 import RejectedRefundsDetails from "../components/RejectedRefundsDetails";
 //import AdminForm from "../components/AdminForm";
+import AdminNavbar from "../components/AdminNavbar";
 
 //hooks
 import {useRRContext} from '../hooks/UseRRContext';
@@ -29,6 +30,7 @@ const {rrefunds, dispatch} = useRRContext()
     return (
     <div className="home">
     <div className="admins">
+    <AdminNavbar></AdminNavbar>
         {rrefunds && rrefunds.map((rrefunds) => (
             <RejectedRefundsDetails key={rrefunds._id} rrefunds={rrefunds}/>
         ))}

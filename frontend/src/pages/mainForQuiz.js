@@ -10,8 +10,10 @@ export default function Main() {
     const routeChange = () =>{ 
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
+        const traineeId = params.get('TraineeId');
+        const ctrainee = params.get('CorporateTraineeId');
         console.log(courseId); 
-        let path =  `/quiz/?CourseId=${courseId}`; 
+        let path =  `/quiz/?CourseId=${courseId}&TraineeId=${traineeId}&CorporateTraineeId=${ctrainee}`; 
         navigate(path);
     }
     return (

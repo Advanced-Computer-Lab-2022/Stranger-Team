@@ -5,13 +5,13 @@ const ReportsPage = () => {
     return (
         <div className='home'>
              <AdminNavbar/>
-            <h4>Welcome, Admin</h4>
-            <div className="btn">
+             <h4>Welcome, Admin</h4>
+            <div>
             <Link to="/deliveredReports">
-             <button className='btn'>Unopened Reports</button>
+             <h5>Unopened Reports</h5>
             </Link>
             <Link to="/seenReports">
-             <button className='btn'>Opened Reports</button>
+             <h5>Opened Reports</h5>
             </Link>
             </div>
             
