@@ -5,22 +5,56 @@ const crypto = require("crypto");
 const sendEmail = require("./Emailer");
 const bcrypt = require("bcrypt");
 const countryToCurrency = require('iso-country-currency');
+const { corporateTrainees } = require("../Models/corporateTrainees");
+const { Instructors } = require("../Models/Instructor");
+const { Administrator } = require("../Models/Administrator");
 
 router.post("/", async (req, res) => {
 	console.log(req.body);
 	try {
-		
 		const { error } = validate(req.body);
 		console.log(error);
 		if (error)
 			return res.status(400).send({ message: error.details[0].message });
 
+		if(req.body.Password !== req.body.confirmPassword){
+			return res.status(401).send({ message: "Password dosen't match confirm password !" });
+		}
 		let user = await Individual_Trainee.findOne({ Email: req.body.Email });
 		if (user)
 			return res
 				.status(409)
-				.send({ message: "User with given email already Exist!" });
-
+				.send({ message: "User with given email already Exists!" });
+		user =await corporateTrainees.findOne({ Email: req.body.Email });
+		if (user)
+			return res
+				.status(409)
+				.send({ message: "User with given email already Exists!" });
+		user =await Instructors.findOne({ Email: req.body.Email });
+		if (user)
+			return res
+				.status(409)
+				.send({ message: "User with given Email already Exists!" });
+		user = await Individual_Trainee.findOne({ Username: req.body.Username });
+		if (user)
+				return res
+					.status(409)
+					.send({ message: "User with given Username already Exists!" });
+		user = await corporateTrainees.findOne({ Username: req.body.Username });
+		if (user)
+				return res
+					.status(409)
+					.send({ message: "User with given Username already Exists!" });		
+		user = await Instructors.findOne({ Username: req.body.Username });
+		if (user)
+				return res
+					.status(409)
+					.send({ message: "User with given Username already Exists!" });	
+		user = await Administrator.findOne({ Username: req.body.Username });
+		if (user)
+				return res
+					.status(409)
+					.send({ message: "User with given Username already Exists!" });	
 				const salt = await bcrypt.genSalt();
 		const hashPassword = await bcrypt.hash(req.body.Password, salt);
 

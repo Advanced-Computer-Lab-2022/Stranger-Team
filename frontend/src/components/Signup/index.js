@@ -16,6 +16,7 @@ const Signup = () => {
     const [Username,setUsername]= useState("");
     const [Email,setEmail]= useState("");
     const [Password,setPassword]= useState("");
+    const [confirmPassword,setconfirmPassword]= useState("");
     const [First_Name,setFirst_Name]= useState("");
     const [Last_Name,setLast_Name]= useState("");
     const [Gender,setGender]= useState("");
@@ -30,7 +31,7 @@ const Signup = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-            const newUser={Username,Email,Password,First_Name,Last_Name,Gender,Country};
+            const newUser={Username,Email,Password,confirmPassword,First_Name,Last_Name,Gender,Country};
             console.log(newUser)
 			// const url = `http://localhost:3000/users`;
 			// const { data: res } = await axios.post(url, data);
@@ -394,6 +395,16 @@ const Signup = () => {
 							//onChange={handleChange}
                             onChange={(e) => setPassword(e.target.value)} 
 							value={Password}
+							required
+							className={styles.input}
+						/>
+                        <input
+							type="password"
+							placeholder="Confirm Password"
+							name="confirmPassword"
+							//onChange={handleChange}
+                            onChange={(e) => setconfirmPassword(e.target.value)} 
+							value={confirmPassword}
 							required
 							className={styles.input}
 						/>

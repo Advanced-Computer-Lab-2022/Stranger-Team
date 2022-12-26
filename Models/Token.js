@@ -12,13 +12,13 @@ const tokenSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		required: false,
 		ref: "corporateTrainees",
-		unique: true,
+		unique: false,
 	},
 	instructorId: {
 		type: Schema.Types.ObjectId,
 		required: false,
 		ref: "Instructor",
-		unique: true,
+		unique: false,
 	},
 	
 	token: { type: String, required: true },

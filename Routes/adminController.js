@@ -1,17 +1,22 @@
-        const mongoose = require('mongoose');
-    const {Administrator} = require ('../Models/Administrator');
+
+        const {Administrator} = require ('../Models/Administrator');
         const pendingInstructors = require ('../Models/pendingInstructors');
         const {corporateTrainees} = require ('../Models/corporateTrainees');
         const {Instructors} = require ('../Models/Instructor');
         const InstructorReports = require ('../Models/InstructorReports');
         const TraineeReports = require ('../Models/TraineeReports');
         const CTraineeReports = require ('../Models/CorporateTraineeReports');
+        const {Individual_Trainee} = require ('../Models/Individual Trainee');
+
+        const mongoose = require('mongoose');
+        const courseRequests = require("../Models/CourseRequests");
+        const course = require('../Models/Course');
+        const refund = require("../Models/TraineeRefunds");
+        const TraineeProgress=require("../Models/TraineeProgress");
         const crypto = require("crypto");
         const bcrypt = require("bcrypt");
         const countryToCurrency = require('iso-country-currency');
-        
-        const courseRequests = require("../Models/CourseRequests");
-
+const Subtitles = require('../Models/Subtitles');
 
 
         //to view admins from instructors
@@ -26,8 +31,22 @@
 
         //adding a new Admin
         const addAdmin = async (req, res) => {
-       const {Username, Password} = req.body
-
+        const {Username, Password} = req.body
+        let user = await Individual_Trainee.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given Username already Exists!"})
+		user = await corporateTrainees.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given Username already Exists!"})
+		user = await Instructors.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given Username already Exists!"})
+        if(req.body.Password !== req.body.confirmPassword){
+            return res.status(400).json({error: "Password doesn't with confirm Password !"})
+		}
+        user = await Administrator.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given Username already Exists!"})
         let emptyFields = []
         if (!Username) {
             emptyFields.push('Username')
@@ -239,6 +258,35 @@
 
         const addInstructor = async (req, res) => {
         const {Username, Password, First_Name, Last_Name, Email, Gender,Bio} = req.body
+        if(req.body.Password !== req.body.confirmPassword){
+            return res.status(400).json({error: "Password doesn't with confirm Password !"})
+		}
+        let user = await Individual_Trainee.findOne({ Email: req.body.Email });
+		if (user)
+        return res.status(400).json({error: "User with given email already Exists!"})
+		user =await corporateTrainees.findOne({ Email: req.body.Email });
+		if (user)
+        return res.status(400).json({error: "User with given email already Exists!"})
+
+		user =await Instructors.findOne({ Email: req.body.Email });
+		if (user)
+        return res.status(400).json({error: "User with given email already Exists!"})
+
+		user = await Individual_Trainee.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given username already Exists!"})
+
+		user = await corporateTrainees.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given username already Exists!"})
+	
+		user = await Instructors.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given username already Exists!"})
+		user = await Administrator.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given username already Exists!"})
+			
 
         let emptyFields = []
         if (!Username) {
@@ -355,7 +403,35 @@
         //adding a corporate Trainee
 
         const addCorporateTrainee = async (req, res) => {
-        const {Username, Password, First_Name, Last_Name, Email, Gender, Corporate} = req.body
+        const {Username, Password,confirmPassword, First_Name, Last_Name, Email, Gender, Corporate} = req.body
+        let user = await Individual_Trainee.findOne({ Email: req.body.Email });
+		if (user)
+        return res.status(400).json({error: "User with given email already Exists!"})
+		user =await corporateTrainees.findOne({ Email: req.body.Email });
+		if (user)
+        return res.status(400).json({error: "User with given email already Exists!"})
+
+		user =await Instructors.findOne({ Email: req.body.Email });
+		if (user)
+        return res.status(400).json({error: "User with given email already Exists!"})
+
+		user = await Individual_Trainee.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given username already Exists!"})
+
+		user = await corporateTrainees.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given username already Exists!"})
+	
+		user = await Instructors.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given username already Exists!"})
+		user = await Administrator.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given username already Exists!"})
+			
+        if(req.body.Password !== req.body.confirmPassword){
+            return res.status(400).json({error: "Password doesn't with confirm Password !"})		}
 
         let emptyFields = []
         if (!Username) {
@@ -384,6 +460,9 @@
 
         if (!Corporate) {
             emptyFields.push('Corporate')
+        }
+        if (!confirmPassword) {
+            emptyFields.push('confirmPassword')
         }
 
         if(emptyFields.length > 0) {
@@ -685,7 +764,6 @@
                     const updatedIR = await InstructorReports.findByIdAndUpdate({_id:RID},{Admin_Response}, {new : true})
                     res.status(200).json(updatedIR)
                 }
-        
                 if (currRep == 0) {
                     // console.log("here1")
                     const currRep1 = await TraineeReports.find({_id:RID}).populate();
@@ -719,6 +797,11 @@
         const grantAccess = async (req, res) => {
             const { id } = req.params //id of the request
             const request = await courseRequests.findById({_id:id}).populate();
+            var c;
+            var already=[];
+            let a=[];
+            let i;
+            let j;
             console.log(request)
             const courseId = request.CourseId;
             const traineeId = request.CorporateTraineeId;
@@ -727,13 +810,51 @@
         // console.log(updatedArray);
             updatedArray.push(courseId);
         // console.log(updatedArray);
-        
-
             try{
             const updatedTrainee =  await corporateTrainees.findByIdAndUpdate({_id:traineeId},{Registered_Courses:updatedArray},{new:true});
             console.log(updatedTrainee)
-            res.status(200).json(updatedTrainee)
-            }
+            res.status(200).json(updatedTrainee);
+
+
+     //creating Progress
+    
+  
+     console.log(req.query.CourseId);
+   
+     const sub = await Subtitles.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId)});
+     //check if this corporate has this course or not
+     const cop=await corporateTrainees.findById({_id:req.query.TraineeId})
+     const coursesArray = cop.Registered_Courses;
+
+     console.log(coursesArray)
+     if(coursesArray.length>0){
+     for ( i = 0; i < coursesArray.length; i++) {
+         //Check if this course is already in traineeProgress DB
+     already=await TraineeProgress.find({"Trainee_Id":req.query.TraineeId,CourseId:mongoose.Types.ObjectId(coursesArray[i])});
+     console.log(already[0]);
+     //console.log(arrayIsEmpty(already.length));
+     console.log("ASLUN!!!!")
+     if(!arrayIsEmpty(already) ){
+      //coursesArray1.push(await course.findById({_id:coursesArray[i]},{_id:1}));
+      res.status(200).json(already)
+      console.log("Hi et3ml abl keda")
+     } 
+     else{  
+         for ( j = 0; i < (sub.length); j++) {
+         old= await TraineeProgress.create({"Trainee_Id":req.query.TraineeId,"SubtitleId":mongoose.Types.ObjectId(sub[j]._id),"CourseId":mongoose.Types.ObjectId(coursesArray[i])});
+         console.log(" NEW here,Bye")
+         }   
+        res.status(200).json(old)
+         }
+  } }
+  else{
+     res.status(400).json({error:"There is no registred"})
+
+  }
+  const old= await course.findById({_id:req.query.CourseId},{NumberOfPaid:1})
+  old=old++;
+ const counter=await course.findByIdAndUpdate({_id:req.query.CourseId},{NumberOfPaid:old});
+         }
             catch(error){
                 res.status(400).json({error:error.message});
             }
@@ -749,5 +870,197 @@
             }
             res.status(200).json(data)
             };
+
+        //add course discounts to all courses
+        const addCourseDiscountToAllCourses = async(req,res)=>{
+
+        const {Discount,Discount_Start_Date,Discount_End_Date}= req.body;
+        const courseId=req.query.CourseId;
         
-        module.exports = {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests}
+    try{
+
+        const allCourses = await course.find({});
+
+        for(let i = 0;i<allCourses.length;i++)
+        {
+            const currCourse = await course.findById({_id:allCourses[i]._id});
+            console.log(currCourse.Discount);
+            if(currCourse.Discount==null||currCourse.Discount=="")
+            {
+                console.log("jj")
+                const updatedDiscount= await course.findByIdAndUpdate({_id:allCourses[i]._id}, { Discount: Discount,Discount_Start_Date:Discount_Start_Date,Discount_End_Date:Discount_End_Date},{new:true});
+                console.log(updatedDiscount);
+                
+            }
+            // else
+            // {
+            //     console.log("ll");
+            //     res.status(400).json({error:"There is a discount already defined for this course! Please try at a later time."});
+            // }
+        }
+        res.status(200).json("Done");
+
+        
+        
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+
+}
+
+//add course discounts to selected courses
+const addCourseDiscountToSelectedCourses = async(req,res)=>{
+
+        const coursesArray = req.body.coursesArray;
+        
+        const {Discount,Discount_Start_Date,Discount_End_Date}= req.body;
+        
+        
+    try{
+
+        //const allCourses = await course.find({});
+
+        for(let i = 0;i<coursesArray.length;i++)
+        {
+            const currCourse = await course.findById({_id:coursesArray[i]._id});
+            console.log(currCourse.Discount);
+            if(currCourse.Discount==null||currCourse.Discount=="")
+            {
+                console.log("jj")
+                const updatedDiscount= await course.findByIdAndUpdate({_id:coursesArray[i]._id}, { Discount: Discount,Discount_Start_Date:Discount_Start_Date,Discount_End_Date:Discount_End_Date},{new:true});
+                console.log(updatedDiscount);
+                
+            }
+        }
+        res.status(200).json("Done");
+
+        
+        
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+
+}
+
+const fetchAdminProfileDetails = async(req,res) => {
+
+    const adminId = req.query.AdminId;
+
+    try{
+    const currAdmin = await Administrator.findById({_id:adminId});
+    console.log(currAdmin)
+    res.status(200).json(currAdmin)
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+
+
+const acceptRefund = async(req,res)=>{
+const refid = req.query.refId
+const currRefund = await refund.findById({_id: refid})
+// console.log("REFUND " + currRefund)
+const currCourse = currRefund.Course_Id +"";
+const trainee = currRefund.Trainee_Id
+const currTrainee = await Individual_Trainee.findById({_id: trainee})
+// console.log("currCourse"+currCourse)
+const wallet = currTrainee.Wallet
+
+const amountToBeRefunded = currRefund.Amount
+const updatedWallet = wallet + amountToBeRefunded
+
+try {
+    const updatedTrainee = await Individual_Trainee.findByIdAndUpdate({_id: trainee}, {Wallet: updatedWallet}, {new: true})
+    const oldCourses = updatedTrainee.Registered_Courses;
+    let newArray = [];
+    for(let i=0;i<oldCourses.length;i++)
+    {
+        if(oldCourses[i]._id!=currCourse)
+        {
+            newArray.push(oldCourses[i])
+        }
+    }
+    // console.log("newArray"+newArray);
+    const updatedTrainee2 = await Individual_Trainee.findByIdAndUpdate({_id: trainee}, {Registered_Courses: newArray}, {new: true})
+    // console.log("updatedTrainee2"+updatedTrainee2);
+    const updatedRefund = await refund.findByIdAndUpdate({_id: refid}, {Status:"Accepted"}, {new: true})
+    res.status(200).json(updatedRefund);
+    const old= await course.findById({_id:req.query.CourseId},{NumberOfPaid:1})
+  old=old--;
+ const counter=await course.findByIdAndUpdate({_id:req.query.CourseId},{NumberOfPaid:old});
+}
+
+catch(error) {
+    res.status(400).json({error:error.message});
+}
+
+
+
+}
+
+
+
+const rejectRefund = async(req,res)=>{
+    const refid = req.query.refId
+    const currRefund = await refund.findById({_id: refid})
+    //console.log("REFUND " + currRefund)
+    const Admin_Response = req.body
+    // const trainee = currRefund.Trainee_Id
+    // const currTrainee = await Individual_Trainee.findById({_id: trainee})
+    // const wallet = currTrainee.Wallet
+    // const amountToBeRefunded = currRefund.Amount
+    // const updatedWallet = wallet + amountToBeRefunded
+    
+    try {
+       // const updatedTrainee = await Individual_Trainee.findByIdAndUpdate({_id: trainee}, {Wallet: updatedWallet}, {new: true})
+      // const updatedRefund1 = await refund.findByIdAndUpdate({_id: id}, {Admin_Response:Admin_Response}, {new: true})
+        const updatedRefund = await refund.findByIdAndUpdate({_id: refid}, {Status:"Rejected"}, {new: true})
+        res.status(200).json(updatedRefund);
+    }
+    
+    catch(error) {
+        res.status(400).json({error:error.message});
+    }
+    
+    
+    
+    }
+
+
+    const viewPendingRefunds = async (req, res) => {
+        const data = await refund.find({Status: "Pending"})
+        res.status(200).json(data)
+        // console.log(data)
+        
+        };
+
+
+    const viewAcceptedRefunds = async (req, res) => {
+            const data = await refund.find({Status: "Accepted"})
+            res.status(200).json(data)
+            // console.log(data)
+            
+            };
+
+
+    const viewRejectedRefunds = async (req, res) => {
+                const data = await refund.find({Status: "Rejected"})
+                res.status(200).json(data)
+                // console.log(data)
+                
+                };
+
+
+const viewSingleRefund = async(req,res) => {
+    const id = req.query.refId
+    const data = await refund.findById({_id: id})
+    res.status(200).json(data)
+}
+
+
+        
+        
+        module.exports = {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests,addCourseDiscountToAllCourses,addCourseDiscountToSelectedCourses,fetchAdminProfileDetails,acceptRefund, rejectRefund, viewPendingRefunds, viewAcceptedRefunds, viewRejectedRefunds, viewSingleRefund}

@@ -149,10 +149,13 @@ router.post("/:id/:token", async (req, res) => {
 	try {
 		const passwordSchema = Joi.object({
 			Password: passwordComplexity().required().label("Password"),
+			confirmPassword: passwordComplexity().required().label("confirmPassword"),
 		});
 		
 		const { error } = passwordSchema.validate(req.body);
-		
+		if(req.body.Password !== req.body.confirmPassword){
+			return res.status(401).send({ message: "Password dosen't match confirm password !" });
+		}
 		if (error)
 			return res.status(400).send({ message: error.details[0].message });
 		
