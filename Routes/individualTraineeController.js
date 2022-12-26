@@ -537,143 +537,255 @@ const checkIfAdminRespondedTrainee = async(req,res) => {
         };
 
         const editProfileDetails = async (req,res) => { 
+
             try{
 
                 const corporateTraineeId = req.query.CorporateTraineeId;
                 const traineeId = req.query.TraineeId;
                 const adminId = req.query.AdminId;
-                var updatedprofile = null;
+                const updatedprofile = null;
                 const username = req.body.Username;
                 const email = req.body.Email;
 
-                
-
-                
-                    if(corporateTraineeId==null)
+                if(corporateTraineeId==null)
+                {
+                    if(traineeId==null)
                     {
-                        if(traineeId==null)
+                        if(username==null || username=="")
                         {
-                            if(username==null || username=="")
-                            {
-                                res.status(400).json({error:"All the fields are empty! Please fill in the fields to update your profile."});
-                            }
-                            else
-                            {
-                                updatedprofile =await adminstrator.findByIdAndUpdate({_id:adminId},{Username:username},{new:true});
-                            }
+                            res.status(400).json({error:"All the fields are empty! Please fill in the fields to update your profile."});
                         }
                         else
                         {
-                            if((username==null && email ==null)||(username=="" && email ==""))
-                            {
-                                res.status(400).json({error:"All the fields are empty! Please fill in either one of the fields to update your profile."});
-                            }
-                            else
-                            {
-                                if(email == null)
-                                {
-                                    updatedprofile =await Individual_Trainee.findByIdAndUpdate({_id:traineeId},{Username:username,Email:email},{new:true});
-                                }
+                            let user = await adminstrator.findOne({ Email: req.body.Email });
+                                if (user)
+                                return res
+                                .status(409)
+                                .send({ error: "User with given email already Exist!" });
+                            
                                 else
                                 {
-                                    let user = await Individual_Trainee.findOne({ Email: req.body.Email });
-                                    if (user)
-                                        return res
-                                        .status(409)
-                                        .send({ error: "User with given email already Exist!" }); 
-                                    else
-                                    {
-                                        user = await instructor.findOne({ Email: req.body.Email });
-                                        if(user)
-                                        {
-                                            return res
-                                            .status(409)
-                                            .send({ error: "User with given email already Exist!" }); 
-                                        }
-                                        else
-                                        {
-                                            user = await corporate_Trainee.findOne({ Email: req.body.Email });
-                                            if(user)
-                                            {
-                                                return res
-                                                .status(409)
-                                                .send({ error: "User with given email already Exist!" }); 
-                                            }
-                                            else
-                                            {
-                                                updatedprofile =await Individual_Trainee.findByIdAndUpdate({_id:traineeId},{Username:username,Email:email},{new:true});
-                                            }
-                                        }
-                                    }
-                                        
+                                    updatedprofile =await adminstrator.findByIdAndUpdate({_id:adminId},{Username:username},{new:true});
+                                    res.status(200).json(updatedprofile);
                                 }
-                                
-                            }
                             
                         }
                     }
                     else
                     {
-                        if((username==null && email ==null)||(username=="" && email ==""))
+                        if((username==null&&email==null)||(username==""&&email==""))
                         {
-                            res.status(400).json({error:"All the fields are empty! Please fill in either one of the fields to update your profile."});
+                            res.status(400).json({error:"All the fields are empty! Please fill in the fields to update your profile."});
                         }
                         else
                         {
-                            if(email==null)
+                            if(username==null||username=="")
                             {
-                                updatedprofile =await corporate_Trainee.findByIdAndUpdate({_id:corporateTraineeId},{Username:username,Email:email},{new:true});
+                                let user = await Individual_Trainee.findOne({ Email: req.body.Email });
+                                if (user)
+                                return res
+                                .status(409)
+                                .send({ error: "User with given email already Exist!" });
+                                else
+                                {
+                                    updatedprofile =await Individual_Trainee.findByIdAndUpdate({_id:traineeId},{Email:email},{new:true});
+                                    res.status(200).json(updatedprofile);
+                                }
                             }
                             else
                             {
-                                let user = await corporate_Trainee.findOne({ Email: req.body.Email });
+                                let user = await Individual_Trainee.findOne({ Email: req.body.Email });
                                 if (user)
-                                    return res
-                                    .status(409)
-                                    .send({ error: "User with given email already Exist!" });
+                                return res
+                                .status(409)
+                                .send({ error: "User with given email already Exist!" });
                                 else
                                 {
-                                    user = await instructor.findOne({ Email: req.body.Email })
-                                    if(user)
+                                    let user = await Individual_Trainee.findOne({ Username: req.body.Username });
+                                    if (user)
+                                    return res
+                                    .status(409)
+                                    .send({ error: "User with given username already Exist!" });
+                                    else
                                     {
-                                        return res
-                                        .status(409)
-                                        .send({ error: "User with given email already Exist!" });
-                                    }
-                                    else{
-                                        user = await Individual_Trainee.findOne({ Email: req.body.Email })
-                                        if(user)
-                                        {
-                                            return res
-                                            .status(409)
-                                            .send({ error: "User with given email already Exist!" });
-                                        }
-                                        else
-                                        {
-                                            updatedprofile =await corporate_Trainee.findByIdAndUpdate({_id:corporateTraineeId},{Username:username,Email:email},{new:true});
-                                        }
+                                        updatedprofile =await Individual_Trainee.findByIdAndUpdate({_id:traineeId},{Username:username,Email:email},{new:true});
+                                        res.status(200).json(updatedprofile);
                                     }
                                 }
-                                
                             }
-                            
                         }
-                        
                     }
-                
-                
+                }
+                else
+                {
+                    if(email==null||email=="")
+                    {
+                        res.status(400).json({error:"All the fields are empty! Please fill in the fields to update your profile."});
+                    }
+                    else
+                    {
+                        let user = await corporate_Trainee.findOne({ Email: req.body.Email });
+                            if (user)
+                            return res
+                            .status(409)
+                            .send({ error: "User with given email already Exist!" });
+                            else
+                            {
+                                updatedprofile =await corporate_Trainee.findByIdAndUpdate({_id:corporateTraineeId},{Email:email},{new:true});
+                                res.status(200).json(updatedprofile);
+                            }
+                    }
+                }
 
-                
-                console.log(updatedprofile)
-                res.status(200).json(updatedprofile);
+                console.log("updatedprofile"+updatedprofile);
+                //res.status(200).json(updatedprofile);
 
-                
-            }
-            catch(error){
+            }catch(error)
+            {
                 res.status(400).json({error:error.message});
             }
 
-            };
+        }
+
+        // const editProfileDetails = async (req,res) => { 
+        //     try{
+
+        //         const corporateTraineeId = req.query.CorporateTraineeId;
+        //         const traineeId = req.query.TraineeId;
+        //         const adminId = req.query.AdminId;
+        //         var updatedprofile = null;
+        //         const username = req.body.Username;
+        //         const email = req.body.Email;
+
+                
+
+                
+        //             if(corporateTraineeId==null)
+        //             {
+        //                 if(traineeId==null)
+        //                 {
+        //                     if(username==null || username=="")
+        //                     {
+        //                         res.status(400).json({error:"All the fields are empty! Please fill in the fields to update your profile."});
+        //                     }
+        //                     else
+        //                     {
+        //                         updatedprofile =await adminstrator.findByIdAndUpdate({_id:adminId},{Username:username},{new:true});
+        //                     }
+        //                 }
+        //                 else
+        //                 {
+        //                     if((username==null && email ==null)||(username=="" && email ==""))
+        //                     {
+        //                         res.status(400).json({error:"All the fields are empty! Please fill in either one of the fields to update your profile."});
+        //                     }
+        //                     else
+        //                     {
+        //                         if(email == null)
+        //                         {
+        //                             updatedprofile =await Individual_Trainee.findByIdAndUpdate({_id:traineeId},{Username:username,Email:email},{new:true});
+        //                         }
+        //                         else
+        //                         {
+        //                             let user = await Individual_Trainee.findOne({ Email: req.body.Email });
+        //                             if (user)
+        //                                 return res
+        //                                 .status(409)
+        //                                 .send({ error: "User with given email already Exist!" }); 
+        //                             else
+        //                             {
+        //                                 user = await instructor.findOne({ Email: req.body.Email });
+        //                                 if(user)
+        //                                 {
+        //                                     return res
+        //                                     .status(409)
+        //                                     .send({ error: "User with given email already Exist!" }); 
+        //                                 }
+        //                                 else
+        //                                 {
+        //                                     user = await corporate_Trainee.findOne({ Email: req.body.Email });
+        //                                     if(user)
+        //                                     {
+        //                                         return res
+        //                                         .status(409)
+        //                                         .send({ error: "User with given email already Exist!" }); 
+        //                                     }
+        //                                     else
+        //                                     {
+        //                                         updatedprofile =await Individual_Trainee.findByIdAndUpdate({_id:traineeId},{Username:username,Email:email},{new:true});
+        //                                     }
+        //                                 }
+        //                             }
+                                        
+        //                         }
+                                
+        //                     }
+                            
+        //                 }
+        //             }
+        //             else
+        //             {
+        //                 if((username==null && email ==null)||(username=="" && email ==""))
+        //                 {
+        //                     res.status(400).json({error:"All the fields are empty! Please fill in either one of the fields to update your profile."});
+        //                 }
+        //                 else
+        //                 {
+        //                     if(email==null)
+        //                     {
+        //                         updatedprofile =await corporate_Trainee.findByIdAndUpdate({_id:corporateTraineeId},{Username:username,Email:email},{new:true});
+        //                     }
+        //                     else
+        //                     {
+        //                         let user = await corporate_Trainee.findOne({ Email: req.body.Email });
+        //                         if (user)
+        //                             return res
+        //                             .status(409)
+        //                             .send({ error: "User with given email already Exist!" });
+        //                         else
+        //                         {
+        //                             user = await instructor.findOne({ Email: req.body.Email })
+        //                             if(user)
+        //                             {
+        //                                 return res
+        //                                 .status(409)
+        //                                 .send({ error: "User with given email already Exist!" });
+        //                             }
+        //                             else{
+        //                                 user = await Individual_Trainee.findOne({ Email: req.body.Email })
+        //                                 if(user)
+        //                                 {
+        //                                     return res
+        //                                     .status(409)
+        //                                     .send({ error: "User with given email already Exist!" });
+        //                                 }
+        //                                 else
+        //                                 {
+        //                                     updatedprofile =await corporate_Trainee.findByIdAndUpdate({_id:corporateTraineeId},{Username:username,Email:email},{new:true});
+        //                                 }
+        //                             }
+        //                         }
+                                
+        //                     }
+                            
+        //                 }
+                        
+        //             }
+                
+                
+
+                
+        //         console.log(updatedprofile)
+        //         res.status(200).json(updatedprofile);
+
+                
+        //     }
+        //     catch(error){
+        //         res.status(400).json({error:error.message});
+        //     }
+
+        //     };
+
 
         
             
