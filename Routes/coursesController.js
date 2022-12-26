@@ -1042,6 +1042,31 @@ const isCourseFree= async (req,res) => {
 
             
             }; 
+            const checkFinished=async(req,res)=>{
+                let f=false
+                try{
+                var finished=await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Trainee_Id":mongoose.Types.ObjectId(req.query.TraineeId)},{Finished:1,_id:0})
+                 f=finished[0].toJSON();
+                 const ff=f.Finished
+
+                console.log(ff);
+                res.status(200).json(ff);
+            }
+                catch(error){
+                res.status(400).json({error:error.message});
+
+                }
+            
+               }      
+               const updateFinished=async(req,res)=>{
+                let f=false
+                const finished=await CorporateTraineeProgress.updateMany({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Trainee_Id":mongoose.Types.ObjectId(req.query.TraineeId)},{Finished:true})
+                const finishedU=await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Trainee_Id":mongoose.Types.ObjectId(req.query.TraineeId)},{Finished:1,_id:0})
+                f=finished[0].toJSON();
+                const ff=f.Finished
+                res.status(200).json(ff);
+                   
+               }
 
 module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, 
     Filter_By_Price,data,createCourse,addANewInstructor
@@ -1055,4 +1080,4 @@ module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate,
     ,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse
     ,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,
     FilteredCourses,isDiscountViable,displayCourseDiscount,
-    UpdateProgressOfSubtitlie, getStatusOfSubtitlie,fetchThePreviewByCourseId,isCourseFree};
+    UpdateProgressOfSubtitlie, getStatusOfSubtitlie,fetchThePreviewByCourseId,isCourseFree,checkFinished,updateFinished};

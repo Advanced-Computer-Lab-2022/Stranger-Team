@@ -150,6 +150,9 @@ import ViewMoney from './components/InstructorMoneyOwed';
 //guest pages
 import GuestHomePage from './components/Guest/GuestHomePage';
 import GuestCurrentCoursePage from './components/Guest/GuestCurrentCoursePage';
+import ViewQuestionsWizAnswersTrainee from './pages/ViewQwizAnswersTrainee';
+//import ViewQuestionsWizAnswersTrainee from './components/ViewQwizAnswersTrainee';
+
 
 function App() {
    const User = localStorage.getItem("token");
@@ -808,6 +811,10 @@ function App() {
         <Route
         path="/viewqwizanswers"
         element={<ViewQuestionsWizAnswers />}
+        />
+        <Route
+        path="/Traineeviewqwizanswers"
+        element={<ViewQuestionsWizAnswersTrainee/>}
         />
         <Route
         path="/viewMoney"

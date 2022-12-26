@@ -11,7 +11,8 @@ var p;
 var f;
 
 
-const ViewQuestionsWizAnswers = () => {
+
+const ViewQuestionsWizAnswersTrainee = () => {
 
 // const [questionN,setQuestionN] = useState(0)
 const [questions,setQuestions] = useState([])
@@ -34,25 +35,23 @@ useEffect(() => {
     if (response.ok) {
         setQuestions(json)
     }
-    }      
-    const fetchStatus=async()=>{
-        const params = new URLSearchParams(window.location.search);
-        const courseId = params.get('CourseId');
-        const TraineeId=params.get('CorporateTraineeId')
-        const response = await fetch(`/checkCourseFinished/?CourseId=${courseId}&TraineeId=${TraineeId}`)
-        const json = await response.json()
-       // console.log("----------------->>>>>>>>>>>>>>>>>>>",json)
-        if(response.ok){
-        setFinished(json)
-        }
+    }        
+const fetchStatus=async()=>{
+    const params = new URLSearchParams(window.location.search);
+    const courseId = params.get('CourseId');
+    const TraineeId=params.get('TraineeId')
+    const response = await fetch(`/checkCourseFinished/?CourseId=${courseId}&TraineeId=${TraineeId}`)
+    const json = await response.json()
+    if(response.ok){
+    setFinished(json)
     }
+}
     f=finished;
-    console.log("----------------->>>>>>>>>>>>>>>>>>>",f)
-
     p=questions;
-    fetchStatus()  
+    fetchStatus()
+
     fetchQ();
-})
+},[])
 console.log(p)
 return (
  <div>    
@@ -76,4 +75,4 @@ return (
 )
 }
 
-export default ViewQuestionsWizAnswers
+export default ViewQuestionsWizAnswersTrainee

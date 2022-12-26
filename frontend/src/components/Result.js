@@ -11,8 +11,11 @@ import { useDispatch,useSelector } from 'react-redux';
 
 import { resetResultAction } from '../redux/result_reducer';
 import { resetAllAction } from '../redux/question_reducer';
+var u;
 
 export default function Result() {
+    const [finished,setFinished] = useState(false)
+
 
 const [corpTrainee, setCorpTrainee] = useState(false)
 
@@ -54,6 +57,27 @@ const flag = flagResult(totalPoints, earnPoints)
         }
 
     }
+    const update= async()=>{
+        let response;
+        let params = new URLSearchParams(window.location.search);
+        let courseId = params.get('CourseId');
+        let TraineeId=params.get('TraineeId');
+        let CTraineeId=params.get('CorporateTraineeId');
+    
+         if(CTraineeId==null){
+          response = await fetch(`/updateFinished/?CourseId=${courseId}&TraineeId=${TraineeId}`)
+        }
+        else{   
+         response = await fetch(`/updateFinished/?CourseId=${courseId}&TraineeId=${CTraineeId}`)
+        }
+        const json = await response.json()
+        if(response.ok){
+        setFinished(json)
+    }
+        u=finished;
+        console.log(u);
+        console.log(courseId); 
+}
 
     let navigate = useNavigate();
     const routeChangeCT = () =>{ 
@@ -109,8 +133,10 @@ const flag = flagResult(totalPoints, earnPoints)
             <div className="start">
                 <Link className='btn' to={`/mainForQuiz/?CourseId=${courseId}&TraineeId=${traineeId}&CorporateTraineeId=${ctrainee}`} onClick={onRestart}>Restart</Link>
             </div>
-{!corpTrainee && <Link className='btn' to={`/CurrentCoursePageTrainee/?CourseId=${courseId}&TraineeId=${traineeId}`}>Back To Course</Link>}
-{corpTrainee && <Link className='btn' to={`/CurrentCoursePageCorporateTrainee/?CourseId=${courseId}&CorporateTraineeId=${ctrainee}`}>Back To Course</Link>}
+        {!corpTrainee && <Link className='btn' to={`/CurrentCoursePageTrainee/?CourseId=${courseId}&TraineeId=${traineeId}`}>Back To Course</Link>}
+        {corpTrainee && <Link className='btn' to={`/CurrentCoursePageCorporateTrainee/?CourseId=${courseId}&CorporateTraineeId=${ctrainee}`}>Back To Course</Link>}
+        {!corpTrainee && <Link className='btn' to={`/Traineeviewqwizanswers/?CourseId=${courseId}&TraineeId=${traineeId}`}onClick={update}>Done</Link>}
+        {corpTrainee && <Link className='btn' to={`/viewqwizanswers/?CourseId=${courseId}&CorporateTraineeId=${ctrainee}`} onClick={update}>Done </Link>}
             
     
             <div className="container">

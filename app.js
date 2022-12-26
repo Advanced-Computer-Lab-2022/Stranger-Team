@@ -54,7 +54,7 @@ const progress = require("./Models/TraineeProgress");
 const Subtitles = require('./Models/Subtitles');
 const TraineeProgress=require("./Models/TraineeProgress");
 // const individual_Trainee=require('./Models/Individual Trainee');
-const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,addANewInstructor,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,FilteredCourses,isDiscountViable,displayCourseDiscount,UpdateProgressOfSubtitlie,getStatusOfSubtitlie,fetchThePreviewByCourseId,isCourseFree} = require('./Routes/coursesController');
+const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data,createCourse,Search_By_Title,Search_By_Instructor_Name,Filter_By_Subject_And_Price,Filter_By_Subject_And_Rating,Filter_By_Subject_And_Rating_And_Price,viewMyInstructorCoursesById,getCurrentCourseDetails,getCurrentCourseInformation,addCourseDiscount,fetchCourseDiscountsByCourseId,addSubtitle,fetchSubtitlesByCourseId,fetchInstructorById,fetchCoursePreviewLink,addANewInstructor,getCurrentCourseInstructor,fetchCurrentCourseInstructorByInstructorId,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,FilteredCourses,isDiscountViable,displayCourseDiscount,UpdateProgressOfSubtitlie,getStatusOfSubtitlie,fetchThePreviewByCourseId,isCourseFree, checkFinished, updateFinished} = require('./Routes/coursesController');
 
 const {addUserRating,saveUserRating} = require('./Routes/usersController');
 
@@ -947,6 +947,9 @@ app.get('/quizSize', quizSize);
 
 //BASBOSAAAAAA
 //test
+app.get("/checkCourseFinished",checkFinished)
+app.get("/updateFinished",updateFinished);
+
 app.get("/checkTest",check);
 app.get("/viewAllQuestions",viewAllQuestions)
 app.get("/allMoneyOwed",AllmoneyOwed)
