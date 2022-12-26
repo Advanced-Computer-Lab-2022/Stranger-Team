@@ -26,11 +26,11 @@ useEffect(() => {
    
     fetchMoney();
 },[])
-console.log("Money",money)
-p=money;
+console.log("Money",money.Money)
+p=money.Money;
 return (
  <div>    
-    {/* <Container >
+    <Container >
     <div className="row gutters">
     <div className="card h-100" style={{width:"300px"}}>
         <div>
@@ -41,19 +41,7 @@ return (
     </div>
   
     
-    </Container> */}
-    
-
-    
-            <div className="row">
-                
-                <p className="mb-0">Money Owed: </p>
-            
-            <div className="col-sm-9">
-                <label className="mb-0">{p}</label>
-            </div>
-            </div>
-            <hr/>
+    </Container>
     </div>
 
 )

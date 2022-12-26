@@ -721,6 +721,7 @@ const Subtitles = require('../Models/Subtitles');
 
 
         const grantAccess = async (req, res) => {
+
             const { id } = req.params //id of the request
             const request = await courseRequests.findById({_id:id}).populate();
             var c;
@@ -728,9 +729,11 @@ const Subtitles = require('../Models/Subtitles');
             let a=[];
             let i;
             let j;
+            var sub;
             console.log(request)
             const courseId = request.CourseId;
             const traineeId = request.CorporateTraineeId;
+            const trainee=traineeId.toString();
             const currTrainee =  await corporateTrainees.findById({_id:traineeId}).populate();
             const updatedArray = currTrainee.Registered_Courses;
         // console.log(updatedArray);
@@ -739,47 +742,50 @@ const Subtitles = require('../Models/Subtitles');
             try{
             const updatedTrainee =  await corporateTrainees.findByIdAndUpdate({_id:traineeId},{Registered_Courses:updatedArray},{new:true});
             console.log(updatedTrainee)
-            res.status(200).json(updatedTrainee);
+            console.log("Traineee Id------->>>>",traineeId);
+        //creating Progress
 
+             sub = await Subtitles.find({CourseId:mongoose.Types.ObjectId(courseId)});
+             console.log("SUB ARRAY------->>>>",sub)
+            //check if this corporate has this course or not
+            const cop=await corporateTrainees.findById({_id:traineeId})
+            const coursesArray =  cop.Registered_Courses;
+       
+            console.log("CourseArray",coursesArray)
+            
+            if(coursesArray.length>0){
+            for ( i = 0; i < coursesArray.length; i++) {
+                //Check if this course is already in traineeProgress DB
+            already=await TraineeProgress.find({"Trainee_Id":trainee,CourseId:mongoose.Types.ObjectId(coursesArray[i])});
+            console.log(arrayIsEmpty(already));
+            //console.log(arrayIsEmpty(already.length));
+            console.log("ASLUN!!!!")
 
-     //creating Progress
-    
-  
-     console.log(req.query.CourseId);
-   
-     const sub = await Subtitles.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId)});
-     //check if this corporate has this course or not
-     const cop=await corporateTrainees.findById({_id:req.query.TraineeId})
-     const coursesArray = cop.Registered_Courses;
-
-     console.log(coursesArray)
-     if(coursesArray.length>0){
-     for ( i = 0; i < coursesArray.length; i++) {
-         //Check if this course is already in traineeProgress DB
-     already=await TraineeProgress.find({"Trainee_Id":req.query.TraineeId,CourseId:mongoose.Types.ObjectId(coursesArray[i])});
-     console.log(already[0]);
-     //console.log(arrayIsEmpty(already.length));
-     console.log("ASLUN!!!!")
-     if(!arrayIsEmpty(already) ){
-      //coursesArray1.push(await course.findById({_id:coursesArray[i]},{_id:1}));
-      res.status(200).json(already)
-      console.log("Hi et3ml abl keda")
-     } 
-     else{  
-         for ( j = 0; i < (sub.length); j++) {
-         old= await TraineeProgress.create({"Trainee_Id":req.query.TraineeId,"SubtitleId":mongoose.Types.ObjectId(sub[j]._id),"CourseId":mongoose.Types.ObjectId(coursesArray[i])});
-         console.log(" NEW here,Bye")
-         }   
-        res.status(200).json(old)
+            if(!arrayIsEmpty(already) ){
+             //coursesArray1.push(await course.findById({_id:coursesArray[i]},{_id:1}));
+             console.log("Hi, et3ml abl keda")
+            } 
+            else{  
+                for ( j = 0; j < (sub.length); j++) {
+                old= await TraineeProgress.create({"Trainee_Id":trainee,"SubtitleId":mongoose.Types.ObjectId(sub[j]._id),"CourseId":mongoose.Types.ObjectId(coursesArray[i])});
+                console.log(" NEW here,Bye")
+                }  
+                 
+         const bb= await course.findById({_id:courseId},{NumberOfPaid:1})
+         const b=(bb.NumberOfPaid)+1;
+         console.log("Number of people ------->>>>>>>>>>>",bb);
+         const counter=await course.findByIdAndUpdate({_id:courseId},{NumberOfPaid:b}); 
+                }
          }
-  } }
-  else{
-     res.status(400).json({error:"There is no registred"})
 
-  }
-  const old= await course.findById({_id:req.query.CourseId},{NumberOfPaid:1})
-  old=old++;
- const counter=await course.findByIdAndUpdate({_id:req.query.CourseId},{NumberOfPaid:old});
+         }
+         
+        
+        
+            res.status(200).json(updatedTrainee);
+            //res.status(200).json(old)
+
+    
          }
             catch(error){
                 res.status(400).json({error:error.message});
@@ -886,47 +892,55 @@ const fetchAdminProfileDetails = async(req,res) => {
 
 
 const acceptRefund = async(req,res)=>{
-const refid = req.query.refId
-const currRefund = await refund.findById({_id: refid})
-// console.log("REFUND " + currRefund)
-const currCourse = currRefund.Course_Id +"";
-const trainee = currRefund.Trainee_Id
-const currTrainee = await Individual_Trainee.findById({_id: trainee})
-// console.log("currCourse"+currCourse)
-const wallet = currTrainee.Wallet
-
-const amountToBeRefunded = currRefund.Amount
-const updatedWallet = wallet + amountToBeRefunded
-
-try {
-    const updatedTrainee = await Individual_Trainee.findByIdAndUpdate({_id: trainee}, {Wallet: updatedWallet}, {new: true})
-    const oldCourses = updatedTrainee.Registered_Courses;
-    let newArray = [];
-    for(let i=0;i<oldCourses.length;i++)
-    {
-        if(oldCourses[i]._id!=currCourse)
+    const refid = req.query.refId
+    const currRefund = await refund.findById({_id: refid})
+    // console.log("REFUND " + currRefund)
+    const currCourse = currRefund.Course_Id +"";
+    const trainee = currRefund.Trainee_Id
+    const currTrainee = await Individual_Trainee.findById({_id: trainee})
+    // console.log("currCourse"+currCourse)
+    const wallet = currTrainee.Wallet
+    
+    const amountToBeRefunded = currRefund.Amount
+    const updatedWallet = wallet + amountToBeRefunded
+    
+    try {
+        const updatedTrainee = await Individual_Trainee.findByIdAndUpdate({_id: trainee}, {Wallet: updatedWallet}, {new: true})
+        const oldCourses = updatedTrainee.Registered_Courses;
+        let newArray = [];
+        for(let i=0;i<oldCourses.length;i++)
         {
-            newArray.push(oldCourses[i])
+            if(oldCourses[i]._id!=currCourse)
+            {
+                newArray.push(oldCourses[i])
+            }
         }
+        // console.log("newArray"+newArray);
+        const updatedTrainee2 = await Individual_Trainee.findByIdAndUpdate({_id: trainee}, {Registered_Courses: newArray}, {new: true})
+        // console.log("updatedTrainee2"+updatedTrainee2);
+        const updatedRefund = await refund.findByIdAndUpdate({_id: refid}, {Status:"Accepted"}, {new: true})
+        //decrement Number of people for this Course
+        const old= await course.findById({_id:currCourse},{NumberOfPaid:1})
+        old=(old.NumberOfPaid)--;
+        const counter=await course.findByIdAndUpdate({_id:currCourse},{NumberOfPaid:old});
+      
+        //deduct Money From
+        const inst=await course.find({"_id":currCourse},{"Instructor":1});
+        const inst2=await Instructors.findById({_id:inst.Instructor},{Money:1});
+
+        const moneydeducted= inst2.Money-(amountToBeRefunded-(amountToBeRefunded*30/100));
+        const inst3=await Instructors.findByIdAndUpdate({_id:inst.Instructor},{Money:moneydeducted});
+    
+        res.status(200).json(updatedRefund);
     }
-    // console.log("newArray"+newArray);
-    const updatedTrainee2 = await Individual_Trainee.findByIdAndUpdate({_id: trainee}, {Registered_Courses: newArray}, {new: true})
-    // console.log("updatedTrainee2"+updatedTrainee2);
-    const updatedRefund = await refund.findByIdAndUpdate({_id: refid}, {Status:"Accepted"}, {new: true})
-    res.status(200).json(updatedRefund);
-    const old= await course.findById({_id:req.query.CourseId},{NumberOfPaid:1})
-  old=old--;
- const counter=await course.findByIdAndUpdate({_id:req.query.CourseId},{NumberOfPaid:old});
-}
-
-catch(error) {
-    res.status(400).json({error:error.message});
-}
-
-
-
-}
-
+    
+    catch(error) {
+        res.status(400).json({error:error.message});
+    }
+    
+    
+    
+    }
 
 
 const rejectRefund = async(req,res)=>{

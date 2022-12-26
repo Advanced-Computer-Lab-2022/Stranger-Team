@@ -50,6 +50,10 @@ const InstructorSchema = new Schema({
       default:"Instructor"
     },
     verified: { type: Boolean, default: true },
+     Money:{
+    type:Number,
+    default:0
+    },
     Currency: {
       type: String,
       required: false,

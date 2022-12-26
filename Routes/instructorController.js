@@ -310,9 +310,9 @@ const fetchInstructorProblem = async(req,res) => {
         res.status(400).json({error:error.message});
     }
 }
-
 const AllmoneyOwed = async (req,res)=>{
     const instId=req.query.id
+    let Inst;
     var C= await course.find({"Instructor":mongoose.Types.ObjectId(instId)},{NumberOfPaid:1,Price:1,Discount:1,Discount_Start_Date:1,Discount_End_Date:1,_id:0});
     var money=0;
     try{
@@ -322,18 +322,22 @@ const AllmoneyOwed = async (req,res)=>{
             var discount=C[i].Discount;
             var DiscountSart=C[i].Discount_Start_Date;
             var DiscountEnd=C[i].Discount_End_Date;
-            console.log(C[i])
+            console.log("All Courses--------->",C[i])
             if(discount==null){
             //----------------------->>>>>> WHO SET THIS DISCOUNT>????????????????
             //-------------------------------------------------->>>>>>>>>>>Do i Need to calculate for each month???????????
             //say that website take 30% from instructor
             money=money+((price) * (HmPeople) * (70/100));
+            Inst=await instructor.findByIdAndUpdate({_id:instId},{Money:money});
             }
             else{
              money=money+((price)*(HmPeople)*((70/100)*((100-discount)/100)));
+             Inst=await instructor.findByIdAndUpdate({_id:instId},{Money:money});
+
             }
         }
-        res.status(200).json(money)
+        //res.status(200).json(money)
+        res.status(200).json(Inst)
     }
     catch(error){
         res.status(400).json({error:"No such Instructor"});
@@ -342,7 +346,6 @@ const AllmoneyOwed = async (req,res)=>{
 
 
 }
-
 
 
     module.exports ={insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,
