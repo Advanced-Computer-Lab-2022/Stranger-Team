@@ -8,6 +8,7 @@ const CorporateTraineeForm = () => {
     const {dispatch} = useCorporateTraineesContext()
     const [Username, setUsername] = useState('')
     const [Password, setPassword] = useState('')
+    const [confirmPassword, setconfirmPassword] = useState('')
     const [First_Name, setFN] = useState('')
     const [Last_Name, setLN] = useState('')
     const [Email, setEmail] = useState('')
@@ -20,7 +21,7 @@ const CorporateTraineeForm = () => {
 
     const handleSubmit = async(e) => {
         e.preventDefault()
-        const ct = {Username, Password, First_Name, Last_Name, Email, Gender, Corporate}
+        const ct = {Username, Password,confirmPassword, First_Name, Last_Name, Email, Gender, Corporate,Country}
         const response = await fetch('/adminHome/addCorporateTrainee', {
             method: 'POST',
             body: JSON.stringify(ct),
@@ -41,6 +42,7 @@ const CorporateTraineeForm = () => {
             setError(null)
             setUsername('')
             setPassword('')
+            setconfirmPassword('')
             setFN('')
             setLN('')
             setEmail('')
@@ -62,7 +64,7 @@ const CorporateTraineeForm = () => {
             type="text" 
             onChange={(e) => setUsername(e.target.value)}
             value={Username}
-            className={emptyFields.includes('Username') ? 'error':''}
+            required
             />
 
             <label>Password: </label>
@@ -70,7 +72,14 @@ const CorporateTraineeForm = () => {
             type="text" 
             onChange={(e) => setPassword(e.target.value)}
             value={Password}
-            className={emptyFields.includes('Password') ? 'error':''}
+            required
+            />
+             <label>Confirm Password: </label>
+            <input 
+            type="text" 
+            onChange={(e) => setconfirmPassword(e.target.value)}
+            value={confirmPassword}
+            required
             />
 
 
@@ -79,7 +88,7 @@ const CorporateTraineeForm = () => {
             type="text" 
             onChange={(e) => setFN(e.target.value)}
             value={First_Name}
-            className={emptyFields.includes('First_Name') ? 'error':''}
+            required
             />
 
             <label>Last Name: </label>
@@ -87,7 +96,7 @@ const CorporateTraineeForm = () => {
             type="text" 
             onChange={(e) => setLN(e.target.value)}
             value={Last_Name}
-            className={emptyFields.includes('Last_Name') ? 'error':''}
+           required
             />
 
 
@@ -96,7 +105,7 @@ const CorporateTraineeForm = () => {
             type="text" 
             onChange={(e) => setEmail(e.target.value)}
             value={Email}
-            className={emptyFields.includes('Email') ? 'error':''}
+            required
             />
 
             <label>Gender: </label>
@@ -104,10 +113,9 @@ const CorporateTraineeForm = () => {
             type="text" 
             onChange={(e) => setGender(e.target.value)}
             value={Gender}
-            className={emptyFields.includes('Gender') ? 'error':''}
+            required
             />
-
-            <label for="Country">Choose your Country:</label>
+<label for="Country">Choose your Country:</label>
             <select id="Country" name="Country" onChange={(e) => setCountry(e.target.value)} value={Country} required class="form-control">
                 <option value="Afghanistan">Afghanistan</option>
                 <option value="Åland Islands">Åland Islands</option>
@@ -357,13 +365,12 @@ const CorporateTraineeForm = () => {
                 <option value="Zimbabwe">Zimbabwe</option>
             </select>
 
-
             <label>Corporate name: </label>
             <input 
             type="text" 
             onChange={(e) => setCorporate(e.target.value)}
             value={Corporate}
-            className={emptyFields.includes('Corporate') ? 'error':''}
+            required
             />
 
             <button>Add Corporate Trainee</button>

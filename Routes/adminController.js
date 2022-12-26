@@ -32,7 +32,21 @@
         //adding a new Admin
         const addAdmin = async (req, res) => {
         const {Username, Password} = req.body
-
+        let user = await Individual_Trainee.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given Username already Exists!"})
+		user = await corporateTrainees.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given Username already Exists!"})
+		user = await Instructors.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given Username already Exists!"})
+        if(req.body.Password !== req.body.confirmPassword){
+            return res.status(400).json({error: "Password doesn't with confirm Password !"})
+		}
+        user = await Administrator.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given Username already Exists!"})
         let emptyFields = []
         if (!Username) {
             emptyFields.push('Username')
@@ -244,6 +258,35 @@
 
         const addInstructor = async (req, res) => {
         const {Username, Password, First_Name, Last_Name, Email, Gender,Bio} = req.body
+        if(req.body.Password !== req.body.confirmPassword){
+            return res.status(400).json({error: "Password doesn't with confirm Password !"})
+		}
+        let user = await Individual_Trainee.findOne({ Email: req.body.Email });
+		if (user)
+        return res.status(400).json({error: "User with given email already Exists!"})
+		user =await corporateTrainees.findOne({ Email: req.body.Email });
+		if (user)
+        return res.status(400).json({error: "User with given email already Exists!"})
+
+		user =await Instructors.findOne({ Email: req.body.Email });
+		if (user)
+        return res.status(400).json({error: "User with given email already Exists!"})
+
+		user = await Individual_Trainee.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given username already Exists!"})
+
+		user = await corporateTrainees.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given username already Exists!"})
+	
+		user = await Instructors.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given username already Exists!"})
+		user = await Administrator.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given username already Exists!"})
+			
 
         let emptyFields = []
         if (!Username) {
@@ -360,7 +403,35 @@
         //adding a corporate Trainee
 
         const addCorporateTrainee = async (req, res) => {
-        const {Username, Password, First_Name, Last_Name, Email, Gender, Corporate} = req.body
+        const {Username, Password,confirmPassword, First_Name, Last_Name, Email, Gender, Corporate} = req.body
+        let user = await Individual_Trainee.findOne({ Email: req.body.Email });
+		if (user)
+        return res.status(400).json({error: "User with given email already Exists!"})
+		user =await corporateTrainees.findOne({ Email: req.body.Email });
+		if (user)
+        return res.status(400).json({error: "User with given email already Exists!"})
+
+		user =await Instructors.findOne({ Email: req.body.Email });
+		if (user)
+        return res.status(400).json({error: "User with given email already Exists!"})
+
+		user = await Individual_Trainee.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given username already Exists!"})
+
+		user = await corporateTrainees.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given username already Exists!"})
+	
+		user = await Instructors.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given username already Exists!"})
+		user = await Administrator.findOne({ Username: req.body.Username });
+		if (user)
+        return res.status(400).json({error: "User with given username already Exists!"})
+			
+        if(req.body.Password !== req.body.confirmPassword){
+            return res.status(400).json({error: "Password doesn't with confirm Password !"})		}
 
         let emptyFields = []
         if (!Username) {
@@ -389,6 +460,9 @@
 
         if (!Corporate) {
             emptyFields.push('Corporate')
+        }
+        if (!confirmPassword) {
+            emptyFields.push('confirmPassword')
         }
 
         if(emptyFields.length > 0) {

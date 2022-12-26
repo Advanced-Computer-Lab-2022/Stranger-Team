@@ -1,6 +1,6 @@
 const crypto = require("crypto");
 const router = require("express").Router();
-const  Individual_Trainee  = require("../Models/Individual Trainee");
+const { Individual_Trainee } = require("../Models/Individual Trainee");
 const  corporateTrainees  = require("../Models/corporateTrainees");
 const  Instructors  = require("../Models/Instructor");
 const  Administrator  = require("../Models/Administrator");
@@ -10,7 +10,9 @@ const bcrypt = require("bcrypt");
 router.post("/", async (req, res) => {
 	try {
 		const passwordSchema = Joi.object({
-			Password: passwordComplexity().required().label("Password"),});	
+			oldPassword: passwordComplexity().required().label("oldPassword"),
+			Password: passwordComplexity().required().label("Password"),
+			confirmPassword: passwordComplexity().required().label("confirmPassword")});	
 			const { error } = passwordSchema.validate(req.body);
 		
 		if (error)
@@ -27,9 +29,18 @@ router.post("/", async (req, res) => {
 			if(!user){
 				user = await Administrator.findOne({Username:req.session.user.Username});
 			}
+			const validPassword = await bcrypt.compare(
+				req.body.oldPassword,
+				req.session.user.Password
+			);
+			if (!validPassword)
+			return res.status(401).send({ message: " current Password is wrong !" });
+
+			if(req.body.Password !== req.body.confirmPassword)
+			return res.status(401).send({ message: "Password dosen't match confirm password !" });
 
 		const salt = await bcrypt.genSalt();
-		const hashPassword = await bcrypt.hash(req.query.Password, salt);
+		const hashPassword = await bcrypt.hash(req.body.Password, salt);
 		user.Password = hashPassword;
         await user.save();
 		res.status(200).send({ message: "Password has been changed !" });

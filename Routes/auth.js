@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Individual_Trainee = require("../Models/Individual Trainee");
+const {Individual_Trainee} = require("../Models/Individual Trainee");
 const  corporateTrainees  = require("../Models/corporateTrainees");
 const  Instructors  = require("../Models/Instructor");
 const  Administrator  = require("../Models/Administrator");

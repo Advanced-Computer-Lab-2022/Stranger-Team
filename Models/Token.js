@@ -6,19 +6,19 @@ const tokenSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		required: false,
 		ref: "individualTrainee",
-		unique: true,
+		unique: false,
 	},
 	corporateId: {
 		type: Schema.Types.ObjectId,
 		required: false,
 		ref: "corporateTrainees",
-		unique: true,
+		unique: false,
 	},
 	instructorId: {
 		type: Schema.Types.ObjectId,
 		required: false,
 		ref: "Instructor",
-		unique: true,
+		unique: false,
 	},
 	
 	token: { type: String, required: true },
@@ -26,4 +26,4 @@ const tokenSchema = new Schema({
 });
 
 const Token= mongoose.model("Token", tokenSchema);
-module.exports = Token;
+module.exports = {Token};

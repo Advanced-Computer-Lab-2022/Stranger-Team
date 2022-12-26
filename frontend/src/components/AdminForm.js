@@ -7,13 +7,15 @@ const AdminForm = () => {
     const {dispatch} = useAdminsContext()
     const [Username, setUsername] = useState('')
     const [Password, setPassword] = useState('')
+    const [confirmPassword, setconfirmPassword] = useState('')
+
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields] = useState([])
 
 
     const handleSubmit = async(e) => {
         e.preventDefault()
-        const admin = {Username, Password}
+        const admin = {Username, Password,confirmPassword}
         const response = await fetch('/adminHome/addAdmin', {
             method: 'POST',
             body: JSON.stringify(admin),
@@ -34,6 +36,7 @@ const AdminForm = () => {
             setError(null)
             setUsername('')
             setPassword('')
+            setconfirmPassword('')
             setEmptyFields([])
             console.log("new admin has been added.", json)
             dispatch({type: 'CREATE_ADMIN', payload: json})
@@ -49,7 +52,7 @@ const AdminForm = () => {
             type="text" 
             onChange={(e) => setUsername(e.target.value)}
             value={Username}
-            className={emptyFields.includes('Username') ? 'error':''}
+            required
             />
 
             <label>Password: </label>
@@ -57,7 +60,14 @@ const AdminForm = () => {
             type="text" 
             onChange={(e) => setPassword(e.target.value)}
             value={Password}
-            className={emptyFields.includes('Password') ? 'error':''}
+            required
+            />
+            <label>Confirm Password: </label>
+            <input 
+            type="text" 
+            onChange={(e) => setconfirmPassword(e.target.value)}
+            value={confirmPassword}
+            required
             />
 
             <button>Add admin</button>

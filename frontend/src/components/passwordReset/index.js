@@ -6,6 +6,7 @@ import styles from "./styles.modules.css";
 const PasswordReset = () => {
 	const [validUrl, setValidUrl] = useState(false);
 	const [Password, setPassword] = useState("");
+	const [confirmPassword, setconfirmPassword] = useState("");
 	const [msg, setMsg] = useState("");
 	const [error, setError] = useState("");
 	const param = useParams();
@@ -28,7 +29,7 @@ const PasswordReset = () => {
 		try {
             
             console.log("ana bozt");
-			const { data } = await axios.post(`http://localhost:3000/passwordReset/${param.id}/${param.token}?Password=${Password}`, { Password });
+			const { data } = await axios.post(`http://localhost:3000/passwordReset/${param.id}/${param.token}?Password=${Password}`, { Password ,confirmPassword});
 			console.log("ana mboztsh");   //
             setMsg(data.message);
 			setError("");
@@ -53,10 +54,19 @@ const PasswordReset = () => {
 						<h1>Add New Password</h1>
 						<input
 							type="Password"
-							placeholder="Password"
+							placeholder="new Password"
 							name="Password"
 							onChange={(e) => setPassword(e.target.value)}
 							value={Password}
+							required
+							className={styles.input}
+						/>
+						<input
+							type="Password"
+							placeholder="confirm new Password"
+							name="confirmPassword"
+							onChange={(e) => setconfirmPassword(e.target.value)}
+							value={confirmPassword}
 							required
 							className={styles.input}
 						/>
