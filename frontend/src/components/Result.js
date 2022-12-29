@@ -42,7 +42,10 @@ const flag = flagResult(totalPoints, earnPoints)
 
     const checkTrainee = async() => {
     
-        const response = await fetch(`/routeCheck?CourseId=${courseId}&TraineeId=${traineeId}&CorporateTraineeId=${ctrainee}`,  {
+        // const response = await fetch(`/routeCheck?CourseId=${courseId}&TraineeId=${traineeId}&CorporateTraineeId=${ctrainee}`,  {
+        //     method: 'GET'
+        // })
+         const response = await fetch('/routeCheck?',  {
             method: 'GET'
         })
         const json = await response.json()
@@ -84,9 +87,10 @@ const flag = flagResult(totalPoints, earnPoints)
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
        // const traineeId = params.get('TraineeId');
-        const ctrainee = params.get('CorporateTraineeId');
+       // const ctrainee = params.get('CorporateTraineeId');
         console.log(courseId); 
-        let path =  `/CurrentCoursePageCorporateTrainee/?CourseId=${courseId}&CorporateTraineeId=${ctrainee}`; 
+      //  let path =  `/CurrentCoursePageCorporateTrainee/?CourseId=${courseId}&CorporateTraineeId=${ctrainee}`; 
+        let path =  `/CurrentCoursePageCorporateTrainee/?CourseId=${courseId}`; 
         navigate(path);
     }
 
@@ -94,10 +98,11 @@ const flag = flagResult(totalPoints, earnPoints)
     const routeChangeT = () =>{ 
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        const traineeId = params.get('TraineeId');
+       // const traineeId = params.get('TraineeId');
         //const ctrainee = params.get('CorporateTraineeId');
         console.log(courseId); 
-        let path =  `/CurrentCoursePageTrainee/?CourseId=${courseId}&TraineeId=${traineeId}`; 
+       // let path =  `/CurrentCoursePageTrainee/?CourseId=${courseId}&TraineeId=${traineeId}`; 
+        let path =  `/CurrentCoursePageTrainee/?CourseId=${courseId}`; 
         navigate(path);
     }
     
@@ -131,13 +136,23 @@ const flag = flagResult(totalPoints, earnPoints)
             </div>
     
             <div className="start">
-                <Link className='btn' to={`/mainForQuiz/?CourseId=${courseId}&TraineeId=${traineeId}&CorporateTraineeId=${ctrainee}`} onClick={onRestart}>Restart</Link>
+                <Link className='btn' to={`/mainForQuiz/?CourseId=${courseId}`} onClick={onRestart}>Restart</Link>
             </div>
-        {!corpTrainee && <Link className='btn' to={`/CurrentCoursePageTrainee/?CourseId=${courseId}&TraineeId=${traineeId}`}>Back To Course</Link>}
-        {corpTrainee && <Link className='btn' to={`/CurrentCoursePageCorporateTrainee/?CourseId=${courseId}&CorporateTraineeId=${ctrainee}`}>Back To Course</Link>}
+        {!corpTrainee && <Link className='btn' to={`/CurrentCoursePageTrainee/?CourseId=${courseId}`}>Back To Course</Link>}
+        {corpTrainee && <Link className='btn' to={`/CurrentCoursePageCorporateTrainee/?CourseId=${courseId}`}>Back To Course</Link>}
         {!corpTrainee && <Link className='btn' to={`/Traineeviewqwizanswers/?CourseId=${courseId}&TraineeId=${traineeId}`}onClick={update}>Done</Link>}
         {/* {corpTrainee && <Link className='btn' to={`/viewqwizanswers/?CourseId=${courseId}&CorporateTraineeId=${ctrainee}`} onClick={update}>Done </Link>} */}
         {corpTrainee && <button onClick={update}>Done</button>}
+
+
+
+
+        {/* <Link className='btn' to={`/mainForQuiz/?CourseId=${courseId}&TraineeId=${traineeId}&CorporateTraineeId=${ctrainee}`} onClick={onRestart}>Restart</Link>
+            </div>
+        {!corpTrainee && <Link className='btn' to={`/CurrentCoursePageTrainee/?CourseId=${courseId}&TraineeId=${traineeId}`}>Back To Course</Link>}
+        {corpTrainee && <Link className='btn' to={`/CurrentCoursePageCorporateTrainee/?CourseId=${courseId}&CorporateTraineeId=${ctrainee}`}>Back To Course</Link>}
+        {!corpTrainee && <Link className='btn' to={`/Traineeviewqwizanswers/?CourseId=${courseId}&TraineeId=${traineeId}`}onClick={update}>Done</Link>} */}
+       
             
     
             <div className="container">

@@ -179,7 +179,7 @@ const createCourse = async(req,res)=>{
             answersArray.push(Answer4);
             console.log(answersArray)
             const newQuestion = await subtitleQuestion.findByIdAndUpdate({_id:questionId},{Answers:answersArray},{new:true});
-            res.status(200).json(newQuestion)
+            res.status(200).json(addCourse)
         }
 
         

@@ -25,7 +25,9 @@
     const CurrentCoursePageTrainee = () => {
     const [course, setCourse] = useState(null);
     const[error,setError] = useState('');
-    const[enableRefundButton, setEnableRefundButton]=useState(false);
+   const[enableRefundButton, setEnableRefundButton]=useState(false);
+    const [button, setButton] = useState(false)
+    const [price, setPrice] = useState("")
     
 
     useEffect(() => {
@@ -52,6 +54,34 @@
 
         fetchCourse()
     })
+
+
+    // const fetchPrice = async () => {
+    //     const courseId = course._id;
+        
+        
+    //     const response = await fetch(`/isCourseFree/?CourseId=${courseId}`)
+        
+        
+    //     const json = await response.json()
+    //     console.log(json)
+    //     if(response.ok)
+    //     {
+    //         if(json==true)
+    //         {
+    //             setPrice("Free");
+    //         }
+    //         else
+    //         {
+    //             setPrice(json);
+    //             setButton(true);
+    //         }
+    //     }
+        
+        
+    //     }
+    //     fetchPrice();
+        
 
     let navigate = useNavigate();
         const routeChange = () =>{ 
@@ -162,6 +192,8 @@
                 {/* <FetchInstructorNameForTraineeCourseDetails/> */}
                 <form className="course-details">
                     <button  onClick={routeChange}>Report a problem</button>
+
+                    {/* {!button &&  <button  onClick={checkIfRefundEligible}>Request A Refund</button>} */}
                     <button  onClick={checkIfRefundEligible}>Request A Refund</button>
                     {error && <div className="error">{error}</div>}
                     

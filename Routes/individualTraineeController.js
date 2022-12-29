@@ -618,258 +618,261 @@ const checkIfAdminRespondedTrainee = async(req,res) => {
         }
         };
 
-        const editProfileDetails = async (req,res) => { 
+        // const editProfileDetails = async (req,res) => { 
 
-            try{
-                const currRole = req.session.user.Role;
-                // const corporateTraineeId = req.query.CorporateTraineeId;
-                // const traineeId = req.query.TraineeId;
-                // const adminId = req.query.AdminId;
-                const updatedprofile = null;
-                const username = req.body.Username;
-                const email = req.body.Email;
-                const userId = req.session.user._id;
+        //     try{
+        //         const currRole = req.session.user.Role;
+        //         // const corporateTraineeId = req.query.CorporateTraineeId;
+        //         // const traineeId = req.query.TraineeId;
+        //         // const adminId = req.query.AdminId;
+        //         const updatedprofile = null;
+        //         const username = req.body.Username;
+        //         const email = req.body.Email;
+        //         const userId = req.session.user._id;
 
-                if(currRole!="Corporate Trainee")
-                {
-                    if(currRole!="Individual Trainee")
-                    {
-                        if(username==null || username=="")
-                        {
-                            res.status(400).json({error:"All the fields are empty! Please fill in the fields to update your profile."});
-                        }
-                        else
-                        {
-                                let user = await adminstrator.findOne({ Username: req.body.Username });
-                                if (user)
-                                return res
-                                .status(409)
-                                .send({ error: "User with given email already Exist!" });
-                                else
-                                {
-                                    let user = await Individual_Trainee.findOne({ Username: req.body.Username });
-                                    if (user)
-                                    return res
-                                    .status(409)
-                                    .send({ error: "User with given email already Exist!" });
-                                    else
-                                    {
-                                        let user = await corporate_Trainee.findOne({ Username: req.body.Username });
-                                        if (user)
-                                        return res
-                                        .status(409)
-                                        .send({ error: "User with given email already Exist!" });
-                                        else
-                                        {
-                                            let user = await corporate_Trainee.findOne({ Username: req.body.Username });
-                                            if (user)
-                                            return res
-                                            .status(409)
-                                            .send({ error: "User with given email already Exist!" });
-                                            else
-                                            {
-                                                //else
-                                                //{
-                                                    updatedprofile =await adminstrator.findByIdAndUpdate({_id:userId},{Username:username},{new:true});
-                                                    res.status(200).json(updatedprofile);
-                                                //}
-                                            }
-                                        }
-                                    }
-                                }
+        //         if(currRole!="Corporate Trainee")
+        //         {
+        //             if(currRole!="Individual Trainee")
+        //             {
+        //                 if(username==null || username=="")
+        //                 {
+        //                     res.status(400).json({error:"All the fields are empty! Please fill in the fields to update your profile."});
+        //                 }
+        //                 else
+        //                 {
+        //                         let user = await adminstrator.findOne({ Username: req.body.Username });
+        //                         if (user)
+        //                         return res
+        //                         .status(409)
+        //                         .send({ error: "User with given email already Exist!" });
+        //                         else
+        //                         {
+        //                             let user = await Individual_Trainee.findOne({ Username: req.body.Username });
+        //                             if (user)
+        //                             return res
+        //                             .status(409)
+        //                             .send({ error: "User with given email already Exist!" });
+        //                             else
+        //                             {
+        //                                 let user = await corporate_Trainee.findOne({ Username: req.body.Username });
+        //                                 if (user)
+        //                                 return res
+        //                                 .status(409)
+        //                                 .send({ error: "User with given email already Exist!" });
+        //                                 else
+        //                                 {
+        //                                     let user = await corporate_Trainee.findOne({ Username: req.body.Username });
+        //                                     if (user)
+        //                                     return res
+        //                                     .status(409)
+        //                                     .send({ error: "User with given email already Exist!" });
+        //                                     else
+        //                                     {
+        //                                         //else
+        //                                         //{
+        //                                             updatedprofile =await adminstrator.findByIdAndUpdate({_id:userId},{Username:username},{new:true});
+        //                                             res.status(200).json(updatedprofile);
+        //                                         //}
+        //                                     }
+        //                                 }
+        //                             }
+        //                         }
                             
                                 
                             
-                        }
-                    }
-                    else
-                    {
-                        console.log("dakhalt henaaaaaa for trainee")
-                        if((username==null&&email==null)||(username==""&&email==""))
-                        {
-                            res.status(400).json({error:"All the fields are empty! Please fill in the fields to update your profile."});
-                        }
-                        else
-                        {
-                            if(username==null||username=="")
-                            {
-                                let user = await Individual_Trainee.findOne({ Email: req.body.Email });
-                                if (user)
-                                return res
-                                .status(409)
-                                .send({ error: "User with given email already Exist!" });
-                                else
-                                {
-                                    let user = await adminstrator.findOne({ Email: req.body.Email });
-                                    if (user)
-                                    return res
-                                    .status(409)
-                                    .send({ error: "User with given email already Exist!" });
-                                    else
-                                    {
-                                        let user = await corporate_Trainee.findOne({ Email: req.body.Email });
-                                        if (user)
-                                        return res
-                                        .status(409)
-                                        .send({ error: "User with given email already Exist!" });
-                                        else
-                                        {
-                                            let user = await instructor.findOne({ Email: req.body.Email });
-                                            if (user)
-                                            return res
-                                            .status(409)
-                                            .send({ error: "User with given email already Exist!" });
-                                            else
-                                            {
-                                                //else
-                                                //{
-                                                    updatedprofile =await Individual_Trainee.findByIdAndUpdate({_id:userId},{Email:email},{new:true});
-                                                    res.status(200).json(updatedprofile);
-                                                //}
-                                            }
-                                        }
-                                    }
-                                }
+        //                 }
+        //             }
+        //             else
+        //             {
+        //                 console.log("dakhalt henaaaaaa for trainee")
+        //                 if((username==null&&email==null)||(username==""&&email==""))
+        //                 {
+        //                     res.status(400).json({error:"All the fields are empty! Please fill in the fields to update your profile."});
+        //                 }
+        //                 else
+        //                 {
+        //                     if(username==null||username=="")
+        //                     {
+        //                         let user = await Individual_Trainee.findOne({ Email: req.body.Email });
+        //                         if (user)
+        //                         return res
+        //                         .status(409)
+        //                         .send({ error: "User with given email already Exist!" });
+        //                         else
+        //                         {
+        //                             let user = await adminstrator.findOne({ Email: req.body.Email });
+        //                             if (user)
+        //                             return res
+        //                             .status(409)
+        //                             .send({ error: "User with given email already Exist!" });
+        //                             else
+        //                             {
+        //                                 let user = await corporate_Trainee.findOne({ Email: req.body.Email });
+        //                                 if (user)
+        //                                 return res
+        //                                 .status(409)
+        //                                 .send({ error: "User with given email already Exist!" });
+        //                                 else
+        //                                 {
+        //                                     let user = await instructor.findOne({ Email: req.body.Email });
+        //                                     if (user)
+        //                                     return res
+        //                                     .status(409)
+        //                                     .send({ error: "User with given email already Exist!" });
+        //                                     else
+        //                                     {
+        //                                         //else
+        //                                         //{
+        //                                             updatedprofile =await Individual_Trainee.findByIdAndUpdate({_id:userId},{Email:email},{new:true});
+        //                                             res.status(200).json(updatedprofile);
+        //                                         //}
+        //                                     }
+        //                                 }
+        //                             }
+        //                         }
                                 
-                            }
-                            else
-                            {
+        //                     }
+        //                     else
+        //                     {
 
-                                let user = await Individual_Trainee.findOne({ Email: req.body.Email });
-                                if (user)
-                                return res
-                                .status(409)
-                                .send({ error: "User with given email already Exist!" });
-                                else
-                                {
-                                    let user = await corporate_Trainee.findOne({ Email: req.body.Email });
-                                    if (user)
-                                    return res
-                                    .status(409)
-                                    .send({ error: "User with given email already Exist!" });
-                                    else
-                                    {
-                                        let user = await instructor.findOne({ Email: req.body.Email });
-                                        if (user)
-                                        return res
-                                        .status(409)
-                                        .send({ error: "User with given email already Exist!" });
-                                        else
-                                        {
-                                            let user = await adminstrator.findOne({ Email: req.body.Email });
-                                            if (user)
-                                            return res
-                                            .status(409)
-                                            .send({ error: "User with given email already Exist!" });
-                                            else
-                                            {
-                                                // else
-                                                // {
-                                                    let user = await Individual_Trainee.findOne({ Username: req.body.Username });
-                                                    if (user)
-                                                    return res
-                                                    .status(409)
-                                                    .send({ error: "User with given username already Exist!" });
-                                                    else
-                                                    {
-                                                        let user = await corporate_Trainee.findOne({ Username: req.body.Username });
-                                                        if (user)
-                                                        return res
-                                                        .status(409)
-                                                        .send({ error: "User with given username already Exist!" });
-                                                        else
-                                                        {
-                                                            let user = await adminstrator.findOne({ Username: req.body.Username });
-                                                            if (user)
-                                                            return res
-                                                            .status(409)
-                                                            .send({ error: "User with given username already Exist!" });
-                                                            else
-                                                            {
-                                                                let user = await instructor.findOne({ Username: req.body.Username });
-                                                                if (user)
-                                                                return res
-                                                                .status(409)
-                                                                .send({ error: "User with given username already Exist!" });
-                                                                else
-                                                                {
-                                                    //                 else
-                                                    // {
-                                                                    updatedprofile =await Individual_Trainee.findByIdAndUpdate({_id:userId},{Username:username,Email:email},{new:true});
-                                                                    res.status(200).json(updatedprofile);
-                                                    //}
-                                                                }
-                                                            }
-                                                        }
-                                                    }
+        //                         let user = await Individual_Trainee.findOne({ Email: req.body.Email });
+        //                         if (user)
+        //                         return res
+        //                         .status(409)
+        //                         .send({ error: "User with given email already Exist!" });
+        //                         else
+        //                         {
+        //                             let user = await corporate_Trainee.findOne({ Email: req.body.Email });
+        //                             if (user)
+        //                             return res
+        //                             .status(409)
+        //                             .send({ error: "User with given email already Exist!" });
+        //                             else
+        //                             {
+        //                                 let user = await instructor.findOne({ Email: req.body.Email });
+        //                                 if (user)
+        //                                 return res
+        //                                 .status(409)
+        //                                 .send({ error: "User with given email already Exist!" });
+        //                                 else
+        //                                 {
+        //                                     let user = await adminstrator.findOne({ Email: req.body.Email });
+        //                                     if (user)
+        //                                     return res
+        //                                     .status(409)
+        //                                     .send({ error: "User with given email already Exist!" });
+        //                                     else
+        //                                     {
+        //                                         // else
+        //                                         // {
+        //                                             let user = await Individual_Trainee.findOne({ Username: req.body.Username });
+        //                                             if (user)
+        //                                             return res
+        //                                             .status(409)
+        //                                             .send({ error: "User with given username already Exist!" });
+        //                                             else
+        //                                             {
+        //                                                 let user = await corporate_Trainee.findOne({ Username: req.body.Username });
+        //                                                 if (user)
+        //                                                 return res
+        //                                                 .status(409)
+        //                                                 .send({ error: "User with given username already Exist!" });
+        //                                                 else
+        //                                                 {
+        //                                                     let user = await adminstrator.findOne({ Username: req.body.Username });
+        //                                                     if (user)
+        //                                                     return res
+        //                                                     .status(409)
+        //                                                     .send({ error: "User with given username already Exist!" });
+        //                                                     else
+        //                                                     {
+        //                                                         let user = await instructor.findOne({ Username: req.body.Username });
+        //                                                         if (user)
+        //                                                         return res
+        //                                                         .status(409)
+        //                                                         .send({ error: "User with given username already Exist!" });
+        //                                                         else
+        //                                                         {
+        //                                             //                 else
+        //                                             // {
+        //                                                             updatedprofile =await Individual_Trainee.findByIdAndUpdate({_id:userId},{Username:username,Email:email},{new:true});
+        //                                                             res.status(200).json(updatedprofile);
+        //                                             //}
+        //                                                         }
+        //                                                     }
+        //                                                 }
+        //                                             }
                                                     
-                                                //}
-                                            }
-                                        }
-                                    }
-                                }
+        //                                         //}
+        //                                     }
+        //                                 }
+        //                             }
+        //                         }
                                 
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if(email==null||email=="")
-                    {
-                        res.status(400).json({error:"All the fields are empty! Please fill in the fields to update your profile."});
-                    }
-                    else
-                    {
-                            let user = await corporate_Trainee.findOne({ Email: req.body.Email });
-                            if (user)
-                            return res
-                            .status(409)
-                            .send({ error: "User with given email already Exist!" });
-                            else
-                            {
-                                let user = await Individual_Trainee.findOne({ Email: req.body.Email });
-                                if (user)
-                                return res
-                                .status(409)
-                                .send({ error: "User with given email already Exist!" });
-                                else
-                                {
-                                    let user = await adminstrator.findOne({ Email: req.body.Email });
-                                    if (user)
-                                    return res
-                                    .status(409)
-                                    .send({ error: "User with given email already Exist!" });
-                            else
-                            {
-                                let user = await instructor.findOne({ Email: req.body.Email });
-                                if (user)
-                                return res
-                                .status(409)
-                                .send({ error: "User with given email already Exist!" });
-                            else
-                            {
-                            //      else
-                            // {
-                                updatedprofile =await corporate_Trainee.findByIdAndUpdate({_id:userId},{Email:email},{new:true});
-                                res.status(200).json(updatedprofile);
-                            //}
-                            }
-                            }
-                            }
-                            }
-                    }
-                }
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //         else
+        //         {
+        //             if(email==null||email=="")
+        //             {
+        //                 res.status(400).json({error:"All the fields are empty! Please fill in the fields to update your profile."});
+        //             }
+        //             else
+        //             {
+        //                     let user = await corporate_Trainee.findOne({ Email: req.body.Email });
+        //                     if (user)
+        //                     return res
+        //                     .status(409)
+        //                     .send({ error: "User with given email already Exist!" });
+        //                     else
+        //                     {
+        //                         let user = await Individual_Trainee.findOne({ Email: req.body.Email });
+        //                         if (user)
+        //                         return res
+        //                         .status(409)
+        //                         .send({ error: "User with given email already Exist!" });
+        //                         else
+        //                         {
+        //                             let user = await adminstrator.findOne({ Email: req.body.Email });
+        //                             if (user)
+        //                             return res
+        //                             .status(409)
+        //                             .send({ error: "User with given email already Exist!" });
+        //                     else
+        //                     {
+        //                         let user = await instructor.findOne({ Email: req.body.Email });
+        //                         if (user)
+        //                         return res
+        //                         .status(409)
+        //                         .send({ error: "User with given email already Exist!" });
+        //                     else
+        //                     {
+        //                     //      else
+        //                     // {
+        //                         updatedprofile =await corporate_Trainee.findByIdAndUpdate({_id:userId},{Email:email},{new:true});
+        //                         res.status(200).json(updatedprofile);
+        //                     //}
+        //                     }
+        //                     }
+        //                     }
+        //                     }
+        //             }
+        //         }
 
-                console.log("updatedprofile"+updatedprofile);
-                //res.status(200).json(updatedprofile);
+        //         console.log("updatedprofile"+updatedprofile);
+        //         //res.status(200).json(updatedprofile);
 
-            }catch(error)
-            {
-                res.status(400).json({error:error.message});
-            }
+        //     }catch(error)
+        //     {
+        //         res.status(400).json({error:error.message});
+        //     }
 
-        }
+        // }
+
+
+        //////////////////////////////////////////////
 
         // const editProfileDetails = async (req,res) => { 
         //     try{
@@ -1040,5 +1043,425 @@ const checkIfAdminRespondedTrainee = async(req,res) => {
             res.status(400).json({error:error.message});
         }
         };
+
+
+
+
+
+        
+
+        const editProfileDetails = async (req,res) => { 
+            
+            try{
+                const currRole = req.session.user.Role;
+                // const corporateTraineeId = req.query.CorporateTraineeId;
+                // const traineeId = req.query.TraineeId;
+                // const adminId = req.query.AdminId;
+                const updatedprofile = null;
+                const username = req.body.Username;
+                console.log("USERNAME:   " + username)
+                const email = req.body.Email;
+                console.log("EMAIL:   " + email)
+                const userId = req.session.user._id;
+
+
+
+                 // checker for input fields 
+if((username==null || username=="")  &&  (email==null || email=="")) {
+ res.status(400).json({error:"All the fields are empty! Please fill in the fields to update your profile."});
+} 
+
+
+else {
+    if(currRole!="Corporate Trainee") { 
+
+    //im an individual trainee
+        if (email==null || email=="")  {
+             // im changing my username
+
+ let user = await adminstrator.findOne({ Username: req.body.Username });
+ if (user) {
+     return res
+     .status(409)
+     .send({ error: "User with given username already Exists." });
+ }
+ else {
+    let user = await corporate_Trainee.findOne({ Username: req.body.Username });
+                                        if (user) {
+                                            return res
+                                            .status(409)
+                                            .send({ error: "User with given username already Exists." }); }
+
+                                            else {
+
+                                        let user = await instructor.findOne({  Username: req.body.Username });
+                                        if (user) {
+                                            return res
+                                            .status(409)
+                                            .send({ error: "User with given username already Exists." });
+                                        }
+
+                                        else {
+                                let user = await Individual_Trainee.findOne({ Username: req.body.Username });
+                                if (user) {
+                                    return res
+                                    .status(409)
+                                    .send({ error: "User with given username already Exists." });
+                                        }
+
+                                        else {
+                                            updatedprofile =await Individual_Trainee.findByIdAndUpdate({_id:userId},{Username:username},{new:true});
+                                                    res.status(200).json(updatedprofile);
+                                        }
+                                        
+
+                                            }
+ }
+}
+        }
+
+
+if (username==null || username=="") {
+    //im only updating my email
+       
+           let user = await corporate_Trainee.findOne({ Email: req.body.Email });
+                                               if (user) {
+                                                   return res
+                                                   .status(409)
+                                                   .send({ error: "User with given email already Exists." }); }
+       
+                                                   else {
+       
+                                               let user = await instructor.findOne({  Email: req.body.Email });
+                                               if (user) {
+                                                   return res
+                                                   .status(409)
+                                                   .send({ error: "User with given email already Exists." });
+                                               }
+       
+                                               else {
+                                       let user = await Individual_Trainee.findOne({ Email: req.body.Email });
+                                       if (user) {
+                                           return res
+                                           .status(409)
+                                           .send({ error: "User with given email already Exists." });
+                                               }
+       
+                                               else {
+                                                   updatedprofile =await Individual_Trainee.findByIdAndUpdate({_id:userId},{Email:email},{new:true});
+                                                           res.status(200).json(updatedprofile);
+                                               }
+                                               
+       
+                                                   }
+        }
+       
+  //  }
+}
+
+
+else {
+  
+       
+           let userEmail = await corporate_Trainee.findOne({ Email: req.body.Email });
+           let userUsername = await corporate_Trainee.findOne({ Username: req.body.Username });
+           if (userEmail && userUsername) {
+            return res
+            .status(409)
+            .send({ error: "User with given username and email already Exists." }); 
+         }
+                                               if (userEmail) {
+                                                   return res
+                                                   .status(409)
+                                                   .send({ error: "User with given email already Exists." }); 
+                                                }
+                                                else {
+                                                    if (userUsername) {
+                                                        return res
+                                                        .status(409)
+                                                        .send({ error: "User with given username already Exists." }); 
+                                                     }
+                                                    
+
+             else {
+
+             let userEmail = await instructor.findOne({ Email: req.body.Email });
+           let userUsername = await instructor.findOne({ Username: req.body.Username });
+           if (userEmail && userUsername) {
+            return res
+            .status(409)
+            .send({ error: "User with given username and email already Exists." }); 
+         }
+                                               if (userEmail) {
+                                                   return res
+                                                   .status(409)
+                                                   .send({ error: "User with given email already Exists." }); 
+                                                }
+                                                else {
+                                                    if (userUsername) {
+                                                        return res
+                                                        .status(409)
+                                                        .send({ error: "User with given username already Exists." }); 
+                                                     }
+
+                                                    
+
+                 else {
+            let userEmail = await Individual_Trainee.findOne({ Email: req.body.Email });
+           let userUsername = await Individual_Trainee.findOne({ Username: req.body.Username });
+                                               if (userEmail) {
+                                                   return res
+                                                   .status(409)
+                                                   .send({ error: "User with given email already Exists." }); 
+                                                }
+                                                else {
+                                                    if (userUsername) {
+                                                        return res
+                                                        .status(409)
+                                                        .send({ error: "User with given username already Exists." }); 
+                                                     }
+
+                                                     else {
+                                                        let userUsername = await adminstrator.findOne({ Username: req.body.Username });
+                                                        if (userUsername) {
+                                                            return res
+                                                            .status(409)
+                                                            .send({ error: "User with given username already Exists." }); 
+                                                         }
+
+                                                         else {
+                                                            updatedprofile =await Individual_Trainee.findByIdAndUpdate({_id:userId},{Email:email, Username:username},{new:true});
+                                                           res.status(200).json(updatedprofile);
+                                                         }
+                                                     }
+                                                        
+                                                     }
+
+                                                     }
+
+                                                    
+                                                }
+
+
+                                               
+
+
+       
+       
+                                                   }
+        }
+       
+  //  }
+
+}
+    }
+
+    else {
+
+            //im a corporate trainee
+            if (email==null || email=="") {
+ let user = await adminstrator.findOne({ Username: req.body.Username });
+ if (user) {
+     return res
+     .status(409)
+     .send({ error: "User with given username already Exists." });
+ }
+
+ else {
+    let user = await corporate_Trainee.findOne({ Username: req.body.Username });
+                                        if (user) {
+                                            return res
+                                            .status(409)
+                                            .send({ error: "User with given username already Exists." }); }
+
+                                            else {
+
+                                        let user = await instructor.findOne({  Username: req.body.Username });
+                                        if (user) {
+                                            return res
+                                            .status(409)
+                                            .send({ error: "User with given username already Exists." });
+                                        }
+
+                                        else {
+                                let user = await Individual_Trainee.findOne({ Username: req.body.Username });
+                                if (user) {
+                                    return res
+                                    .status(409)
+                                    .send({ error: "User with given username already Exists.." });
+                                        }
+
+                                        else {
+                                            updatedprofile =await corporate_Trainee.findByIdAndUpdate({_id:userId},{Username:username},{new:true});
+                                                    res.status(200).json(updatedprofile);
+                                        }
+                                        
+
+                                            }
+ }
+}
+            }
+
+
+
+if (username==null || username=="") {
+    //im only updating my email
+       
+           let user = await corporate_Trainee.findOne({ Email: req.body.Email });
+                                               if (user) {
+                                                   return res
+                                                   .status(409)
+                                                   .send({ error: "User with given email already Exists." }); }
+       
+                                                   else {
+       
+                                               let user = await instructor.findOne({  Email: req.body.Email });
+                                               if (user) {
+                                                   return res
+                                                   .status(409)
+                                                   .send({ error: "User with given email already Exists." });
+                                               }
+       
+                                               else {
+                                       let user = await Individual_Trainee.findOne({ Email: req.body.Email });
+                                       if (user) {
+                                           return res
+                                           .status(409)
+                                           .send({ error: "User with given email already Exists." });
+                                               }
+       
+                                               else {
+                                                   updatedprofile =await corporate_Trainee.findByIdAndUpdate({_id:userId},{Email:email},{new:true});
+                                                           res.status(200).json(updatedprofile);
+                                               }
+                                               
+       
+                                                   }
+        }
+       
+}
+
+
+else {
+   
+       
+           let userEmail = await corporate_Trainee.findOne({ Email: req.body.Email });
+           let userUsername = await corporate_Trainee.findOne({ Username: req.body.Username });
+           if (userEmail && userUsername) {
+            return res
+            .status(409)
+            .send({ error: "User with given username and email already Exists." }); 
+         }
+                                               if (userEmail) {
+                                                   return res
+                                                   .status(409)
+                                                   .send({ error: "User with given email already Exists." }); 
+                                                }
+                                                else {
+                                                    if (userUsername) {
+                                                        return res
+                                                        .status(409)
+                                                        .send({ error: "User with given username already Exists." }); 
+                                                     }
+
+                                                    
+
+             else {
+
+             let userEmail = await instructor.findOne({ Email: req.body.Email });
+           let userUsername = await instructor.findOne({ Username: req.body.Username });
+           console.log(userEmail && userUsername)
+           if (userEmail && userUsername) {
+            return res
+            .status(409)
+            .send({ error: "User with given username and email already Exists." }); 
+         }
+                                               if (userEmail) {
+                                                   return res
+                                                   .status(409)
+                                                   .send({ error: "User with given email already Exists." }); 
+                                                }
+                                                else {
+                                                    if (userUsername) {
+                                                        return res
+                                                        .status(409)
+                                                        .send({ error: "User with given username already Exists." }); 
+                                                     }
+                                                     
+
+                 else {
+            let userEmail = await Individual_Trainee.findOne({ Email: req.body.Email });
+           let userUsername = await Individual_Trainee.findOne({ Username: req.body.Username });
+           if (userEmail && userUsername) {
+            return res
+            .status(409)
+            .send({ error: "User with given username and email already Exists." }); 
+         }
+                                               if (userEmail) {
+                                                   return res
+                                                   .status(409)
+                                                   .send({ error: "User with given email already Exists." }); 
+                                                }
+                                                else {
+                                                    if (userUsername) {
+                                                        return res
+                                                        .status(409)
+                                                        .send({ error: "User with given username already Exists." }); 
+                                                     }
+
+                                                   
+
+                                                     else {
+                                                        let userUsername = await adminstrator.findOne({ Username: req.body.Username });
+                                                        if (userUsername) {
+                                                            return res
+                                                            .status(409)
+                                                            .send({ error: "User with given username already Exists." }); 
+                                                         }
+
+                                                         else {
+                                                            updatedprofile =await corporate_Trainee.findByIdAndUpdate({_id:userId},{Email:email, Username:username},{new:true});
+                                                           res.status(200).json(updatedprofile);
+                                                         }
+                                                     }
+                                                        
+                                                     }
+
+                                                     }
+
+                                                    
+                                                }
+
+
+                                               
+
+
+       
+       
+                                                   }
+        }
+       
+
+}
+        
+    }
+}
+
+
+
+
+}
+
+
+catch(error) {
+    res.status(400).json({error:error.message});
+}
+
+        }
+
+
+
+
+
 
     module.exports ={addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports,fetchTraineeProfileDetails,fetchTraineeDeliveredReports,fetchTraineePendingReports,fetchTraineeResolvedReports,fetchProblem,fetchNonRegisteredTraineeCoursesForInstructor,checkIfAdminRespondedTrainee,updateReportStatusFromPendingToResolvedTrainee,traineeSendFollowup,getWalletBalance,viewMyWalletBalance,payByWalletBalance,traineeRefundRequest,fetchTraineePendingRequests,fetchCurrentRequest,getCurrentCourse,fetchTraineeResolvedRequests,editProfileDetails,checkIfRefundEligible};

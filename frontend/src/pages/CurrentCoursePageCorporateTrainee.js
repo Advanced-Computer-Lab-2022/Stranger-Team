@@ -28,6 +28,7 @@ import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTrain
 
     const CurrentCoursePageCorporateTrainee = () => {
     const [course, setCourse] = useState(null)
+   
     
 
     useEffect(() => {
@@ -58,6 +59,13 @@ import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTrain
 
         fetchCourse()
     }, [])
+
+
+
+    
+
+
+
 
     let navigate = useNavigate();
         const routeChange = () =>{ 

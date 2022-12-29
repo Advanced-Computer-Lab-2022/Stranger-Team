@@ -32,8 +32,8 @@ const QuizForm = () => {
 
 
 
-    const handleClick = async () =>  {
-
+    const handleClick = async (e) =>  {
+        e.preventDefault()
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
         const response = await fetch(`/quizSize/?CourseId=${courseId}`,  {
@@ -172,13 +172,14 @@ const QuizForm = () => {
             className={emptyFields.includes('correctAns') ? 'error':''}
             </select> 
             
-            <hr></hr>
+            {/* <hr></hr> */}
             <button>Add question</button>
             {error && <div className="error">{error}</div>}
 
-            {error1 && <div className="error">{error1}</div>}
+           
         </form>
         <button onClick={handleClick}>Done</button>
+        {error1 && <div className="error">{error1}</div>}
         
         </div>
         
