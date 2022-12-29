@@ -26,11 +26,11 @@ const traineeReportSchema = new Schema({
         type:String,
         required:false
     },
-    Admin_Response:{
-        type:String,
-        required:false,
-        default:""
-    },
+    // Admin_Response:{
+    //     type:String,
+    //     required:false,
+    //     default:""
+    // },
     Username:{
         type:String,
         required:false

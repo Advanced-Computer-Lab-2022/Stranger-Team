@@ -1,5 +1,4 @@
-
-//instructor current course page
+//sessions done
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
@@ -21,7 +20,7 @@
     import CurrentCourseInstructorPageSubtitles from "../components/CurrentCourseInstructorPageSubtitles"
     import InstructorCurrentCoursePageDetails from "../components/InstructorCurrentCoursePageDetails";
     import CurrentReportPageDetails from "../components/CurrentReportPageDetails";
-import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+    import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
 
 
     const InstructorCurrentPendingReportPage = () => {
@@ -34,8 +33,8 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     useEffect(() => {
         const fetchProblem = async () => {
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        console.log(instructorId); 
+        // const instructorId = params.get('id');
+        // console.log(instructorId); 
         const reportId = params.get('ReportId');
         
         
@@ -60,7 +59,7 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
         e.preventDefault()
         const queryParams = new URLSearchParams(window.location.search);
         const reportId = queryParams.get('ReportId');
-        const instructorId = queryParams.get('id');
+        //const instructorId = queryParams.get('id');
         console.log(reportId);
         
 
@@ -88,7 +87,8 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
         setFollowup('')
         
         console.log('report sent:', json)
-        window.location=`http://localhost:3000/InstructorDeliveredReportsPage?id=${instructorId}`
+        // window.location=`http://localhost:3000/InstructorDeliveredReportsPage?id=${instructorId}`
+        window.location=`http://localhost:3000/InstructorDeliveredReportsPage`
         }
 
     }

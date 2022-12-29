@@ -1,5 +1,6 @@
+    //sessions done
     import { useState } from 'react'
-import TraineeProfileNavBar from '../components/TraineeProfilNavBar'
+    import TraineeProfileNavBar from '../components/TraineeProfilNavBar'
 
     const RequestARefundPageTrainee = () => {
     const [Problem,setProblem] = useState('')
@@ -9,14 +10,22 @@ import TraineeProfileNavBar from '../components/TraineeProfilNavBar'
     const handleSubmit = async (e) => {
         e.preventDefault()
         const queryParams = new URLSearchParams(window.location.search);
-        const traineeId = queryParams.get('TraineeId');
+        //const traineeId = queryParams.get('TraineeId');
         const courseId = queryParams.get('CourseId');
 
 
         const report = {Problem};
         console.log(report)
 
-        const response = await fetch(`/traineeRefundRequest/?TraineeId=${traineeId}&CourseId=${courseId}`, {
+        // const response = await fetch(`/traineeRefundRequest/?TraineeId=${traineeId}&CourseId=${courseId}`, {
+        // method: 'POST',
+        // body: JSON.stringify(report),
+        // headers: {
+        //     'Content-Type': 'application/json'
+        // }
+        // })
+
+        const response = await fetch(`/traineeRefundRequest/?CourseId=${courseId}`, {
         method: 'POST',
         body: JSON.stringify(report),
         headers: {
@@ -36,7 +45,8 @@ import TraineeProfileNavBar from '../components/TraineeProfilNavBar'
         setProblem('')
         
         console.log('refund request sent:', json)
-        window.location=`http://localhost:3000/CurrentCoursePageTrainee?TraineeId=${traineeId}&CourseId=${courseId}`
+        // window.location=`http://localhost:3000/CurrentCoursePageTrainee?TraineeId=${traineeId}&CourseId=${courseId}`
+        window.location=`http://localhost:3000/CurrentCoursePageTrainee?CourseId=${courseId}`
         }
 
     }

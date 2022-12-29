@@ -1,4 +1,4 @@
-
+//sessions done
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate } from "react-router-dom";
@@ -15,15 +15,12 @@
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
 
     const TraineeReportsPage = () => {
-    const [courses, setCourses] = useState(null)
-    const [searchQuery, setSearchQuery] = useState("")
-    const [searchRateQuery, setSearchRateQuery] = useState("");
 
     useEffect(() => {
         // const fetchCourses = async () => {
         // const params = new URLSearchParams(window.location.search);
-        // const traineeId = params.get('TraineeId');
-        // console.log(traineeId); 
+        // //const traineeId = params.get('TraineeId');
+        // //console.log(traineeId); 
 
 
         // const response = await fetch(`/View_All_Courses/?q=${searchQuery}`)
@@ -42,35 +39,39 @@
 
         const routeChange = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
-        console.log(traineeId); 
-        let path = `/TraineeDeliveredReportsPage/?TraineeId=${traineeId}`; 
+        //const traineeId = params.get('TraineeId');
+        //console.log(traineeId); 
+        // let path = `/TraineeDeliveredReportsPage/?TraineeId=${traineeId}`; 
+        let path = `/TraineeDeliveredReportsPage`; 
         navigate(path);
     }
 
     const routeChange1 = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
-        console.log(traineeId); 
-        let path = `/TraineePendingReportsPage/?TraineeId=${traineeId}`; 
+        //const traineeId = params.get('TraineeId');
+        //console.log(traineeId); 
+        // let path = `/TraineePendingReportsPage/?TraineeId=${traineeId}`; 
+        let path = `/TraineePendingReportsPage`; 
         navigate(path);
     }
 
     const routeChange2 = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
-        console.log(traineeId); 
-        let path = `/TraineeResolvedReportsPage/?TraineeId=${traineeId}`; 
+        //const traineeId = params.get('TraineeId');
+        //console.log(traineeId); 
+        // let path = `/TraineeResolvedReportsPage/?TraineeId=${traineeId}`; 
+        let path = `/TraineeResolvedReportsPage`; 
         navigate(path);
     }
 
-    const routeChange3 = () =>{ 
-        const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
-        console.log(traineeId); 
-        let path = `/AdminResponsesPageTrainee/?TraineeId=${traineeId}`; 
-        navigate(path);
-    }
+    // const routeChange3 = () =>{ 
+    //     const params = new URLSearchParams(window.location.search);
+    //     //const traineeId = params.get('TraineeId');
+    //     //console.log(traineeId); 
+    //     // let path = `/AdminResponsesPageTrainee/?TraineeId=${traineeId}`; 
+    //     let path = `/AdminResponsesPageTrainee`; 
+    //     navigate(path);
+    // }
 
 
     return (
@@ -86,9 +87,9 @@
             <p><strong>Pending Reports</strong></p> 
             </div>
 
-            <div className="course-details" onClick={routeChange3}>
+            {/* <div className="course-details" onClick={routeChange3}>
             <p><strong>Admin Responses</strong></p> 
-            </div>
+            </div> */}
 
             <div className="course-details" onClick={routeChange2}>
             <p><strong>Resolved Reports</strong></p> 

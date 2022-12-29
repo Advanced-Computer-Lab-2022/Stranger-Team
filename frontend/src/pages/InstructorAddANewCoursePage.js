@@ -1,3 +1,4 @@
+    //sessions done
     import { useState } from 'react'
     import { useCourseContext } from "../hooks/useCoursesContext";
     import InstructorAddNewSubtitlePage from './InstructorAddANewSubtitlePage';
@@ -30,14 +31,22 @@
     const handleSubmit = async (e) => {
         e.preventDefault()
         const queryParams = new URLSearchParams(window.location.search);
-        const instructorId = queryParams.get('id');
+        //const instructorId = queryParams.get('id');
 
 
-        const course = {Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Discount_Start_Date,Discount_End_Date,Course_Description,PreviewLink,Subtitle_Title,Link,Description,Q, Answer1, Answer2, Answer3, Answer4, correctAnswer,instructorId}
+        const course = {Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Discount_Start_Date,Discount_End_Date,Course_Description,PreviewLink,Subtitle_Title,Link,Description,Q, Answer1, Answer2, Answer3, Answer4, correctAnswer}
         console.log(course)
 
 
-        const response = await fetch(`/createCourse/?id=${instructorId}`, {
+        // const response = await fetch(`/createCourse/?id=${instructorId}`, {
+        // method: 'POST',
+        // body: JSON.stringify(course),
+        // headers: {
+        //     'Content-Type': 'application/json'
+        // }
+        // })
+
+        const response = await fetch(`/createCourse`, {
         method: 'POST',
         body: JSON.stringify(course),
         headers: {
@@ -49,12 +58,13 @@
         const json = await response.json()
 
         console.log(response)
-        console.log("courseid"+json._id)
+        console.log("courseid"+json)
 
         if (!response.ok) {
         setError(json.error)
         }
         if (response.ok) {
+        console.log("here")
         setError(null)
         setTitle('')
         setSubject('')
@@ -78,7 +88,8 @@
         //dispatch({type:'CREATE_COURSE',payload:json})
         
         console.log('new course added:', json)
-        window.location=`http://localhost:3000/InstructorAddMoreSubtitles/?id=${instructorId}&CourseId=${json._id}`
+        // window.location=`http://localhost:3000/InstructorAddMoreSubtitles/?id=${instructorId}&CourseId=${json._id}`
+        window.location=`http://localhost:3000/InstructorAddMoreSubtitles/?CourseId=${json._id}`
         }
 
     }

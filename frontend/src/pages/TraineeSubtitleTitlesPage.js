@@ -1,5 +1,4 @@
-
-//instructor current course page
+//sessions done
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
@@ -72,9 +71,10 @@
                 onClick={() =>{
 
                 const params = new URLSearchParams(window.location.search);
-                const traineeId = params.get('TraineeId');
+                // const traineeId = params.get('TraineeId');
                 const courseId = params.get('CourseId');
-                window.location.href=`/CurrentCourseSubtitlesPageTrainee?CourseId=${courseId}&SubtitleId=${subtitle._id}&TraineeId=${traineeId}`} }
+                // window.location.href=`/CurrentCourseSubtitlesPageTrainee?CourseId=${courseId}&SubtitleId=${subtitle._id}&TraineeId=${traineeId}`
+                window.location.href=`/CurrentCourseSubtitlesPageTrainee?CourseId=${courseId}&SubtitleId=${subtitle._id}`} }
                 key={subtitle._id}>
                 <TraineeSubtitleTitlesDetailsPage subtitle={subtitle} key={subtitle._id} />
             

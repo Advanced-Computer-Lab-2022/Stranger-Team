@@ -1,4 +1,4 @@
-
+//sessions done
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate } from "react-router-dom";
@@ -26,17 +26,19 @@
 
     const routeChange1 = () =>{  
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
-        console.log(traineeId); 
-        let path = `/TraineePendingRefundRequestsPage/?TraineeId=${traineeId}`; 
+        // const traineeId = params.get('TraineeId');
+        // console.log(traineeId); 
+        // let path = `/TraineePendingRefundRequestsPage/?TraineeId=${traineeId}`; 
+        let path = `/TraineePendingRefundRequestsPage`; 
         navigate(path);
     }
 
     const routeChange2 = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
-        console.log(traineeId); 
-        let path = `/TraineeResolvedRefundRequestsPage/?TraineeId=${traineeId}`; 
+        // const traineeId = params.get('TraineeId');
+        // console.log(traineeId); 
+        // let path = `/TraineeResolvedRefundRequestsPage/?TraineeId=${traineeId}`; 
+        let path = `/TraineeResolvedRefundRequestsPage`; 
         navigate(path);
     }
 

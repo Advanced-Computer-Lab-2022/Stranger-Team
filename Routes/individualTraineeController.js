@@ -29,8 +29,8 @@
 
 const viewMyWalletBalance = async(req,res) => {
     
-    //const traineeId = req.session.user._id;
-    const traineeId = req.query.TraineeId;
+    const traineeId = req.session.user._id;
+    //const traineeId = req.query.TraineeId;
 
     try{
     const result = await Individual_Trainee.findById({_id:traineeId});
@@ -61,8 +61,8 @@ function arrayIsEmpty(array) {
 
 const payByWalletBalance = async(req,res) => {
     
-    //const traineeId = req.session.user._id;
-    const traineeId = req.query.TraineeId;
+    const traineeId = req.session.user._id;
+    // const traineeId = req.query.TraineeId;
     const courseId = req.query.CourseId;
     var c;
     var already=[];
@@ -147,8 +147,8 @@ const payByWalletBalance = async(req,res) => {
 
 const traineeRefundRequest = async(req,res) => {
     
-    //const traineeId = req.session.user._id;
-    const traineeId = req.query.TraineeId;
+    const traineeId = req.session.user._id;
+    // const traineeId = req.query.TraineeId;
     const courseId = req.query.CourseId;
     const{Problem}= req.body;
 
@@ -182,7 +182,8 @@ const traineeRefundRequest = async(req,res) => {
 
 const fetchTraineePendingRequests = async(req,res) => {
 
-    const traineeId = req.query.TraineeId;
+    // const traineeId = req.query.TraineeId;
+    const traineeId = req.session.user._id;
 
     try{
     const pendingProblems = await refund.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Pending"}).populate('Trainee_Id');
@@ -197,7 +198,9 @@ const fetchTraineePendingRequests = async(req,res) => {
 
 const fetchTraineeResolvedRequests = async(req,res) => {
 
-    const traineeId = req.query.TraineeId;
+    //const traineeId = req.query.TraineeId;
+    const traineeId = req.session.user._id;
+
 
     try{
     const resolvedProblems = await refund.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Accepted"}).populate('Trainee_Id');
@@ -238,12 +241,35 @@ const fetchCurrentRequest = async(req,res) => {
     }
 }
 
+function arrayIsEmpty(array) {
+            //If it's not an array, return FALSE.
+            if (!Array.isArray(array)) {
+                return FALSE;
+            }
+            //If it is an array, check its length property
+            if (array.length == 0) {
+                //Return TRUE if the array is empty
+                return true;
+            }
+            //Otherwise, return FALSE.
+            return false;
+        }
+
     const indiviualTraineeRegisterCourse = async(req,res) => {
     
-        const individualTraineeId = req.query.TraineeId;
+        // const individualTraineeId = req.query.TraineeId;
+        const individualTraineeId = req.session.user._id;
         const courseId = req.query.CourseId;
+        const traineeId = req.session.user._id;
+        var c;
+        var already=[];
+        let a=[];
+        let i;
+        let j;
+        var sub;
 
     try{
+        console.log("dakhakt henaaa")
     const currTrainee = await Individual_Trainee.findById({_id:individualTraineeId});
     const updatedArray = currTrainee.Registered_Courses;
     console.log(updatedArray);
@@ -252,7 +278,53 @@ const fetchCurrentRequest = async(req,res) => {
 
     const updatedTrainee =  await Individual_Trainee.findByIdAndUpdate({_id:individualTraineeId},{Registered_Courses:updatedArray},{new:true});
     console.log(updatedTrainee)
-    res.status(200).json(updatedTrainee)
+    
+    //const courseId = req.query.CourseId;
+    // const traineeId = req.query.TraineeId;
+    
+    //const traineeId = req.session.user._id;
+    const currCourse = await course.findById({_id:courseId});
+    const currPrice = parseInt(currCourse.Price);
+    console.log(currPrice);
+
+    //creating Progress
+
+                sub = await Subtitles.find({CourseId:mongoose.Types.ObjectId(courseId)});
+                console.log("SUB ARRAY------->>>>",sub)
+                //check if this corporate has this course or not
+                const cop=await Individual_Trainee.findById({_id:traineeId})
+                const coursesArray =  cop.Registered_Courses;
+        
+                console.log("CourseArray",coursesArray)
+                
+                if(coursesArray.length>0){
+                    console.log("dakhalt")
+                for ( i = 0; i < coursesArray.length; i++) {
+                    //Check if this course is already in traineeProgress DB
+                already=await TraineeProgress.find({"Trainee_Id":traineeId,CourseId:mongoose.Types.ObjectId(coursesArray[i])});
+                console.log(arrayIsEmpty(already));
+                //console.log(arrayIsEmpty(already.length));
+                console.log("ASLUN!!!!")
+
+                if(!arrayIsEmpty(already) ){
+                //coursesArray1.push(await course.findById({_id:coursesArray[i]},{_id:1}));
+                console.log("Hi, et3ml abl keda")
+                } 
+                else{  
+                    for ( j = 0; j < (sub.length); j++) {
+                    old= await TraineeProgress.create({"Trainee_Id":traineeId,"SubtitleId":mongoose.Types.ObjectId(sub[j]._id),"CourseId":mongoose.Types.ObjectId(coursesArray[i])});
+                    console.log(" NEW here,Bye")
+                    }  
+                    
+            const bb= await course.findById({_id:courseId},{NumberOfPaid:1})
+            const b=(bb.NumberOfPaid)+1;
+            console.log("Number of people ------->>>>>>>>>>>",bb);
+            const counter=await course.findByIdAndUpdate({_id:courseId},{NumberOfPaid:b}); 
+            res.status(200).json(updatedTrainee)
+                    }
+            }
+
+            }
     }
     catch(error){
         res.status(400).json({error:error.message});
@@ -261,7 +333,8 @@ const fetchCurrentRequest = async(req,res) => {
 
     const viewMyRegisteredCourses = async(req,res) => {
     
-        const individualTraineeId = req.query.TraineeId;
+        //const individualTraineeId = req.query.TraineeId;
+        const individualTraineeId = req.session.user._id;
         
 
     try{
@@ -301,7 +374,9 @@ const fetchCurrentRequest = async(req,res) => {
 
 const traineeSendReport = async(req,res) => {
 
-    const traineeId = req.query.TraineeId;
+    // const traineeId = req.query.TraineeId;
+    const currRole = req.session.user.Role;
+    const traineeId = req.session.user._id;
     const {Report_Title,Reported_Problem,Report_Type} = req.body;
     const trainee = await Individual_Trainee.findById({_id:traineeId});
     const traineeUsername = trainee.Username;
@@ -364,7 +439,8 @@ const fetchTraineeAllPreviousReports = async(req,res) => {
 
 const fetchTraineeDeliveredReports = async(req,res) => {
 
-    const traineeId = req.query.TraineeId;
+    // const traineeId = req.query.TraineeId;
+    const traineeId = req.session.user._id;
 
     try{
     const deliveredProblems = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Delivered"}).populate('Trainee_Id');
@@ -379,7 +455,8 @@ const fetchTraineeDeliveredReports = async(req,res) => {
 
 const fetchTraineePendingReports = async(req,res) => {
 
-    const traineeId = req.query.TraineeId;
+    // const traineeId = req.query.TraineeId;
+    const traineeId = req.session.user._id;
 
     try{
     const pendingProblems = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Pending"}).populate('Trainee_Id');
@@ -394,7 +471,8 @@ const fetchTraineePendingReports = async(req,res) => {
 
 const fetchTraineeResolvedReports = async(req,res) => {
 
-    const traineeId = req.query.TraineeId;
+    // const traineeId = req.query.TraineeId;
+    const traineeId = req.session.user._id;
 
     try{
     const resolvedProblems = await reportedProblem.find({Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Resolved"}).populate('Trainee_Id');
@@ -425,7 +503,8 @@ const fetchProblem = async(req,res) => {
 
 const fetchTraineeProfileDetails = async(req,res) => {
 
-    const traineeId = req.query.TraineeId;
+    // const traineeId = req.query.TraineeId;
+    const traineeId = req.session.user._id;
 
     try{
     const trainee = await Individual_Trainee.findById({_id:traineeId});
@@ -439,7 +518,8 @@ const fetchTraineeProfileDetails = async(req,res) => {
 
 const fetchNonRegisteredTraineeCoursesForInstructor = async(req,res) => {
 
-    const traineeId = req.query.TraineeId;
+    //const traineeId = req.query.TraineeId;
+    const traineeId = req.session.user._id;
     const instructorId = req.query.id;
 
 
@@ -473,7 +553,8 @@ const fetchNonRegisteredTraineeCoursesForInstructor = async(req,res) => {
 
 const checkIfAdminRespondedTrainee = async(req,res) => {
 
-    const traineeId = req.query.TraineeId;
+    // const traineeId = req.query.TraineeId;
+    const traineeId = req.session.user._id;
     const reportId = req.query.ReportId;
 
     try{
@@ -520,6 +601,7 @@ const checkIfAdminRespondedTrainee = async(req,res) => {
     }
 
         }
+
         const getWalletBalance =async(req,res)=>{
             console.log('d5l')
             
@@ -539,17 +621,18 @@ const checkIfAdminRespondedTrainee = async(req,res) => {
         const editProfileDetails = async (req,res) => { 
 
             try{
-
-                const corporateTraineeId = req.query.CorporateTraineeId;
-                const traineeId = req.query.TraineeId;
-                const adminId = req.query.AdminId;
+                const currRole = req.session.user.Role;
+                // const corporateTraineeId = req.query.CorporateTraineeId;
+                // const traineeId = req.query.TraineeId;
+                // const adminId = req.query.AdminId;
                 const updatedprofile = null;
                 const username = req.body.Username;
                 const email = req.body.Email;
+                const userId = req.session.user._id;
 
-                if(corporateTraineeId==null)
+                if(currRole!="Corporate Trainee")
                 {
-                    if(traineeId==null)
+                    if(currRole!="Individual Trainee")
                     {
                         if(username==null || username=="")
                         {
@@ -557,22 +640,51 @@ const checkIfAdminRespondedTrainee = async(req,res) => {
                         }
                         else
                         {
-                            let user = await adminstrator.findOne({ Email: req.body.Email });
+                                let user = await adminstrator.findOne({ Username: req.body.Username });
                                 if (user)
                                 return res
                                 .status(409)
                                 .send({ error: "User with given email already Exist!" });
-                            
                                 else
                                 {
-                                    updatedprofile =await adminstrator.findByIdAndUpdate({_id:adminId},{Username:username},{new:true});
-                                    res.status(200).json(updatedprofile);
+                                    let user = await Individual_Trainee.findOne({ Username: req.body.Username });
+                                    if (user)
+                                    return res
+                                    .status(409)
+                                    .send({ error: "User with given email already Exist!" });
+                                    else
+                                    {
+                                        let user = await corporate_Trainee.findOne({ Username: req.body.Username });
+                                        if (user)
+                                        return res
+                                        .status(409)
+                                        .send({ error: "User with given email already Exist!" });
+                                        else
+                                        {
+                                            let user = await corporate_Trainee.findOne({ Username: req.body.Username });
+                                            if (user)
+                                            return res
+                                            .status(409)
+                                            .send({ error: "User with given email already Exist!" });
+                                            else
+                                            {
+                                                //else
+                                                //{
+                                                    updatedprofile =await adminstrator.findByIdAndUpdate({_id:userId},{Username:username},{new:true});
+                                                    res.status(200).json(updatedprofile);
+                                                //}
+                                            }
+                                        }
+                                    }
                                 }
+                            
+                                
                             
                         }
                     }
                     else
                     {
+                        console.log("dakhalt henaaaaaa for trainee")
                         if((username==null&&email==null)||(username==""&&email==""))
                         {
                             res.status(400).json({error:"All the fields are empty! Please fill in the fields to update your profile."});
@@ -588,12 +700,41 @@ const checkIfAdminRespondedTrainee = async(req,res) => {
                                 .send({ error: "User with given email already Exist!" });
                                 else
                                 {
-                                    updatedprofile =await Individual_Trainee.findByIdAndUpdate({_id:traineeId},{Email:email},{new:true});
-                                    res.status(200).json(updatedprofile);
+                                    let user = await adminstrator.findOne({ Email: req.body.Email });
+                                    if (user)
+                                    return res
+                                    .status(409)
+                                    .send({ error: "User with given email already Exist!" });
+                                    else
+                                    {
+                                        let user = await corporate_Trainee.findOne({ Email: req.body.Email });
+                                        if (user)
+                                        return res
+                                        .status(409)
+                                        .send({ error: "User with given email already Exist!" });
+                                        else
+                                        {
+                                            let user = await instructor.findOne({ Email: req.body.Email });
+                                            if (user)
+                                            return res
+                                            .status(409)
+                                            .send({ error: "User with given email already Exist!" });
+                                            else
+                                            {
+                                                //else
+                                                //{
+                                                    updatedprofile =await Individual_Trainee.findByIdAndUpdate({_id:userId},{Email:email},{new:true});
+                                                    res.status(200).json(updatedprofile);
+                                                //}
+                                            }
+                                        }
+                                    }
                                 }
+                                
                             }
                             else
                             {
+
                                 let user = await Individual_Trainee.findOne({ Email: req.body.Email });
                                 if (user)
                                 return res
@@ -601,17 +742,73 @@ const checkIfAdminRespondedTrainee = async(req,res) => {
                                 .send({ error: "User with given email already Exist!" });
                                 else
                                 {
-                                    let user = await Individual_Trainee.findOne({ Username: req.body.Username });
+                                    let user = await corporate_Trainee.findOne({ Email: req.body.Email });
                                     if (user)
                                     return res
                                     .status(409)
-                                    .send({ error: "User with given username already Exist!" });
+                                    .send({ error: "User with given email already Exist!" });
                                     else
                                     {
-                                        updatedprofile =await Individual_Trainee.findByIdAndUpdate({_id:traineeId},{Username:username,Email:email},{new:true});
-                                        res.status(200).json(updatedprofile);
+                                        let user = await instructor.findOne({ Email: req.body.Email });
+                                        if (user)
+                                        return res
+                                        .status(409)
+                                        .send({ error: "User with given email already Exist!" });
+                                        else
+                                        {
+                                            let user = await adminstrator.findOne({ Email: req.body.Email });
+                                            if (user)
+                                            return res
+                                            .status(409)
+                                            .send({ error: "User with given email already Exist!" });
+                                            else
+                                            {
+                                                // else
+                                                // {
+                                                    let user = await Individual_Trainee.findOne({ Username: req.body.Username });
+                                                    if (user)
+                                                    return res
+                                                    .status(409)
+                                                    .send({ error: "User with given username already Exist!" });
+                                                    else
+                                                    {
+                                                        let user = await corporate_Trainee.findOne({ Username: req.body.Username });
+                                                        if (user)
+                                                        return res
+                                                        .status(409)
+                                                        .send({ error: "User with given username already Exist!" });
+                                                        else
+                                                        {
+                                                            let user = await adminstrator.findOne({ Username: req.body.Username });
+                                                            if (user)
+                                                            return res
+                                                            .status(409)
+                                                            .send({ error: "User with given username already Exist!" });
+                                                            else
+                                                            {
+                                                                let user = await instructor.findOne({ Username: req.body.Username });
+                                                                if (user)
+                                                                return res
+                                                                .status(409)
+                                                                .send({ error: "User with given username already Exist!" });
+                                                                else
+                                                                {
+                                                    //                 else
+                                                    // {
+                                                                    updatedprofile =await Individual_Trainee.findByIdAndUpdate({_id:userId},{Username:username,Email:email},{new:true});
+                                                                    res.status(200).json(updatedprofile);
+                                                    //}
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                //}
+                                            }
+                                        }
                                     }
                                 }
+                                
                             }
                         }
                     }
@@ -624,15 +821,42 @@ const checkIfAdminRespondedTrainee = async(req,res) => {
                     }
                     else
                     {
-                        let user = await corporate_Trainee.findOne({ Email: req.body.Email });
+                            let user = await corporate_Trainee.findOne({ Email: req.body.Email });
                             if (user)
                             return res
                             .status(409)
                             .send({ error: "User with given email already Exist!" });
                             else
                             {
-                                updatedprofile =await corporate_Trainee.findByIdAndUpdate({_id:corporateTraineeId},{Email:email},{new:true});
+                                let user = await Individual_Trainee.findOne({ Email: req.body.Email });
+                                if (user)
+                                return res
+                                .status(409)
+                                .send({ error: "User with given email already Exist!" });
+                                else
+                                {
+                                    let user = await adminstrator.findOne({ Email: req.body.Email });
+                                    if (user)
+                                    return res
+                                    .status(409)
+                                    .send({ error: "User with given email already Exist!" });
+                            else
+                            {
+                                let user = await instructor.findOne({ Email: req.body.Email });
+                                if (user)
+                                return res
+                                .status(409)
+                                .send({ error: "User with given email already Exist!" });
+                            else
+                            {
+                            //      else
+                            // {
+                                updatedprofile =await corporate_Trainee.findByIdAndUpdate({_id:userId},{Email:email},{new:true});
                                 res.status(200).json(updatedprofile);
+                            //}
+                            }
+                            }
+                            }
                             }
                     }
                 }
@@ -792,7 +1016,8 @@ const checkIfAdminRespondedTrainee = async(req,res) => {
         const checkIfRefundEligible =async(req,res)=>{
         
             
-            const traineeId=req.query.TraineeId;
+            // const traineeId=req.query.TraineeId;
+            const traineeId=req.session.user._id;
             const courseId = req.query.CourseId;
             
         try{

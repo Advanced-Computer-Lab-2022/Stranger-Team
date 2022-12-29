@@ -1,4 +1,4 @@
-
+//sessions done
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate } from "react-router-dom";
@@ -15,8 +15,8 @@
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     import ReportHeadings from "../components/ReportHeadings";
     import RequestHeadings from "../components/RequestHeadings";
-import ResolvedRequestHeadings from "../components/ResolvedRequestHeadings";
-        
+    import ResolvedRequestHeadings from "../components/ResolvedRequestHeadings";
+
 
     const TraineeResolvedRefundRequestsPage = () => {
     const [problems, setProblems] = useState(null)
@@ -24,11 +24,12 @@ import ResolvedRequestHeadings from "../components/ResolvedRequestHeadings";
     useEffect(() => {
         const fetchProblems = async () => {
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
-        console.log(traineeId); 
+        // const traineeId = params.get('TraineeId');
+        // console.log(traineeId); 
 
 
-        const response = await fetch(`/fetchTraineeResolvedRequests/?TraineeId=${traineeId}`)
+        // const response = await fetch(`/fetchTraineeResolvedRequests/?TraineeId=${traineeId}`)
+        const response = await fetch(`/fetchTraineeResolvedRequests`)
         
         const json = await response.json()
         console.log(json)
@@ -42,10 +43,10 @@ import ResolvedRequestHeadings from "../components/ResolvedRequestHeadings";
 
     let navigate = useNavigate();
 
-        const routeChange1 = () =>{ 
-        let path = '/CoursesFilterByPrice'; 
-        navigate(path);
-    }
+    //     const routeChange1 = () =>{ 
+    //     let path = '/CoursesFilterByPrice'; 
+    //     navigate(path);
+    // }
 
 
 
@@ -65,9 +66,10 @@ import ResolvedRequestHeadings from "../components/ResolvedRequestHeadings";
                 }}
                 onClick={() => {
                     const params = new URLSearchParams(window.location.search);
-                    const traineeId = params.get('TraineeId');
-                    console.log(traineeId);
-                    window.location.href=`/TraineeCurrentResolvedRefundRequestPage?RequestId=${problem._id}&TraineeId=${traineeId}`}}
+                    // const traineeId = params.get('TraineeId');
+                    // console.log(traineeId);
+                    // window.location.href=`/TraineeCurrentResolvedRefundRequestPage?RequestId=${problem._id}&TraineeId=${traineeId}`
+                window.location.href=`/TraineeCurrentResolvedRefundRequestPage?RequestId=${problem._id}`}}
                 key={problem._id}>
             <ResolvedRequestHeadings problem={problem} key={problem.id} />
             

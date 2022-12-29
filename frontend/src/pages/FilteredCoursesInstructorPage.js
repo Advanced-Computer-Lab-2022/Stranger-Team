@@ -1,4 +1,4 @@
-
+//sessions done
 
 
 
@@ -12,7 +12,7 @@
 
     import{Button, Alert, Container} from 'react-bootstrap'
     import ProfileNavBar from '../components/ProfileNavBar'
-import FilterMyCoursesInstructorComponent from "../components/FilterMyCoursesInstructorComponent";
+    import FilterMyCoursesInstructorComponent from "../components/FilterMyCoursesInstructorComponent";
 
 
     const FilteredCoursesInstructorPage = () => {
@@ -24,11 +24,11 @@ import FilterMyCoursesInstructorComponent from "../components/FilterMyCoursesIns
         const fetchInstructor = async () => {
         
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
+        // const instructorId = params.get('id');
         const rating = params.get('Rating');
         const price = params.get('Price');
         const subject = params.get('Subject');
-        console.log(instructorId); 
+        //console.log(instructorId); 
 
         var response;
 
@@ -38,22 +38,22 @@ import FilterMyCoursesInstructorComponent from "../components/FilterMyCoursesIns
             {
                 if(price==null||price=="")
                 {
-                    response = await fetch(`/FilterMyCourses/?q=${searchQuery}&id=${instructorId}`)
+                    response = await fetch(`/FilterMyCourses/?q=${searchQuery}`)
                 }
                 else
                 {
-                    response = await fetch(`/FilterMyCourses/?Price=${price}&q=${searchQuery}&id=${instructorId}`)
+                    response = await fetch(`/FilterMyCourses/?Price=${price}&q=${searchQuery}`)
                 }
             }
             else
             {
                 if(price==null||price=="")
                 {
-                    response = await fetch(`/FilterMyCourses/?Subject=${subject}&q=${searchQuery}&id=${instructorId}`)
+                    response = await fetch(`/FilterMyCourses/?Subject=${subject}&q=${searchQuery}`)
                 }
                 else
                 {
-                    response = await fetch(`/FilterMyCourses/?Subject=${subject}&Price=${price}&q=${searchQuery}&id=${instructorId}`)
+                    response = await fetch(`/FilterMyCourses/?Subject=${subject}&Price=${price}&q=${searchQuery}`)
                 }
             }
         }
@@ -63,22 +63,22 @@ import FilterMyCoursesInstructorComponent from "../components/FilterMyCoursesIns
             {
                 if(price==null||price=="")
                 {
-                    response = await fetch(`/FilterMyCourses/?Rating=${rating}&q=${searchQuery}&id=${instructorId}`)
+                    response = await fetch(`/FilterMyCourses/?Rating=${rating}&q=${searchQuery}`)
                 }
                 else
                 {
-                    response = await fetch(`/FilterMyCourses/?Rating=${rating}&Price=${price}&q=${searchQuery}&id=${instructorId}`)
+                    response = await fetch(`/FilterMyCourses/?Rating=${rating}&Price=${price}&q=${searchQuery}`)
                 }
             }
             else
             {
                 if(price==null||price=="")
                 {
-                    response = await fetch(`/FilterMyCourses/?Rating=${rating}&Subject=${subject}&q=${searchQuery}&id=${instructorId}`)
+                    response = await fetch(`/FilterMyCourses/?Rating=${rating}&Subject=${subject}&q=${searchQuery}`)
                 }
                 else
                 {
-                    response = await fetch(`/FilterMyCourses/?Rating=${rating}&Subject=${subject}&Price=${price}&q=${searchQuery}&id=${instructorId}`)
+                    response = await fetch(`/FilterMyCourses/?Rating=${rating}&Subject=${subject}&Price=${price}&q=${searchQuery}`)
                 }
             }
         }
@@ -108,8 +108,9 @@ import FilterMyCoursesInstructorComponent from "../components/FilterMyCoursesIns
 
     const routeChange2 = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        let path = `/InstructorAddANewCoursePage/?id=${instructorId}`; 
+        // const instructorId = params.get('id');
+        // let path = `/InstructorAddANewCoursePage/?id=${instructorId}`; 
+        let path = `/InstructorAddANewCoursePage`; 
         navigate(path);
     }
 
@@ -134,8 +135,9 @@ import FilterMyCoursesInstructorComponent from "../components/FilterMyCoursesIns
                     
                     () =>{
                         const params = new URLSearchParams(window.location.search);
-                        const instructorId = params.get('id'); 
-                        window.location.href=`/CurrentCourse/?id=${instructorId}&CourseId=${course._id}`}}
+                        //const instructorId = params.get('id'); 
+                        // window.location.href=`/CurrentCourse/?id=${instructorId}&CourseId=${course._id}`
+                    window.location.href=`/CurrentCourse/?CourseId=${course._id}`}}
                 key={course._id}>
             <MyCourses course={course} key={course._id} />
             </Container>

@@ -1,3 +1,4 @@
+    //sessions done
     import { useState } from 'react'
     import ProfileNavBar from '../components/ProfileNavBar'
 
@@ -10,14 +11,22 @@
     const handleSubmit = async (e) => {
         e.preventDefault()
         const queryParams = new URLSearchParams(window.location.search);
-        const instructorId = queryParams.get('id');
+        //const instructorId = queryParams.get('id');
         const courseId = queryParams.get('CourseId');
 
 
         const report = {Report_Title,Reported_Problem,Report_Type};
         console.log(report)
 
-        const response = await fetch(`/instructorSendReport/?id=${instructorId}`, {
+        // const response = await fetch(`/instructorSendReport/?id=${instructorId}`, {
+        // method: 'POST',
+        // body: JSON.stringify(report),
+        // headers: {
+        //     'Content-Type': 'application/json'
+        // }
+        // })
+
+        const response = await fetch(`/instructorSendReport`, {
         method: 'POST',
         body: JSON.stringify(report),
         headers: {
@@ -39,7 +48,8 @@
         setReport_Type(null)
         
         console.log('report sent:', json)
-        window.location=`http://localhost:3000/CurrentCourse?id=${instructorId}&CourseId=${courseId}`
+        // window.location=`http://localhost:3000/CurrentCourse?id=${instructorId}&CourseId=${courseId}`
+        window.location=`http://localhost:3000/CurrentCourse?CourseId=${courseId}`
         }
 
     }

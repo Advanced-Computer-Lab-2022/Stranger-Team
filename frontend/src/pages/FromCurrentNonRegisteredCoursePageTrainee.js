@@ -1,5 +1,5 @@
 
-//instructor current course page
+//sessions done
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
@@ -20,7 +20,7 @@
     import TraineeSubtitleTitlesPage from "./TraineeSubtitleTitlesPage";
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     import CurrentNonRegisteredCoursePageDetailsTrainee from "../components/CurrentNonRegisteredCoursePageDetailsTrainee";
-import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
+    import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
     
 
 
@@ -33,7 +33,7 @@ import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTrain
         const fetchCourse = async () => {
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        const traineeId = params.get('TraineeId');
+        //const traineeId = params.get('TraineeId');
         
         
         const response = await fetch(`/CurrentCourse/?CourseId=${courseId}`)
@@ -57,11 +57,12 @@ import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTrain
     let navigate = useNavigate();
         const routeChange = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
+        //const traineeId = params.get('TraineeId');
         const courseId= params.get('CourseId');
-        console.log(traineeId); 
+        //console.log(traineeId); 
 
-        let path = `/CurrentCoursePageTrainee?CourseId=${courseId}&TraineeId=${traineeId}`; 
+        // let path = `/CurrentCoursePageTrainee?CourseId=${courseId}&TraineeId=${traineeId}`; 
+        let path = `/CurrentCoursePageTrainee?CourseId=${courseId}`; 
         navigate(path);
     }
 

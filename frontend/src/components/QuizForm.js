@@ -1,3 +1,4 @@
+//sessions done
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 
@@ -46,8 +47,9 @@ const QuizForm = () => {
 
         if (response.ok) {
             const params = new URLSearchParams(window.location.search);
-            const instructorId = params.get('id');
-            let path = `/InstructorCoursePage/?id=${instructorId}`; 
+            //const instructorId = params.get('id');
+            // let path = `/InstructorCoursePage/?id=${instructorId}`; 
+            let path = `/InstructorCoursePage`; 
             navigate(path);
         }
         
@@ -60,7 +62,7 @@ const QuizForm = () => {
         const question = {QNumber, Q, Answer1, Answer2, Answer3, Answer4, correctAnswer}
 
         const queryParams = new URLSearchParams(window.location.search);
-                 const courseId = queryParams.get('CourseId');
+                const courseId = queryParams.get('CourseId');
                 const response = await fetch(`/addQ/?CourseId=${courseId}`, {
             method: 'POST',
             body: JSON.stringify(question),
@@ -95,7 +97,7 @@ const QuizForm = () => {
 
     return (
         <div> 
-             <form className="create" onSubmit={handleSubmit}>
+            <form className="create" onSubmit={handleSubmit}>
             <h3>Add a new question</h3>
 
             <label>Question number: </label>
@@ -159,27 +161,27 @@ const QuizForm = () => {
             className={emptyFields.includes('correctAns') ? 'error':''}
             /> */}
 
-             <label>Option which holds the correct answer </label>  
-             <select id="RID" name="correctAnswer" onChange={(e) => setCorrectAnswer(e.target.value)}
+            <label>Option which holds the correct answer </label>  
+            <select id="RID" name="correctAnswer" onChange={(e) => setCorrectAnswer(e.target.value)}
             value={correctAnswer} type="number">
-             <option value=""></option>
-             <option value="0">0</option>
-             <option value="1">1</option>
-             <option value="2">2</option>
-             <option value="3">3</option>
-             className={emptyFields.includes('correctAns') ? 'error':''}
-             </select> 
+            <option value=""></option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            className={emptyFields.includes('correctAns') ? 'error':''}
+            </select> 
             
-             <hr></hr>
+            <hr></hr>
             <button>Add question</button>
             {error && <div className="error">{error}</div>}
 
             {error1 && <div className="error">{error1}</div>}
         </form>
         <button onClick={handleClick}>Done</button>
-       
+        
         </div>
-       
+        
     )
 }
 

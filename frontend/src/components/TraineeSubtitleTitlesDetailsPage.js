@@ -1,4 +1,4 @@
-
+//sessions done
     const TraineeSubtitleTitlesDetailsPage = ({ subtitle }) => {
 
 

@@ -1,5 +1,4 @@
-
-//instructor current course page
+//sessions done
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
@@ -30,12 +29,13 @@
         const fetchCourse = async () => {
         const params = new URLSearchParams(window.location.search);
         const instructorId = params.get('id');
-        const traineeId = params.get('TraineeId');
+        //const traineeId = params.get('TraineeId');
         //console.log(courseId); 
         
         
         //const response = await fetch(`/fetchCurrentCourseInstructorCoursesByInstructorId/?id=${instructorId}`)
-        const response = await fetch(`/fetchNonRegisteredTraineeCoursesForInstructor/?TraineeId=${traineeId}&id=${instructorId}`)
+        // const response = await fetch(`/fetchNonRegisteredTraineeCoursesForInstructor/?TraineeId=${traineeId}&id=${instructorId}`)
+        const response = await fetch(`/fetchNonRegisteredTraineeCoursesForInstructor/?id=${instructorId}`)
         
         
         const json = await response.json()
@@ -71,9 +71,10 @@
                 //onClick={() => window.location.href=`/CurrentCoursePageTrainee?CourseId=${course._id}`}
                 onClick={() =>{
                 const params = new URLSearchParams(window.location.search);
-                const traineeId = params.get('TraineeId');
-                console.log(traineeId);
-                window.location.href=`/CurrentNonRegisteredCoursePageTrainee?CourseId=${course._id}&TraineeId=${traineeId}`} }
+                // const traineeId = params.get('TraineeId');
+                // console.log(traineeId);
+                // window.location.href=`/CurrentNonRegisteredCoursePageTrainee?CourseId=${course._id}&TraineeId=${traineeId}`
+            window.location.href=`/CurrentNonRegisteredCoursePageTrainee?CourseId=${course._id}`} }
                 key={course._id}>
             <CourseDetails course={course} key={course.id} />
             {/* <PreviewCourseVideoPageDetails course={course} key={course.id} /> */}

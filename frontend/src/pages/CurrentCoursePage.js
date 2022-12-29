@@ -1,5 +1,4 @@
-
-//instructor current course page
+//sessions done
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
@@ -66,10 +65,11 @@
 
     const routeChange2 = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
+        // const instructorId = params.get('id');
         const courseId = params.get('CourseId');
         // console.log(courseId); 
-        let path = `/AddANewSubtitle/?id=${instructorId}&CourseId=${courseId}`; 
+        // let path = `/AddANewSubtitle/?id=${instructorId}&CourseId=${courseId}`; 
+        let path = `/AddANewSubtitle/?CourseId=${courseId}`; 
         console.log("CourseId"+courseId)
         navigate(path);
     }
@@ -77,9 +77,10 @@
     const routeChange3 = () =>{ 
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        const instructorId = params.get('id');
+        //const instructorId = params.get('id');
         // console.log(courseId); 
-        let path = `/InstructorReportAProblemPage/?id=${instructorId}&CourseId=${courseId}`; 
+        // let path = `/InstructorReportAProblemPage/?id=${instructorId}&CourseId=${courseId}`; 
+        let path = `/InstructorReportAProblemPage/?CourseId=${courseId}`; 
         navigate(path);
     }
 
@@ -87,9 +88,10 @@
     const routeChange4 = () =>{ 
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        const instructorId = params.get('id');
+        //const instructorId = params.get('id');
         // console.log(courseId); 
-        let path = `/createQuiz/?id=${instructorId}&CourseId=${courseId}`; 
+        // let path = `/createQuiz/?id=${instructorId}&CourseId=${courseId}`; 
+        let path = `/createQuiz/?CourseId=${courseId}`; 
         navigate(path);
     }
 

@@ -330,10 +330,98 @@ app.get("/View_All_Courses/",async (req,res)=>{
 
 
 //app.get("/FilteredCourses",FilteredCourses);
+// app.get("/FilteredCourses",async (req,res)=>{
+
+
+//   const q = req.query.q;
+  
+
+//   const keys=["Title","Subject","Instructor_Name"];
+//   const search = (data)=>{
+//     return data.filter((item)=>
+//     keys.some((key)=>item[key].toLowerCase().includes(q))
+//     );
+//   };
+
+//             const subject = req.query.Subject;
+//             const rating = req.query.Rating;
+//             const price = req.query.Price;
+//             // const filteredCourses=null;
+
+//             if(subject==null||subject=="")
+//             {
+//                 if(rating==null||rating=="")
+//                 {
+//                     if(price==null||price=="")
+//                     {
+//                         const filteredCourses = await course.find({});
+
+//                         res.status(200).json(search(filteredCourses));
+//                     }
+//                     else
+//                     {
+//                         const filteredCourses = await course.find({Price:price});
+
+//                         res.status(200).json(search(filteredCourses));
+//                     }
+//                 }
+//                 else
+//                 {
+//                     if(price==null||price=="")
+//                     {
+//                         const filteredCourses = await course.find({Rating:rating});
+
+//                         res.status(200).json(search(filteredCourses));
+//                     }
+//                     else
+//                     {
+//                         const filteredCourses = await course.find({Rating:rating,Price:price});
+
+//                         res.status(200).json(search(filteredCourses));
+//                     }
+//                 }
+//             }
+//             else
+//             {
+//                 if(rating==null||rating=="")
+//                 {
+//                     if(price==null||price=="")
+//                     {
+//                         const filteredCourses = await course.find({Subject:subject});
+
+//                         res.status(200).json(search(filteredCourses));
+//                     }
+//                     else
+//                     {
+//                         const filteredCourses = await course.find({Subject:subject,Price:price});
+
+//                         res.status(200).json(search(filteredCourses));
+//                     }
+//                 }
+//                 else
+//                 {
+//                     if(price==null||price=="")
+//                     {
+//                         const filteredCourses = await course.find({Subject:subject,Rating:rating});
+
+//                         res.status(200).json(search(filteredCourses));
+//                     }
+//                     else
+//                     {
+//                         const filteredCourses = await course.find({Subject:subject,Rating:rating,Price:price});
+
+//                         res.status(200).json(search(filteredCourses));
+
+//                     }
+//                 }
+//             }
+
+// });
+
 app.get("/FilteredCourses",async (req,res)=>{
 
 
-  const q = req.query.q;
+  //const q = req.query.q;
   
 
   const keys=["Title","Subject","Instructor_Name"];
@@ -347,6 +435,9 @@ app.get("/FilteredCourses",async (req,res)=>{
             const rating = req.query.Rating;
             const price = req.query.Price;
             // const filteredCourses=null;
+            console.log("subject"+subject);
+            console.log("rating"+rating);
+            console.log("rating"+rating);
 
             if(subject==null||subject=="")
             {
@@ -356,13 +447,13 @@ app.get("/FilteredCourses",async (req,res)=>{
                     {
                         const filteredCourses = await course.find({});
 
-                        res.status(200).json(search(filteredCourses));
+                        res.status(200).json(filteredCourses);
                     }
                     else
                     {
                         const filteredCourses = await course.find({Price:price});
 
-                        res.status(200).json(search(filteredCourses));
+                        res.status(200).json(filteredCourses);
                     }
                 }
                 else
@@ -371,13 +462,13 @@ app.get("/FilteredCourses",async (req,res)=>{
                     {
                         const filteredCourses = await course.find({Rating:rating});
 
-                        res.status(200).json(search(filteredCourses));
+                        res.status(200).json(filteredCourses);
                     }
                     else
                     {
                         const filteredCourses = await course.find({Rating:rating,Price:price});
 
-                        res.status(200).json(search(filteredCourses));
+                        res.status(200).json(filteredCourses);
                     }
                 }
             }
@@ -388,14 +479,14 @@ app.get("/FilteredCourses",async (req,res)=>{
                     if(price==null||price=="")
                     {
                         const filteredCourses = await course.find({Subject:subject});
-
-                        res.status(200).json(search(filteredCourses));
+                        console.log("filteredCourses"+filteredCourses);
+                        res.status(200).json(filteredCourses);
                     }
                     else
                     {
                         const filteredCourses = await course.find({Subject:subject,Price:price});
 
-                        res.status(200).json(search(filteredCourses));
+                        res.status(200).json(filteredCourses);
                     }
                 }
                 else
@@ -404,13 +495,13 @@ app.get("/FilteredCourses",async (req,res)=>{
                     {
                         const filteredCourses = await course.find({Subject:subject,Rating:rating});
 
-                        res.status(200).json(search(filteredCourses));
+                        res.status(200).json(filteredCourses);
                     }
                     else
                     {
                         const filteredCourses = await course.find({Subject:subject,Rating:rating,Price:price});
 
-                        res.status(200).json(search(filteredCourses));
+                        res.status(200).json(filteredCourses);
 
                     }
                 }
@@ -670,7 +761,8 @@ app.get("/viewMyRegisteredCourses" , async(req,res) => {
     
         //const individualTraineeId = req.query.TraineeId;
         // const individualTraineeId = req.session.user._id;
-        const individualTraineeId = req.query.TraineeId;
+        // const individualTraineeId = req.query.TraineeId;
+        const individualTraineeId = req.session.user._id;
 
         const q = req.query.q;
   
@@ -774,10 +866,11 @@ app.get("/isDiscountViable",isDiscountViable);
 app.get("/displayCourseDiscount",displayCourseDiscount);
 
 
-app.get("/MyCourses/:id",async (req,res)=>{
+app.get("/MyCourses",async (req,res)=>{
 
   const q = req.query.q;
-  const instructorId = req.params.id;
+  // const instructorId = req.params.id;
+  const instructorId = req.session.user._id;
   console.log(q);
 
   const keys=["Title","Subject"];
@@ -1068,7 +1161,8 @@ function arrayIsEmpty(array) {
 app.post("/create-payment-intent", async (req, res) => {
 
     const courseId = req.query.CourseId;
-    const traineeId = req.query.TraineeId;
+    // const traineeId = req.query.TraineeId;
+    const traineeId = req.session.user._id;
     var c;
     var already=[];
     let a=[];
@@ -1128,14 +1222,6 @@ app.post("/create-payment-intent", async (req, res) => {
         enabled:true,
       },
     })
-
-    // const currTrainee = await individual_Trainee.findById({_id:traineeId});
-    // const updatedArray = currTrainee.Registered_Courses;
-    // console.log(updatedArray);
-    // updatedArray.push(courseId);
-    // console.log(updatedArray)
-    // const updatedTrainee =  await individual_Trainee.findByIdAndUpdate({_id:traineeId},{Registered_Courses:updatedArray},{new:true});
-    // console.log("updatedTrainee"+updatedTrainee)
     
     res.send({clientSecret:paymentIntent.client_secret});
     

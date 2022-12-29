@@ -1,5 +1,4 @@
-
-//instructor current course page
+//sessions done
 import { useEffect, useState } from "react"
 import React from 'react';
 import { useNavigate,useLocation  } from "react-router-dom";
@@ -28,8 +27,8 @@ var p;
 const CurrentCourseSubtitlesPageTrainee = () => {
 
 const [subtitle,setSubtitle] = useState([])
- const [subtitleQuestion, setSubtitleQuestion] = useState(null)
- const [progress,setProgress]=useState([]);
+const [subtitleQuestion, setSubtitleQuestion] = useState(null)
+const [progress,setProgress]=useState([]);
 
 useEffect(() => {
     const fetchSubtitles = async () => {
@@ -42,9 +41,9 @@ useEffect(() => {
     const response1 = await fetch(`/getSubQ/?SubtitleId=${subtitleId}`)
 
     const json = await response.json()
-     const json1 = await response1.json()
+    const json1 = await response1.json()
     console.log( json)
-     console.log("SUB QUESTION AHO: " + json1)
+    console.log("SUB QUESTION AHO: " + json1)
 
     if (response.ok) {
         setSubtitle([json])
@@ -60,9 +59,10 @@ useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const subtitleId = params.get('SubtitleId');
         const courseId = params.get('CourseId');
-        const Trainee_Id = params.get('TraineeId');
+        // const Trainee_Id = params.get('TraineeId');
         console.log(subtitleId); 
-        const response = await fetch(`/getSubtitlesStatus/?CourseId=${courseId}&TraineeId=${Trainee_Id}&SubtitleId=${subtitleId}`)
+        // const response = await fetch(`/getSubtitlesStatus/?CourseId=${courseId}&TraineeId=${Trainee_Id}&SubtitleId=${subtitleId}`)
+        const response = await fetch(`/getSubtitlesStatus/?CourseId=${courseId}&SubtitleId=${subtitleId}`)
         const json = await response.json()
         console.log( json)
         if (response.ok) {
@@ -72,7 +72,7 @@ useEffect(() => {
         console.log(p)      
         
         
-  
+
     fetchSubtitles();
     fetchProgress();
 })
@@ -81,10 +81,11 @@ const updateProgress = async () => {
     const params = new URLSearchParams(window.location.search);
     const subtitleId = params.get('SubtitleId');
     const courseId = params.get('CourseId');
-    const Trainee_Id = params.get('TraineeId');
+    // const Trainee_Id = params.get('TraineeId');
 
     console.log(subtitleId); 
-    const response = await fetch(`/updatetSubtitlesStatus/?CourseId=${courseId}&TraineeId=${Trainee_Id}&SubtitleId=${subtitleId}`)
+    // const response = await fetch(`/updatetSubtitlesStatus/?CourseId=${courseId}&TraineeId=${Trainee_Id}&SubtitleId=${subtitleId}`)
+    const response = await fetch(`/updatetSubtitlesStatus/?CourseId=${courseId}&SubtitleId=${subtitleId}`)
     const json = await response.json()
     console.log( json)
     if (response.ok) {
@@ -123,7 +124,7 @@ return (
             ))[0]}
 
 
-           {subtitleQuestion && subtitleQuestion.map(subtitleQuestion => (
+            {subtitleQuestion && subtitleQuestion.map(subtitleQuestion => (
             <SubtitleQuestionComponent subtitleQuestion={subtitleQuestion} key={subtitleQuestion._id} />
             ))[0]}
             
@@ -134,7 +135,7 @@ return (
         
         
     </div>
-  
+
     </div>
     
     </Container>

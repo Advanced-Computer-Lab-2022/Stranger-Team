@@ -83,13 +83,15 @@
                 <CurrentCourseInstructorProfileDetailsForTrainee instructor={instructor} key={instructor._id} />
                 ))[0]}
                 
+                <div className="course-details">
+                
+                    <RadioButtonsRateAnInstructor/>
+                </div>
                 
                 {/* <button onClick={routeChange1}>Review Instructor</button> */}
             </div>
                     
-            <form className="course-details">
-                    <RadioButtonsRateAnInstructor/>
-            </form>
+            
 
             <form className="course-details">
                     <TraineeReviewAnInstructor/>

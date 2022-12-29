@@ -1,4 +1,4 @@
-
+//sessions done
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate } from "react-router-dom";
@@ -13,8 +13,8 @@
     import StarRating from "../components/StarRating";
     import PreviewCourseVideoPageDetails from '../components/PreviewCourseVideoTraineePageDetails'
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
-import ReportHeadings from "../components/ReportHeadings";
-    
+    import ReportHeadings from "../components/ReportHeadings";
+        
 
     const InstructorDeliveredReportsPage = () => {
     const [problems, setProblems] = useState(null)
@@ -22,11 +22,13 @@ import ReportHeadings from "../components/ReportHeadings";
     useEffect(() => {
         const fetchProblems = async () => {
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        console.log(instructorId); 
+        // const instructorId = params.get('id');
+        // console.log(instructorId); 
 
 
-        const response = await fetch(`/fetchInstructorDeliveredReports/?id=${instructorId}`)
+        // const response = await fetch(`/fetchInstructorDeliveredReports/?id=${instructorId}`)
+        
+        const response = await fetch(`/fetchInstructorDeliveredReports`)
         
         const json = await response.json()
         console.log(json)
@@ -40,10 +42,10 @@ import ReportHeadings from "../components/ReportHeadings";
 
     let navigate = useNavigate();
 
-        const routeChange1 = () =>{ 
-        let path = '/CoursesFilterByPrice'; 
-        navigate(path);
-    }
+    //     const routeChange1 = () =>{ 
+    //     let path = '/CoursesFilterByPrice'; 
+    //     navigate(path);
+    // }
 
 
 
@@ -63,9 +65,10 @@ import ReportHeadings from "../components/ReportHeadings";
                 }}
                 onClick={() => {
                     const params = new URLSearchParams(window.location.search);
-                    const instructorId = params.get('id'); 
-                    console.log(instructorId);
-                    window.location.href=`/InstructorCurrentReportPage?ReportId=${problem._id}&id=${instructorId}`}}
+                    // const instructorId = params.get('id'); 
+                    // console.log(instructorId);
+                    // window.location.href=`/InstructorCurrentReportPage?ReportId=${problem._id}&id=${instructorId}`
+                window.location.href=`/InstructorCurrentReportPage?ReportId=${problem._id}`}}
                 key={problem._id}>
             <ReportHeadings problem={problem} key={problem.id} />
             

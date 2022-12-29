@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+    //sessions done
+    import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate } from "react-router-dom";
     // components
@@ -11,7 +12,7 @@ import { useEffect, useState } from "react"
     import Navbar from "../components/Navbar";
     import StarRating from "../components/StarRating";
     import PreviewCourseVideoPageDetails from '../components/PreviewCourseVideoTraineePageDetails'
-import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+    import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
 
     const MyRegisteredCoursesTraineePage = () => {
     const [courses, setCourses] = useState(null)
@@ -22,11 +23,12 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
         const fetchCourses = async () => {
         
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
-        console.log(traineeId); 
+        // const traineeId = params.get('TraineeId');
+        // console.log(traineeId); 
         
 
-        const response = await fetch(`/viewMyRegisteredCourses/?TraineeId=${traineeId}&q=${searchQuery}`)
+        // const response = await fetch(`/viewMyRegisteredCourses/?TraineeId=${traineeId}&q=${searchQuery}`)
+        const response = await fetch(`/viewMyRegisteredCourses/?q=${searchQuery}`)
         
         const json = await response.json()
         console.log(json)
@@ -60,9 +62,10 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
                 }}
                 onClick={() =>{
                 const params = new URLSearchParams(window.location.search);
-                const traineeId = params.get('TraineeId');
-                console.log(traineeId);
-                window.location.href=`/CurrentCoursePageTrainee?CourseId=${course._id}&TraineeId=${traineeId}`} }
+                // const traineeId = params.get('TraineeId');
+                // console.log(traineeId);
+                //window.location.href=`/CurrentCoursePageTrainee?CourseId=${course._id}&TraineeId=${traineeId}`
+            window.location.href=`/CurrentCoursePageTrainee?CourseId=${course._id}`} }
                 key={course._id}>
             <CourseDetails course={course} key={course.id} />
             {/* <PreviewCourseVideoPageDetails course={course} key={course.id} /> */}

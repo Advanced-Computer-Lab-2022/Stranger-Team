@@ -1,3 +1,4 @@
+//sessions done
 import { useQuizContext } from "../hooks/UseQuizContext"
 import { useState } from "react"
 
@@ -13,10 +14,10 @@ const QuizDetails = ({ quiz }) => {
 
     const [drop, setdrop] = useState(false)
 
-  function onSelect(){
-       
-       setdrop(!drop)
- }
+    function onSelect(){
+
+        setdrop(!drop)
+}
     
     const handleClick = async () =>  {
         const response = await fetch('/deleteQ/' +quiz._id,  {
@@ -37,13 +38,11 @@ const QuizDetails = ({ quiz }) => {
             <h4>{quiz.QNumber}. {quiz.Q}</h4>
             <p className="material-symbols-outlined" onClick={onSelect}>expand_more</p>
             <label>OPTIONS</label>
-         {drop &&
+            {drop &&
 quiz.Answers.map((q, i) => (
- <p  id={`q${i}-option`} visible="false">OPTION {i}: <strong>{quiz.Answers[i]}</strong></p>
-                  ))
-                 }
-                 
-                 
+<p  id={`q${i}-option`} visible="false">OPTION {i}: <strong>{quiz.Answers[i]}</strong></p>
+                    ))
+                    }
             <p><strong>Correct Answer:  </strong> {quiz.Answers[quiz.correctAnswer]}</p>
             <p>Created {formatDistanceToNow(new Date(quiz.createdAt), {addSuffix: true})}</p>
             <span className="material-symbols-outlined" onClick={handleClick}>delete</span>

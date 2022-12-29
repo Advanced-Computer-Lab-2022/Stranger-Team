@@ -1,5 +1,4 @@
-
-//instructor current course page
+//sessions done
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
@@ -18,9 +17,9 @@
     import CurrentCourseSubtitlesPageTrainee from "./CurrentCourseSubtitlesPageTrainee";
     import RadioButtonsRateACourse from "../components/RadioButtonsRateACourse";
     import TraineeSubtitleTitlesPage from "./TraineeSubtitleTitlesPage";
-import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
-import CurrentNonRegisteredCoursePageDetailsTrainee from "../components/CurrentNonRegisteredCoursePageDetailsTrainee";
-import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
+    import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+    import CurrentNonRegisteredCoursePageDetailsTrainee from "../components/CurrentNonRegisteredCoursePageDetailsTrainee";
+    import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
     
 
 
@@ -33,7 +32,7 @@ import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTrain
         const fetchCourse = async () => {
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        const traineeId = params.get('TraineeId');
+        // //const traineeId = params.get('TraineeId');
         
         
         const response = await fetch(`/CurrentCourse/?CourseId=${courseId}`)
@@ -58,16 +57,50 @@ import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTrain
 
         const routeChange = () =>{  
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
-        let path = `/TraineeReportsPage/?TraineeId=${traineeId}`; 
+        //const traineeId = params.get('TraineeId');
+        // let path = `/TraineeReportsPage/?TraineeId=${traineeId}`; 
+        let path = `/TraineeReportsPage`; 
         navigate(path);
+    }
+
+    // window.location.href=`/RequestARefundPageTrainee/?CourseId=${courseId}`;
+    
+
+    const checkIfPaymentNeeded= async (e) =>{  
+        e.preventDefault();
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get('CourseId')
+        const response = await fetch(`/isCourseFree/?CourseId=${courseId}`)
+        
+        
+        const json = await response.json()
+        console.log("res "+response)
+        console.log( "json "+json)
+
+        if (response.ok) {
+            if(json == true)
+            {
+                const response2 = await fetch(`/indiviualTraineeRegisterCourse/?CourseId=${courseId}`)
+                const json2 = await response2.json()
+                console.log("json2"+json2)
+                window.location.href=`/CurrentCoursePageTrainee/?CourseId=${courseId}`; 
+
+            }
+            else
+            {
+                window.location.href=`/ProceedToPaymentPageTrainee/?CourseId=${courseId}`; 
+            }
+
+        }
+
     }
     
     const routeChange1 = () =>{  
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
         const courseId = params.get('CourseId')
-        let path = `/ProceedToPaymentPageTrainee/?TraineeId=${traineeId}&CourseId=${courseId}`; 
+        //const traineeId = params.get('TraineeId');
+        // let path = `/ProceedToPaymentPageTrainee/?TraineeId=${traineeId}&CourseId=${courseId}`; 
+        let path = `/ProceedToPaymentPageTrainee/?CourseId=${courseId}`; 
         navigate(path);
     }
 
@@ -91,7 +124,7 @@ import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTrain
                 <PreviewCourseVideoPageDetails/>
 
                 <form className="course-details">
-            <button onClick={routeChange1}>Register For The Course</button>
+            <button onClick={checkIfPaymentNeeded}>Register For The Course</button>
             </form>
                 
             </div>

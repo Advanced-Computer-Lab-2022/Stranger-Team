@@ -1,3 +1,4 @@
+//sessions done
 import { Link } from 'react-router-dom';
 import '../index.css';
 import { useNavigate } from "react-router-dom";
@@ -7,14 +8,16 @@ const Terms = () => {
 
     const routeChange1 = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        let path = `/InstructorCoursePage/?id=${instructorId}`; 
+        //const instructorId = params.get('id');
+        // let path = `/InstructorCoursePage/?id=${instructorId}`; 
+        let path = `/InstructorCoursePage`; 
         navigate(path);
     }
     const routeChange2 = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        let path =`/InstructorAddANewCoursePage/?id=${instructorId}`; 
+        //const instructorId = params.get('id');
+        // let path =`/InstructorAddANewCoursePage/?id=${instructorId}`; 
+        let path =`/InstructorAddANewCoursePage`; 
         navigate(path);
     }
 return (

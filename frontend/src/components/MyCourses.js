@@ -1,3 +1,4 @@
+        //sessions done
         import React from 'react';
         const MyCourses = ({ course }) => {
         const fetchCourseDicountDetails = async () => {

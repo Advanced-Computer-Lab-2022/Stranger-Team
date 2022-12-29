@@ -1,3 +1,4 @@
+    //sessions done
     import { Link } from 'react-router-dom'
 
     import 'bootstrap/dist/css/bootstrap.min.css'
@@ -15,25 +16,27 @@
         let navigate = useNavigate();
         const routeChange = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
-        console.log(traineeId); 
-        let path =  `/TraineeProfilePage/?TraineeId=${traineeId}`; 
+        // const traineeId = params.get('TraineeId');
+        // console.log(traineeId); 
+        // let path =  `/TraineeProfilePage/?TraineeId=${traineeId}`; 
+        let path =  `/TraineeProfilePage`; 
         navigate(path);
     }
 
     const routeChange2 = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
-        console.log(traineeId); 
-        let path =  `/Home/?TraineeId=${traineeId}`; 
+        // const traineeId = params.get('TraineeId');
+        // console.log(traineeId); 
+        let path =  `/Home`; 
         navigate(path);
     }
 
     const routeChange3 = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
-        console.log(traineeId); 
-        let path =  `/MyRegisteredCoursesTrainee/?TraineeId=${traineeId}`; 
+        // const traineeId = params.get('TraineeId');
+        // console.log(traineeId); 
+        // let path =  `/MyRegisteredCoursesTrainee/?TraineeId=${traineeId}`; 
+        let path =  `/MyRegisteredCoursesTrainee`; 
         navigate(path);
     }
 

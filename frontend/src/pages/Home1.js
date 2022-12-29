@@ -29,8 +29,8 @@
     useEffect(() => {
         const fetchCourses = async () => {
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
-        console.log(traineeId); 
+        // const traineeId = params.get('TraineeId');
+        // console.log(traineeId); 
 
 
         const response = await fetch(`/View_All_Courses/?q=${searchQuery}`)
@@ -48,71 +48,16 @@
 
     let navigate = useNavigate();
 
-        const routeChange1 = () =>{ 
-        let path = '/CoursesFilterByPrice'; 
-        navigate(path);
-    }
-
-    const routeChange2 = () =>{ 
-        let path = '/CourseFilterByRate'; 
-        navigate(path);
-    }
-
-    // const routeChange3 = () =>{ 
-    //     let path = '/CourseSearchByTitle'; 
-    //     navigate(path);
-    // }
-
-    // const routeChange4 = () =>{ 
-    //     let path = '/CourseSearchByInstructorName'; 
-    //     navigate(path);
-    // }
-
-    const routeChange5 = () =>{ 
-        let path = '/CourseFilterBySubjectAndPrice'; 
-        navigate(path);
-    }
-
-    const routeChange6 = () =>{ 
-        let path = '/CourseFilterBySubjectAndRating'; 
-        navigate(path);
-    }
-
-    const routeChange7 = () =>{ 
-        let path = '/CourseFilterBySubjectAndRatingAndPrice'; 
-        navigate(path);
-    }
-
-    const routeChange8 = () =>{ 
-        let path = '/CourseFilterByPrice'; 
-        navigate(path);
-    }
-
-
-    const routeChange9 = () =>{ 
-        const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
-        console.log(traineeId);
-        
-        let path = '/CourseFilterByPrice'; 
-        navigate(path);
-    }
-
-    const routeChange10 = () =>{ 
-        let path = '/TraineeWallet'; 
-        navigate(path);
-    }
-  
-
     const handleSubmit = async (courseid) => {
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
+        //const traineeId = params.get('TraineeId');
         const courseId= params.get('CourseId');
-        console.log(traineeId); 
+       // console.log(traineeId); 
 
         console.log("courseid"+courseid); 
 
-        const response = await fetch(`/isCurrentCourseRegistered/?TraineeId=${traineeId}&CourseId=${courseid}`)
+        // const response = await fetch(`/isCurrentCourseRegistered/?TraineeId=${traineeId}&CourseId=${courseid}`)
+        const response = await fetch(`/isCurrentCourseRegistered/?CourseId=${courseid}`)
         
         
         const json = await response.json()
@@ -128,14 +73,16 @@
         {
             console.log("kk")
             const params = new URLSearchParams(window.location.search);
-            const traineeId = params.get('TraineeId');
-            window.location.href=`/FromCurrentNonRegisteredCoursePageTrainee/?CourseId=${courseid}&TraineeId=${traineeId}`;
+            //const traineeId = params.get('TraineeId');
+            // window.location.href=`/FromCurrentNonRegisteredCoursePageTrainee/?CourseId=${courseid}&TraineeId=${traineeId}`;
+            window.location.href=`/FromCurrentNonRegisteredCoursePageTrainee/?CourseId=${courseid}`;
         }
         else
         {
             const params = new URLSearchParams(window.location.search);
-            const traineeId = params.get('TraineeId');
-            window.location.href=`/CurrentNonRegisteredCoursePageTrainee?CourseId=${courseid}&TraineeId=${traineeId}`;
+            //const traineeId = params.get('TraineeId');
+            // window.location.href=`/CurrentNonRegisteredCoursePageTrainee?CourseId=${courseid}&TraineeId=${traineeId}`;
+            window.location.href=`/CurrentNonRegisteredCoursePageTrainee?CourseId=${courseid}`;
         }
         
     }

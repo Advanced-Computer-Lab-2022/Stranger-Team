@@ -1,5 +1,5 @@
 
-//instructor current course page
+//sessions done
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
@@ -21,7 +21,7 @@
     import CurrentCourseInstructorPageSubtitles from "../components/CurrentCourseInstructorPageSubtitles"
     import InstructorCurrentCoursePageDetails from "../components/InstructorCurrentCoursePageDetails";
     import CurrentReportPageDetails from "../components/CurrentReportPageDetails";
-import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+    import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
 
 
     const TraineeCurrentReportPage = () => {
@@ -32,10 +32,10 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     useEffect(() => {
         const fetchProblem = async () => {
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
-        console.log(traineeId); 
+        // const traineeId = params.get('TraineeId');
+        // console.log(traineeId); 
         const reportId = params.get('ReportId');
-        console.log(traineeId); 
+        //console.log(traineeId); 
         
         
         const response = await fetch(`/fetchProblem/?ReportId=${reportId}`)

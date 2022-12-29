@@ -1,3 +1,4 @@
+    //sessions done
     import 'bootstrap/dist/css/bootstrap.min.css'
 
     import{Button, Alert, Container, Nav} from 'react-bootstrap'
@@ -61,9 +62,10 @@
     let navigate = useNavigate();
     const routeChange2 = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id'); 
+        //const instructorId = params.get('id'); 
         const courseId = params.get('CourseId'); 
-        let path = `/CurrentCourse/?id=${instructorId}&CourseId=${courseId}`; 
+        // let path = `/CurrentCourse/?id=${instructorId}&CourseId=${courseId}`; 
+        let path = `/CurrentCourse/?CourseId=${courseId}`; 
         navigate(path);
     }
 

@@ -1,5 +1,5 @@
 
-//instructor current course page
+//sessions done
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
@@ -21,7 +21,8 @@
     import CurrentCourseInstructorPageSubtitles from "../components/CurrentCourseInstructorPageSubtitles"
     import InstructorCurrentCoursePageDetails from "../components/InstructorCurrentCoursePageDetails";
     import CurrentReportPageDetails from "../components/CurrentReportPageDetails";
-import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+    import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+import CurrentReportPageAdminResponseDetailsTrainee from "../components/CurrentReportPageAdminResponseDetailsTrainee";
 
 
     const AdminResponseCurrentReportPageTrainee = () => {
@@ -32,10 +33,10 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     useEffect(() => {
         const fetchProblem = async () => {
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
-        console.log(traineeId); 
+        // const traineeId = params.get('TraineeId');
+        // console.log(traineeId); 
         const reportId = params.get('ReportId');
-        console.log(traineeId); 
+        //console.log(traineeId); 
         
         
         const response = await fetch(`/fetchProblem/?ReportId=${reportId}`)
@@ -54,14 +55,15 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
         fetchProblem()
     }, [])
     
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
+        //const traineeId = params.get('TraineeId');
         const reportId= params.get('ReportId');
-        console.log(traineeId); 
+        //console.log(traineeId); 
 
 
-        const response = await fetch(`/updateReportStatusFromPendingToResolvedTrainee/?TraineeId=${traineeId}&ReportId=${reportId}`)
+        const response = await fetch(`/updateReportStatusFromPendingToResolvedTrainee/?ReportId=${reportId}`)
         
         
         const json = await response.json()
@@ -71,8 +73,9 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
         if(response.ok)
         {
             const params = new URLSearchParams(window.location.search);
-            const traineeId = params.get('TraineeId');
-            window.location.href=`/TraineeReportsPage/?TraineeId=${traineeId}`;
+            //const traineeId = params.get('TraineeId');
+            // window.location.href=`/TraineeReportsPage/?TraineeId=${traineeId}`;
+            window.location.href=`/TraineeReportsPage`;
         }
         
     }
@@ -90,7 +93,7 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
             <div className="card-body">
 
                 {problem && problem.map(problem => (
-                <CurrentReportPageDetails problem={problem} key={problem._id} />
+                <CurrentReportPageAdminResponseDetailsTrainee problem={problem} key={problem._id} />
                 ))[0]}
                 <form className="course-details">
                     <h3>Are you satisfied with the response?</h3>

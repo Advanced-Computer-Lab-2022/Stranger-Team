@@ -1,5 +1,5 @@
 
-//instructor current course page
+//sessions done
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
@@ -21,9 +21,9 @@
     import CurrentCourseInstructorPageSubtitles from "../components/CurrentCourseInstructorPageSubtitles"
     import InstructorCurrentCoursePageDetails from "../components/InstructorCurrentCoursePageDetails";
     import CurrentReportPageDetails from "../components/CurrentReportPageDetails";
-import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
-import CurrentRequestDetails from "../components/CurrentRequestDetails";
-import CurrentResolvedRequestDetails from "../components/CurrentResolvedRequestDetails";
+    import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+    import CurrentRequestDetails from "../components/CurrentRequestDetails";
+    import CurrentResolvedRequestDetails from "../components/CurrentResolvedRequestDetails";
 
 
     const TraineeCurrentResolvedRefundRequestPage = () => {
@@ -34,10 +34,10 @@ import CurrentResolvedRequestDetails from "../components/CurrentResolvedRequestD
     useEffect(() => {
         const fetchProblem = async () => {
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
-        console.log(traineeId); 
+        // const traineeId = params.get('TraineeId');
+        // console.log(traineeId); 
         const reportId = params.get('RequestId');
-        console.log(traineeId); 
+        //console.log(traineeId); 
         
         
         const response = await fetch(`/fetchCurrentRequest/?RequestId=${reportId}`)

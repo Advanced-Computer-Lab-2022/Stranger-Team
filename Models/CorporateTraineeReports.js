@@ -26,10 +26,10 @@ const corporateTraineeReportSchema = new Schema({
         type:String,
         required:false
     },
-    Admin_Response:{
-        type:String,
-        required:false
-    },
+    // Admin_Response:{
+    //     type:String,
+    //     required:false
+    // },
     Username:{
         type:String,
         required:false

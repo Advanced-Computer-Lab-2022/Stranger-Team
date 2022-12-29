@@ -1,9 +1,11 @@
+    //sessions done
     import 'bootstrap/dist/css/bootstrap.min.css'
 
     import{Button, Alert, Container, Nav} from 'react-bootstrap'
     import React from 'react';
     import { useNavigate } from "react-router-dom";
 	import { useState } from 'react'
+    import ProfileNavBar from '../components/ProfileNavBar'
 
     const InstructorAddANewCourseSubtitlePageDirectlyAfterAddingCourse = () => {
 
@@ -71,14 +73,16 @@
         const queryParams = new URLSearchParams(window.location.search);
         const courseId = queryParams.get('CourseId');
         const params = new URLSearchParams(window.location.search);
-         const instructorId = params.get('id');
-        let path = `/createQuiz/?CourseId=${courseId}&id=${instructorId}`; 
+        //const instructorId = params.get('id');
+        // let path = `/createQuiz/?CourseId=${courseId}&id=${instructorId}`; 
+        let path = `/createQuiz/?CourseId=${courseId}`; 
         navigate(path);
     }
 
     return (
 
-        
+        <>
+        <ProfileNavBar/>
         <div className="course-details">
         <form className="create" onSubmit={defineCourseSubtitle}> 
         <h3>If you wish to add more subtitles to your course now, please enter the link to the new subtitle you would like to define for your course:</h3>
@@ -107,7 +111,7 @@
 
 
 {/* SUBTITLE QUESTIONS */}
-     
+
         <h3>Subtitle Question</h3>
         <label>Question:</label>
         <input 
@@ -162,7 +166,7 @@
 
 
 
-        
+        </>
 
     )
     }

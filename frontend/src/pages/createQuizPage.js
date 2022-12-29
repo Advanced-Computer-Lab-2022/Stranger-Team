@@ -1,3 +1,4 @@
+//sessions done
 import { useEffect } from "react";
 
 
@@ -17,7 +18,7 @@ const {quiz, dispatch} = useQuizContext()
         const fetchQuiz = async () => {
             const queryParams = new URLSearchParams(window.location.search);
             const courseId = queryParams.get('CourseId');
-           const response = await fetch(`/fetchQ/?CourseId=${courseId}`)
+            const response = await fetch(`/fetchQ/?CourseId=${courseId}`)
             const json = await response.json() 
             if (response.ok) {
                 dispatch({type: 'SET_QUESTIONS', payload: json})

@@ -1,3 +1,4 @@
+    //sessions done
     import { Link } from 'react-router-dom'
 
     import 'bootstrap/dist/css/bootstrap.min.css'
@@ -15,17 +16,19 @@
         let navigate = useNavigate();
         const routeChange = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        console.log(instructorId); 
-        let path =  `/MyProfile/?id=${instructorId}`; 
+        // const instructorId = params.get('id');
+        // console.log(instructorId); 
+        // let path =  `/MyProfile/?id=${instructorId}`; 
+        let path =  `/MyProfile`; 
         navigate(path);
     }
 
     const routeChange2 = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        console.log(instructorId); 
-        let path =  `/InstructorCoursePage/?id=${instructorId}`; 
+        // const instructorId = params.get('id');
+        // console.log(instructorId); 
+        // let path =  `/InstructorCoursePage/?id=${instructorId}`; 
+        let path =  `/InstructorCoursePage`; 
         navigate(path);
     }
 

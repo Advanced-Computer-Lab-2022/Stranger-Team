@@ -1,7 +1,8 @@
+    //sessions done
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
-import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+    import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     
 
     const ProceedToPaymentPageTrainee = ({}) => {
@@ -12,10 +13,10 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     const fetchWalletDetails = async () => {
         
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
+        //const traineeId = params.get('TraineeId');
         
         
-        const response = await fetch(`/viewMyWalletBalance/?TraineeId=${traineeId}`)
+        const response = await fetch(`/viewMyWalletBalance/`)
 
         
         
@@ -29,10 +30,11 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
         const payForCourse = async () => {
         
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
+        //const traineeId = params.get('TraineeId');
         const courseId = params.get('CourseId');
         
-        const response = await fetch(`/payByWalletBalance/?TraineeId=${traineeId}&CourseId=${courseId}`)
+        // const response = await fetch(`/payByWalletBalance/?TraineeId=${traineeId}&CourseId=${courseId}`)
+        const response = await fetch(`/payByWalletBalance/?CourseId=${courseId}`)
 
         
         
@@ -41,7 +43,8 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
         if(response.ok)
         {
             setWallet(json);
-            window.location.href=`/CurrentCoursePageTrainee/?CourseId=${courseId}&TraineeId=${traineeId}`;
+            // window.location.href=`/CurrentCoursePageTrainee/?CourseId=${courseId}&TraineeId=${traineeId}`;
+            window.location.href=`/CurrentCoursePageTrainee/?CourseId=${courseId}`;
         }
         else
         {
@@ -55,9 +58,10 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
 
         const routeChange = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
+        //const traineeId = params.get('TraineeId');
         const courseId = params.get('CourseId');
-        let path = `/Payment/?TraineeId=${traineeId}&CourseId=${courseId}`; 
+        // let path = `/Payment/?TraineeId=${traineeId}&CourseId=${courseId}`; 
+        let path = `/Payment/?CourseId=${courseId}`; 
         navigate(path);
     }
         

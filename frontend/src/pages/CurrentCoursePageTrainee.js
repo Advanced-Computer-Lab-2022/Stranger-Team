@@ -1,5 +1,4 @@
-
-//instructor current course page
+//sessions done fadel MAIN FOR QUIZ 
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
@@ -20,7 +19,6 @@
     import TraineeSubtitleTitlesPage from "./TraineeSubtitleTitlesPage";
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
-            
     import { Certificate } from "../components/Certificate";
 
 
@@ -34,7 +32,7 @@
         const fetchCourse = async () => {
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        const traineeId = params.get('TraineeId');
+        //const traineeId = params.get('TraineeId');
         
         
         const response = await fetch(`/CurrentCourse/?CourseId=${courseId}`)
@@ -53,54 +51,58 @@
 
 
         fetchCourse()
-    }, [])
+    })
 
     let navigate = useNavigate();
         const routeChange = () =>{ 
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        const traineeId = params.get('TraineeId');
+        // const traineeId = params.get('TraineeId');
         // console.log(courseId); 
-        let path = `/TraineeReportAProblemPage/?TraineeId=${traineeId}&CourseId=${courseId}`; 
+        // let path = `/TraineeReportAProblemPage/?TraineeId=${traineeId}&CourseId=${courseId}`; 
+        let path = `/TraineeReportAProblemPage/?CourseId=${courseId}`; 
         navigate(path);
         
     }
 
 
-
+//NEED TO DO THE SESSION FOR IT !!!!
     const routeChange1 = () =>{ 
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        const traineeId = params.get('TraineeId');
-        let path = `/mainForQuiz/?TraineeId=${traineeId}&CourseId=${courseId}`; 
+        //const traineeId = params.get('TraineeId');
+        //let path = `/mainForQuiz/?TraineeId=${traineeId}&CourseId=${courseId}`; 
+        let path = `/mainForQuiz/?CourseId=${courseId}`; 
         navigate(path);
     }
 
 
 
-    const routeChange2 = () =>{ 
-        const params = new URLSearchParams(window.location.search);
-        const courseId = params.get('CourseId');
-        const traineeId = params.get('TraineeId');
-        console.log(traineeId); 
-        let path = `/RequestARefundPageTrainee/?TraineeId=${traineeId}&CourseId=${courseId}`; 
-        navigate(path);
-    }
+    // const routeChange2 = () =>{ 
+    //     const params = new URLSearchParams(window.location.search);
+    //     const courseId = params.get('CourseId');
+    //     const traineeId = params.get('TraineeId');
+    //     console.log(traineeId); 
+    //     let path = `/RequestARefundPageTrainee/?TraineeId=${traineeId}&CourseId=${courseId}`; 
+    //     navigate(path);
+    // }
     const routeChange3 = () =>{ 
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        const corporateTraineeId = params.get('TraineeId');
-        let path = `/TraineeCertificate/?CourseId=${courseId}&TraineeId=${corporateTraineeId}`; 
+        //const corporateTraineeId = params.get('TraineeId');
+        // let path = `/TraineeCertificate/?CourseId=${courseId}&TraineeId=${corporateTraineeId}`; 
+        let path = `/TraineeCertificate/?CourseId=${courseId}`; 
         navigate(path);
-       <Certificate></Certificate>
+        <Certificate></Certificate>
     }
     const routeChange4 = () =>{ 
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        const corporateTraineeId = params.get('TraineeId');
-        let path = `/viewqwizanswers/?CourseId=${courseId}&CorporateTraineeId=${corporateTraineeId}`; 
+        // const corporateTraineeId = params.get('TraineeId');
+        // let path = `/viewqwizanswers/?CourseId=${courseId}&CorporateTraineeId=${corporateTraineeId}`; 
+        let path = `/viewqwizanswers/?CourseId=${courseId}`; 
         navigate(path);
-       
+
     }
 
 
@@ -108,10 +110,11 @@
         e.preventDefault()
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        const traineeId = params.get('TraineeId');
+        //const traineeId = params.get('TraineeId');
         
         
-        const response = await fetch(`/checkIfRefundEligible/?CourseId=${courseId}&TraineeId=${traineeId}`)
+        // const response = await fetch(`/checkIfRefundEligible/?CourseId=${courseId}&TraineeId=${traineeId}`)
+        const response = await fetch(`/checkIfRefundEligible/?CourseId=${courseId}`)
         
         
         const json = await response.json()
@@ -126,7 +129,8 @@
         if (response.ok) {
             if(json == true)
             {
-                window.location.href=`/RequestARefundPageTrainee/?TraineeId=${traineeId}&CourseId=${courseId}`;
+                // window.location.href=`/RequestARefundPageTrainee/?TraineeId=${traineeId}&CourseId=${courseId}`;
+                window.location.href=`/RequestARefundPageTrainee/?CourseId=${courseId}`;
             }
             else
             {
@@ -158,7 +162,7 @@
                 {/* <FetchInstructorNameForTraineeCourseDetails/> */}
                 <form className="course-details">
                     <button  onClick={routeChange}>Report a problem</button>
-                    <button >Request A Refund</button>
+                    <button  onClick={checkIfRefundEligible}>Request A Refund</button>
                     {error && <div className="error">{error}</div>}
                     
                     

@@ -1,3 +1,4 @@
+//sessions done
 import { useEffect, useState } from "react";
 import{useStripe,useElements} from "@stripe/react-stripe-js"
 import { PaymentElement } from "@stripe/react-stripe-js";
@@ -23,9 +24,10 @@ export default function CheckoutForm() {
 
     const params = new URLSearchParams(window.location.search);
     const courseId = params.get('CourseId');
-    const traineeId = params.get('TraineeId');
+    //const traineeId = params.get('TraineeId');
 
-    const response = await fetch(`/indiviualTraineeRegisterCourse/?TraineeId=${traineeId}&CourseId=${courseId}`)
+    // const response = await fetch(`/indiviualTraineeRegisterCourse/?TraineeId=${traineeId}&CourseId=${courseId}`)
+    const response = await fetch(`/indiviualTraineeRegisterCourse/?CourseId=${courseId}`)
         
         
         const json = await response.json()
@@ -34,7 +36,8 @@ export default function CheckoutForm() {
     const{error} = await stripe.confirmPayment({
       elements,
       confirmParams:{
-        return_url: `${window.location.origin}/CurrentCoursePageTrainee/?CourseId=${courseId}&TraineeId=${traineeId}`
+        // return_url: `${window.location.origin}/CurrentCoursePageTrainee/?CourseId=${courseId}&TraineeId=${traineeId}`
+        return_url: `${window.location.origin}/CurrentCoursePageTrainee/?CourseId=${courseId}`
       }
     })
 

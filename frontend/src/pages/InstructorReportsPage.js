@@ -1,4 +1,4 @@
-
+//sessions done
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate } from "react-router-dom";
@@ -24,25 +24,28 @@
 
         const routeChange = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        console.log(instructorId); 
-        let path = `/InstructorDeliveredReportsPage/?id=${instructorId}`; 
+        //const instructorId = params.get('id');
+        //console.log(instructorId); 
+        // let path = `/InstructorDeliveredReportsPage/?id=${instructorId}`; 
+        let path = `/InstructorDeliveredReportsPage`; 
         navigate(path);
     }
 
     const routeChange1 = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        console.log(instructorId); 
-        let path = `/InstructorPendingReportsPage/?id=${instructorId}`; 
+        //const instructorId = params.get('id');
+        //console.log(instructorId); 
+        // let path = `/InstructorPendingReportsPage/?id=${instructorId}`; 
+        let path = `/InstructorPendingReportsPage`; 
         navigate(path);
     }
 
     const routeChange2 = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        console.log(instructorId); 
-        let path = `/InstructorResolvedReportsPage/?id=${instructorId}`; 
+        //const instructorId = params.get('id');
+        //console.log(instructorId); 
+        // let path = `/InstructorResolvedReportsPage/?id=${instructorId}`; 
+        let path = `/InstructorResolvedReportsPage`; 
         navigate(path);
     }
 

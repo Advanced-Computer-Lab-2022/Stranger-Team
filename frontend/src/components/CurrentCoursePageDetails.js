@@ -129,6 +129,32 @@
         
         }
         displayDiscount();
+
+        const [price, setPrice] = useState("")
+        const fetchPrice = async () => {
+        const courseId = course._id;
+        
+        
+        const response = await fetch(`/isCourseFree/?CourseId=${courseId}`)
+        
+        
+        const json = await response.json()
+        console.log(json)
+        if(response.ok)
+        {
+            if(json==true)
+            {
+                setPrice("Free");
+            }
+            else
+            {
+                setPrice(json);
+            }
+        }
+        
+        
+        }
+        fetchPrice();
         
     return (
 
@@ -143,7 +169,7 @@
         <p><strong>Subject: </strong>{course.Subject}</p>
         <p><strong>Subtitles Total Hours: </strong>{course.Subtitles_Total_Hours}</p>
         <p><strong>Course Total Hours: </strong>{course.Course_Total_Hours}</p>
-        <p><strong>Price: </strong>{course.Price}</p>
+        <p><strong>Price: </strong>{price}</p>
         <p><strong>Rating: </strong>{course.Rating}</p>
         <p><strong>Dicount: </strong>{Discount}</p>
         <p><strong>Course Description: </strong>{course.Course_Description}</p> 

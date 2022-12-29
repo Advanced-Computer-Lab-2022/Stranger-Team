@@ -1,4 +1,6 @@
+    //sessions done
     import { useState } from 'react'
+import TraineeProfileNavBar from '../components/TraineeProfilNavBar'
 
     const TraineeReportAProblemPage = () => {
     const [Reported_Problem,setReported_Problem] = useState('')
@@ -9,14 +11,22 @@
     const handleSubmit = async (e) => {
         e.preventDefault()
         const queryParams = new URLSearchParams(window.location.search);
-        const traineeId = queryParams.get('TraineeId');
+        //const traineeId = queryParams.get('TraineeId');
         const courseId = queryParams.get('CourseId');
 
 
         const report = {Report_Title,Reported_Problem,Report_Type};
         console.log(report)
 
-        const response = await fetch(`/traineeSendReport/?TraineeId=${traineeId}`, {
+        // const response = await fetch(`/traineeSendReport/?TraineeId=${traineeId}`, {
+        // method: 'POST',
+        // body: JSON.stringify(report),
+        // headers: {
+        //     'Content-Type': 'application/json'
+        // }
+        // })
+
+        const response = await fetch(`/traineeSendReport`, {
         method: 'POST',
         body: JSON.stringify(report),
         headers: {
@@ -38,12 +48,14 @@
         setReport_Type(null)
         
         console.log('report sent:', json)
-        window.location=`http://localhost:3000/CurrentCoursePageTrainee?TraineeId=${traineeId}&CourseId=${courseId}`
+        window.location=`http://localhost:3000/CurrentCoursePageTrainee?CourseId=${courseId}`
         }
 
     }
 
     return (
+        <>
+        <TraineeProfileNavBar/>
         <form className="create" onSubmit={handleSubmit}> 
         <h3>Fill In The Following Fields To Send Your Report:</h3>
 
@@ -98,6 +110,7 @@
         <button>Submit Report</button>
         {error && <div className="error">{error}</div>}
         </form>
+        </>
     )
     }
 

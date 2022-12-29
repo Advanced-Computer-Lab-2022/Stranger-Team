@@ -1,10 +1,11 @@
+    //sessions done
     import 'bootstrap/dist/css/bootstrap.min.css'
 
     import{Button, Alert, Container, Nav} from 'react-bootstrap'
     import React from 'react';
     import { useNavigate } from "react-router-dom";
 	import { useState } from 'react'
-import TraineeProfileNavBar from '../components/TraineeProfilNavBar';
+    import TraineeProfileNavBar from '../components/TraineeProfilNavBar';
 
     const TraineeEditMyProfilePage = () => {
 
@@ -12,11 +13,11 @@ import TraineeProfileNavBar from '../components/TraineeProfilNavBar';
     const [Email, setEmail] = useState('')
 	const[error,setError]= useState('')
 
-		const updateInstructorProfile = async (e) => {
+		const updateTraineeProfile = async (e) => {
         e.preventDefault()
         const queryParams = new URLSearchParams(window.location.search);
-        const traineeId = queryParams.get('TraineeId');
-        console.log("TraineeId"+traineeId)
+        // const traineeId = queryParams.get('TraineeId');
+        // console.log("TraineeId"+traineeId)
 
         var updatedTrainee = null;
 		
@@ -43,7 +44,14 @@ import TraineeProfileNavBar from '../components/TraineeProfilNavBar';
             }
         }
         
-        const response = await fetch(`/editProfileDetails/?TraineeId=${traineeId}`, {
+        // const response = await fetch(`/editProfileDetails/?TraineeId=${traineeId}`, {
+        // method: 'POST',
+        // body: JSON.stringify(updatedTrainee),
+        // headers: {
+        //     'Content-Type': 'application/json'
+        // }
+        // })
+        const response = await fetch(`/editProfileDetails`, {
         method: 'POST',
         body: JSON.stringify(updatedTrainee),
         headers: {
@@ -64,7 +72,8 @@ import TraineeProfileNavBar from '../components/TraineeProfilNavBar';
         
         
 		//http://localhost:3000/MyProfile/?id=635ff82db9f20282ed560dae
-        window.location=`http://localhost:3000/TraineeProfilePage/?TraineeId=${traineeId}`
+        // window.location=`http://localhost:3000/TraineeProfilePage/?TraineeId=${traineeId}`
+        window.location=`http://localhost:3000/TraineeProfilePage`
 
         console.log('trainee Updated:', json)
 
@@ -80,7 +89,7 @@ import TraineeProfileNavBar from '../components/TraineeProfilNavBar';
         <div>
         <TraineeProfileNavBar/>
         <div className="course-details">
-        <form className="create" onSubmit={updateInstructorProfile}> 
+        <form className="create" onSubmit={updateTraineeProfile}> 
         <h3>Edit Profile Details:</h3>
 
         <label>Username:</label>

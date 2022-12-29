@@ -1,4 +1,4 @@
-
+//sessions done
 //ViewQswizAnswers
 import { useEffect, useState } from "react"
 import React from 'react';
@@ -27,10 +27,10 @@ useEffect(() => {
     const courseId = params.get('CourseId');
     const response = await fetch(`/viewAllQuestions/?CourseId=${courseId}`)
     const json = await response.json()
-     console.log(" Q1' " + json[0].Q)
-     console.log("array of Qs' " + json[0].Answers)
-     console.log("array of Qs' " + json[0].correctAnswer)
-     console.log("array of Qs' " + json)
+    console.log(" Q1' " + json[0].Q)
+    console.log("array of Qs' " + json[0].Answers)
+    console.log("array of Qs' " + json[0].correctAnswer)
+    console.log("array of Qs' " + json)
 
     if (response.ok) {
         setQuestions(json)
@@ -39,8 +39,9 @@ useEffect(() => {
 const fetchStatus=async()=>{
     const params = new URLSearchParams(window.location.search);
     const courseId = params.get('CourseId');
-    const TraineeId=params.get('TraineeId')
-    const response = await fetch(`/checkCourseFinished/?CourseId=${courseId}&TraineeId=${TraineeId}`)
+    // const TraineeId=params.get('TraineeId')
+    // const response = await fetch(`/checkCourseFinished/?CourseId=${courseId}&TraineeId=${TraineeId}`)
+    const response = await fetch(`/checkCourseFinished/?CourseId=${courseId}`)
     const json = await response.json()
     if(response.ok){
     setFinished(json)
@@ -53,7 +54,7 @@ const fetchStatus=async()=>{
 })
 console.log(p)
 return (
- <div>    
+<div>    
     <Container >
     <div className="row gutters">
     <div className="card h-100">

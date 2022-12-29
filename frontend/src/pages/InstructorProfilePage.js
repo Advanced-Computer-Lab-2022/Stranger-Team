@@ -1,5 +1,5 @@
 
-
+//sessions done
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
@@ -24,11 +24,12 @@
         //const response = await fetch('/View_My_Courses/Layla')
         //const response = await fetch(`/View_My_Courses/Layla/?q=${searchQuery}`)
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        console.log(instructorId); 
+        // const instructorId = params.get('id');
+        // console.log(instructorId); 
         
         
-        const response = await fetch(`/MyProfile/?id=${instructorId}`)
+        // const response = await fetch(`/MyProfile/?id=${instructorId}`)
+        const response = await fetch(`/MyProfile`)
         // if(searchPriceQuery == null)
         // {
         //     const response = await fetch(`/MyCourses/${instructorId}/?q=${searchQuery}`)
@@ -56,13 +57,13 @@
     
 
         let navigate = useNavigate();
-        const routeChange = () =>{ 
-        const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        console.log(instructorId); 
-        let path = `/InstructorEditMyProfilePage/?id=${instructorId}`; 
-        navigate(path);
-    }
+    //     const routeChange = () =>{ 
+    //     const params = new URLSearchParams(window.location.search);
+    //     const instructorId = params.get('id');
+    //     console.log(instructorId); 
+    //     let path = `/InstructorEditMyProfilePage/?id=${instructorId}`; 
+    //     navigate(path);
+    // }
 
     return (
         <Container >

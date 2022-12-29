@@ -17,11 +17,12 @@
         
         
         const json = await response.json()
-        console.log(json.Discount)
+        //console.log(json.Discount)
         
         }
         fetchCourseDicountDetails();
 
+        
         const fetchPrice = async () => {
         const courseId = course._id;
         
@@ -30,7 +31,7 @@
         
         
         const json = await response.json()
-        console.log(json)
+        //console.log(json)
         if(response.ok)
         {
             if(json==true)

@@ -1,3 +1,4 @@
+//sessions done
 import { useEffect, useState } from "react";
 import{loadStripe} from "@stripe/stripe-js"
 import {Elements} from "@stripe/react-stripe-js"
@@ -24,8 +25,8 @@ function Payment(props) {
     useEffect(()=> {
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        const traineeId = params.get('TraineeId');
-        fetch(`/create-payment-intent?CourseId=${courseId}&TraineeId=${traineeId}`,{
+        //const traineeId = params.get('TraineeId');
+        fetch(`/create-payment-intent?CourseId=${courseId}`,{
             method:"POST",
             body:JSON.stringify({}),
         }).then(async(r)=>{

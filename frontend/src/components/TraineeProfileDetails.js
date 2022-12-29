@@ -1,3 +1,4 @@
+    //sessions done
     import 'bootstrap/dist/css/bootstrap.min.css'
 
     import{Button, Alert, Container, Nav} from 'react-bootstrap'
@@ -14,22 +15,26 @@
         let navigate = useNavigate();
 
         const routeChange = () =>{  
-        let path = `/TraineeReportsPage/?TraineeId=${trainee._id}`; 
+        // let path = `/TraineeReportsPage/?TraineeId=${trainee._id}`;
+        let path = `/TraineeReportsPage`;
         navigate(path);
     }
     
     const routeChange1 = () =>{  
-        let path = `/MyWalletTraineePage/?TraineeId=${trainee._id}`; 
+        // let path = `/MyWalletTraineePage/?TraineeId=${trainee._id}`; 
+        let path = `/MyWalletTraineePage`; 
         navigate(path);
     }
 
     const routeChange2 = () =>{  
-        let path = `/TraineeRefundRequestsPage/?TraineeId=${trainee._id}`; 
+        // let path = `/TraineeRefundRequestsPage/?TraineeId=${trainee._id}`; 
+        let path = `/TraineeRefundRequestsPage`; 
         navigate(path);
     }
 
     const routeChange3 = () =>{  
-        let path = `/TraineeEditMyProfilePage/?TraineeId=${trainee._id}`; 
+        // let path = `/TraineeEditMyProfilePage/?TraineeId=${trainee._id}`; 
+        let path = `/TraineeEditMyProfilePage`; 
         navigate(path);
     }
 
@@ -57,17 +62,6 @@
         </div>
         </div>
         </div>
-
-        {/* <div className="card-body text-center">
-        <div className="row">
-                <div className="col-sm-3">
-                    <p className="mb-0">Username</p>
-                </div>
-                <div className="col-sm-9">
-                    <p className="text-muted mb-0">{trainee.Username}</p>
-                </div>
-                </div>
-                </div> */}
                 
                 <div className="row">
                 <div className="col-sm-3">

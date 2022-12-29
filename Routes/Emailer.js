@@ -7,13 +7,13 @@ module.exports = async (email, subject, text) => {
    			port: 465,
     		secure: true, // use SSL
    			auth: {
-       			user: 'strangerteam@zohomail.com',
+       			user: 'strangerteam2@zohomail.com',
         		pass: 'Forgetmeplz'
     }
 		  });
 
 		await transporter.sendMail({
-			from: 'strangerteam@zohomail.com',
+			from: 'strangerteam2@zohomail.com',
 			to: email,
 			subject: subject,
 			text: text,

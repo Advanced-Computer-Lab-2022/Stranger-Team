@@ -1,3 +1,4 @@
+    //sessions done
     import 'bootstrap/dist/css/bootstrap.min.css'
 
     import{Button, Alert, Container, Nav} from 'react-bootstrap'
@@ -21,9 +22,16 @@
         <h4><strong>Reported Problem: </strong></h4>
         <p>{problem.Status}</p>
         <hr/>
-        <h4><strong>Admin Response: </strong></h4>
-        <p>{problem.Admin_Response}</p>
-        
+        {/* <h4><strong>Admin Response: </strong></h4>
+        <p>{problem.Admin_Response}</p> */}
+        <div className="course-details">
+        <h4><strong>Followups Sent:</strong></h4>
+        {
+        problem.Followups.map((q, i) => (
+        <p  id={`q${i}-option`} visible="false">FOLLOW-UP {i+1}: <strong>{problem.Followups[i]}</strong></p>
+                        ))
+        }
+        </div>
         </div>
         
         

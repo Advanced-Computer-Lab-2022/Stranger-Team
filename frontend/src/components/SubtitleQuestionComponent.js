@@ -1,19 +1,20 @@
+//sessions done
 import { useState } from "react"
 
 
 const SubtitleQuestionComponent = ({ subtitleQuestion }) => {
-  const [selected, setSelected] = useState(null)
-  const [red, setRed] = useState(false)
-  const [correctA, setCorrectA] = useState(false)
-  const [disable, setDisable] = useState("false")
+const [selected, setSelected] = useState(null)
+const [red, setRed] = useState(false)
+const [correctA, setCorrectA] = useState(false)
+const [disable, setDisable] = useState("false")
 
 
-  function onClick(i) {
+function onClick(i) {
     setSelected(i)
     
-  }
+    }
 
-  function onSubmit() {
+function onSubmit() {
     console.log(selected)
     console.log(subtitleQuestion.correctAnswer)
     console.log(red)
@@ -24,7 +25,7 @@ const SubtitleQuestionComponent = ({ subtitleQuestion }) => {
     }
 
     setCorrectA(true)
-  }
+}
 
 
     return (
@@ -42,7 +43,6 @@ const SubtitleQuestionComponent = ({ subtitleQuestion }) => {
                             name="options"
                             id={`q${i}-option`}
                             onChange={() => onClick(q)}
-                           
                             
                         />
 
@@ -73,14 +73,13 @@ const SubtitleQuestionComponent = ({ subtitleQuestion }) => {
                 
             
         </ul>}
-       
 
         <button onClick={onSubmit}>View answer</button>
 
         {/* <div>
-       {correctA &&  <label><strong>{subtitleQuestion.correctAnswer}</strong></label>}
+        {correctA &&  <label><strong>{subtitleQuestion.correctAnswer}</strong></label>}
        </div> */}
-         
+        
     </div>
     )
     }

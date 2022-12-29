@@ -1,5 +1,5 @@
 
-
+//sessions done
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
@@ -11,8 +11,8 @@
     import{Button, Alert, Container} from 'react-bootstrap'
     import ProfileNavBar from '../components/ProfileNavBar'
     import InstructorProfileDetails from "../components/InstructorProfileDetails";
-import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
-import TraineeProfileDetails from "../components/TraineeProfileDetails";
+    import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+    import TraineeProfileDetails from "../components/TraineeProfileDetails";
 
 
     const TraineeProfilePage = () => {
@@ -22,11 +22,12 @@ import TraineeProfileDetails from "../components/TraineeProfileDetails";
         const fetchTrainee = async () => {
         
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
-        console.log(traineeId); 
+        // const traineeId = params.get('TraineeId');
+        // console.log(traineeId); 
         
         
-        const response = await fetch(`/fetchTraineeProfileDetails/?TraineeId=${traineeId}`)
+        // const response = await fetch(`/fetchTraineeProfileDetails/?TraineeId=${traineeId}`)
+        const response = await fetch(`/fetchTraineeProfileDetails`)
         
         
         
@@ -47,13 +48,13 @@ import TraineeProfileDetails from "../components/TraineeProfileDetails";
     
 
         let navigate = useNavigate();
-        const routeChange = () =>{ 
-        const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        console.log(instructorId); 
-        let path = `/InstructorEditMyProfilePage/?id=${instructorId}`; 
-        navigate(path);
-    }
+    //     const routeChange = () =>{ 
+    //     const params = new URLSearchParams(window.location.search);
+    //     const instructorId = params.get('id');
+    //     console.log(instructorId); 
+    //     let path = `/InstructorEditMyProfilePage/?id=${instructorId}`; 
+    //     navigate(path);
+    // }
 
     return (
         <Container >

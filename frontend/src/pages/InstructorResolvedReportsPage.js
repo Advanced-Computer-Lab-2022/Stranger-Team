@@ -1,4 +1,4 @@
-
+//sessions done
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate } from "react-router-dom";
@@ -22,11 +22,12 @@
     useEffect(() => {
         const fetchProblems = async () => {
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        console.log(instructorId); 
+        // const instructorId = params.get('id');
+        // console.log(instructorId); 
 
 
-        const response = await fetch(`/fetchInstructorResolvedReports/?id=${instructorId}`)
+        // const response = await fetch(`/fetchInstructorResolvedReports/?id=${instructorId}`)
+        const response = await fetch(`/fetchInstructorResolvedReports`)
         
         const json = await response.json()
         console.log(json)
@@ -39,11 +40,6 @@
     }, [])
 
     let navigate = useNavigate();
-
-        const routeChange1 = () =>{ 
-        let path = '/CoursesFilterByPrice'; 
-        navigate(path);
-    }
 
 
 
@@ -63,9 +59,10 @@
                 }}
                 onClick={() => {
                     const params = new URLSearchParams(window.location.search);
-                    const instructorId = params.get('id'); 
-                    console.log(instructorId);
-                    window.location.href=`/InstructorCurrentResolvedReportPage?ReportId=${problem._id}&id=${instructorId}`}}
+                    // const instructorId = params.get('id'); 
+                    // console.log(instructorId);
+                    // window.location.href=`/InstructorCurrentResolvedReportPage?ReportId=${problem._id}&id=${instructorId}`
+                window.location.href=`/InstructorCurrentResolvedReportPage?ReportId=${problem._id}`}}
                 key={problem._id}>
             <ReportHeadings problem={problem} key={problem.id} />
             

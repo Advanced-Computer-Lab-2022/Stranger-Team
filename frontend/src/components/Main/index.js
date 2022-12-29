@@ -98,7 +98,7 @@ const Main = () => {
 					Logout
 				</button>
 			</nav>
-
+{/*
 			<div className="courses">
 
 			<input type="text" placeholder="Search By Course Title,Subject,Instructor..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}>
@@ -111,7 +111,7 @@ const Main = () => {
 			<div>
 <h1>OUR MOST POPULAR COURSES</h1>
 </div>
-          
+
                 
             {mostViewedCourses && mostViewedCourses.map(course => (
                 
@@ -152,7 +152,7 @@ const Main = () => {
                     
                     </Container>
                 ))}
-        </div>
+        </div> */}
 		</div>
 	);
 };

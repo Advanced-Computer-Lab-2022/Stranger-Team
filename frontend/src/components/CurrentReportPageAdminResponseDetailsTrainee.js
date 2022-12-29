@@ -7,7 +7,7 @@
     import { useEffect, useState } from "react"
 
 
-    const CurrentReportPageDetails = ({ problem }) => {
+    const CurrentReportPageAdminResponseDetailsTrainee = ({ problem }) => {
 
 
     return (
@@ -24,12 +24,10 @@
         <hr/>
         <h4><strong>Report Status: </strong></h4>
         <p>{problem.Status}</p>
-        <h4><strong>Followups Sent:</strong></h4>
-        {
-        problem.Followups.map((q, i) => (
-        <p  id={`q${i}-option`} visible="false">FOLLOW-UP {i+1}: <strong>{problem.Followups[i]}</strong></p>
-                        ))
-        }
+
+        <hr/>
+        <h4><strong>Admin Response: </strong></h4>
+        <p>{problem.Admin_Response}</p>
         
         </div>
         
@@ -38,4 +36,4 @@
     )
     }
 
-    export default CurrentReportPageDetails
+    export default CurrentReportPageAdminResponseDetailsTrainee

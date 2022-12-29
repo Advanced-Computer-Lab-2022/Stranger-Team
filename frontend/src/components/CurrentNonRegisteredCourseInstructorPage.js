@@ -1,5 +1,5 @@
 
-
+//sessions done 
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
@@ -15,7 +15,7 @@
     import StarRating from "../components/StarRating";
     import RadioButtonsRateAnInstructor from "../components/RadioButtonsRateAnInstructor";
     import CurrentCourseInstructorProfileDetailsForTrainee from "../components/CurrentCourseInstructorProfileDetailsForTrainee";
-import CorporateTraineeProfileNavBar from "./CorporateTraineeProfileNavBar";
+    import CorporateTraineeProfileNavBar from "./CorporateTraineeProfileNavBar";
 
 
     const CurrentNonRegisteredCourseInstructorPage = () => {

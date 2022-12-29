@@ -10,7 +10,7 @@
 
     import{Button, Alert, Container} from 'react-bootstrap'
     import ProfileNavBar from '../components/ProfileNavBar'
-import FilterMyCoursesInstructorComponent from "../components/FilterMyCoursesInstructorComponent";
+    import FilterMyCoursesInstructorComponent from "../components/FilterMyCoursesInstructorComponent";
 
 
     const InstructorCoursePage = () => {
@@ -23,10 +23,11 @@ import FilterMyCoursesInstructorComponent from "../components/FilterMyCoursesIns
         //const response = await fetch('/View_My_Courses/Layla')
         //const response = await fetch(`/View_My_Courses/Layla/?q=${searchQuery}`)
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        console.log("instructorId"+instructorId); 
+        // const instructorId = params.get('id');
+        // console.log("instructorId"+instructorId); 
 
-        const response = await fetch(`/MyCourses/${instructorId}/?q=${searchQuery}`)
+        // const response = await fetch(`/MyCourses/${instructorId}/?q=${searchQuery}`)
+        const response = await fetch(`/MyCourses/?q=${searchQuery}`)
         
         
         console.log(searchQuery)
@@ -62,10 +63,10 @@ import FilterMyCoursesInstructorComponent from "../components/FilterMyCoursesIns
     // }
 
         let navigate = useNavigate();
-        const routeChange = () =>{ 
-        let path = '/InstructorAddCourse'; 
-        navigate(path);
-    }
+    //     const routeChange = () =>{ 
+    //     let path = '/InstructorAddCourse'; 
+    //     navigate(path);
+    // }
 
     // const routeChange2 = () =>{ 
     //     const params = new URLSearchParams(window.location.search);
@@ -75,9 +76,10 @@ import FilterMyCoursesInstructorComponent from "../components/FilterMyCoursesIns
     // }
     const routeChange2 = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
+        //const instructorId = params.get('id');
         //let path = `/InstructorAddANewCoursePage/?id=${instructorId}`; 
-        let path = `/InstructorContract/?id=${instructorId}`; 
+        // let path = `/InstructorContract/?id=${instructorId}`; 
+        let path = `/InstructorContract`; 
         navigate(path);
     }
 

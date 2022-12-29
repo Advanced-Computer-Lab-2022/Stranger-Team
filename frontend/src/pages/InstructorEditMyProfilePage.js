@@ -1,4 +1,5 @@
-    import 'bootstrap/dist/css/bootstrap.min.css'
+    //sessions done
+	import 'bootstrap/dist/css/bootstrap.min.css'
 
     import{Button, Alert, Container, Nav} from 'react-bootstrap'
     import React from 'react';
@@ -17,8 +18,8 @@
 		const updateInstructorProfile = async (e) => {
         e.preventDefault()
         const queryParams = new URLSearchParams(window.location.search);
-        const instrcutorId = queryParams.get('id');
-        console.log("instrcutorId"+instrcutorId)
+        // const instrcutorId = queryParams.get('id');
+        // console.log("instrcutorId"+instrcutorId)
 
         var updatedInstructor = null;
 		if(First_Name==null||First_Name=="")
@@ -144,7 +145,14 @@
 			}
 		}
         
-        const response = await fetch(`/EditMyProfile/?id=${instrcutorId}`, {
+        // const response = await fetch(`/EditMyProfile/?id=${instrcutorId}`, {
+        // method: 'POST',
+        // body: JSON.stringify(updatedInstructor),
+        // headers: {
+        //     'Content-Type': 'application/json'
+        // }
+        // })
+		const response = await fetch(`/EditMyProfile`, {
         method: 'POST',
         body: JSON.stringify(updatedInstructor),
         headers: {
@@ -166,7 +174,8 @@
         setBio('')
         
 		//http://localhost:3000/MyProfile/?id=635ff82db9f20282ed560dae
-        window.location=`http://localhost:3000/MyProfile/?id=${instrcutorId}`
+        // window.location=`http://localhost:3000/MyProfile/?id=${instrcutorId}`
+		window.location=`http://localhost:3000/MyProfile`
 
         console.log('Instructor Updated:', json)
 

@@ -1,4 +1,4 @@
-
+//sessions done
 
 
 
@@ -31,7 +31,7 @@
         const routeChange = () =>{ 
         // window.location.href=`/FilteredCoursesInstructorPage?Rating=${Rating}&Subject=${Subject}&Price=${Price}`;
         const params = new URLSearchParams(window.location.search);
-        const instructorid = params.get('id');
+        // const instructorid = params.get('id');
         let path; 
 
         if(Rating==null||Rating=="")
@@ -40,22 +40,22 @@
             {
                 if(Price==null||Price=="")
                 {
-                    path = `/FilteredCoursesInstructorPage?id=${instructorid}`; 
+                    path = `/FilteredCoursesInstructorPage`; 
                 }
                 else
                 {
-                    path = `/FilteredCoursesInstructorPage?Price=${Price}&id=${instructorid}`; 
+                    path = `/FilteredCoursesInstructorPage?Price=${Price}`; 
                 }
             }
             else
             {
                 if(Price==null||Price=="")
                 {
-                    path = `/FilteredCoursesInstructorPage?Subject=${Subject}&id=${instructorid}`; 
+                    path = `/FilteredCoursesInstructorPage?Subject=${Subject}`; 
                 }
                 else
                 {
-                    path = `/FilteredCoursesInstructorPage?Subject=${Subject}&Price=${Price}&id=${instructorid}`; 
+                    path = `/FilteredCoursesInstructorPage?Subject=${Subject}&Price=${Price}`; 
                 }
             }
         }
@@ -65,22 +65,22 @@
             {
                 if(Price==null||Price=="")
                 {
-                    path = `/FilteredCoursesInstructorPage?Rating=${Rating}&id=${instructorid}`; 
+                    path = `/FilteredCoursesInstructorPage?Rating=${Rating}`; 
                 }
                 else
                 {
-                    path = `/FilteredCoursesInstructorPage?Rating=${Rating}&Price=${Price}&id=${instructorid}`; 
+                    path = `/FilteredCoursesInstructorPage?Rating=${Rating}&Price=${Price}`; 
                 }
             }
             else
             {
                 if(Price==null||Price=="")
                 {
-                    path = `/FilteredCoursesInstructorPage?Rating=${Rating}&Subject=${Subject}&id=${instructorid}`; 
+                    path = `/FilteredCoursesInstructorPage?Rating=${Rating}&Subject=${Subject}`; 
                 }
                 else
                 {
-                    path = `/FilteredCoursesInstructorPage?Rating=${Rating}&Subject=${Subject}&Price=${Price}&id=${instructorid}`; 
+                    path = `/FilteredCoursesInstructorPage?Rating=${Rating}&Subject=${Subject}&Price=${Price}`; 
                 }
             }
         }

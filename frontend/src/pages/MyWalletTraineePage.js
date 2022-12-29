@@ -1,8 +1,9 @@
+    //sessions done
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
-import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
-    
+    import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+        
 
     const MyWalletTraineePage = ({ course }) => {
         
@@ -13,10 +14,12 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     const fetchWalletDetails = async () => {
         
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
+        //const traineeId = params.get('TraineeId');
         
         
-        const response = await fetch(`/viewMyWalletBalance/?TraineeId=${traineeId}`)
+        // const response = await fetch(`/viewMyWalletBalance/?TraineeId=${traineeId}`)
+
+        const response = await fetch(`/viewMyWalletBalance`)
 
         
         

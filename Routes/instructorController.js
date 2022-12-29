@@ -42,7 +42,8 @@
             
             const getInstructorInformation= async (req,res) => { 
             try{
-                const data=await instructor.find( { "_id":req.query.id,},{})
+                // const data=await instructor.find( { "_id":req.query.id,},{})
+                const data=await instructor.find( { "_id":req.session.user._id,},{})
                 res.status(200).json(data);
             }
             catch(error){
@@ -76,7 +77,8 @@
 
             const editInstructorProfileEmailAndBio = async (req,res) => { 
             try{
-                const instructorId= req.query.id;
+                // const instructorId= req.query.id;
+                const instructorId= req.session.user._id;
 
                 if(req.body.Email ==null || req.body.Email=="")
                 {
@@ -185,7 +187,8 @@
 
     const instructorSendReport = async(req,res) => {
 
-    const instructorId = req.query.id;
+    // const instructorId = req.query.id;
+    const instructorId = req.session.user._id;
     
     const currInstructor = await instructor.findById({_id:instructorId});
     const currInstructorUsername = currInstructor.Username;
@@ -253,7 +256,8 @@ const fetchInstructorAllPreviousReports = async(req,res) => {
 
 const fetchInstructorDeliveredReports = async(req,res) => {
 
-    const instructorId = req.query.id;
+    // const instructorId = req.query.id;
+    const instructorId = req.session.user._id;
 
     try{
     const deliveredProblems = await reportedProblem.find({Instructor_Id:mongoose.Types.ObjectId(instructorId),Status:"Delivered"}).populate('Instructor_Id');
@@ -268,7 +272,8 @@ const fetchInstructorDeliveredReports = async(req,res) => {
 
 const fetchInstructorPendingReports = async(req,res) => {
 
-    const instructorId = req.query.id;
+    // const instructorId = req.query.id;
+    const instructorId = req.session.user._id;
 
     try{
     const pendingProblems = await reportedProblem.find({Instructor_Id:mongoose.Types.ObjectId(instructorId),Status:"Pending"}).populate('Instructor_Id');
@@ -283,7 +288,8 @@ const fetchInstructorPendingReports = async(req,res) => {
 
 const fetchInstructorResolvedReports = async(req,res) => {
 
-    const instructorId = req.query.id;
+    // const instructorId = req.query.id;
+    const instructorId = req.session.user._id;
 
     try{
     const resolvedProblems = await reportedProblem.find({Instructor_Id:mongoose.Types.ObjectId(instructorId),Status:"Resolved"}).populate('Instructor_Id');
@@ -311,7 +317,8 @@ const fetchInstructorProblem = async(req,res) => {
     }
 }
 const AllmoneyOwed = async (req,res)=>{
-    const instId=req.query.id
+    // const instId=req.query.id
+    const instId=req.session.user._id;
     let Inst;
     var C= await course.find({"Instructor":mongoose.Types.ObjectId(instId)},{NumberOfPaid:1,Price:1,Discount:1,Discount_Start_Date:1,Discount_End_Date:1,_id:0});
     var money=0;
