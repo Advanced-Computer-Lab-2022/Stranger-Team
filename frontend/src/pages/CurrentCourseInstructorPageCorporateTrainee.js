@@ -1,4 +1,5 @@
 
+//REMOVED IDs' ===>>>>>DONE
 
     import { useEffect, useState } from "react"
     import React from 'react';
@@ -28,11 +29,11 @@ import TraineeReviewAnInstructor from "../components/TraineeReviewAnInstructor";
         //const response = await fetch('/View_My_Courses/Layla')
         //const response = await fetch(`/View_My_Courses/Layla/?q=${searchQuery}`)
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        console.log(instructorId); 
+       // const instructorId = params.get('id');
+        //console.log(instructorId); 
         
-        
-        const response = await fetch(`/fetchCurrentCourseInstructorByInstructorId/?id=${instructorId}`)
+        //?id=${instructorId}
+        const response = await fetch('/fetchCurrentCourseInstructorByInstructorId')
         
         const json = await response.json()
         console.log(response)
@@ -51,15 +52,18 @@ import TraineeReviewAnInstructor from "../components/TraineeReviewAnInstructor";
 
         const routeChange = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        let path = `/RadioButtonsRateAnInstructor/?id=${instructorId}`; 
+       // const instructorId = params.get('id');
+       //?id=${instructorId}
+
+        let path = '/RadioButtonsRateAnInstructor'; 
         navigate(path);
     }
 
     const routeChange1 = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        let path = `/TraineeReviewAnInstructor/?id=${instructorId}`; 
+       // const instructorId = params.get('id');
+       ///?id=${instructorId}
+        let path = '/TraineeReviewAnInstructor'; 
         navigate(path);
     }
 

@@ -1,3 +1,5 @@
+    //REMOVED IDs' ===>>>>>DONE
+    
     import 'bootstrap/dist/css/bootstrap.min.css'
 
     import{Button, Alert, Container, Nav} from 'react-bootstrap'
@@ -16,8 +18,8 @@ import CorporateTraineeProfileNavBar from '../components/CorporateTraineeProfile
 		const updateInstructorProfile = async (e) => {
         e.preventDefault()
         const queryParams = new URLSearchParams(window.location.search);
-        const corporateTraineeId = queryParams.get('CorporateTraineeId');
-        console.log("corporateTraineeId"+corporateTraineeId)
+        //const corporateTraineeId = queryParams.get('CorporateTraineeId');
+        //console.log("corporateTraineeId"+corporateTraineeId)
 
         var updatedTrainee = null;
 		
@@ -43,8 +45,8 @@ import CorporateTraineeProfileNavBar from '../components/CorporateTraineeProfile
                 updatedTrainee={Username,Email};
             }
         }
-        
-        const response = await fetch(`/editProfileDetails/?CorporateTraineeId=${corporateTraineeId}`, {
+        //?CorporateTraineeId=${corporateTraineeId}
+        const response = await fetch('/editProfileDetails', {
         method: 'POST',
         body: JSON.stringify(updatedTrainee),
         headers: {
@@ -65,7 +67,9 @@ import CorporateTraineeProfileNavBar from '../components/CorporateTraineeProfile
         
         
 		//http://localhost:3000/MyProfile/?id=635ff82db9f20282ed560dae
-        window.location=`http://localhost:3000/CorporateTraineeProfilePage/?CorporateTraineeId=${corporateTraineeId}`
+
+        //?CorporateTraineeId=${corporateTraineeId}
+        window.location='http://localhost:3000/CorporateTraineeProfilePage'
 
         console.log('trainee Updated:', json)
 

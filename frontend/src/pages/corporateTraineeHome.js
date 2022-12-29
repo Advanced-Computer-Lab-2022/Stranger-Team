@@ -1,3 +1,4 @@
+    //REMOVED IDs' ===>>>>>DONE
 
     
     import { useEffect, useState } from "react"
@@ -27,8 +28,8 @@ import FilterCoursesCorporateTraineeComponent from "../components/FilterCoursesC
     useEffect(() => {
         const fetchCourses = async () => {
         const params = new URLSearchParams(window.location.search);
-        const corporateTraineeId = params.get('CorporateTraineeId');
-        console.log(corporateTraineeId); 
+        //const corporateTraineeId = params.get('CorporateTraineeId');
+        //console.log(corporateTraineeId); 
 
         const response = await fetch(`/View_All_Courses/?q=${searchQuery}`)
 
@@ -77,13 +78,13 @@ import FilterCoursesCorporateTraineeComponent from "../components/FilterCoursesC
 
     const handleSubmit = async (courseid) => {
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('CorporateTraineeId');
+        //const traineeId = params.get('CorporateTraineeId');
         const courseId= params.get('CourseId');
-        console.log(traineeId); 
+        //console.log(traineeId); 
 
         console.log("courseid"+courseid); 
-
-        const response = await fetch(`/isCurrentCourseRegistered/?CorporateTraineeId=${traineeId}&CourseId=${courseid}`)
+//?CorporateTraineeId=${traineeId}&
+        const response = await fetch(`/isCurrentCourseRegistered/?CourseId=${courseid}`)
         
         
         const json = await response.json()
@@ -92,14 +93,16 @@ import FilterCoursesCorporateTraineeComponent from "../components/FilterCoursesC
         {
             console.log("kk")
             const params = new URLSearchParams(window.location.search);
-            const traineeId = params.get('CorporateTraineeId');
-            window.location.href=`/FromCurrentNonRegisteredCoursePageCorporateTrainee/?CourseId=${courseid}&CorporateTraineeId=${traineeId}`;
+            //const traineeId = params.get('CorporateTraineeId');
+           // &CorporateTraineeId=${traineeId}
+            window.location.href=`/FromCurrentNonRegisteredCoursePageCorporateTrainee/?CourseId=${courseid}`;
         }
         else
         {
             const params = new URLSearchParams(window.location.search);
-            const traineeId = params.get('CorporateTraineeId');
-            window.location.href=`/CurrentNonRegisteredCoursepageCorporateTrainee?CourseId=${courseid}&CorporateTraineeId=${traineeId}`;
+            //const traineeId = params.get('CorporateTraineeId');
+            //&CorporateTraineeId=${traineeId}
+            window.location.href=`/CurrentNonRegisteredCoursepageCorporateTrainee?CourseId=${courseid}`;
         }
         
     }

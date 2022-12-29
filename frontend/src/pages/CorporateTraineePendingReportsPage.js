@@ -1,4 +1,4 @@
-
+//REMOVED IDs' ===>>>>>>DONE
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate } from "react-router-dom";
@@ -23,11 +23,11 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
     useEffect(() => {
         const fetchProblems = async () => {
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('CorporateTraineeId');
-        console.log(traineeId); 
+       // const traineeId = params.get('CorporateTraineeId');
+        //console.log(traineeId); 
+///?CorporateTraineeId=${traineeId}
 
-
-        const response = await fetch(`/fetchCorporateTraineePendingReports/?CorporateTraineeId=${traineeId}`)
+        const response = await fetch('/fetchCorporateTraineePendingReports')
         
         const json = await response.json()
         console.log(json)
@@ -64,9 +64,10 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
                 }}
                 onClick={() => {
                     const params = new URLSearchParams(window.location.search);
-                    const traineeId = params.get('CorporateTraineeId');
-                    console.log(traineeId);
-                    window.location.href=`/CorporateTraineeCurrentPendingReportPage?ReportId=${problem._id}&CorporateTraineeId=${traineeId}`}}
+                    //const traineeId = params.get('CorporateTraineeId');
+                    //console.log(traineeId);
+                    //&CorporateTraineeId=${traineeId}
+                    window.location.href=`/CorporateTraineeCurrentPendingReportPage?ReportId=${problem._id}`}}
                 key={problem._id}>
             <ReportHeadings problem={problem} key={problem.id} />
             

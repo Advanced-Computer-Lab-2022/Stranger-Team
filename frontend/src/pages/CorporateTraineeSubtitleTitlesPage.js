@@ -1,4 +1,4 @@
-
+//REMOVED IDs' ===>>>>>DONE
 //instructor current course page
     import { useEffect, useState } from "react"
     import React from 'react';
@@ -73,11 +73,13 @@
                 onClick={() =>{
 
                 const params = new URLSearchParams(window.location.search);
-                const corporateTraineeId = params.get('CorporateTraineeId');
+               // const corporateTraineeId = params.get('CorporateTraineeId');
                 const courseId = params.get('CourseId');
                 // window.location.href=`/CurrentCourseSubtitlesPageTrainee?CourseId=${courseId}&SubtitleId=${subtitle._id}&CorporateTraineeId=${corporateTraineeId}`
             //he should reference
-            window.location.href=`/CurrentCourseSubtitlesPageCorporateTrainee?CourseId=${courseId}&SubtitleId=${subtitle._id}&CorporateTraineeId=${corporateTraineeId}`
+
+            //&CorporateTraineeId=${corporateTraineeId}
+            window.location.href=`/CurrentCourseSubtitlesPageCorporateTrainee?CourseId=${courseId}&SubtitleId=${subtitle._id}`
         } }
                 key={subtitle._id}>
                 <CorporateTraineeSubtitleTitlesDetailsPage subtitle={subtitle} key={subtitle._id} />

@@ -99,7 +99,7 @@ const Main = () => {
 				</button>
 			</nav>
 
-			<div className="courses">
+			{/* <div className="courses">
 
 			<input type="text" placeholder="Search By Course Title,Subject,Instructor..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}>
             
@@ -107,13 +107,13 @@ const Main = () => {
 
             <div>
                 <input type="number" placeholder="Filter By Rate..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}></input>
-            </div>
-			<div>
+            </div> */}
+			{/* <div>
 <h1>OUR MOST POPULAR COURSES</h1>
-</div>
+</div> */}
 
                 
-            {mostViewedCourses && mostViewedCourses.map(course => (
+            {/* {mostViewedCourses && mostViewedCourses.map(course => (
                 
             <Container hover
                 sx={{
@@ -129,12 +129,12 @@ const Main = () => {
                 <CourseDetails course={course} key={course.id} />
                 {/* <PreviewCourseVideoPageDetails course={course} key={course.id} /> */}
                 
-                </Container>
-            ))}
-            			<div>
-<h1>ALL OUR COURSES</h1>
-</div>
-                {courses && courses.map(course => (
+                {/* </Container>
+            ))}  */}
+             			{/* <div>
+ <h1>ALL OUR COURSES</h1>
+ </div> */}
+                {/* {courses && courses.map(course => (
                 
                 <Container hover
                     sx={{
@@ -150,9 +150,9 @@ const Main = () => {
                     <CourseDetails course={course} key={course.id} />
                     {/* <PreviewCourseVideoPageDetails course={course} key={course.id} /> */}
                     
-                    </Container>
-                ))}
-        </div>
+                    {/* </Container> */} 
+                 {/* ))} */}
+        {/* </div> */}
 		</div>
 	);
 };

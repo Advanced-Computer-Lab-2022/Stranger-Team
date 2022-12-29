@@ -1,3 +1,5 @@
+//REMOVED IDs'===>>>>>DONE
+
 
 //instructor current course page
     import { useEffect, useState } from "react"
@@ -38,7 +40,7 @@ import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTrain
         const fetchCourse = async () => {
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        const traineeId = params.get('TraineeId');
+        //const traineeId = params.get('TraineeId');
         
         
         const response = await fetch(`/CurrentCourse/?CourseId=${courseId}`)
@@ -66,8 +68,10 @@ import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTrain
         const queryParams = new URLSearchParams(window.location.search);
         const courseId = queryParams.get('CourseId');
         console.log(courseId)
-        const traineeId =  queryParams.get('CorporateTraineeId');
-        const response = await fetch(`/req?CourseId=${courseId}&CorporateTraineeId=${traineeId}`,  {
+        //const traineeId =  queryParams.get('CorporateTraineeId');
+
+        //&CorporateTraineeId=${traineeId}
+        const response = await fetch(`/req?CourseId=${courseId}`,  {
             method: 'GET'
         })
         const json = await response.json()
@@ -83,14 +87,16 @@ import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTrain
         const queryParams = new URLSearchParams(window.location.search);
         const courseId = queryParams.get('CourseId');
         console.log(courseId)
-        const traineeId =  queryParams.get('CorporateTraineeId');
-        const response = await fetch(`/req?CourseId=${courseId}&CorporateTraineeId=${traineeId}`,  {
+        //const traineeId =  queryParams.get('CorporateTraineeId');
+        //&CorporateTraineeId=${traineeId}
+        const response = await fetch(`/req?CourseId=${courseId}`,  {
             method: 'GET'
         })
         const json = await response.json()
         console.log(json)
         if (response.ok) {
-            const response1 = await fetch(`/reqAccess?CourseId=${courseId}&CorporateTraineeId=${traineeId}`,  {
+            //&CorporateTraineeId=${traineeId}
+            const response1 = await fetch(`/reqAccess?CourseId=${courseId}`,  {
                 method: 'POST'
             })
             const json1 = await response1.json()

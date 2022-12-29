@@ -1,3 +1,4 @@
+    //REMOVED IDs' ===>>>>>>DONE
 
     import { useEffect, useState } from "react"
     import React from 'react';
@@ -42,25 +43,28 @@
 
         const routeChange = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('CorporateTraineeId');
-        console.log(traineeId); 
-        let path = `/CorporateTraineeDeliveredReportsPage/?CorporateTraineeId=${traineeId}`; 
+       // const traineeId = params.get('CorporateTraineeId');
+        //console.log(traineeId); 
+        //?CorporateTraineeId=${traineeId}
+        let path = '/CorporateTraineeDeliveredReportsPage'; 
         navigate(path);
     }
 
     const routeChange1 = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('CorporateTraineeId');
-        console.log(traineeId); 
-        let path = `/CorporateTraineePendingReportsPage/?CorporateTraineeId=${traineeId}`; 
+        //const traineeId = params.get('CorporateTraineeId');
+        //console.log(traineeId); 
+        ///?CorporateTraineeId=${traineeId}
+        let path = '/CorporateTraineePendingReportsPage'; 
         navigate(path);
     }
 
     const routeChange2 = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('CorporateTraineeId');
-        console.log(traineeId); 
-        let path = `/CorporateTraineeResolvedReportsPage/?CorporateTraineeId=${traineeId}`; 
+       // const traineeId = params.get('CorporateTraineeId');
+        //console.log(traineeId); 
+///?CorporateTraineeId=${traineeId}
+        let path = '/CorporateTraineeResolvedReportsPage'; 
         navigate(path);
     }
 

@@ -6,7 +6,6 @@ import paymentStyles from "./paymentStyles.css";
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
-
   const [message, setMessage] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
 

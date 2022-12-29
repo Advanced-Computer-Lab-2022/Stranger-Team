@@ -1,4 +1,6 @@
-    const express = require("express");
+   //SESSIONS HERE DONE WITHOUT CHECKING ROLES
+   ///////////////////////////////////////////////////////
+   const express = require("express");
     const mongoose = require('mongoose');
     const instructor = require("../Models/Instructor");
     const course = require("../Models/Course");
@@ -27,7 +29,7 @@ const Subtitles = require("../Models/Subtitles");
 
     const corporateTraineeRegisterCourse = async(req,res) => {
     
-        const corporateTrainee = req.query.CorporateTraineeId;
+        const corporateTrainee = req.session.user._id;
         const courseId = req.query.CourseId;
         console.log(courseId);
 
@@ -49,7 +51,7 @@ const Subtitles = require("../Models/Subtitles");
 
     const corporateViewMyRegisteredCourses = async(req,res) => {
     
-        const corporateTrainee = req.query.CorporateTraineeId;
+        const corporateTrainee = req.session.user._id;
         
 
     try{
@@ -73,7 +75,7 @@ const Subtitles = require("../Models/Subtitles");
 
 const corporateTraineeSendReport = async(req,res) => {
 
-    const traineeId = req.query.CorporateTraineeId;
+    const traineeId = req.session.user._id;
     const {Report_Title,Reported_Problem,Report_Type} = req.body;
     const trainee = await corporate_Trainee.findById({_id:traineeId});
     const traineeUsername = trainee.Username;
@@ -113,7 +115,7 @@ const corporateTraineeSendFollowup = async(req,res) => {
 
 const fetchCorporateTraineeAllPreviousReports = async(req,res) => {
 
-    const corporateTraineeId = req.query.CorporateTraineeId;
+    const corporateTraineeId = req.session.user._id;
     const allReports=[];
 
     try{
@@ -139,7 +141,7 @@ const fetchCorporateTraineeAllPreviousReports = async(req,res) => {
 
 const fetchCorporateTraineeProfileDetails = async(req,res) => {
 
-    const corporateTraineeId = req.query.CorporateTraineeId;
+    const corporateTraineeId = req.session.user._id;
 
     try{
     const trainee = await corporate_Trainee.findById({_id:corporateTraineeId});
@@ -154,7 +156,7 @@ const fetchCorporateTraineeProfileDetails = async(req,res) => {
 
 const fetchCorporateTraineeDeliveredReports = async(req,res) => {
 
-    const traineeId = req.query.CorporateTraineeId;
+    const traineeId = req.session.user._id;
 
     try{
     const deliveredProblems = await reportedProblem.find({Corporate_Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Delivered"}).populate('Corporate_Trainee_Id');
@@ -169,7 +171,7 @@ const fetchCorporateTraineeDeliveredReports = async(req,res) => {
 
 const fetchCorporateTraineePendingReports = async(req,res) => {
 
-    const traineeId = req.query.CorporateTraineeId;
+    const traineeId = req.session.user._id;
 
     try{
     const pendingProblems = await reportedProblem.find({Corporate_Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Pending"}).populate('Corporate_Trainee_Id');
@@ -184,7 +186,7 @@ const fetchCorporateTraineePendingReports = async(req,res) => {
 
 const fetchCorporateTraineeResolvedReports = async(req,res) => {
 
-    const traineeId = req.query.CorporateTraineeId;
+    const traineeId = req.session.user._id;
 
     try{
     const resolvedProblems = await reportedProblem.find({Corporate_Trainee_Id:mongoose.Types.ObjectId(traineeId),Status:"Resolved"}).populate('Corporate_Trainee_Id');
@@ -214,7 +216,7 @@ const fetchCorporateProblem = async(req,res) => {
 
 const fetchNonRegisteredCorporateTraineeCoursesForInstructor = async(req,res) => {
 
-    const traineeId = req.query.CorporateTraineeId;
+    const traineeId = req.session.user._id;
     const instructorId = req.query.id;
 
 
@@ -248,7 +250,7 @@ const fetchNonRegisteredCorporateTraineeCoursesForInstructor = async(req,res) =>
 
 
 const requestCourseAccess = async(req,res) => {
-    const corporateTraineeId = req.query.CorporateTraineeId;
+    const corporateTraineeId = req.session.user._id;
     console.log(corporateTraineeId)
     const courseId = req.query.CourseId;
     //console.log(courseId)
@@ -274,11 +276,11 @@ const requestCourseAccess = async(req,res) => {
 
 const AddNotes = async(req,res) => {
     const {Notes} = req.body;
-    const Trainee = req.query.TraineeId;
+    const Trainee = req.session.user._id;
     const SubtitleId = req.query.SubtitleId;
 
     try{
-    const currTrainee = await TraineeNotes.create({Trainee_Id:req.query.TraineeId,SubtitleId:SubtitleId, Notes:Notes});
+    const currTrainee = await TraineeNotes.create({Trainee_Id:Trainee,SubtitleId:SubtitleId, Notes:Notes});
     res.status(200).json(currTrainee)
     console.log("Hello from notes",Notes)
     }
@@ -288,7 +290,7 @@ const AddNotes = async(req,res) => {
 }
     const getNotes = async(req,res) => {
    // const {Notes} = req.body;
-    const Trainee = req.query.TraineeId;
+    const Trainee = req.session.user._id;
     const SubtitleId = req.query.SubtitleId;
     try{
     const notes = await TraineeNotes.find({Trainee_Id:Trainee,SubtitleId:SubtitleId},{Notes:1});
@@ -301,7 +303,7 @@ const AddNotes = async(req,res) => {
 }
 
 const courseRequestCheck = async(req,res) => {
-    const corporateTraineeId = req.query.CorporateTraineeId;
+    const corporateTraineeId = req.session.user._id;
    // console.log(corporateTraineeId)
     const courseId = req.query.CourseId;
     //console.log(courseId)

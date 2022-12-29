@@ -18,7 +18,6 @@ function Payment(props) {
         
 
 
-
     },[])
 
     useEffect(()=> {
@@ -46,7 +45,6 @@ function Payment(props) {
         <TraineeProfileNavBar/>
         <h1>Please Fill In The Following Fields To Pay For The Course</h1>
         {stripePromise && clientSecret &&(
-
         <Elements stripe={stripePromise} options={{clientSecret}}>
         <CheckoutForm/>
         </Elements>

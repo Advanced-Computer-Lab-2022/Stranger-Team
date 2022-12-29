@@ -702,8 +702,8 @@ app.get("/viewMyRegisteredCourses" , async(req,res) => {
 
 app.get("/corporateViewMyRegisteredCourses" , async(req,res) => {
     
-        const corporateTrainee = req.query.CorporateTraineeId;
-        //const corporateTrainee = req.session.user._id;
+        //const corporateTrainee = req.query.CorporateTraineeId;
+        const corporateTrainee = req.session.user._id;
 
         const q = req.query.q;
   
@@ -1068,7 +1068,7 @@ function arrayIsEmpty(array) {
 app.post("/create-payment-intent", async (req, res) => {
 
     const courseId = req.query.CourseId;
-    const traineeId = req.query.TraineeId;
+    const traineeId = req.session.user._id;
     var c;
     var already=[];
     let a=[];
@@ -1129,14 +1129,6 @@ app.post("/create-payment-intent", async (req, res) => {
       },
     })
 
-    // const currTrainee = await individual_Trainee.findById({_id:traineeId});
-    // const updatedArray = currTrainee.Registered_Courses;
-    // console.log(updatedArray);
-    // updatedArray.push(courseId);
-    // console.log(updatedArray)
-    // const updatedTrainee =  await individual_Trainee.findByIdAndUpdate({_id:traineeId},{Registered_Courses:updatedArray},{new:true});
-    // console.log("updatedTrainee"+updatedTrainee)
-    
     res.send({clientSecret:paymentIntent.client_secret});
     
   }

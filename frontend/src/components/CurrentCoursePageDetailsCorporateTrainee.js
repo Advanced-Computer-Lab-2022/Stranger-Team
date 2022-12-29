@@ -1,4 +1,5 @@
 
+//REMOVED IDs' ====>>>>>DONE BUT CHECK THE INSTRUCTOR ID
 
     import { useEffect, useState } from "react"
     import React from 'react';
@@ -15,10 +16,11 @@
         
         //getCurrentCourseInstructor
         const instructorId = course.Instructor;
-        console.log("instid "+instructorId); 
+       //console.log("instid "+instructorId); 
+
+        //?id=${instructorId}
         
-        
-        const response = await fetch(`/getCurrentCourseInstructor/?id=${instructorId}`)
+        const response = await fetch(`/getCurrentCourseInstructor/`)
         
         
         const json = await response.json()
@@ -66,8 +68,10 @@
 
         const routeChange = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('CorporateTraineeId');
-        let path = `/CurrentCourseInstructorPageCorporateTrainee/?CorporateTraineeId=${traineeId}&id=${currentInstructorId}`; 
+        //const traineeId = params.get('CorporateTraineeId');
+        //?CorporateTraineeId=${traineeId}&id=${currentInstructorId}
+
+        let path = `/CurrentCourseInstructorPageCorporateTrainee/`; 
         navigate(path);
     }
         

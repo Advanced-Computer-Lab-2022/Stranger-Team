@@ -1,4 +1,4 @@
-
+//REMOVED IDs'-->>>> done
 //instructor current course page
     import { useEffect, useState } from "react"
     import React from 'react';
@@ -30,12 +30,13 @@
         const fetchCourse = async () => {
         const params = new URLSearchParams(window.location.search);
         const instructorId = params.get('id');
-        const traineeId = params.get('TraineeId');
+        //const traineeId = params.get('TraineeId');
         //console.log(courseId); 
         
+        //?TraineeId=${traineeId}&
         
         //const response = await fetch(`/fetchCurrentCourseInstructorCoursesByInstructorId/?id=${instructorId}`)
-        const response = await fetch(`/fetchNonRegisteredTraineeCoursesForInstructor/?TraineeId=${traineeId}&id=${instructorId}`)
+        const response = await fetch(`/fetchNonRegisteredTraineeCoursesForInstructor/id=${instructorId}`)
         
         
         const json = await response.json()

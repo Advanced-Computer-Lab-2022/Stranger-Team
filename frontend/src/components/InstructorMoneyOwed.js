@@ -1,3 +1,4 @@
+//REMOVED IDs' =====>>>>>>> DONE
 
 //ViewQswizAnswers
 import { useEffect, useState } from "react"
@@ -16,8 +17,9 @@ const [money,setMoney] = useState(0)
 useEffect(() => {
     const fetchMoney = async () => {
     const params = new URLSearchParams(window.location.search);
-    const instructorId = params.get('id');
-    const response = await fetch(`/allMoneyOwed/?id=${instructorId}`)
+    //const instructorId = params.get('id');
+//?id=${instructorId}
+    const response = await fetch(`/allMoneyOwed`)
     const json = await response.json();
     if (response.ok) {
         setMoney(json)

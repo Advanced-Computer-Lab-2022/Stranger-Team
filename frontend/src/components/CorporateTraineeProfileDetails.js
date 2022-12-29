@@ -1,3 +1,4 @@
+    //ROMOVED ID done
     import 'bootstrap/dist/css/bootstrap.min.css'
 
     import{Button, Alert, Container, Nav} from 'react-bootstrap'
@@ -13,12 +14,14 @@
         let navigate = useNavigate();
 
         const routeChange = () =>{  
-        let path = `/CorporateTraineeReportsPage/?CorporateTraineeId=${trainee._id}`; 
+        //?CorporateTraineeId=${trainee._id}
+        let path = `/CorporateTraineeReportsPage/`; 
         navigate(path);
     }
 
     const routeChange1 = () =>{  
-        let path = `/CorporateTraineeEditMyProfilePage/?CorporateTraineeId=${trainee._id}`; 
+        //?CorporateTraineeId=${trainee._id}
+        let path = `/CorporateTraineeEditMyProfilePage/`; 
         navigate(path);
     }
 

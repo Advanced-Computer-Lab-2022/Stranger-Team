@@ -1,4 +1,4 @@
-
+//REMOVED IDs' ====>>>>>>. DONE
 //instructor current course page
     import { useEffect, useState } from "react"
     import React from 'react';
@@ -34,10 +34,10 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     useEffect(() => {
         const fetchProblem = async () => {
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('CorporateTraineeId');
-        console.log(traineeId); 
+        //const traineeId = params.get('CorporateTraineeId');
+        //console.log(traineeId); 
         const reportId = params.get('ReportId');
-        console.log(traineeId); 
+        //console.log(traineeId); 
         
         
         const response = await fetch(`/fetchCorporateProblem/?ReportId=${reportId}`)
@@ -61,7 +61,7 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
         e.preventDefault()
         const queryParams = new URLSearchParams(window.location.search);
         const reportId = queryParams.get('ReportId');
-        const traineeId = queryParams.get('CorporateTraineeId');
+        //const traineeId = queryParams.get('CorporateTraineeId');
         console.log(reportId);
         
 
@@ -89,7 +89,8 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
         setFollowup('')
         
         console.log('report sent:', json)
-        window.location=`http://localhost:3000/CorporateTraineeDeliveredReportsPage?CorporateTraineeId=${traineeId}`
+        //?CorporateTraineeId=${traineeId}
+        window.location='http://localhost:3000/CorporateTraineeDeliveredReportsPage'
         }
 
     }

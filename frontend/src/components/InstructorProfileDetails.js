@@ -1,3 +1,5 @@
+    //REMOVED IDs'====>>>>> DONE BUT CHECK AGAIN
+    
     import 'bootstrap/dist/css/bootstrap.min.css'
 
     import{Button, Alert, Container, Nav} from 'react-bootstrap'
@@ -14,7 +16,8 @@
         let navigate = useNavigate();
 
         const routeChange = () =>{  
-        let path = `/InstructorReportsPage/?id=${instructor._id}`; 
+            //?id=${instructor._id}
+        let path = `/InstructorReportsPage`; 
         navigate(path);
     }
 
@@ -27,7 +30,8 @@
         const params = new URLSearchParams(window.location.search);
         // const instructorId = params.get('id');
         // console.log(instructorId); 
-        let path = `/InstructorEditMyProfilePage/?id=${instructor._id}`; 
+        //?id=${instructor._id}
+        let path = `/InstructorEditMyProfilePage`; 
         navigate(path);
     }
 

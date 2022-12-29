@@ -1,3 +1,4 @@
+//REMOVED IDs'-->>>> done
 
 //instructor current course page
     import { useEffect, useState } from "react"
@@ -30,12 +31,13 @@
         const fetchCourse = async () => {
         const params = new URLSearchParams(window.location.search);
         const instructorId = params.get('id');
-        const traineeId = params.get('CorporateTraineeId');
+        //const traineeId = params.get('CorporateTraineeId');
         //console.log(courseId); 
         
-        
+        //?CorporateTraineeId=${traineeId}&
+
         //const response = await fetch(`/fetchCurrentCourseInstructorCoursesByInstructorId/?id=${instructorId}`)
-        const response = await fetch(`/fetchNonRegisteredCorporateTraineeCoursesForInstructor/?CorporateTraineeId=${traineeId}&id=${instructorId}`)
+        const response = await fetch(`/fetchNonRegisteredCorporateTraineeCoursesForInstructor/id=${instructorId}`)
         
         
         const json = await response.json()
@@ -71,9 +73,11 @@
                 //onClick={() => window.location.href=`/CurrentCoursePageTrainee?CourseId=${course._id}`}
                 onClick={() =>{
                 const params = new URLSearchParams(window.location.search);
-                const traineeId = params.get('CorporateTraineeId');
-                console.log(traineeId);
-                window.location.href=`/CurrentNonRegisteredCoursePageCorporateTrainee?CourseId=${course._id}&CorporateTraineeId=${traineeId}`} }
+                //const traineeId = params.get('CorporateTraineeId');
+                //console.log(traineeId);
+
+                //&CorporateTraineeId=${traineeId}
+                window.location.href=`/CurrentNonRegisteredCoursePageCorporateTrainee?CourseId=${course._id}`} }
                 key={course._id}>
             <CourseDetails course={course} key={course.id} />
             {/* <PreviewCourseVideoPageDetails course={course} key={course.id} /> */}

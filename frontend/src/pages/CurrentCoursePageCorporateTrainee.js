@@ -1,3 +1,4 @@
+//REMOVED IDs' ===>>>>>DONE
 
 //instructor current course page
     import { useEffect, useState } from "react"
@@ -35,8 +36,8 @@ import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTrain
         
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        const corporateTraineeId = params.get('CorporateTraineeId');
-        console.log(corporateTraineeId); 
+       // const corporateTraineeId = params.get('CorporateTraineeId');
+       // console.log(corporateTraineeId); 
 
         
         
@@ -63,9 +64,10 @@ import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTrain
         const routeChange = () =>{ 
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        const corporateTraineeId = params.get('CorporateTraineeId');
-        console.log(corporateTraineeId); 
-        let path = `/CorporateTraineeReportAProblemPage/?CorporateTraineeId=${corporateTraineeId}&CourseId=${courseId}`; 
+       // const corporateTraineeId = params.get('CorporateTraineeId');
+        //console.log(corporateTraineeId); 
+        //?CorporateTraineeId=${corporateTraineeId}
+        let path = `/CorporateTraineeReportAProblemPage/?CourseId=${courseId}`; 
         navigate(path);
     }
 
@@ -73,24 +75,27 @@ import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTrain
     const routeChange1 = () =>{ 
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        const corporateTraineeId = params.get('CorporateTraineeId');
-        console.log(corporateTraineeId); 
-        let path = `/mainForQuiz/?CorporateTraineeId=${corporateTraineeId}&CourseId=${courseId}`; 
+        //const corporateTraineeId = params.get('CorporateTraineeId');
+        //console.log(corporateTraineeId); 
+        //CorporateTraineeId=${corporateTraineeId}&
+        let path = `/mainForQuiz/?CourseId=${courseId}`; 
         navigate(path);
     }
     const routeChange2 = () =>{ 
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        const corporateTraineeId = params.get('CorporateTraineeId');
-        let path = `/CorporateTraineeCertificate/?CourseId=${courseId}&CorporateTraineeId=${corporateTraineeId}`; 
+        //const corporateTraineeId = params.get('CorporateTraineeId');
+        //&CorporateTraineeId=${corporateTraineeId}
+        let path = `/CorporateTraineeCertificate/?CourseId=${courseId}`; 
         navigate(path);
        <Certificate></Certificate>
     }
     const routeChange3 = () =>{ 
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        const corporateTraineeId = params.get('CorporateTraineeId');
-        let path = `/viewqwizanswers/?CourseId=${courseId}&CorporateTraineeId=${corporateTraineeId}`; 
+        //const corporateTraineeId = params.get('CorporateTraineeId');
+        //&CorporateTraineeId=${corporateTraineeId}
+        let path = `/viewqwizanswers/?CourseId=${courseId}`; 
         navigate(path);
        
     }

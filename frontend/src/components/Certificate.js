@@ -1,3 +1,5 @@
+//REMOVED ID OF TRAINEE FROM URL
+
 import React from "react";
 import certificate from '../images/certificate.jpg';
 import "../styles/certificate.css"

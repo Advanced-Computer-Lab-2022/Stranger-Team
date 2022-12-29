@@ -1,3 +1,5 @@
+    //REMOVED IDs'-->>>> done
+
     import { Link } from 'react-router-dom'
 
     import 'bootstrap/dist/css/bootstrap.min.css'
@@ -15,24 +17,27 @@
         let navigate = useNavigate();
         const routeChange = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('CorporateTraineeId');
-        console.log(traineeId); 
-        let path =  `/CorporateTraineeProfilePage/?CorporateTraineeId=${traineeId}`; 
+        //const traineeId = params.get('CorporateTraineeId');
+        //console.log(traineeId); 
+        //?CorporateTraineeId=${traineeId}
+        let path =  `/CorporateTraineeProfilePage`; 
         navigate(path);
     }
 
 
     const routeChange2 = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const corporateTraineeId = params.get('CorporateTraineeId');
-        let path =  `/corporateTraineeHome/?CorporateTraineeId=${corporateTraineeId}`; 
+        //const corporateTraineeId = params.get('CorporateTraineeId');
+        //?CorporateTraineeId=${corporateTraineeId}
+        let path =  `/corporateTraineeHome/`; 
         navigate(path);
     }
 
     const routeChange3 = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const corporateTraineeId = params.get('CorporateTraineeId');
-        let path =  `/MyRegisteredCoursesCorporateTraineePage/?CorporateTraineeId=${corporateTraineeId}`; 
+      //const corporateTraineeId = params.get('CorporateTraineeId');
+      //?CorporateTraineeId=${corporateTraineeId}
+        let path =  `/MyRegisteredCoursesCorporateTraineePage/`; 
         navigate(path);
     }
 

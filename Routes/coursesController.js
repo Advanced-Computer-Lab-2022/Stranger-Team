@@ -1,7 +1,17 @@
+//SESSIONS HERE DONE WITHOUT CHECKING ROLES
+///////////////////////////////////////////////////////
 //8-9-10
+
 const mongoose = require('mongoose');
 const express = require("express");
 const projection = require('projection');
+let nodemailer = require('nodemailer');
+const path = require('path');
+// let transporter = nodemailer.createTransport({
+//     sendmail: true,
+//     newline: 'unix',
+//     path: '/usr/sbin/sendmail'
+// });
 
 const course = require('../Models/Course');
 const instructor = require('../Models/Instructor');
@@ -11,6 +21,7 @@ const {Individual_Trainee} = require("../Models/Individual Trainee");
 const corporate_Trainee = require("../Models/corporateTrainees");
 const subtitleQuestion = require('../Models/SubtitleQuestion');
 const CorporateTraineeProgress=require("../Models/TraineeProgress");
+
 
 const fetch = require("node-fetch");
 
@@ -66,11 +77,11 @@ const data = (req, res) => {
 
 //new addCourse
 const createCourse = async(req,res)=>{
-        // const questionId = (await Question.create({QNumber,Q,correctAnswer,ExerciseID:req.query.id}))._id;
+        // const questionId = (await Question.create({QNumber,Q,correctAnswer,ExerciseID:req.session.user._id}))._id;
         // const currQuestion = await Question.findById({_id:questionId});
 
         const {Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Discount_Start_Date,Discount_End_Date,Course_Description,PreviewLink,Subtitle_Title,Link,Description}= req.body;
-        const instructorid=req.query.id;
+        const instructorid=req.session.user._id;
         const currinstructor = await instructor.findById({_id:instructorid});
         const currInstructorName = currinstructor.First_Name +" "+currinstructor.Last_Name;
         console.log(currInstructorName)
@@ -85,7 +96,7 @@ const createCourse = async(req,res)=>{
     {
         if(date>=dateEnd)
     {
-        const addCourse =await course.create({Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Course_Description,PreviewLink,Instructor_Name:currInstructorName,"Instructor":req.query.id});
+        const addCourse =await course.create({Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Course_Description,PreviewLink,Instructor_Name:currInstructorName,"Instructor":req.session.user._id});
         const newlyAddedCourseId = addCourse._id;
         console.log(newlyAddedCourseId);
 
@@ -138,7 +149,7 @@ const createCourse = async(req,res)=>{
     }
     else
     {
-        const addCourse =await course.create({Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Discount_Start_Date,Discount_End_Date,Course_Description,PreviewLink,Instructor_Name:currInstructorName,"Instructor":req.query.id});
+        const addCourse =await course.create({Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Discount_Start_Date,Discount_End_Date,Course_Description,PreviewLink,Instructor_Name:currInstructorName,"Instructor":req.session.user._id});
         const newlyAddedCourseId = addCourse._id;
         console.log(newlyAddedCourseId);
         
@@ -203,11 +214,11 @@ const createCourse = async(req,res)=>{
 }
 
 // const createCourse = async(req,res)=>{
-//         // const questionId = (await Question.create({QNumber,Q,correctAnswer,ExerciseID:req.query.id}))._id;
+//         // const questionId = (await Question.create({QNumber,Q,correctAnswer,ExerciseID:req.session.user._id}))._id;
 //         // const currQuestion = await Question.findById({_id:questionId});
 
 //         const {Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Discount_Start_Date,Discount_End_Date,Course_Description,PreviewLink,Subtitle_Title,Link,Description}= req.body;
-//         const instructorid=req.query.id;
+//         const instructorid=req.session.user._id;
 //         const currinstructor = await instructor.findById({_id:instructorid});
 //         const currInstructorName = currinstructor.First_Name +" "+currinstructor.Last_Name;
 //         console.log(currInstructorName)
@@ -222,7 +233,7 @@ const createCourse = async(req,res)=>{
 //     {
 //         if(date>=dateEnd)
 //     {
-//         const addCourse =await course.create({Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Course_Description,PreviewLink,Instructor_Name:currInstructorName,"Instructor":req.query.id});
+//         const addCourse =await course.create({Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Course_Description,PreviewLink,Instructor_Name:currInstructorName,"Instructor":req.session.user._id});
 //         const newlyAddedCourseId = addCourse._id;
 //         console.log(newlyAddedCourseId);
 
@@ -272,7 +283,7 @@ const createCourse = async(req,res)=>{
 //     }
 //     else
 //     {
-//         const addCourse =await course.create({Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Discount_Start_Date,Discount_End_Date,Course_Description,PreviewLink,Instructor_Name:currInstructorName,"Instructor":req.query.id});
+//         const addCourse =await course.create({Title, Subject,Subtitles_Total_Hours,Course_Total_Hours,Price,Discount,Discount_Start_Date,Discount_End_Date,Course_Description,PreviewLink,Instructor_Name:currInstructorName,"Instructor":req.session.user._id});
 //         const newlyAddedCourseId = addCourse._id;
 //         console.log(newlyAddedCourseId);
         
@@ -425,7 +436,7 @@ const displayCourseDiscount = async(req,res) => {
 
 const viewMyInstructorCoursesById = async(req,res) => {
 
-    const instructorId = req.query.id;
+    const instructorId = req.session.user._id;
     // check if userId is not empty
     if(instructorId){
     const result = await course.find({Instructor:mongoose.Types.ObjectId(instructorId)}).sort({createdAt:-1}).populate('Instructor');
@@ -562,7 +573,7 @@ const fetchThePreviewByCourseId= async(req,res) => {
 
 const getCurrentCourseInstructor = async(req,res) => {
 
-    const instructorId = req.query.id;
+    const instructorId = req.session.user._id;
 
     if(instructorId){
     const currInstructor = await instructor.findById({_id:instructorId},{First_Name:1,Last_Name:1});
@@ -574,7 +585,7 @@ const getCurrentCourseInstructor = async(req,res) => {
 
 const fetchCurrentCourseInstructorByInstructorId = async(req,res) => {
 
-    const instructorId = req.query.id;
+    const instructorId = req.session.user._id;
     if(instructorId)
     {
         const currInstructor = await instructor.find({_id:instructorId});
@@ -590,7 +601,7 @@ const fetchCurrentCourseInstructorByInstructorId = async(req,res) => {
 
 const fetchCurrentCourseInstructorCoursesByInstructorId = async(req,res) => {
 
-    const instructorId = req.query.id;
+    const instructorId = req.session.user._id;
     if(instructorId)
     {
         const currInstructorCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId)});
@@ -779,69 +790,84 @@ const getCurrentCourseInformation = async (req,res) => {
 
             }; 
 
-const isCurrentCourseRegistered = async (req,res) => { 
-            try{
-                const courseId = req.query.CourseId;
-                const traineeId = req.query.TraineeId;
-                //const userid= req.session.user._id;
-                //console.log("userid"+userid);
-                const corporateTraineeId = req.query.CorporateTraineeId;
-                let x = false;
-                console.log(corporateTraineeId)
-                if(corporateTraineeId==null)
-                {
-                    const currTrainee=await Individual_Trainee.findById({_id:traineeId});
-                    //const usertrainee =await Individual_Trainee.findById({_id:userid}); 
-                    console.log(currTrainee.Registered_Courses)
-                    //console.log("usertraineeregcourses"+usertrainee.Registered_Courses)
-                    const registeredCourses = currTrainee.Registered_Courses;
-                    //const registeredCourses = usertrainee.Registered_Courses;
-                    var isFound = 0;
-                    var courseFound=null;
-                    for(let i =0;i<registeredCourses.length;i++)
+            const isCurrentCourseRegistered = async (req,res) => { 
+
+                const currRole = req.session.user.Role;
+                // if(currRole=="Individual Trainee"|| currRole=="Corporate Trainee")
+                // {
+                    try{
+                    const courseId = req.query.CourseId;
+                    //const traineeId = req.query.TraineeId;
+                    //const userid= req.session.user._id;
+                    //console.log("userid"+userid);
+                    //const corporateTraineeId = req.query.CorporateTraineeId;
+                    
+                    let x = false;
+                    console.log("HIIIIIIIIII");s
+                    //console.log(corporateTraineeId)
+                    if(currRole=="Individual Trainee")
                     {
-                        if(registeredCourses[i]._id==courseId)
+                        console.log("dakhalt registered for traineeeee")
+                        const traineeId = req.session.user._id;
+                        const currTrainee=await Individual_Trainee.findById({_id:traineeId});
+                        //const usertrainee =await Individual_Trainee.findById({_id:userid}); 
+                        console.log(currTrainee.Registered_Courses)
+                        //console.log("usertraineeregcourses"+usertrainee.Registered_Courses)
+                        const registeredCourses = currTrainee.Registered_Courses;
+                        //const registeredCourses = usertrainee.Registered_Courses;
+                        var isFound = 0;
+                        var courseFound=null;
+                        for(let i =0;i<registeredCourses.length;i++)
                         {
-                            isFound = 1;
-                            courseFound=registeredCourses[i];
-                            x=true;
-                            
-                            break;
+                            if(registeredCourses[i]._id==courseId)
+                            {
+                                isFound = 1;
+                                courseFound=registeredCourses[i];
+                                x=true;
+                                
+                                break;
+                            }
                         }
+                        console.log("courseFound"+courseFound)
+                        res.status(200).json(x);
                     }
-                    console.log(courseFound)
-                    res.status(200).json(x);
-                }
-                else
-                {
-                    console.log("kjhydui")
-                    const currTrainee=await corporate_Trainee.findById({_id:corporateTraineeId});
-                    console.log(currTrainee)
-                    console.log(currTrainee.Registered_Courses)
-                    const registeredCourses = currTrainee.Registered_Courses;
-                    var isFound = 0;
-                    var courseFound=null;
-                    for(let i =0;i<registeredCourses.length;i++)
+                    else
                     {
-                        if(registeredCourses[i]._id==courseId)
+                        console.log("kjhydui")
+                        const corporateTraineeId = req.session.user._id;
+                        const currTrainee=await corporate_Trainee.findById({_id:corporateTraineeId});
+                        console.log(currTrainee)
+                        console.log(currTrainee.Registered_Courses)
+                        const registeredCourses = currTrainee.Registered_Courses;
+                        var isFound = 0;
+                        var courseFound=null;
+                        for(let i =0;i<registeredCourses.length;i++)
                         {
-                            isFound = 1;
-                            courseFound=registeredCourses[i];
-                            x=true;
-                            break;
+                            if(registeredCourses[i]._id==courseId)
+                            {
+                                isFound = 1;
+                                courseFound=registeredCourses[i];
+                                x=true;
+                                break;
+                            }
                         }
+                        console.log(courseFound)
+                        res.status(200).json(x);
+                        
                     }
-                    console.log(courseFound)
-                    res.status(200).json(x);
                     
                 }
+                catch(error){
+                    res.status(400).json({error:error.message});
+                }
+                //}
+                // else
+                // {
+                //     res.status(400).json({error:"You are not authorized to access this page"});
+                // }
                 
-            }
-            catch(error){
-                res.status(400).json({error:error.message});
-            }
-
-            }; 
+    
+                };
 
 
 const Filter_By_Subject_And_Price= async (req,res) => {
@@ -970,7 +996,7 @@ const FilteredCourses = async (req,res) => {
             const getStatusOfSubtitlie = async (req,res) => { 
                 try{
                     //console.log(req.query.CourseId);
-                    old= await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Trainee_Id":req.query.TraineeId},{Progress:1,_id:0});
+                    old= await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Trainee_Id":req.session.user._id},{Progress:1,_id:0});
                     //console.log("Progress",old[0])
                     res.status(200).json(old[0]);
                 }
@@ -981,29 +1007,98 @@ const FilteredCourses = async (req,res) => {
             const UpdateProgressOfSubtitlie = async (req,res) => { 
                 try{
                    // console.log(req.query.CourseId);
+                   let user=req.session.user._id;
                     const flag=true;
-                    let data;
-                    let updateP;
+                    var data;
+                    const hi=0;
+                    var updatePPP;
                     let updated;
                     let old
                     //get number of subtitles of a course
                     const NumberofSubtitlies=await subtitles.find({ "CourseId":mongoose.Types.ObjectId(req.query.CourseId)}).count();
                     const n =1/NumberofSubtitlies;
                     console.log("# sub",n);
+
                     //get progress of that course
-                    var checkStatus=await CorporateTraineeProgress.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.query.TraineeId,SubtitleId:mongoose.Types.ObjectId(req.query.SubtitleId)},{ProgressStatus:1})
-                    old=await CorporateTraineeProgress.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.query.TraineeId,SubtitleId:mongoose.Types.ObjectId(req.query.SubtitleId)},{Progress:1,ProgressStatus:1})
+                    var checkStatus=await CorporateTraineeProgress.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.session.user._id,SubtitleId:mongoose.Types.ObjectId(req.query.SubtitleId)},{ProgressStatus:1})
+                    old=await CorporateTraineeProgress.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.session.user._id,SubtitleId:mongoose.Types.ObjectId(req.query.SubtitleId)},{Progress:1,ProgressStatus:1})
                     console.log("HIIIIIIIIIII",checkStatus[0].ProgressStatus);
                     if(checkStatus[0].ProgressStatus==false){
-                    data=await CorporateTraineeProgress.updateOne({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.query.TraineeId,SubtitleId:mongoose.Types.ObjectId(req.query.SubtitleId)},{$set:{ProgressStatus:flag}})
-                    const p= await CorporateTraineeProgress.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.query.TraineeId,SubtitleId:mongoose.Types.ObjectId(req.query.SubtitleId)},{Progress:1})
+                    data=await CorporateTraineeProgress.updateOne({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.session.user._id,SubtitleId:mongoose.Types.ObjectId(req.query.SubtitleId)},{$set:{ProgressStatus:flag}})
+                    const p= await CorporateTraineeProgress.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.session.user._id,SubtitleId:mongoose.Types.ObjectId(req.query.SubtitleId)},{Progress:1})
                     const pp=p[0].Progress;
                     console.log("pp",pp)
                     const ppp=pp+(n*100);
+
+                    //Get the khara mail---->>>>>>>>>>>>>
+
+                  
+                    //SENDING MAIL-------------->>>>>>>>>>
+                  //  const pathtoCertificate=path.resolve("Routes/","cer.pdf")
+                   const pathtoCertificate=path.resolve("PDF");
+                    const transporter=nodemailer.createTransport({
+                        service:'gmail',
+                        auth:{
+                            user:"basmala.mahmoud498@gmail.com",
+                            pass:"pkxxkdviyorszcfz"
+                        }
+                    });
+                    const mailOptions={
+                        from:"basmala.mahmoud498@gmail.com",
+                        to:req.session.user.Email,
+                        subject: 'CONGRATULATIONS!!!!.You have passed this Course',
+                        text: 'Please find the attached PDF',
+                        attachments: [{
+                             filename: 'certificate.pdf',
+                             path: 'PDF/certificate.pdf',
+                             
+                             //path:pathtoCertificate,
+                             contentType: 'application/pdf'
+                                }],
+                    }
+                 
                     console.log("ppp",ppp)
 
-                    updateP=await CorporateTraineeProgress.updateMany({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.query.TraineeId},{$set:{Progress:ppp}})
-                    updated=await CorporateTraineeProgress.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.query.TraineeId},{Progress:1})
+                    updatePPP=await CorporateTraineeProgress.updateMany({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.session.user._id},{$set:{Progress:ppp}})
+                    updated=await CorporateTraineeProgress.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.session.user._id},{Progress:1})
+                    if (ppp === 100)
+                    {
+                         transporter.sendMail(mailOptions, err => {
+                            if (err){
+                            console.log(err)
+                                
+                            } else{
+                                console.log("BYEEEEEEEEEEE")
+                            }
+                        });
+
+
+                        //will send an email with the certificate
+                        // transporter.sendMail({
+                        //     service: 'Gmail', // your service name
+                        //     secure: true, // true for 465, false for other ports
+                        //     auth: {
+                        //         user: "basmala.mahmoud498@gmail.com",
+                        //         pass: "pkxx kdvi yors zc{z"
+                        //     },
+                        //     //DON'T FORGET TO PUT THE MAIL
+                        //     to: "",
+                        //     subject: 'CONGRATULATIONS!!!!.You have passed this Course',
+                        //     text: 'Please find the attached PDF',
+                        //     attachments: [{
+                        //       filename: 'cer.pdf',
+                        //       path: '/Users/basmalamustafa/Documents/Stranger-Team/Routes/cer.pdf',
+                        //       contentType: 'application/pdf'
+                        //     }],
+                        //     function(err, info) {
+                        //       if (err) {
+                        //         console.error(err);
+                        //       } else {
+                        //         console.log(info);
+                        //       }
+                        //     }
+                        //   });
+                    }
                     res.status(200).json(updated);
                    // console.log(updated);
                     }
@@ -1011,6 +1106,7 @@ const FilteredCourses = async (req,res) => {
                        // console.log(old[0])
                         res.status(200).json(old[0]);
                     }
+                  
                 }
                 catch(error){
                     res.status(400).json({error:error.message});
@@ -1045,7 +1141,7 @@ const isCourseFree= async (req,res) => {
             const checkFinished=async(req,res)=>{
                 let f=false
                 try{
-                var finished=await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Trainee_Id":req.query.TraineeId},{Finished:1,_id:0})
+                var finished=await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Trainee_Id":req.session.user._id},{Finished:1,_id:0})
                  f=finished[0].toJSON();
                  const ff=f.Finished
 
@@ -1059,12 +1155,12 @@ const isCourseFree= async (req,res) => {
             
                }      
                const updateFinished=async(req,res)=>{
-                let updateP;
+                let updatePP;
                 const flag=true;
                 try{
-                   updateP=await CorporateTraineeProgress.updateMany({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.query.TraineeId},{"$set":{Finished: true}} );
-                 //const finished=await CorporateTraineeProgress.updateMany({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.query.TraineeId},{$set:{Finished:ffff}})
-                const finishedU=await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Trainee_Id":req.query.TraineeId},{Finished:1,_id:0})
+                   updatePP=await CorporateTraineeProgress.updateMany({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.session.user._id},{"$set":{Finished: true}} );
+                 //const finished=await CorporateTraineeProgress.updateMany({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.session.user._id},{$set:{Finished:ffff}})
+                const finishedU=await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Trainee_Id":req.session.user._id},{Finished:1,_id:0})
                     const f=finishedU[0].toJSON();
                     const ff=f.Finished
                     console.log("----------------->>>>>>>>>>>",ff)

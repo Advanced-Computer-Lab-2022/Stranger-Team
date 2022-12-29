@@ -34,10 +34,10 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
     useEffect(() => {
         const fetchProblem = async () => {
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('CorporateTraineeId');
-        console.log(traineeId); 
+       // const traineeId = params.get('CorporateTraineeId');
+        //console.log(traineeId); 
         const reportId = params.get('ReportId');
-        console.log(traineeId); 
+        //console.log(traineeId); 
         
         
         const response = await fetch(`/fetchCorporateProblem/?ReportId=${reportId}`)

@@ -136,8 +136,8 @@ const flag = flagResult(totalPoints, earnPoints)
         {!corpTrainee && <Link className='btn' to={`/CurrentCoursePageTrainee/?CourseId=${courseId}&TraineeId=${traineeId}`}>Back To Course</Link>}
         {corpTrainee && <Link className='btn' to={`/CurrentCoursePageCorporateTrainee/?CourseId=${courseId}&CorporateTraineeId=${ctrainee}`}>Back To Course</Link>}
         {!corpTrainee && <Link className='btn' to={`/Traineeviewqwizanswers/?CourseId=${courseId}&TraineeId=${traineeId}`}onClick={update}>Done</Link>}
-        {/* {corpTrainee && <Link className='btn' to={`/viewqwizanswers/?CourseId=${courseId}&CorporateTraineeId=${ctrainee}`} onClick={update}>Done </Link>} */}
-        {corpTrainee && <button onClick={update}>Done</button>}
+        {corpTrainee && <Link className='btn' to={`/viewqwizanswers/?CourseId=${courseId}&CorporateTraineeId=${ctrainee}`} onClick={update}>Done </Link>}
+        {/* {corpTrainee && <button onClick={update}>Done</button>} */}
             
     
             <div className="container">

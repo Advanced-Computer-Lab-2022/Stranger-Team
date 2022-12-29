@@ -1,4 +1,5 @@
 
+//REMOVED IDs' ====>>>>>DONE 
 
     import { useEffect, useState } from "react"
     import React from 'react';
@@ -24,11 +25,11 @@ import CorporateTraineeProfileNavBar from "./CorporateTraineeProfileNavBar";
     useEffect(() => {
         const fetchInstructor = async () => {
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        console.log(instructorId); 
+       //const instructorId = params.get('id');
+       // console.log(instructorId); 
         
-        
-        const response = await fetch(`/fetchCurrentCourseInstructorByInstructorId/?id=${instructorId}`)
+        //?id=${instructorId}
+        const response = await fetch(`/fetchCurrentCourseInstructorByInstructorId`)
         
         const json = await response.json()
         console.log(response)

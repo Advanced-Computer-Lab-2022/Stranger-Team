@@ -1,3 +1,5 @@
+//REMOVED IDs'===>>>>>DONE
+
 
 //instructor current course page
     import { useEffect, useState } from "react"
@@ -34,7 +36,7 @@
         const fetchCourse = async () => {
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        const traineeId = params.get('TraineeId');
+        //const traineeId = params.get('TraineeId');
         
         
         const response = await fetch(`/CurrentCourse/?CourseId=${courseId}`)
@@ -58,11 +60,12 @@
     let navigate = useNavigate();
         const routeChange = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('CorporateTraineeId');
+       // const traineeId = params.get('CorporateTraineeId');
         const courseId= params.get('CourseId');
-        console.log(traineeId); 
+       // console.log(traineeId); 
 
-        let path = `/CurrentCoursePageCorporateTrainee?CourseId=${courseId}&CorporateTraineeId=${traineeId}`; 
+       //&CorporateTraineeId=${traineeId}
+        let path = `/CurrentCoursePageCorporateTrainee?CourseId=${courseId}`; 
         navigate(path);
     }
 

@@ -1,3 +1,5 @@
+    //REMOVED ID's ====>>>>>>Done
+    
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
@@ -14,11 +16,12 @@
         const fetchCurrentCourseInstructor = async () => {
         
         //getCurrentCourseInstructor
-        const instructorId = course.Instructor;
-        console.log("instid "+instructorId); 
+        //const instructorId = course.Instructor;
+        //console.log("instid "+instructorId); 
+
+        //?id=${instructorId}
         
-        
-        const response = await fetch(`/getCurrentCourseInstructor/?id=${instructorId}`)
+        const response = await fetch(`/getCurrentCourseInstructor/`)
         
         
         const json = await response.json()
@@ -77,7 +80,8 @@
         let navigate = useNavigate();
 
         const routeChange = () =>{ 
-        let path = `/CurrentNonRegisteredCourseInstructorPage/?id=${currentInstructorId}`; 
+            //?id=${currentInstructorId}
+        let path = `/CurrentNonRegisteredCourseInstructorPage/`; 
         navigate(path);
     }
         

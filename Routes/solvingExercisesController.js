@@ -260,7 +260,7 @@ const fetchSubtitleQuestion = async(req,res) => {
   if(subtitleId){
   const result = await subtitleQuestion.find({SubtitleId:mongoose.Types.ObjectId(subtitleId)}).populate('SubtitleId');
   res.status(200).json(result)
-  console.log(result)
+  //console.log(result)
   }else{
       res.status(400).json({error:"subtitleId is required"})
   }
@@ -271,13 +271,13 @@ const fetchSubtitleQuestion = async(req,res) => {
 const subtitleQuestionAnswer = async(req,res) => {
 
   const subtitleId = req.query.SubtitleId;
-  console.log("subtitleid: "+subtitleId);
+  //console.log("subtitleid: "+subtitleId);
 
   if(subtitleId){
   const result = await subtitleQuestion.findOne({SubtitleId:mongoose.Types.ObjectId(subtitleId)});
   console.log(result)
   const ans =  result.correctAnswer
-  console.log(ans)
+  //console.log(ans)
   if(ans) {
     res.status(200).json(ans)
     //console.log(result)
@@ -295,7 +295,7 @@ const subtitleQuestionAnswer = async(req,res) => {
  const quizSize = async(req,res) => {
 
   const courseid = req.query.CourseId;
-  console.log("courseid: "+courseid);
+  //console.log("courseid: "+courseid);
 
   if(courseid){
   const result = await Question.find({CourseId:mongoose.Types.ObjectId(courseid)}).populate('CourseId');

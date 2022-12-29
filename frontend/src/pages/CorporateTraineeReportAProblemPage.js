@@ -1,3 +1,5 @@
+    //REMOVED IDs' ===>>>>>>DONE
+
     import { useState } from 'react'
 import CorporateTraineeProfileNavBar from '../components/CorporateTraineeProfileNavBar'
 
@@ -10,15 +12,16 @@ import CorporateTraineeProfileNavBar from '../components/CorporateTraineeProfile
     const handleSubmit = async (e) => {
         e.preventDefault()
         const queryParams = new URLSearchParams(window.location.search);
-        const corporateTraineeId = queryParams.get('CorporateTraineeId');
-        console.log(corporateTraineeId);
+        //const corporateTraineeId = queryParams.get('CorporateTraineeId');
+        //console.log(corporateTraineeId);
         const courseId = queryParams.get('CourseId');
 
 
         const report = {Report_Title,Reported_Problem,Report_Type};
         console.log(report)
 
-        const response = await fetch(`/corporateTraineeSendReport/?CorporateTraineeId=${corporateTraineeId}`, {
+        //?CorporateTraineeId=${corporateTraineeId}
+        const response = await fetch('/corporateTraineeSendReport', {
         method: 'POST',
         body: JSON.stringify(report),
         headers: {
@@ -40,7 +43,8 @@ import CorporateTraineeProfileNavBar from '../components/CorporateTraineeProfile
         setReport_Type(null)
         
         console.log('report sent:', json)
-        window.location=`http://localhost:3000/CurrentCoursePageCorporateTrainee?CorporateTraineeId=${corporateTraineeId}&CourseId=${courseId}`
+        //CorporateTraineeId=${corporateTraineeId}
+        window.location=`http://localhost:3000/CurrentCoursePageCorporateTrainee?CourseId=${courseId}`
         }
 
     }

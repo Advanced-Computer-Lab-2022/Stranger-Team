@@ -1,3 +1,5 @@
+//REMOVED IDs'====>>>>>>DONE
+
 import { useState,useEffect } from "react";
 import React from 'react';
 import { Certificate } from "../components/Certificate";
@@ -12,9 +14,10 @@ const fetchProgress = async () => {
         const params = new URLSearchParams(window.location.search);
        // const subtitleId = params.get('SubtitleId');
         const courseId = params.get('CourseId');
-        const corpId=params.get('CorporateTraineeId')
+       // const corpId=params.get('CorporateTraineeId')
        //console.log(subtitleId); 
-        const response = await fetch(`/getSubtitlesStatus/?CourseId=${courseId}&CorporateTraineeId=${corpId}`)
+       //&CorporateTraineeId=${corpId}
+        const response = await fetch(`/getSubtitlesStatus/?CourseId=${courseId}`)
         const json = await response.json()
         if (response.ok) {
         setProgress(json)    

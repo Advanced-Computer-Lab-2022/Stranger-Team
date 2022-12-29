@@ -1,4 +1,5 @@
 
+//REMOVED IDs' ===>>>>>>DONE
 
     import { useEffect, useState } from "react"
     import React from 'react';
@@ -24,11 +25,11 @@ import CorporateTraineeProfileDetails from "../components/CorporateTraineeProfil
         const fetchTrainee = async () => {
         
         const params = new URLSearchParams(window.location.search);
-        const corporateTraineeId = params.get('CorporateTraineeId');
-        console.log(corporateTraineeId); 
+       // const corporateTraineeId = params.get('CorporateTraineeId');
+        //console.log(corporateTraineeId); 
+        //?CorporateTraineeId=${corporateTraineeId}
         
-        
-        const response = await fetch(`/fetchCorporateTraineeProfileDetails/?CorporateTraineeId=${corporateTraineeId}`)
+        const response = await fetch('/fetchCorporateTraineeProfileDetails')
         
         
         
@@ -51,9 +52,10 @@ import CorporateTraineeProfileDetails from "../components/CorporateTraineeProfil
         let navigate = useNavigate();
         const routeChange = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        console.log(instructorId); 
-        let path = `/InstructorEditMyProfilePage/?id=${instructorId}`; 
+        //const instructorId = params.get('id');
+        //console.log(instructorId); 
+        //?id=${instructorId}
+        let path = '/InstructorEditMyProfilePage'; 
         navigate(path);
     }
 
