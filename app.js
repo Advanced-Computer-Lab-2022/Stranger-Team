@@ -1065,7 +1065,7 @@ function arrayIsEmpty(array) {
             return false;
         }
 
-app.post("/create-payment-intent", async (req, res) => {
+app.post("/create-payment", async (req, res) => {
 
     const courseId = req.query.CourseId;
     const traineeId = req.query.TraineeId;
@@ -1076,9 +1076,9 @@ app.post("/create-payment-intent", async (req, res) => {
     let j;
     var sub;
     //const traineeId = req.session.user._id;
-    const currCourse = await course.findById({_id:courseId});
-    const currPrice = parseInt(currCourse.Price);
-    console.log(currPrice);
+    const Course = await course.findById({_id:courseId});
+    const Price = parseInt(Course.Price);
+    console.log(Price);
 
     //creating Progress
 
@@ -1120,29 +1120,18 @@ app.post("/create-payment-intent", async (req, res) => {
     
 
   try{
-    
     const paymentIntent = await stripe.paymentIntents.create({
-      currency:"usd",
-      amount:currPrice,
+      amount:Price,
       automatic_payment_methods:{
         enabled:true,
       },
+      currency:"usd",
     })
-
-    // const currTrainee = await individual_Trainee.findById({_id:traineeId});
-    // const updatedArray = currTrainee.Registered_Courses;
-    // console.log(updatedArray);
-    // updatedArray.push(courseId);
-    // console.log(updatedArray)
-    // const updatedTrainee =  await individual_Trainee.findByIdAndUpdate({_id:traineeId},{Registered_Courses:updatedArray},{new:true});
-    // console.log("updatedTrainee"+updatedTrainee)
-    
     res.send({clientSecret:paymentIntent.client_secret});
-    
   }
-  catch(e){
+  catch(error){
     return res.status(400).send({
-      error:{message:e.message,}
+     error:error.message
     })
   }
 

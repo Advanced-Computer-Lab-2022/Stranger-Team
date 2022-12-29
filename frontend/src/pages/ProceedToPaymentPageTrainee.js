@@ -16,10 +16,6 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
         
         
         const response = await fetch(`/viewMyWalletBalance/?TraineeId=${traineeId}`)
-
-        
-        
-        
         const json = await response.json()
         setWallet(json);
         
@@ -68,15 +64,15 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
         <div className="course-details">
         <TraineeProfileNavBar/>
 
-        <h4>Please Choose How You Would Like To Proceed For Your Payement: </h4>
+        <h4>Choose Payment Method </h4>
 
         <div className="course-details" onClick={payForCourse}>
-            <p><strong>By Wallet Balance</strong></p> 
-            <p><strong>Balance: </strong>{wallet}</p> 
+            <p><strong>Wallet Balance</strong></p> 
+            <p><strong>Balance </strong>{wallet}</p> 
         </div>
 
         <div className="course-details" onClick={routeChange}>
-            <p><strong>By Visa </strong></p> 
+            <p><strong>Credit Card</strong></p> 
         </div>
 
         {error && <div className="error">{error}</div>}

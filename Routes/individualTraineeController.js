@@ -31,7 +31,6 @@ const viewMyWalletBalance = async(req,res) => {
     
     //const traineeId = req.session.user._id;
     const traineeId = req.query.TraineeId;
-
     try{
     const result = await Individual_Trainee.findById({_id:traineeId});
     const wallet = result.Wallet;
@@ -39,7 +38,7 @@ const viewMyWalletBalance = async(req,res) => {
     res.status(200).json(wallet)
     }
     catch(error){
-        res.status(400).json({error:error.message});
+        res.status(400).json({error:"Wallet not found"});
     }
 }
 
@@ -61,8 +60,8 @@ function arrayIsEmpty(array) {
 
 const payByWalletBalance = async(req,res) => {
     
-    //const traineeId = req.session.user._id;
-    const traineeId = req.query.TraineeId;
+    const traineeId = req.session.user._id;
+   // const traineeId = req.query.TraineeId;
     const courseId = req.query.CourseId;
     var c;
     var already=[];
@@ -70,22 +69,21 @@ const payByWalletBalance = async(req,res) => {
     let i;
     let j;
     var sub;
-
     try{
     if(traineeId)
     {
-        const currCourse = await course.findById({_id:courseId});
-        const currCoursePrice = currCourse.Price;
-        const currTrainee = await Individual_Trainee.findById({_id:traineeId});
-        const balance = currTrainee.Wallet;
-        if(balance>=currCoursePrice)
+        const Trainee = await Individual_Trainee.findById({_id:traineeId});
+        const traineeWallet = Trainee.Wallet;
+        const Course = await course.findById({_id:courseId});
+        const CoursePrice = Course.Price;
+       
+        if(traineeWallet>=CoursePrice)
         {
-            const newBalance = balance - currCoursePrice;
-            const newArray = currTrainee.Registered_Courses;
-            newArray.push(courseId)
-            console.log("newArray"+newArray)
+            const newtraineeWallet = traineeWallet -CoursePrice;
+            const newCourses = Trainee.Registered_Courses;
+            newCourses.push(courseId)
 
-            const updatedBalance = await Individual_Trainee.findByIdAndUpdate({_id:traineeId},{Registered_Courses:newArray,Wallet:newBalance},{new:true});
+            const updatedTraineeWallet = await Individual_Trainee.findByIdAndUpdate({_id:traineeId},{Registered_Courses:newCourses,Wallet:newtraineeWallet},{new:true});
 
             //creating Progress
 
@@ -125,7 +123,7 @@ const payByWalletBalance = async(req,res) => {
 
             }
 
-            res.status(200).json(updatedBalance)
+            res.status(200).json(updatedTraineeWallet)
         }
         else
         {

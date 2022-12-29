@@ -5,6 +5,8 @@ import CheckoutForm from "./CheckoutForm";
 import TraineeProfileNavBar from "../../components/TraineeProfilNavBar";
 
 function Payment(props) {
+    //const{stripePromise}=props;
+    const stripePublicKey = '<my test public key>';
     const[stripePromise,setStripePromise]=useState(null);
     const[clientSecret,setClientSecret]=useState("");
 
@@ -13,38 +15,35 @@ function Payment(props) {
             const{publishableKey}= await r.json();
             console.log(publishableKey)
             setStripePromise(loadStripe(publishableKey));
-        })
-
-        
-
-
+            
+        })  
 
     },[])
+
+    if (!stripePublicKey) {
+        return null;
+      }
 
     useEffect(()=> {
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
         const traineeId = params.get('TraineeId');
-        fetch(`/create-payment-intent?CourseId=${courseId}&TraineeId=${traineeId}`,{
+        fetch(`/create-payment?CourseId=${courseId}&TraineeId=${traineeId}`,{
             method:"POST",
             body:JSON.stringify({}),
-        }).then(async(r)=>{
-            const{clientSecret}= await r.json();
+        }).then(async(error)=>{
+            const{clientSecret}= await error.json();
 
             setClientSecret(clientSecret);
             
         })
-
-        
-
-
 
     },[])
 
     return (
         <>
         <TraineeProfileNavBar/>
-        <h1>Please Fill In The Following Fields To Pay For The Course</h1>
+        <h4>Enter credit card details</h4>
         {stripePromise && clientSecret &&(
 
         <Elements stripe={stripePromise} options={{clientSecret}}>
