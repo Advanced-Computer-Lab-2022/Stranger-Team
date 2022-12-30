@@ -260,7 +260,7 @@ const fetchSubtitleQuestion = async(req,res) => {
   if(subtitleId){
   const result = await subtitleQuestion.find({SubtitleId:mongoose.Types.ObjectId(subtitleId)}).populate('SubtitleId');
   res.status(200).json(result)
-  console.log(result)
+  //console.log(result)
   }else{
       res.status(400).json({error:"subtitleId is required"})
   }
@@ -275,9 +275,9 @@ const subtitleQuestionAnswer = async(req,res) => {
 
   if(subtitleId){
   const result = await subtitleQuestion.findOne({SubtitleId:mongoose.Types.ObjectId(subtitleId)});
-  console.log(result)
+  //console.log(result)
   const ans =  result.correctAnswer
-  console.log(ans)
+  //console.log(ans)
   if(ans) {
     res.status(200).json(ans)
     //console.log(result)

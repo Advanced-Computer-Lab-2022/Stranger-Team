@@ -794,8 +794,8 @@ app.get("/viewMyRegisteredCourses" , async(req,res) => {
 
 app.get("/corporateViewMyRegisteredCourses" , async(req,res) => {
     
-        const corporateTrainee = req.query.CorporateTraineeId;
-        //const corporateTrainee = req.session.user._id;
+        //const corporateTrainee = req.query.CorporateTraineeId;
+        const corporateTrainee = req.session.user._id;
 
         const q = req.query.q;
   
@@ -1059,7 +1059,7 @@ const TraineeWalletSchema = require("./Models/TraineeWalletScheema");
 const course_price=require('./Models/Course');
 
 
-app.get('/ViewBalance', getWalletBalance);
+//app.get('/ViewBalance', getWalletBalance);
 
 
 // app.post("/api/stripe-payment", (req, res) => {
@@ -1130,106 +1130,291 @@ app.get('/ViewBalance', getWalletBalance);
 
 // });
 
-const env = require("dotenv").config({ path: "./.env" });
+//NOUR
+// const env = require("dotenv").config({ path: "./.env" });
 
-app.use(express.static(process.env.STATIC_DIR));
+// app.use(express.static(process.env.STATIC_DIR));
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2022-08-01",
-});
+// const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
+//   apiVersion: "2022-08-01",
+// });
 
-app.get("/config", (req, res) => {
+// app.get("/config", (req, res) => {
+//   res.send({
+//     publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+//   });
+// });
+
+
+
+       
+        //HANA
+       // const TraineeWalletSchema = require("./Models/TraineeWalletScheema");
+        //const course_price=require('./Models/Course');
+        
+        
+        app.get('/ViewBalance', getWalletBalance);
+        
+        
+        // app.post("/api/stripe-payment", (req, res) => {
+        //   const stripe = require("stripe")(
+        //     "sk_test_51MDnmRA1yEL5EJbENdbcmKmYkqssvZWFhhRFlgGEL4wfhyqQ940KHCYXEq0CbQ12Phm6qGln9DP5bpO8sxPhNI30006fYbIEV7"
+        //   );
+        
+        
+        //   const { email} = req.body;
+        //   const token = req.query.TraineeId;
+        //   const courseId = req.query.CourseId;
+        //   const coursePrice = course_price.findById({_id:courseId},{Price:1,_id:0})
+        //   const traineebalance = TraineeWalletSchema.findById({_id:mongoose.Types.ObjectId(req.query.TraineeId)},{Balance:1,_id:0})
+        //   let alert=require('alert');
+        
+        //   if(coursePrice<traineebalance){
+        
+        //     alert("Amount withdrawn from wallet");
+        //     traineebalance -= coursePrice
+        
+        //   }
+        //   else{
+        
+        //     if(traineebalance !=0){
+        
+        //       alert("Amount withdrawn partially from wallet");
+        //       traineebalance = 0;
+        
+        //       stripe.customers
+        //     .create({
+        //       email: email,
+        //       source: token.id,
+        //       name: token.card.name,
+        //     })
+        //     .then((customer) => {
+        //       return stripe.charges.create({
+        //         // amount: parseFloat(amount) * 100,
+        //         // description: `Payment for USD ${amount}`,
+        //         currency: "USD",
+        //         customer: customer.id,
+        //       });
+        //     })
+        //     .then((charge) => res.status(200).send(charge))
+        //     .catch((err) => console.log(err));
+        //   }
+        //   else{
+        
+        //     stripe.customers
+        //     .create({
+        //       email: email,
+        //       source: token.id,
+        //       name: token.card.name,
+        //     })
+        //     .then((customer) => {
+        //       return stripe.charges.create({
+        //         // amount: parseFloat(amount) * 100,
+        //         // description: `Payment for USD ${amount}`,
+        //         currency: "USD",
+        //         customer: customer.id,
+        //       });
+        //     })
+        //     .then((charge) => res.status(200).send(charge))
+        //     .catch((err) => console.log(err));
+        //   }
+           
+        // } 
+        //   const new_balance = TraineeWalletSchema.findByIdAndUpdate({_id:mongoose.Types.ObjectId(req.query.TraineeId)},{Balance:traineebalance})
+        
+        // });
+        
+        const env = require("dotenv").config({ path: "./.env" });
+        
+        const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
+          apiVersion: "2022-08-01",
+        });
+        app.use(express.static(process.env.STATIC_DIR));
+        
+        
+  app.get("/config", (req, res) => {
   res.send({
     publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
   });
 });
-
-function arrayIsEmpty(array) {
-            //If it's not an array, return FALSE.
-            if (!Array.isArray(array)) {
-                return FALSE;
-            }
-            //If it is an array, check its length property
-            if (array.length == 0) {
-                //Return TRUE if the array is empty
-                return true;
-            }
-            //Otherwise, return FALSE.
-            return false;
-        }
-
-app.post("/create-payment-intent", async (req, res) => {
-
-    const courseId = req.query.CourseId;
-    // const traineeId = req.query.TraineeId;
-    const traineeId = req.session.user._id;
-    var c;
-    var already=[];
-    let a=[];
-    let i;
-    let j;
-    var sub;
-    //const traineeId = req.session.user._id;
-    const currCourse = await course.findById({_id:courseId});
-    const currPrice = parseInt(currCourse.Price);
-    console.log(currPrice);
-
-    //creating Progress
-
-                sub = await Subtitles.find({CourseId:mongoose.Types.ObjectId(courseId)});
-                console.log("SUB ARRAY------->>>>",sub)
-                //check if this corporate has this course or not
-                const cop=await Individual_Trainee.findById({_id:traineeId})
-                const coursesArray =  cop.Registered_Courses;
         
-                console.log("CourseArray",coursesArray)
-                
-                if(coursesArray.length>0){
-                    console.log("dakhalt")
-                for ( i = 0; i < coursesArray.length; i++) {
-                    //Check if this course is already in traineeProgress DB
-                already=await TraineeProgress.find({"Trainee_Id":traineeId,CourseId:mongoose.Types.ObjectId(coursesArray[i])});
-                console.log(arrayIsEmpty(already));
-                //console.log(arrayIsEmpty(already.length));
-                console.log("ASLUN!!!!")
-
-                if(!arrayIsEmpty(already) ){
-                //coursesArray1.push(await course.findById({_id:coursesArray[i]},{_id:1}));
-                console.log("Hi, et3ml abl keda")
-                } 
-                else{  
-                    for ( j = 0; j < (sub.length); j++) {
-                    old= await TraineeProgress.create({"Trainee_Id":traineeId,"SubtitleId":mongoose.Types.ObjectId(sub[j]._id),"CourseId":mongoose.Types.ObjectId(coursesArray[i])});
-                    console.log(" NEW here,Bye")
-                    }  
-                    
-            const bb= await course.findById({_id:courseId},{NumberOfPaid:1})
-            const b=(bb.NumberOfPaid)+1;
-            console.log("Number of people ------->>>>>>>>>>>",bb);
-            const counter=await course.findByIdAndUpdate({_id:courseId},{NumberOfPaid:b}); 
+        function arrayIsEmpty(array) {
+                    //If it's not an array, return FALSE.
+                    if (!Array.isArray(array)) {
+                        return FALSE;
                     }
-            }
+                    //If it is an array, check its length property
+                    if (array.length == 0) {
+                        //Return TRUE if the array is empty
+                        return true;
+                    }
+                    //Otherwise, return FALSE.
+                    return false;
+                }
+        
+        app.post("/create-payment", async (req, res) => {
+        
+            const courseId = req.query.CourseId;
+            //const traineeId = req.query.TraineeId;
+            const traineeId = req.session.user._id;
+            console.log("-------->>>>>>",traineeId);
+            var c;
+            var already=[];
+            let a=[];
+            let i;
+            let j;
+            var sub;
+            //const traineeId = req.session.user._id;
+            const Course = await course.findById({_id:courseId});
+            const Price = parseInt(Course.Price);
+            console.log(Price);
+          try{
+            const paymentIntent = await stripe.paymentIntents.create({
+              amount:Price,
+              automatic_payment_methods:{
+                enabled:true,
+              },
+              currency:"usd",
+            }) 
+            //creating Progress
+        //     sub = await Subtitles.find({CourseId:mongoose.Types.ObjectId(courseId)});
+        //     console.log("SUB ARRAY------->>>>",sub)
+        //     //check if this corporate has this course or not
+        //     const cop=await Individual_Trainee.findById({_id:traineeId})
+        //     const coursesArray =  cop.Registered_Courses;
+    
+        //     console.log("CourseArray",coursesArray)
+            
+        //     if(coursesArray.length>0){
+        //         console.log("dakhalt")
+        //     for ( i = 0; i < coursesArray.length; i++) {
+        //         //Check if this course is already in traineeProgress DB
+        //     already=await TraineeProgress.find({"Trainee_Id":traineeId,CourseId:mongoose.Types.ObjectId(coursesArray[i])});
+        //     console.log(arrayIsEmpty(already));
+        //     //console.log(arrayIsEmpty(already.length));
+        //     console.log("ASLUN!!!!")
 
-            }
+        //     if(!arrayIsEmpty(already) ){
+        //     //coursesArray1.push(await course.findById({_id:coursesArray[i]},{_id:1}));
+        //     console.log("Hi, et3ml abl keda")
+        //     } 
+        //     else{  
+        //         for ( j = 0; j < (sub.length); j++) {
+        //         old= await TraineeProgress.create({"Trainee_Id":traineeId,"SubtitleId":mongoose.Types.ObjectId(sub[j]._id),"CourseId":mongoose.Types.ObjectId(coursesArray[i])});
+        //         console.log(" NEW here,Bye")
+        //         }  
+        // const bb= await course.findById({_id:courseId},{NumberOfPaid:1})
+        // const b=(bb.NumberOfPaid)+1;
+        // console.log("Number of people ------->>>>>>>>>>>",bb);
+        // const counter=await course.findByIdAndUpdate({_id:courseId},{NumberOfPaid:b}); 
+        //         }
+        // }
+        // }
+
+            res.send({clientSecret:paymentIntent.client_secret});
+          }
+          catch(error){
+            return res.status(400).send({
+             error:error.message
+            })
+          }
+        
+        });
+
+
+
+// function arrayIsEmpty(array) {
+//             //If it's not an array, return FALSE.
+//             if (!Array.isArray(array)) {
+//                 return FALSE;
+//             }
+//             //If it is an array, check its length property
+//             if (array.length == 0) {
+//                 //Return TRUE if the array is empty
+//                 return true;
+//             }
+//             //Otherwise, return FALSE.
+//             return false;
+//         }
+
+
+
+
+
+
+ //NOUR       
+// app.post("/create-payment-intent", async (req, res) => {
+
+//     const courseId = req.query.CourseId;
+//     // const traineeId = req.query.TraineeId;
+//     const traineeId = req.session.user._id;
+//     var c;
+//     var already=[];
+//     let a=[];
+//     let i;
+//     let j;
+//     var sub;
+//     //const traineeId = req.session.user._id;
+//     const currCourse = await course.findById({_id:courseId});
+//     const currPrice = parseInt(currCourse.Price);
+//     console.log(currPrice);
+
+//     //creating Progress
+
+//                 sub = await Subtitles.find({CourseId:mongoose.Types.ObjectId(courseId)});
+//                 console.log("SUB ARRAY------->>>>",sub)
+//                 //check if this corporate has this course or not
+//                 const cop=await Individual_Trainee.findById({_id:traineeId})
+//                 const coursesArray =  cop.Registered_Courses;
+        
+//                 console.log("CourseArray",coursesArray)
+                
+//                 if(coursesArray.length>0){
+//                     console.log("dakhalt")
+//                 for ( i = 0; i < coursesArray.length; i++) {
+//                     //Check if this course is already in traineeProgress DB
+//                 already=await TraineeProgress.find({"Trainee_Id":traineeId,CourseId:mongoose.Types.ObjectId(coursesArray[i])});
+//                 console.log(arrayIsEmpty(already));
+//                 //console.log(arrayIsEmpty(already.length));
+//                 console.log("ASLUN!!!!")
+
+//                 if(!arrayIsEmpty(already) ){
+//                 //coursesArray1.push(await course.findById({_id:coursesArray[i]},{_id:1}));
+//                 console.log("Hi, et3ml abl keda")
+//                 } 
+//                 else{  
+//                     for ( j = 0; j < (sub.length); j++) {
+//                     old= await TraineeProgress.create({"Trainee_Id":traineeId,"SubtitleId":mongoose.Types.ObjectId(sub[j]._id),"CourseId":mongoose.Types.ObjectId(coursesArray[i])});
+//                     console.log(" NEW here,Bye")
+//                     }  
+                    
+//             const bb= await course.findById({_id:courseId},{NumberOfPaid:1})
+//             const b=(bb.NumberOfPaid)+1;
+//             console.log("Number of people ------->>>>>>>>>>>",bb);
+//             const counter=await course.findByIdAndUpdate({_id:courseId},{NumberOfPaid:b}); 
+//                     }
+//             }
+
+//             }
     
 
-  try{
+//   try{
     
-    const paymentIntent = await stripe.paymentIntents.create({
-      currency:"usd",
-      amount:currPrice,
-      automatic_payment_methods:{
-        enabled:true,
-      },
-    })
+//     const paymentIntent = await stripe.paymentIntents.create({
+//       currency:"usd",
+//       amount:currPrice,
+//       automatic_payment_methods:{
+//         enabled:true,
+//       },
+//     })
     
-    res.send({clientSecret:paymentIntent.client_secret});
+//     res.send({clientSecret:paymentIntent.client_secret});
     
-  }
-  catch(e){
-    return res.status(400).send({
-      error:{message:e.message,}
-    })
-  }
+//   }
+//   catch(e){
+//     return res.status(400).send({
+//       error:{message:e.message,}
+//     })
+//   }
 
-});
+// });

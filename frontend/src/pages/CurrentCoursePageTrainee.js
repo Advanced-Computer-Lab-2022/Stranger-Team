@@ -21,7 +21,7 @@
     import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
     import { Certificate } from "../components/Certificate";
 
-
+    var p;
     const CurrentCoursePageTrainee = () => {
     const [course, setCourse] = useState(null);
     const[error,setError] = useState('');
@@ -47,10 +47,10 @@
         if (response.ok) {
             setCourse(json)
         }
+        p=course[0].Price;
 
-
+        console.log("-------------------------->>>>>>>>>>PRICEEE",course[0].Price)
         }
-
 
         fetchCourse()
     })
@@ -194,7 +194,9 @@
                     <button  onClick={routeChange}>Report a problem</button>
 
                     {/* {!button &&  <button  onClick={checkIfRefundEligible}>Request A Refund</button>} */}
+                    {p==0 ? <div></div> :
                     <button  onClick={checkIfRefundEligible}>Request A Refund</button>
+    }
                     {error && <div className="error">{error}</div>}
                     
                     

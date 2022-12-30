@@ -1,3 +1,5 @@
+//REMOVED ID OF TRAINEE FROM URL
+
 import { useState,useEffect } from "react";
 import React from 'react';
 import { Certificate } from "./Certificate";
@@ -12,9 +14,10 @@ const fetchProgress = async () => {
         const params = new URLSearchParams(window.location.search);
        // const subtitleId = params.get('SubtitleId');
         const courseId = params.get('CourseId');
-        const corpId=params.get('CorporateTraineeId')
+        //const corpId=params.get('CorporateTraineeId')
        //console.log(subtitleId); 
-        const response = await fetch(`/getSubtitlesStatus/?CourseId=${courseId}&TraineeId=${corpId}`)
+       //&TraineeId=${corpId}
+        const response = await fetch(`/getSubtitlesStatus/?CourseId=${courseId}`)
         const json = await response.json()
         if (response.ok) {
         setProgress(json)    

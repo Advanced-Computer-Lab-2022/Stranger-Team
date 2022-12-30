@@ -1,3 +1,4 @@
+//REMOVED IDs' ====>>>>>>>>>>DONE
 import { useEffect, useState } from "react"
 import React from 'react';
 import { useNavigate,useLocation  } from "react-router-dom";
@@ -16,13 +17,15 @@ const generatePDF = () => {
 const CTraineeViewWithNotes = () => {
     const params = new URLSearchParams(window.location.search);  
     const [Notes, setNotes] = useState([])
-    const TraineeId = params.get('CorporateTraineeId');
+    //const TraineeId = params.get('CorporateTraineeId');
     const SubtitleId = params.get('SubtitleId');
    // console.log("Trainee ID :---------------------------------->>>>>>>>>>>>>>>>>>>>>>",TraineeId)
 
     useEffect(() => {
     const fetchNotes = async () => {
-    const response = await fetch(`/fetchCorporateTraineeNotes/?TraineeId=${TraineeId}&SubtitleId=${SubtitleId}`)
+
+        //?TraineeId=${TraineeId}
+    const response = await fetch(`/fetchCorporateTraineeNotes/?SubtitleId=${SubtitleId}`)
     const notes = await response.json();
     //console.log("Trainee ID :---------------------------------->>>>>>>>>>>>>>>>>>>>>>",TraineeId)
     console.log(notes);
@@ -43,7 +46,8 @@ const CTraineeViewWithNotes = () => {
 });
     let navigate = useNavigate();
     const routeChange = () =>{ 
-    let path = `/fetchCorporateTraineeAddNotes/?TraineeId=${TraineeId}`; 
+        //?TraineeId=${TraineeId}
+    let path = `/fetchCorporateTraineeAddNotes/`; 
     navigate(path);
 }
 return (

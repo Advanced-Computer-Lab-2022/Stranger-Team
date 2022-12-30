@@ -1,4 +1,3 @@
-//sessions done
 import React, { useState } from "react";
 import axios from "axios";
 //import RichTextEditor from "./Components/RichTextEditor";
@@ -43,10 +42,10 @@ const IndTraineeNotes = () => {
         <div>
         <AddNotes initialValue="" getValue={getValue}
         // config={config} 
-        />
+         />
           <br />
         </div>
-      
+       
       </div>
 
     </div>

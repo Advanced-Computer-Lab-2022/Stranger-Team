@@ -1,3 +1,5 @@
+//REMOVED ID OF TRAINEE FROM URL
+
 import React, { useRef,useState,useMemo } from "react";
 import JoditEditor from "jodit-react";
 import { Jodit } from "jodit-react";
@@ -57,10 +59,11 @@ const AddNotesCorporate = ({ placeholder}) => {
     console.log("on submit----------------------->>>>>>>>>>>>>>>>>>>",Notes)
     const params = new URLSearchParams(window.location.search);
     const SubtitleId = params.get('SubtitleId');
-    const TraineeId = params.get('CorporateTraineeId');
-    console.log(TraineeId);
+    //const TraineeId = params.get('CorporateTraineeId');
+    //console.log(TraineeId);
      var data={Notes}
-     const response = await fetch(`/fetchCorporateTraineeAddNotes?TraineeId=${TraineeId}&SubtitleId=${SubtitleId}`, {
+     //TraineeId=${TraineeId}&
+     const response = await fetch(`/fetchCorporateTraineeAddNotes?SubtitleId=${SubtitleId}`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

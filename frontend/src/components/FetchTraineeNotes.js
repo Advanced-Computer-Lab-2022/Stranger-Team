@@ -16,12 +16,14 @@ const generatePDF = () => {
 const TraineeViewWithNotes = () => {
     const params = new URLSearchParams(window.location.search);  
     const [Notes, setNotes] = useState([])
-    const TraineeId = params.get('TraineeId');
+    //const TraineeId = params.get('TraineeId');
     const SubtitleId = params.get('SubtitleId');
 
     useEffect(() => {
     const fetchNotes = async () => {
-    const response = await fetch(`/fetchCorporateTraineeNotes/?TraineeId=${TraineeId}&SubtitleId=${SubtitleId}`)
+
+//?TraineeId=${TraineeId}&
+    const response = await fetch(`/fetchCorporateTraineeNotes/?SubtitleId=${SubtitleId}`)
     const notes = await response.json();
     console.log(notes);
    // console.log(notes[1].Notes);
@@ -41,7 +43,8 @@ const TraineeViewWithNotes = () => {
 });
     let navigate = useNavigate();
     const routeChange = () =>{ 
-    let path = `/fetchCorporateTraineeAddNotes/?TraineeId=${TraineeId}`; 
+        //?TraineeId=${TraineeId}
+    let path = `/fetchCorporateTraineeAddNotes`; 
     navigate(path);
 }
 return (

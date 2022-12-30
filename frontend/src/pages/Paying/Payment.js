@@ -1,11 +1,13 @@
-//sessions done
 import { useEffect, useState } from "react";
 import{loadStripe} from "@stripe/stripe-js"
 import {Elements} from "@stripe/react-stripe-js"
 import CheckoutForm from "./CheckoutForm";
 import TraineeProfileNavBar from "../../components/TraineeProfilNavBar";
 
+//HANA
 function Payment(props) {
+    //const{stripePromise}=props;
+    const stripePublicKey = '<my test public key>';
     const[stripePromise,setStripePromise]=useState(null);
     const[clientSecret,setClientSecret]=useState("");
 
@@ -14,38 +16,37 @@ function Payment(props) {
             const{publishableKey}= await r.json();
             console.log(publishableKey)
             setStripePromise(loadStripe(publishableKey));
-        })
-
-        
-
-
+            
+        })  
 
     },[])
+
+    
 
     useEffect(()=> {
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
         //const traineeId = params.get('TraineeId');
-        fetch(`/create-payment-intent?CourseId=${courseId}`,{
+
+        //&TraineeId=${traineeId}
+        fetch(`/create-payment/?CourseId=${courseId}`,{
             method:"POST",
             body:JSON.stringify({}),
-        }).then(async(r)=>{
-            const{clientSecret}= await r.json();
-
+        }).then(async(error)=>{
+            const{clientSecret}= await error.json();
             setClientSecret(clientSecret);
             
         })
-
-        
-
-
-
     },[])
+
+    // if (!stripePublicKey) {
+    //     return null;
+    //   }
 
     return (
         <>
         <TraineeProfileNavBar/>
-        <h1>Please Fill In The Following Fields To Pay For The Course</h1>
+        <h4>Enter credit card details</h4>
         {stripePromise && clientSecret &&(
 
         <Elements stripe={stripePromise} options={{clientSecret}}>
@@ -53,7 +54,6 @@ function Payment(props) {
         </Elements>
 
         )}
-        
         
         </>
     );

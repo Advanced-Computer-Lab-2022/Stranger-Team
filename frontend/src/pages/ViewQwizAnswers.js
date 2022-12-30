@@ -1,3 +1,4 @@
+//REMOVED IDs'===>>>>DONE
 
 //ViewQswizAnswers
 import { useEffect, useState } from "react"
@@ -38,8 +39,9 @@ useEffect(() => {
     const fetchStatus=async()=>{
         const params = new URLSearchParams(window.location.search);
         const courseId = params.get('CourseId');
-        const TraineeId=params.get('CorporateTraineeId')
-        const response = await fetch(`/checkCourseFinished/?CourseId=${courseId}&TraineeId=${TraineeId}`)
+       // const TraineeId=params.get('CorporateTraineeId')
+       //&TraineeId=${TraineeId}
+        const response = await fetch(`/checkCourseFinished/?CourseId=${courseId}`)
         const json = await response.json()
        // console.log("----------------->>>>>>>>>>>>>>>>>>>",json)
         if(response.ok){

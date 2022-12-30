@@ -36,8 +36,8 @@ const flag = flagResult(totalPoints, earnPoints)
 
     const params = new URLSearchParams(window.location.search);
     const courseId = params.get('CourseId');
-    const traineeId = params.get('TraineeId');
-    const ctrainee = params.get('CorporateTraineeId');
+    //const traineeId = params.get('TraineeId');
+    //const ctrainee = params.get('CorporateTraineeId');
     console.log(courseId); 
 
     const checkTrainee = async() => {
@@ -68,10 +68,10 @@ const flag = flagResult(totalPoints, earnPoints)
         let CTraineeId=params.get('CorporateTraineeId');
 
          if(CTraineeId==null){
-          response = await fetch(`/updateFinished/?CourseId=${courseId}&TraineeId=${TraineeId}`)
+          response = await fetch(`/updateFinished/?CourseId=${courseId}`)
         }
         else{   
-         response = await fetch(`/updateFinished/?CourseId=${courseId}&TraineeId=${CTraineeId}`)
+         response = await fetch(`/updateFinished/?CourseId=${courseId}`)
         }
         const json = await response.json()
         if(response.ok){
@@ -140,9 +140,9 @@ const flag = flagResult(totalPoints, earnPoints)
             </div>
         {!corpTrainee && <Link className='btn' to={`/CurrentCoursePageTrainee/?CourseId=${courseId}`}>Back To Course</Link>}
         {corpTrainee && <Link className='btn' to={`/CurrentCoursePageCorporateTrainee/?CourseId=${courseId}`}>Back To Course</Link>}
-        {!corpTrainee && <Link className='btn' to={`/Traineeviewqwizanswers/?CourseId=${courseId}&TraineeId=${traineeId}`}onClick={update}>Done</Link>}
-        {/* {corpTrainee && <Link className='btn' to={`/viewqwizanswers/?CourseId=${courseId}&CorporateTraineeId=${ctrainee}`} onClick={update}>Done </Link>} */}
-        {corpTrainee && <button onClick={update}>Done</button>}
+        {!corpTrainee && <Link className='btn' to={`/Traineeviewqwizanswers/?CourseId=${courseId}`}onClick={update}>Done</Link>}
+        {corpTrainee && <Link className='btn' to={`/viewqwizanswers/?CourseId=${courseId}`} onClick={update}>Done </Link>}
+        {/* {corpTrainee && <button onClick={update}>Done</button>} */}
 
 
 

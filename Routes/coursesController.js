@@ -2,6 +2,8 @@
 const mongoose = require('mongoose');
 const express = require("express");
 const projection = require('projection');
+let nodemailer = require('nodemailer');
+const path = require('path');
 
 const course = require('../Models/Course');
 const instructor = require('../Models/Instructor');
@@ -999,45 +1001,120 @@ const FilteredCourses = async (req,res) => {
                 }
                 }; 
 
-            const UpdateProgressOfSubtitlie = async (req,res) => { 
-                try{
-                   // console.log(req.query.CourseId);
-                    const flag=true;
-                    let data;
-                    let updateP;
-                    let updated;
-                    let old
-                    const traineeId = req.session.user._id;
-                    //get number of subtitles of a course
-                    const NumberofSubtitlies=await subtitles.find({ "CourseId":mongoose.Types.ObjectId(req.query.CourseId)}).count();
-                    const n =1/NumberofSubtitlies;
-                    console.log("# sub",n);
-                    //get progress of that course
-                    var checkStatus=await CorporateTraineeProgress.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:traineeId,SubtitleId:mongoose.Types.ObjectId(req.query.SubtitleId)},{ProgressStatus:1})
-                    old=await CorporateTraineeProgress.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:traineeId,SubtitleId:mongoose.Types.ObjectId(req.query.SubtitleId)},{Progress:1,ProgressStatus:1})
-                    console.log("HIIIIIIIIIII",checkStatus[0].ProgressStatus);
-                    if(checkStatus[0].ProgressStatus==false){
-                    data=await CorporateTraineeProgress.updateOne({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:traineeId,SubtitleId:mongoose.Types.ObjectId(req.query.SubtitleId)},{$set:{ProgressStatus:flag}})
-                    const p= await CorporateTraineeProgress.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:traineeId,SubtitleId:mongoose.Types.ObjectId(req.query.SubtitleId)},{Progress:1})
-                    const pp=p[0].Progress;
-                    console.log("pp",pp)
-                    const ppp=pp+(n*100);
-                    console.log("ppp",ppp)
+                const UpdateProgressOfSubtitlie = async (req,res) => { 
+                    try{
+                       // console.log(req.query.CourseId);
+                       let user=req.session.user._id;
+                        const flag=true;
+                        var data;
+                        const hi=0;
+                        var updatePPP;
+                        let updated;
+                        let old
+                        //get number of subtitles of a course
+                        const NumberofSubtitlies=await subtitles.find({ "CourseId":mongoose.Types.ObjectId(req.query.CourseId)}).count();
+                        const n =1/NumberofSubtitlies;
+                        console.log("# sub",n);
+                        const coursename=await course.find({"_id":req.query.CourseId},{Title:1})
+                        console.log(coursename);
+                        const cName=coursename[0].Title;
+                        console.log(cName)
+                        //console.log(coursename.Title.toJSON());
+    
+                        //get progress of that course
+                        var checkStatus=await CorporateTraineeProgress.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.session.user._id,SubtitleId:mongoose.Types.ObjectId(req.query.SubtitleId)},{ProgressStatus:1})
+                        old=await CorporateTraineeProgress.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.session.user._id,SubtitleId:mongoose.Types.ObjectId(req.query.SubtitleId)},{Progress:1,ProgressStatus:1})
+                        console.log("HIIIIIIIIIII",checkStatus[0].ProgressStatus);
+                        if(checkStatus[0].ProgressStatus==false){
+                        data=await CorporateTraineeProgress.updateOne({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.session.user._id,SubtitleId:mongoose.Types.ObjectId(req.query.SubtitleId)},{$set:{ProgressStatus:flag}})
+                        const p= await CorporateTraineeProgress.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.session.user._id,SubtitleId:mongoose.Types.ObjectId(req.query.SubtitleId)},{Progress:1})
+                        const pp=p[0].Progress;
+                        console.log("pp",pp)
+                        const ppp=pp+(n*100);
+    
+                        //Get the khara mail---->>>>>>>>>>>>>
+    
+                      
+                        //SENDING MAIL-------------->>>>>>>>>>
+                      //  const pathtoCertificate=path.resolve("Routes/","cer.pdf")
+                       const pathtoCertificate=path.resolve("PDF");
+                        const transporter=nodemailer.createTransport({
+                            service:'gmail',
+                            auth:{
+                                user:"basmala.mahmoud498@gmail.com",
+                                pass:"pkxxkdviyorszcfz"
+                            }
+                        });
+                        const mailOptions={
+                            from:"basmala.mahmoud498@gmail.com",
+                            to:req.session.user.Email,
+                            subject:  cName + ' COMPLETED!!!!!!' ,
+                            text: 'CONGRATULATIONS '+ req.session.user.First_Name + '!!' + ' You Have completed the' + cName + ' course'  +' Please find the attached PDF for the Certificate.',
+                            attachments: [{
+                                 filename: 'certificate.pdf',
+                                 path: 'PDF/certificate.pdf',
+                                 
+                                 //path:pathtoCertificate,
+                                 contentType: 'application/pdf'
+                                    }],
+                        }
+                     
+                        console.log("ppp",ppp)
+    
+                        updatePPP=await CorporateTraineeProgress.updateMany({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.session.user._id},{$set:{Progress:ppp}})
+                        updated=await CorporateTraineeProgress.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.session.user._id},{Progress:1})
 
-                    updateP=await CorporateTraineeProgress.updateMany({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:traineeId},{$set:{Progress:ppp}})
-                    updated=await CorporateTraineeProgress.find({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:traineeId},{Progress:1})
-                    res.status(200).json(updated);
-                   // console.log(updated);
+                        if (ppp === 100)
+                        {
+                             transporter.sendMail(mailOptions, err => {
+                                if (err){
+                                console.log(err)
+                                    
+                                } else{
+                                    console.log("BYEEEEEEEEEEE")
+                                }
+                            });
+    
+    
+                            //will send an email with the certificate
+                            // transporter.sendMail({
+                            //     service: 'Gmail', // your service name
+                            //     secure: true, // true for 465, false for other ports
+                            //     auth: {
+                            //         user: "basmala.mahmoud498@gmail.com",
+                            //         pass: "pkxx kdvi yors zc{z"
+                            //     },
+                            //     //DON'T FORGET TO PUT THE MAIL
+                            //     to: "",
+                            //     subject: 'CONGRATULATIONS!!!!.You have passed this Course',
+                            //     text: 'Please find the attached PDF',
+                            //     attachments: [{
+                            //       filename: 'cer.pdf',
+                            //       path: '/Users/basmalamustafa/Documents/Stranger-Team/Routes/cer.pdf',
+                            //       contentType: 'application/pdf'
+                            //     }],
+                            //     function(err, info) {
+                            //       if (err) {
+                            //         console.error(err);
+                            //       } else {
+                            //         console.log(info);
+                            //       }
+                            //     }
+                            //   });
+                        }
+                        res.status(200).json(updated);
+                       // console.log(updated);
+                        }
+                        else{
+                           // console.log(old[0])
+                            res.status(200).json(old[0]);
+                        }
+                      
                     }
-                    else{
-                       // console.log(old[0])
-                        res.status(200).json(old[0]);
+                    catch(error){
+                        res.status(400).json({error:error.message});
                     }
-                }
-                catch(error){
-                    res.status(400).json({error:error.message});
-                }
-                }; 
+                    }; 
 
 const isCourseFree= async (req,res) => {
             const courseId = req.query.CourseId;
@@ -1086,9 +1163,9 @@ const isCourseFree= async (req,res) => {
                 let updateP;
                 const flag=true;
                 try{
-                   updateP=await CorporateTraineeProgress.updateMany({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.query.TraineeId},{"$set":{Finished: true}} );
+                   updateP=await CorporateTraineeProgress.updateMany({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.session.user._id},{"$set":{Finished: true}} );
                  //const finished=await CorporateTraineeProgress.updateMany({CourseId:mongoose.Types.ObjectId(req.query.CourseId),Trainee_Id:req.query.TraineeId},{$set:{Finished:ffff}})
-                const finishedU=await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Trainee_Id":req.query.TraineeId},{Finished:1,_id:0})
+                const finishedU=await CorporateTraineeProgress.find({"CourseId":mongoose.Types.ObjectId(req.query.CourseId),"Trainee_Id":req.session.user._id},{Finished:1,_id:0})
                     const f=finishedU[0].toJSON();
                     const ff=f.Finished
                     console.log("----------------->>>>>>>>>>>",ff)

@@ -65,9 +65,10 @@ useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const subtitleId = params.get('SubtitleId');
         const courseId = params.get('CourseId');
-        const Trainee_Id = params.get('CorporateTraineeId');
+        //const Trainee_Id = params.get('CorporateTraineeId');
         console.log(subtitleId); 
-        const response = await fetch(`/getSubtitlesStatus/?CourseId=${courseId}&TraineeId=${Trainee_Id}&SubtitleId=${subtitleId}`)
+        //&TraineeId=${Trainee_Id}
+        const response = await fetch(`/getSubtitlesStatus/?CourseId=${courseId}&SubtitleId=${subtitleId}`)
         const json = await response.json()
         console.log( json)
         if (response.ok) {
@@ -86,10 +87,10 @@ const updateProgress = async () => {
     const params = new URLSearchParams(window.location.search);
     const subtitleId = params.get('SubtitleId');
     const courseId = params.get('CourseId');
-    const Trainee_Id = params.get('CorporateTraineeId');
-
+    //const Trainee_Id = params.get('CorporateTraineeId');
+//&TraineeId=${Trainee_Id}
     console.log(subtitleId); 
-    const response = await fetch(`/updatetSubtitlesStatus/?CourseId=${courseId}&TraineeId=${Trainee_Id}&SubtitleId=${subtitleId}`)
+    const response = await fetch(`/updatetSubtitlesStatus/?CourseId=${courseId}&SubtitleId=${subtitleId}`)
     const json = await response.json()
     console.log( json)
     if (response.ok) {

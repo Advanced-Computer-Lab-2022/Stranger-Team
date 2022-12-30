@@ -1,3 +1,5 @@
+//REMOVED IDs'=====>>>>>DONE
+
 import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate } from "react-router-dom";
@@ -22,11 +24,11 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
         const fetchCourses = async () => {
         
         const params = new URLSearchParams(window.location.search);
-        const corporateTraineeId = params.get('CorporateTraineeId');
-        console.log(corporateTraineeId); 
-        
+        //const corporateTraineeId = params.get('CorporateTraineeId');
+        //console.log(corporateTraineeId); 
+        //CorporateTraineeId=${corporateTraineeId}&
 
-        const response = await fetch(`/corporateViewMyRegisteredCourses/?CorporateTraineeId=${corporateTraineeId}&q=${searchQuery}`)
+        const response = await fetch(`/corporateViewMyRegisteredCourses/?q=${searchQuery}`)
         
         const json = await response.json()
         console.log(json)
@@ -59,8 +61,9 @@ import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfile
                 }}
                 onClick={() =>{
                 const params = new URLSearchParams(window.location.search);
-                const corporateTraineeId = params.get('CorporateTraineeId');
-                window.location.href=`/CurrentCoursePageCorporateTrainee?CourseId=${course._id}&CorporateTraineeId=${corporateTraineeId}`} }
+                //const corporateTraineeId = params.get('CorporateTraineeId');
+                //&CorporateTraineeId=${corporateTraineeId}
+                window.location.href=`/CurrentCoursePageCorporateTrainee?CourseId=${course._id}`} }
                 key={course._id}>
             <CourseDetails course={course} key={course.id} />
             {/* <PreviewCourseVideoPageDetails course={course} key={course.id} /> */}

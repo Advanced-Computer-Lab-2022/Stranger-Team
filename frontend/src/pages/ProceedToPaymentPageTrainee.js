@@ -1,10 +1,9 @@
-    //sessions done
-    import { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
-    import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     
-
+//HANA
     const ProceedToPaymentPageTrainee = ({}) => {
 
     const[wallet,setWallet]=useState('');
@@ -15,12 +14,8 @@
         const params = new URLSearchParams(window.location.search);
         //const traineeId = params.get('TraineeId');
         
-        
+        //?TraineeId=${traineeId}
         const response = await fetch(`/viewMyWalletBalance/`)
-
-        
-        
-        
         const json = await response.json()
         setWallet(json);
         
@@ -33,34 +28,28 @@
         //const traineeId = params.get('TraineeId');
         const courseId = params.get('CourseId');
         
-        // const response = await fetch(`/payByWalletBalance/?TraineeId=${traineeId}&CourseId=${courseId}`)
-        const response = await fetch(`/payByWalletBalance/?CourseId=${courseId}`)
-
-        
-        
-        
+        //?TraineeId=${traineeId}&CourseId=${courseId}
+        const response = await fetch(`/payByWalletBalance/`)
         const json = await response.json()
         if(response.ok)
         {
             setWallet(json);
-            // window.location.href=`/CurrentCoursePageTrainee/?CourseId=${courseId}&TraineeId=${traineeId}`;
+            //&TraineeId=${traineeId}
             window.location.href=`/CurrentCoursePageTrainee/?CourseId=${courseId}`;
         }
         else
         {
             setError(json.error)
         }
-        
-        
         }
-
         let navigate = useNavigate();
 
         const routeChange = () =>{ 
         const params = new URLSearchParams(window.location.search);
         //const traineeId = params.get('TraineeId');
         const courseId = params.get('CourseId');
-        // let path = `/Payment/?TraineeId=${traineeId}&CourseId=${courseId}`; 
+
+        //TraineeId=${traineeId}&
         let path = `/Payment/?CourseId=${courseId}`; 
         navigate(path);
     }
@@ -72,15 +61,15 @@
         <div className="course-details">
         <TraineeProfileNavBar/>
 
-        <h4>Please Choose How You Would Like To Proceed For Your Payement: </h4>
+        <h4>Choose Payment Method </h4>
 
         <div className="course-details" onClick={payForCourse}>
-            <p><strong>By Wallet Balance</strong></p> 
-            <p><strong>Balance: </strong>{wallet}</p> 
+            <p><strong>Wallet Balance</strong></p> 
+            <p><strong>Balance </strong>{wallet}</p> 
         </div>
 
         <div className="course-details" onClick={routeChange}>
-            <p><strong>By Visa </strong></p> 
+            <p><strong>Credit Card</strong></p> 
         </div>
 
         {error && <div className="error">{error}</div>}

@@ -27,11 +27,28 @@
     }
 }
 
+// const viewMyWalletBalance = async(req,res) => {
+    
+//     const traineeId = req.session.user._id;
+//     //const traineeId = req.query.TraineeId;
+
+//     try{
+//     const result = await Individual_Trainee.findById({_id:traineeId});
+//     const wallet = result.Wallet;
+//     console.log(wallet)
+//     res.status(200).json(wallet)
+//     }
+//     catch(error){
+//         res.status(400).json({error:error.message});
+//     }
+// }
+//indvidualtraineecontroller
+
+//HANA
 const viewMyWalletBalance = async(req,res) => {
     
     const traineeId = req.session.user._id;
-    //const traineeId = req.query.TraineeId;
-
+   // const traineeId = req.query.TraineeId;
     try{
     const result = await Individual_Trainee.findById({_id:traineeId});
     const wallet = result.Wallet;
@@ -39,7 +56,7 @@ const viewMyWalletBalance = async(req,res) => {
     res.status(200).json(wallet)
     }
     catch(error){
-        res.status(400).json({error:error.message});
+        res.status(400).json({error:"Wallet not found"});
     }
 }
 
@@ -62,7 +79,7 @@ function arrayIsEmpty(array) {
 const payByWalletBalance = async(req,res) => {
     
     const traineeId = req.session.user._id;
-    // const traineeId = req.query.TraineeId;
+   // const traineeId = req.query.TraineeId;
     const courseId = req.query.CourseId;
     var c;
     var already=[];
@@ -70,22 +87,21 @@ const payByWalletBalance = async(req,res) => {
     let i;
     let j;
     var sub;
-
     try{
     if(traineeId)
     {
-        const currCourse = await course.findById({_id:courseId});
-        const currCoursePrice = currCourse.Price;
-        const currTrainee = await Individual_Trainee.findById({_id:traineeId});
-        const balance = currTrainee.Wallet;
-        if(balance>=currCoursePrice)
+        const Trainee = await Individual_Trainee.findById({_id:traineeId});
+        const traineeWallet = Trainee.Wallet;
+        const Course = await course.findById({_id:courseId});
+        const CoursePrice = Course.Price;
+       
+        if(traineeWallet>=CoursePrice)
         {
-            const newBalance = balance - currCoursePrice;
-            const newArray = currTrainee.Registered_Courses;
-            newArray.push(courseId)
-            console.log("newArray"+newArray)
+            const newtraineeWallet = traineeWallet -CoursePrice;
+            const newCourses = Trainee.Registered_Courses;
+            newCourses.push(courseId)
 
-            const updatedBalance = await Individual_Trainee.findByIdAndUpdate({_id:traineeId},{Registered_Courses:newArray,Wallet:newBalance},{new:true});
+            const updatedTraineeWallet = await Individual_Trainee.findByIdAndUpdate({_id:traineeId},{Registered_Courses:newCourses,Wallet:newtraineeWallet},{new:true});
 
             //creating Progress
 
@@ -125,7 +141,7 @@ const payByWalletBalance = async(req,res) => {
 
             }
 
-            res.status(200).json(updatedBalance)
+            res.status(200).json(updatedTraineeWallet)
         }
         else
         {
@@ -143,6 +159,108 @@ const payByWalletBalance = async(req,res) => {
         res.status(400).json({error:error.message});
     }
 }
+////////////////////////////////////////////////////////////////////
+
+// function arrayIsEmpty(array) {
+//             //If it's not an array, return FALSE.
+//             if (!Array.isArray(array)) {
+//                 return FALSE;
+//             }
+//             //If it is an array, check its length property
+//             if (array.length == 0) {
+//                 //Return TRUE if the array is empty
+//                 return true;
+//             }
+//             //Otherwise, return FALSE.
+//             return false;
+//         }
+
+
+
+// const payByWalletBalance = async(req,res) => {
+    
+//     const traineeId = req.session.user._id;
+//     // const traineeId = req.query.TraineeId;
+//     const courseId = req.query.CourseId;
+//     var c;
+//     var already=[];
+//     let a=[];
+//     let i;
+//     let j;
+//     var sub;
+
+//     try{
+//     if(traineeId)
+//     {
+//         const currCourse = await course.findById({_id:courseId});
+//         const currCoursePrice = currCourse.Price;
+//         const currTrainee = await Individual_Trainee.findById({_id:traineeId});
+//         const balance = currTrainee.Wallet;
+//         if(balance>=currCoursePrice)
+//         {
+//             const newBalance = balance - currCoursePrice;
+//             const newArray = currTrainee.Registered_Courses;
+//             newArray.push(courseId)
+//             console.log("newArray"+newArray)
+
+//             const updatedBalance = await Individual_Trainee.findByIdAndUpdate({_id:traineeId},{Registered_Courses:newArray,Wallet:newBalance},{new:true});
+
+//             //creating Progress
+
+//                 sub = await Subtitles.find({CourseId:mongoose.Types.ObjectId(courseId)});
+//                 console.log("SUB ARRAY------->>>>",sub)
+//                 //check if this corporate has this course or not
+//                 const cop=await Individual_Trainee.findById({_id:traineeId})
+//                 const coursesArray =  cop.Registered_Courses;
+        
+//                 console.log("CourseArray",coursesArray)
+                
+//                 if(coursesArray.length>0){
+//                     console.log("dakhalt")
+//                 for ( i = 0; i < coursesArray.length; i++) {
+//                     //Check if this course is already in traineeProgress DB
+//                 already=await TraineeProgress.find({"Trainee_Id":traineeId,CourseId:mongoose.Types.ObjectId(coursesArray[i])});
+//                 console.log(arrayIsEmpty(already));
+//                 //console.log(arrayIsEmpty(already.length));
+//                 console.log("ASLUN!!!!")
+
+//                 if(!arrayIsEmpty(already) ){
+//                 //coursesArray1.push(await course.findById({_id:coursesArray[i]},{_id:1}));
+//                 console.log("Hi, et3ml abl keda")
+//                 } 
+//                 else{  
+//                     for ( j = 0; j < (sub.length); j++) {
+//                     old= await TraineeProgress.create({"Trainee_Id":traineeId,"SubtitleId":mongoose.Types.ObjectId(sub[j]._id),"CourseId":mongoose.Types.ObjectId(coursesArray[i])});
+//                     console.log(" NEW here,Bye")
+//                     }  
+                    
+//             const bb= await course.findById({_id:courseId},{NumberOfPaid:1})
+//             const b=(bb.NumberOfPaid)+1;
+//             console.log("Number of people ------->>>>>>>>>>>",bb);
+//             const counter=await course.findByIdAndUpdate({_id:courseId},{NumberOfPaid:b}); 
+//                     }
+//             }
+
+//             }
+
+//             res.status(200).json(updatedBalance)
+//         }
+//         else
+//         {
+//             res.status(400).json({error:"There isn't enough balance to pay for the course!Please choose another payment method."});
+//         }
+//     }
+//     else
+//     {
+//         res.status(400).json({error:"TraineeId isn't correct"});
+//     }
+
+
+//     }
+//     catch(error){
+//         res.status(400).json({error:error.message});
+//     }
+// }
 
 
 const traineeRefundRequest = async(req,res) => {
@@ -277,31 +395,27 @@ function arrayIsEmpty(array) {
     console.log(updatedArray)
 
     const updatedTrainee =  await Individual_Trainee.findByIdAndUpdate({_id:individualTraineeId},{Registered_Courses:updatedArray},{new:true});
-    console.log(updatedTrainee)
+    console.log("",updatedTrainee)
     
     //const courseId = req.query.CourseId;
     // const traineeId = req.query.TraineeId;
-    
     //const traineeId = req.session.user._id;
     const currCourse = await course.findById({_id:courseId});
     const currPrice = parseInt(currCourse.Price);
     console.log(currPrice);
 
     //creating Progress
-
                 sub = await Subtitles.find({CourseId:mongoose.Types.ObjectId(courseId)});
                 console.log("SUB ARRAY------->>>>",sub)
                 //check if this corporate has this course or not
-                const cop=await Individual_Trainee.findById({_id:traineeId})
+                const cop=await Individual_Trainee.findById({_id:individualTraineeId})
                 const coursesArray =  cop.Registered_Courses;
-        
-                console.log("CourseArray",coursesArray)
-                
+                console.log("CourseArray",coursesArray)            
                 if(coursesArray.length>0){
                     console.log("dakhalt")
                 for ( i = 0; i < coursesArray.length; i++) {
                     //Check if this course is already in traineeProgress DB
-                already=await TraineeProgress.find({"Trainee_Id":traineeId,CourseId:mongoose.Types.ObjectId(coursesArray[i])});
+                already=await TraineeProgress.find({"Trainee_Id":individualTraineeId,CourseId:mongoose.Types.ObjectId(coursesArray[i])});
                 console.log(arrayIsEmpty(already));
                 //console.log(arrayIsEmpty(already.length));
                 console.log("ASLUN!!!!")
@@ -312,10 +426,9 @@ function arrayIsEmpty(array) {
                 } 
                 else{  
                     for ( j = 0; j < (sub.length); j++) {
-                    old= await TraineeProgress.create({"Trainee_Id":traineeId,"SubtitleId":mongoose.Types.ObjectId(sub[j]._id),"CourseId":mongoose.Types.ObjectId(coursesArray[i])});
+                    old= await TraineeProgress.create({"Trainee_Id":individualTraineeId,"SubtitleId":mongoose.Types.ObjectId(sub[j]._id),"CourseId":mongoose.Types.ObjectId(coursesArray[i])});
                     console.log(" NEW here,Bye")
-                    }  
-                    
+                    }                     
             const bb= await course.findById({_id:courseId},{NumberOfPaid:1})
             const b=(bb.NumberOfPaid)+1;
             console.log("Number of people ------->>>>>>>>>>>",bb);
@@ -323,14 +436,12 @@ function arrayIsEmpty(array) {
             res.status(200).json(updatedTrainee)
                     }
             }
-
             }
     }
     catch(error){
         res.status(400).json({error:error.message});
     }
 }
-
     const viewMyRegisteredCourses = async(req,res) => {
     
         //const individualTraineeId = req.query.TraineeId;
