@@ -61,7 +61,7 @@ const {addUserRating,saveUserRating} = require('./Routes/usersController');
 const {insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor,reviewingAnInstructor,getInstructorRatings,instructorSendReport,fetchInstructorAllPreviousReports,fetchInstructorDeliveredReports,fetchInstructorPendingReports,fetchInstructorResolvedReports,
   fetchInstructorProblem,instructorSendFollowup,AllmoneyOwed} = require('./Routes/instructorController');
 
-const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests,addCourseDiscountToAllCourses,addCourseDiscountToSelectedCourses,fetchAdminProfileDetails, acceptRefund, rejectRefund, viewPendingRefunds, viewAcceptedRefunds, viewRejectedRefunds, viewSingleRefund} = require('./Routes/adminController');
+const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests,addCourseDiscountToAllCourses,addCourseDiscountToSelectedCourses,fetchAdminProfileDetails, acceptRefund, rejectRefund, viewPendingRefunds, viewAcceptedRefunds, viewRejectedRefunds, viewSingleRefund, fetchAllPendingReports, fetchAllResolvedReports} = require('./Routes/adminController');
 
 //solving exercises
 const {addCourse, viewCourses, insertQuestions, viewQuestions,
@@ -1004,6 +1004,8 @@ app.get('/routeCheck', routeCheck);
 //ADMIN SIDE REPORTS
 //app.get('/pendingInstructorReports', fetchInstructorAllPendingReports);
 app.get('/seenReports', fetchSeenReports);
+app.get('/pendingReports', fetchAllPendingReports);
+app.get('/resolvedReports', fetchAllResolvedReports);
 app.get('/unseenReports', fetchAllDeliveredReports);
 app.get('/viewReport', viewIReport);
 app.put('/updatePending', updateReportStatus);

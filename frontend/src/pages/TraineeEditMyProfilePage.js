@@ -66,14 +66,22 @@
         setError(json.error)
         }
         if (response.ok) {
+            
         setError(null)
+        if(Email)
+        {
+            window.location=`http://localhost:3000/login`
+        }
+        else{
+            window.location=`http://localhost:3000/TraineeProfilePage`
+        }
 		setUsername('')
         setEmail('')
         
         
 		//http://localhost:3000/MyProfile/?id=635ff82db9f20282ed560dae
         // window.location=`http://localhost:3000/TraineeProfilePage/?TraineeId=${traineeId}`
-        window.location=`http://localhost:3000/TraineeProfilePage`
+       // window.location=`http://localhost:3000/login`
 
         console.log('trainee Updated:', json)
 

@@ -136,7 +136,7 @@ irep.Followups.map((q, i) => (
         <div className="nonspanny">
         <span className="material-symbols-outlined">visibility</span>
         </div>
-        <div className="drpp">
+        {/* <div className="drpp">
         {!adminReschange && <span className="material-symbols-outlined" onClick={() => setadminResChange(!adminReschange)}>question_answer</span>}
         </div>
         {adminReschange && 
@@ -150,7 +150,7 @@ irep.Followups.map((q, i) => (
             />
              <button onClick={handleOnClick}>Send</button>
             </p>}
-            {error1 && <div className="error">{error1}</div>} 
+            {error1 && <div className="error">{error1}</div>}  */}
             <p>Sent {formatDistanceToNow(new Date(irep.createdAt), {addSuffix: true})}</p>
             <p>Updated {formatDistanceToNow(new Date(irep.updatedAt), {addSuffix: true})}</p> 
       </div>

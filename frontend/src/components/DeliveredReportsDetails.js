@@ -16,8 +16,8 @@ let navigate = useNavigate();
         navigate(path);
     }
     return (
-      <div className="admin-details">
-        <h4 onClick={routeChange}><strong>{deliveredReports.Report_Title}</strong></h4>
+      <div className="admin-details"  onClick={routeChange}>
+        <h4><strong>{deliveredReports.Report_Title}</strong></h4>
         <h6>{deliveredReports.Role} <strong>{deliveredReports.Username}</strong></h6>
         <p><strong>{deliveredReports.Report_Type}</strong></p>
         <span className="material-symbols-outlined">visibility_off</span>

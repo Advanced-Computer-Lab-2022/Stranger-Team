@@ -1090,6 +1090,62 @@ const viewSingleRefund = async(req,res) => {
 }
 
 
+
+
+const fetchAllPendingReports = async(req,res) => {
+    const allReports = [];
+        try{
+        const iPendingReports = await InstructorReports.find({Status:"Pending"}).populate()
+        const tPendingReports = await TraineeReports.find({Status:"Pending"}).populate()
+        const ctPendingReports = await CTraineeReports.find({Status:"Pending"}).populate()
+        for (let i = 0; i < iPendingReports.length; i++) {
+            allReports.push(iPendingReports[i]);
+    }
+
+
+    for (let i = 0; i < tPendingReports.length; i++) {
+        allReports.push(tPendingReports[i]);
+}
+
+for (let i = 0; i < ctPendingReports.length; i++) {
+    allReports.push(ctPendingReports[i]);
+}
+        res.status(200).json(allReports)
+    
+    }
+        catch(error){
+            res.status(400).json({error:error.message});
+        }
+    }
+
+   
+    const fetchAllResolvedReports = async(req,res) => {
+        const allReports = [];
+            try{
+            const iResolvedReports = await InstructorReports.find({Status:"Resolved"}).populate()
+            const tResolvedReports = await TraineeReports.find({Status:"Resolved"}).populate()
+            const ctResolvedReports = await CTraineeReports.find({Status:"Resolved"}).populate()
+            for (let i = 0; i < iResolvedReports.length; i++) {
+                allReports.push(iResolvedReports[i]);
+        }
+
+
+        for (let i = 0; i < tResolvedReports.length; i++) {
+            allReports.push(tResolvedReports[i]);
+    }
+
+    for (let i = 0; i < ctResolvedReports.length; i++) {
+        allReports.push(ctResolvedReports[i]);
+    }
+            res.status(200).json(allReports)
+        
+        }
+            catch(error){
+                res.status(400).json({error:error.message});
+            }
+        }
+
+
         
         
-        module.exports = {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests,addCourseDiscountToAllCourses,addCourseDiscountToSelectedCourses,fetchAdminProfileDetails,acceptRefund, rejectRefund, viewPendingRefunds, viewAcceptedRefunds, viewRejectedRefunds, viewSingleRefund}
+        module.exports = {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests,addCourseDiscountToAllCourses,addCourseDiscountToSelectedCourses,fetchAdminProfileDetails,acceptRefund, rejectRefund, viewPendingRefunds, viewAcceptedRefunds, viewRejectedRefunds, viewSingleRefund, fetchAllPendingReports, fetchAllResolvedReports}

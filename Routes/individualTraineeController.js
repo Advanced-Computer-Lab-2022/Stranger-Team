@@ -1168,7 +1168,7 @@ const checkIfAdminRespondedTrainee = async(req,res) => {
                 // const corporateTraineeId = req.query.CorporateTraineeId;
                 // const traineeId = req.query.TraineeId;
                 // const adminId = req.query.AdminId;
-                const updatedprofile = null;
+                var updatedprofile = null;
                 const username = req.body.Username;
                 console.log("USERNAME:   " + username)
                 const email = req.body.Email;
@@ -1185,11 +1185,14 @@ if((username==null || username=="")  &&  (email==null || email=="")) {
 
 else {
     if(currRole!="Corporate Trainee") { 
-
+     console.log("ANA INDIVIDUAL TRAINEE")
     //im an individual trainee
-        if (email==null || email=="")  {
+
+   // if (email==null || email=="") 
+        if (!email)  {
              // im changing my username
 
+             console.log("ana wasalt")
  let user = await adminstrator.findOne({ Username: req.body.Username });
  if (user) {
      return res
@@ -1231,8 +1234,8 @@ else {
 }
         }
 
-
-if (username==null || username=="") {
+      //  if (username==null || username=="")
+if (!username) {
     //im only updating my email
        
            let user = await corporate_Trainee.findOne({ Email: req.body.Email });
@@ -1260,6 +1263,7 @@ if (username==null || username=="") {
        
                                                else {
                                                    updatedprofile =await Individual_Trainee.findByIdAndUpdate({_id:userId},{Email:email},{new:true});
+                                                   req.session.user = null
                                                            res.status(200).json(updatedprofile);
                                                }
                                                
@@ -1270,9 +1274,9 @@ if (username==null || username=="") {
   //  }
 }
 
-
-else {
-  
+//else
+if (email && username) {
+  console.log("ANA HENAAAA")
        
            let userEmail = await corporate_Trainee.findOne({ Email: req.body.Email });
            let userUsername = await corporate_Trainee.findOne({ Username: req.body.Username });
@@ -1320,6 +1324,11 @@ else {
                  else {
             let userEmail = await Individual_Trainee.findOne({ Email: req.body.Email });
            let userUsername = await Individual_Trainee.findOne({ Username: req.body.Username });
+           if (userEmail && userUsername) {
+            return res
+            .status(409)
+            .send({ error: "User with given username and email already Exists." }); 
+         }
                                                if (userEmail) {
                                                    return res
                                                    .status(409)
@@ -1342,6 +1351,7 @@ else {
 
                                                          else {
                                                             updatedprofile =await Individual_Trainee.findByIdAndUpdate({_id:userId},{Email:email, Username:username},{new:true});
+                                                            req.session.user = null
                                                            res.status(200).json(updatedprofile);
                                                          }
                                                      }
@@ -1370,7 +1380,8 @@ else {
     else {
 
             //im a corporate trainee
-            if (email==null || email=="") {
+        //    if (email==null || email=="")
+            if (!email) {
  let user = await adminstrator.findOne({ Username: req.body.Username });
  if (user) {
      return res
@@ -1414,8 +1425,8 @@ else {
             }
 
 
-
-if (username==null || username=="") {
+          //  if (username==null || username=="")
+if (!username) {
     //im only updating my email
        
            let user = await corporate_Trainee.findOne({ Email: req.body.Email });
@@ -1443,6 +1454,7 @@ if (username==null || username=="") {
        
                                                else {
                                                    updatedprofile =await corporate_Trainee.findByIdAndUpdate({_id:userId},{Email:email},{new:true});
+                                                   req.session.user = null
                                                            res.status(200).json(updatedprofile);
                                                }
                                                
@@ -1452,8 +1464,8 @@ if (username==null || username=="") {
        
 }
 
-
-else {
+//else
+if (email && username) {
    
        
            let userEmail = await corporate_Trainee.findOne({ Email: req.body.Email });
@@ -1532,6 +1544,7 @@ else {
 
                                                          else {
                                                             updatedprofile =await corporate_Trainee.findByIdAndUpdate({_id:userId},{Email:email, Username:username},{new:true});
+                                                            req.session.user = null
                                                            res.status(200).json(updatedprofile);
                                                          }
                                                      }
@@ -1569,6 +1582,9 @@ catch(error) {
 }
 
         }
+
+
+
 
 
 
