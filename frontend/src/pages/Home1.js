@@ -17,9 +17,12 @@
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
 
     import { FaWallet } from "react-icons/fa";
+    import styles from "../components/Guest/styles.module.css"
+    import GuestCourseDetails from "../components/Guest/GuestCourseDetails";
 
     const Home1 = () => {
     const [courses, setCourses] = useState(null)
+    const [mostViewedCourses, setmostViewedCourses] = useState(null)
     const [searchQuery, setSearchQuery] = useState("")
     const [searchRateQuery, setSearchRateQuery] = useState("");
     const [isRegistered, setIsRegistered] = useState("");
@@ -42,7 +45,21 @@
         
         }
 
+        const fetchCourses2 = async () => {
+        const params = new URLSearchParams(window.location.search);
+
+
+        const response = await fetch(`/View_Most_Viewed/?q=${searchQuery}`)
+        
+        const json = await response.json()
+        console.log(json)
+        
+        setmostViewedCourses(json)
+        
+        }
+
         fetchCourses()
+        fetchCourses2()
     }, [searchQuery,searchRateQuery])
 
 
@@ -94,25 +111,67 @@
 
     return (
 
-        <div >
-            <TraineeProfileNavBar/>
-            <input type="text" placeholder="Search By Course Title,Subject,Instructor..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}>
-            </input>
+    //     <div >
+    //         <TraineeProfileNavBar/>
+    //         <input type="text" placeholder="Search By Course Title,Subject,Instructor..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}>
+    //         </input>
 
-            {/* <div>
-                <input type="number" placeholder="Filter By Rate..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}></input>
-            </div> */}
-            {/* <div>
-                <button onClick={routeChange10}><FaWallet></FaWallet></button>
-            </div> */}
+    //         {/* <div>
+    //             <input type="number" placeholder="Filter By Rate..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}></input>
+    //         </div> */}
+    //         {/* <div>
+    //             <button onClick={routeChange10}><FaWallet></FaWallet></button>
+    //         </div> */}
             
-            <div className="courses">
-            <FilterCoursesByRateComponent/>
+    //         <div className="courses">
+    //         <FilterCoursesByRateComponent/>
 
 
-            {courses && courses.map(course => (
+    //         {courses && courses.map(course => (
                 
-            <Container hover
+    //         <Container hover
+    //             sx={{
+    //                 "&:hover":{
+    //                 cursor: "pointer",
+    //                 backgroundColor: "#f5f5f5",
+    //                 width: "100%"
+    //                 }
+    //             }}
+                
+    //             onClick={() =>{handleSubmit(course._id)}}
+    //             key={course._id}>
+    //             <CourseDetails course={course} key={course.id} />
+    //             {/* <PreviewCourseVideoPageDetails course={course} key={course.id} /> */}
+                
+    //             </Container>
+    //         ))}
+    //     </div>
+
+    //     <div>
+            
+    //         <form className="signin">
+        
+    //         {/* <button onClick={routeChange3}> Search By Title </button>
+    //         <button onClick={routeChange4}> Search By Instructor Name </button>
+    //         <button onClick={routeChange}> Filter By Subject </button> */}
+    //         {/* <button onClick={routeChange2}> Filter By Rate </button>
+    //         <button onClick={routeChange8}> Filter By Price </button>
+    //         <button onClick={routeChange5}> Filter By Price And Subject </button>
+    //         <button onClick={routeChange6}> Filter By Rating And Subject </button>
+    //         <button onClick={routeChange7}> Filter By Subject And Rating And Price </button> */}
+    //         </form>
+    //     </div>
+    // </div>
+
+    <>
+
+            <h4 className={styles.GuestHeading}>OUR POPULAR COURSES: </h4>
+
+            <div className={styles.grid}>
+
+            {mostViewedCourses && mostViewedCourses.map(course => (
+                
+            <div hover
                 sx={{
                     "&:hover":{
                     cursor: "pointer",
@@ -123,28 +182,35 @@
                 
                 onClick={() =>{handleSubmit(course._id)}}
                 key={course._id}>
-                <CourseDetails course={course} key={course.id} />
-                {/* <PreviewCourseVideoPageDetails course={course} key={course.id} /> */}
+                <GuestCourseDetails course={course} key={course.id} />
                 
-                </Container>
+                
+                </div>
             ))}
-        </div>
 
-        <div>
-            
-            <form className="signin">
-        
-            {/* <button onClick={routeChange3}> Search By Title </button>
-            <button onClick={routeChange4}> Search By Instructor Name </button>
-            <button onClick={routeChange}> Filter By Subject </button> */}
-            {/* <button onClick={routeChange2}> Filter By Rate </button>
-            <button onClick={routeChange8}> Filter By Price </button>
-            <button onClick={routeChange5}> Filter By Price And Subject </button>
-            <button onClick={routeChange6}> Filter By Rating And Subject </button>
-            <button onClick={routeChange7}> Filter By Subject And Rating And Price </button> */}
-            </form>
-        </div>
-    </div>
+            </div>
+            <h4 className={styles.GuestHeading}>ALL OUR COURSES: </h4>
+            <div className={styles.grid}>
+                {courses && courses.map(course => (
+                
+            <div  hover
+                sx={{
+                    "&:hover":{
+                    cursor: "pointer",
+                    backgroundColor: "#f5f5f5",
+                    width: "100%"
+                    }
+                }}
+                
+                onClick={() =>{handleSubmit(course._id)}}
+                key={course._id}>
+                <GuestCourseDetails course={course} key={course.id} />
+                
+                
+                </div>
+            ))}
+            </div>
+        </>
 
         
     )

@@ -251,81 +251,149 @@ app.get("/View_All_Courses/",async (req,res)=>{
 
 });
 
-// app.get("/View_All_Courses/",async (req,res)=>{
-//   const endpoint = "https://api.exchangerate-api.com/v4/latest/USD";
-//   const result = await fetch(`${endpoint}?base=${req.session.user.Currency}`);
-//   const rates = await result.json();
-//   const q = req.query.q;
-//   const keys=["Title","Subject"];
-//   const search = (data)=>{
-//     return data.filter((item)=>
-//     keys.some((key)=>item[key].toLowerCase().includes(q))
-//     );
-//   };
-//   const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Instructor_Name:1,Course_Description:1 }).sort({createdAt:-1}) ;
-//   const allCourses2 = allCourses.map(async coursaya => {
-//     //  let insCurrency= await Instructors.findOne({_id : coursaya.Instructor})
-//       const x= rates.rates.USD;
-//    //   console.log(coursaya.Instructor.Currency);
-//       coursaya.Price = coursaya.Price/x + req.session.user.Currency;
-//       //Do somethign with the user
-//   });
-//   res.status(200).json(search(allCourses));
-// });
-// app.get("/View_Most_Viewed/",async (req,res)=>{
-//  // console.log(req.session.user.Currency);
-//  // const x= await fetchRates(req.session.user.Currency);
-//  const endpoint = "https://api.exchangerate-api.com/v4/latest/USD";
-//   const result = await fetch(`${endpoint}?base=${req.session.user.Currency}`);
-//   const rates = await result.json();
-//  // console.log("object");
-//   console.log(rates.rates[req.session.user.Currency]);
-//   const q = req.query.q;
+app.get("/View_All_Courses/",async (req,res)=>{
+  const currSession = req.session.user;
+  // if(currSession==null||currSession==undefined)
+  // {
+  //   req.session.user.Currency="USD";
+  // }
+  
+  // const endpoint = "https://api.exchangerate-api.com/v4/latest/USD";
+  // const result = await fetch(`${endpoint}?base=${req.session.user.Currency}`);
+  var endpoint=null;
+  var result = null; 
+  var isGuest = false;
+  if(currSession==null||currSession==undefined)
+  {
+      endpoint = "https://api.exchangerate-api.com/v4/latest/USD";
+      result = await fetch(`${endpoint}?base=USD`);
+      isGuest=true;
+  }
+  else
+  {
+      endpoint = "https://api.exchangerate-api.com/v4/latest/USD";
+      result = await fetch(`${endpoint}?base=${req.session.user.Currency}`);
+  }
+ 
+  const rates = await result.json();
+  const q = req.query.q;
+  const keys=["Title","Subject"];
+  const search = (data)=>{
+    return data.filter((item)=>
+    keys.some((key)=>item[key].toLowerCase().includes(q))
+    );
+  };
+  const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Instructor_Name:1,Course_Description:1,Rating:1 }).sort({createdAt:-1}) ;
+  const allCourses2 = allCourses.map(async coursaya => {
+    //  let insCurrency= await Instructors.findOne({_id : coursaya.Instructor})
+      const x= rates.rates.USD;
+   //   console.log(coursaya.Instructor.Currency);
+   if(isGuest==true)
+   {
+    if(coursaya.Price=="0"||coursaya.Price==0)
+    {
+      coursaya.Price = "Free";
+    }
+    else
+    {
+      coursaya.Price = coursaya.Price/x + "USD";
+    }
+    
+   }
+   else
+   {
+    if(coursaya.Price=="0"||coursaya.Price==0)
+    {
+      coursaya.Price = "Free";
+    }
+    else
+    {
+      coursaya.Price = coursaya.Price/x + "USD";
+    }
+   }
+      
+      //Do somethign with the user
+  });
+  res.status(200).json(search(allCourses));
+});
+app.get("/View_Most_Viewed/",async (req,res)=>{
+ // console.log(req.session.user.Currency);
+ // const x= await fetchRates(req.session.user.Currency);
+ 
+ const currSession = req.session.user;
+ var endpoint=null;
+ var result = null; 
+ var isGuest = false;
+  if(currSession==null||currSession==undefined)
+  {
+      endpoint = "https://api.exchangerate-api.com/v4/latest/USD";
+      result = await fetch(`${endpoint}?base=USD`);
+      isGuest = true;
+  }
+  else
+  {
+      endpoint = "https://api.exchangerate-api.com/v4/latest/USD";
+      result = await fetch(`${endpoint}?base=${req.session.user.Currency}`);
+  }
+ 
+  const rates = await result.json();
+ // console.log("object");
+  //console.log(rates.rates[req.session.user.Currency]);
+  const q = req.query.q;
   
 
-//   const keys=["Title","Subject"];
-//   const search = (data)=>{
-//     return data.filter((item)=>
-//     keys.some((key)=>item[key].toLowerCase().includes(q))
-//     );
-//   };
+  const keys=["Title","Subject"];
+  const search = (data)=>{
+    return data.filter((item)=>
+    keys.some((key)=>item[key].toLowerCase().includes(q))
+    );
+  };
 
-//   // if(parseInt(q))
-//   // {
-    
-//   //   const allCourses = await course.find({"Rating":q}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Rating:1,Course_Description:1 }).sort({createdAt:-1}) ;
-    
-//   //   res.status(200).json(allCourses);
-//   // }
-//   // else{
-//     // const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Course_Description:1,Instructor:1 }).sort({Views:-1}).limit(5) ;
-//     //  const allCourses2 =  allCourses.map(async coursaya => {
-//     //   let insCurrency= await Instructors.findOne({_id : coursaya.Instructor})
-//     //  console.log(insCurrency.Currency);
-//     //  coursaya.Price = coursaya.Price/rates.rates[insCurrency.Currency];
-//     const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Course_Description:1,Instructor:1 }).sort({Views:-1}).limit(5) ;
-//      const allCourses2 = allCourses.map(async coursaya => {
-//    //   let insCurrency= await Instructors.findById({_id : coursaya.Instructor})
-//     //  const currCurrency = insCurrency.Currency;
-//    //   console.log(currCurrency)
-//       const x= rates.rates.USD;
-//     //  console.log(x);
+    const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Course_Description:1,Instructor:1,Instructor_Name:1,Rating:1 }).sort({Views:-1}).limit(5) ;
+    const allCourses2 = allCourses.map(async coursaya => {
+   //   let insCurrency= await Instructors.findById({_id : coursaya.Instructor})
+    //  const currCurrency = insCurrency.Currency;
+   //   console.log(currCurrency)
+      const x= rates.rates.USD;
+    //  console.log(x);
       
-//       coursaya.Price = coursaya.Price/x + req.session.user.Currency;
+    if(isGuest==true)
+   {
+    if(coursaya.Price=="0"||coursaya.Price==0)
+    {
+      coursaya.Price = "Free";
+    }
+    else
+    {
+      coursaya.Price = coursaya.Price/x + "USD";
+    }
+    
+   }
+   else
+   {
+    if(coursaya.Price=="0"||coursaya.Price==0)
+    {
+      coursaya.Price = "Free";
+    }
+    else
+    {
+      coursaya.Price = coursaya.Price/x + "USD";
+    }
+   }
 
       
-//       //Do somethign with the user
-//   });
-//     // //allCourses2=allCourses2.Price*rates.rates.USD;
-//    //  console.log("all courses"+allCourses2);
+      //Do somethign with the user
+  });
+    // //allCourses2=allCourses2.Price*rates.rates.USD;
+   //  console.log("all courses"+allCourses2);
     
-//     res.status(200).json(search(allCourses));
+    res.status(200).json(search(allCourses));
     
-//   //}
+  //}
 
 
 
-// });
+});
 
 
 

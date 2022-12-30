@@ -10,7 +10,6 @@
 
     // import profile from '../images/profile.png'
     import profile from '../../images/profile.png'
-    import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardTitle, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn } from 'mdb-react-ui-kit';
 
 
 

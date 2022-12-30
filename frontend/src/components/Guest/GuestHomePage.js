@@ -15,6 +15,7 @@
     import 'bootstrap/dist/css/bootstrap.min.css'
     import 'bootstrap/dist/js/bootstrap.min.js'
     import GuestCourseDetails from "./GuestCourseDetails";
+import GuestNavBar from "./GuestNavBar";
     
 
 
@@ -71,7 +72,8 @@
     return (
         <>
             <div>
-            <form className="signin">
+                <GuestNavBar/>
+            {/* <form className="signin">
                 <Navbar collapseOnSelect expand="lg"  variant="dark" className={styles.navbar}>
                 <h1>LearnEd</h1>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -109,7 +111,7 @@
                 </Navbar.Collapse>
             </Navbar>
             
-            </form>
+            </form> */}
             </div>
 
             <h4 className={styles.GuestHeading}>OUR POPULAR COURSES: </h4>
