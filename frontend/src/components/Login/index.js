@@ -2,6 +2,9 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
+import { FaSignInAlt } from 'react-icons/fa';
+import { AiOutlineUserAdd } from "react-icons/ai";
+
 
 const Login = () => {
 	const [data, setData] = useState({ Email: "", Password: "" });
@@ -58,7 +61,7 @@ const Login = () => {
 						</Link>
 						{error && <div className={styles.error_msg}>{error}</div>}
 						<button type="submit" className={styles.green_btn}>
-							Sign In
+							Sign In <FaSignInAlt style={{width:'25px',height:'25px'}}/>
 						</button>
 					</form>
 				</div>
@@ -66,7 +69,7 @@ const Login = () => {
 					<h1>New Here ?</h1>
 					<Link to="/signup">
 						<button type="button" className={styles.white_btn}>
-							Sign Up
+							Sign Up <AiOutlineUserAdd style={{width:'25px',height:'25px'}}></AiOutlineUserAdd>
 						</button>
 					</Link>
 				</div>

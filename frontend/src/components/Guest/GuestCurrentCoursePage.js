@@ -1,6 +1,7 @@
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
+    import styles from "./styles.module.css"; 
 
     // components
     import 'bootstrap/dist/css/bootstrap.min.css'
@@ -9,6 +10,7 @@
     import CurrentNonRegisteredCoursePageDetailsTrainee from "../../components/CurrentNonRegisteredCoursePageDetailsTrainee";
     import PreviewCourseVideoPageDetails from '../../components/PreviewCourseVideoTraineePageDetails'
     import GuestNavBar from "./GuestNavBar";
+    import GuestCurrentCoursePageDetails from "./GuestCurrentCoursePageDetails";
 
 
 
@@ -57,19 +59,10 @@
         <div className="row gutters">
         <div className="card h-100">
             <div className="card-body">
-                {/* <FetchInstructorNameForTraineeCourseDetails/> */}
-                {/* <form className="course-details">
-                    <button  onClick={routeChange}>Report a problem</button>
-                </form> */}
-
-                
-                {/* {course && course.map(course => (
-                <CurrentNonRegisteredCoursePageDetailsTrainee course={course} key={course._id} />
-                ))[0]} */}
 
                 {course && course.map(course => (
                 
-            <Container hover
+            <Container  className={styles.currentCourseContainer} hover
                 sx={{
                     "&:hover":{
                     cursor: "pointer",
@@ -78,7 +71,7 @@
                     }
                 }}
                 key={course._id}>
-                <CurrentNonRegisteredCoursePageDetailsTrainee course={course} key={course._id} />
+                <GuestCurrentCoursePageDetails course={course} key={course._id} />
                 
                 
                 </Container>
@@ -88,7 +81,7 @@
                 
 
                 <form className="course-details">
-            <button onClick={routeChange}>Register For The Course</button>
+            <Button onClick={routeChange} className={styles.registerForCourseButton}>Register For The Course</Button>
             </form>
                 
             </div>

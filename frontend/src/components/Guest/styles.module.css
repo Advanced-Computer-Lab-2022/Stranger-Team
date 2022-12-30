@@ -27,6 +27,7 @@
 .search_navbar{
     width: 350px;
     height: 70px;
+    margin-left: 150px;
     background-color: #00008B;
     display: flex;
     align-items: center;
@@ -50,8 +51,8 @@
 
 .courseDetails {
     font-size: medium;
-    width:400px;
-    margin-left: 50px;
+    width:350px;
+    
     margin-right: 50px;
     /* margin-bottom: 1000px; */
     margin-bottom: 500px;
@@ -62,14 +63,101 @@
     justify-content: space-between;
 }
 
+.currentCourseDetails {
+    font-size: medium;
+    width: 400px;
+
+    margin-right: 50px;
+    /* margin-bottom: 1000px; */
+    height:495px;
+    margin-bottom: 500px;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-between;
+}
+
+.currentCourseDetails h4{
+    font-size: 35px;
+    width: 600px;
+    justify-content: space-between;
+}
+
+.GuestHeading{
+    margin: 30px;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.registerForCourseButton{
+    background-color: blue;
+    font-size: 15px;
+    width: 300px;
+    height: 50px;
+}
+
+.currentInstructorCourseDetails {
+    font-size: 15px;
+    width: 600px;
+    justify-content: space-between;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05);
+}
+
+.currentCourseContainer {
+    display: block;
+    position: relative;
+    margin: 40px auto;
+    height: 495px;
+    width: 800px;
+    padding: 20px;
+}
+
+.currentCourseinstructorCoursesContainer {
+    display: block;
+    position: relative;
+    margin: 40px auto;
+    height: 250px;
+    width: 800px;
+    padding: 20px;
+}
+
+/* box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05); */
+
 .grid {
     display: grid;
     width:400px;
-    margin:50px;
+    /* margin:20px; */
+    margin-left: 15px;
+    margin-bottom: 200px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 200px;
+    gap: 8rem;
+    /* grid-auto-flow: column;
+    grid-template-columns: repeat(auto-fit, minmax(min-content, 1fr)); */
+}
+
+.instructorCoursesGrid {
+    display: grid;
+    width: 350px;
+    
+    margin-right: 0px;
     margin-bottom: 200px;
     grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: 200px;
     gap: 5rem;
-    /* grid-auto-flow: column;
-    grid-template-columns: repeat(auto-fit, minmax(min-content, 1fr)); */
+}
+
+.instructorCourseDetails {
+    font-size: medium;
+    width: 400px;
+
+    margin-right: -103px;
+    /* margin-bottom: 1000px; */
+    margin-bottom: 500px;
+    padding: 10px 0px;
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-between;
 }

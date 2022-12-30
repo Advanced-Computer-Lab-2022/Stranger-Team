@@ -15,6 +15,9 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { FaSignInAlt } from 'react-icons/fa';
+import { AiOutlineUserAdd } from "react-icons/ai";
+
 
 
 const GuestNavBar = () => {
@@ -36,24 +39,13 @@ const GuestNavBar = () => {
     }
 
 	return (
-		// <div className={styles.main_container}>
-		// 	<nav className={styles.navbar}>
-        //     {/* <img src={logo} width="50" height="50" className="d-inline-block align-top" alt=""></img> */}
-		// 		<h1>LearnEd</h1>
-        //         <button className={styles.white_btn} onClick={routeChange1}>
-		// 			Signup
-		// 		</button>
-		// 		<button type="button" className={styles.white_btn} onClick={routeChange}>
-        //             Login
-		// 		</button>
-		// 	</nav>
-        // </div>
+		
         <Navbar collapseOnSelect expand="lg"  variant="dark" className={styles.navbar}>
                 <h1 onClick={routeChange2}>LearnEd</h1>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
-                    <Nav.Link href="#features">Features</Nav.Link>
+                    {/* <Nav.Link href="#"></Nav.Link> */}
                     <Form className={styles.search_navbar}>
                     <Form.Control
                         type="search"
@@ -62,23 +54,11 @@ const GuestNavBar = () => {
                         aria-label="Search"
                     />
                     </Form>
-                    <Nav.Link href="#pricing">Pricing</Nav.Link>
-                    <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                    <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.2">
-                        Another action
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action/3.4">
-                        Separated link
-                    </NavDropdown.Item>
-                    </NavDropdown>
                 </Nav>
                 <Nav>
-                    <Nav.Link className={styles.navbar} onClick={routeChange1}>Signup</Nav.Link>
-                    <Nav.Link className={styles.navbar} onClick={routeChange}>
-                    Login
+                    <Nav.Link className={styles.navbar} onClick={routeChange1} style={{marginRight:'50px',fontSize:'20px'}}>Signup <AiOutlineUserAdd/></Nav.Link>
+                    <Nav.Link className={styles.navbar} onClick={routeChange} style={{marginRight:'50px',fontSize:'20px'}}>
+                    Login <FaSignInAlt/>
                     </Nav.Link>
                 </Nav>
                 </Navbar.Collapse>

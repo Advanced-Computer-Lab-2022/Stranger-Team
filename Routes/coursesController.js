@@ -1177,6 +1177,18 @@ const isCourseFree= async (req,res) => {
                    
                }
 
+const fetchInstructorCoursesByIdForGuest=async(req,res)=>{
+                
+                try{
+                    const instructorId = req.query.id;
+                    const instructorCourses =  await course.find({Instructor:mongoose.Types.ObjectId(instructorId)}).sort({createdAt:-1}).populate('Instructor');
+                    res.status(200).json(instructorCourses);
+                }
+                catch(error){
+                res.status(400).json({error:error.message});
+                }
+                }
+
 module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate, 
     Filter_By_Price,data,createCourse,addANewInstructor
     ,Search_By_Instructor_Name,Search_By_Title
@@ -1189,4 +1201,4 @@ module.exports = {View_All_Courses, Filter_By_Subject, Filter_By_Rate,
     ,fetchCurrentCourseInstructorCoursesByInstructorId,ratingACourse
     ,fetchTheSubtitleBySubtitleId,isCurrentCourseRegistered,
     FilteredCourses,isDiscountViable,displayCourseDiscount,
-    UpdateProgressOfSubtitlie, getStatusOfSubtitlie,fetchThePreviewByCourseId,isCourseFree,checkFinished,updateFinished};
+    UpdateProgressOfSubtitlie, getStatusOfSubtitlie,fetchThePreviewByCourseId,isCourseFree,checkFinished,updateFinished,fetchInstructorCoursesByIdForGuest};

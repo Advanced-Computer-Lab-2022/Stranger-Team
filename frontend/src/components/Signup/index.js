@@ -2,6 +2,9 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
+import { FaSignInAlt } from 'react-icons/fa';
+import { AiOutlineUserAdd } from "react-icons/ai";
+
 
 const Signup = () => {
 	const [data, setData] = useState({
@@ -128,7 +131,7 @@ const Signup = () => {
 							required
 							className={styles.input}
 						/>
-                        <input
+                        {/* <input
 							type="text"
 							placeholder="Gender"
 							name="Gender"
@@ -137,7 +140,15 @@ const Signup = () => {
 							value={Gender}
 							required
 							className={styles.input}
-						/>
+						/> */}
+
+                <label>Gender:</label>
+            <select onChange={(e) => setGender(e.target.value)} value={Gender} required class="form-control">
+                <option></option>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Other">Other</option>
+                </select>
                     
             <label for="Country">Choose your Country:</label>
             <select id="Country" name="Country" onChange={(e) => setCountry(e.target.value)} value={Country} required class="form-control">
@@ -415,7 +426,7 @@ const Signup = () => {
 						{error && <div className={styles.error_msg}>{error}</div>}
 						{msg && <div className={styles.success_msg}>{msg}</div>}
 						<button type="submit" className={styles.green_btn}>
-							Sign Up ❤
+							Sign Up <AiOutlineUserAdd style={{width:'25px',height:'25px'}}></AiOutlineUserAdd>
 						</button>
 					</form>
 				</div>

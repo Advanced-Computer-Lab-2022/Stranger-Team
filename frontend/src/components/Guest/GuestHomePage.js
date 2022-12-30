@@ -24,6 +24,7 @@
     const [courses, setCourses] = useState(null)
     const [searchQuery, setSearchQuery] = useState("")
     const [searchRateQuery, setSearchRateQuery] = useState("");
+    const [mostViewedCourses, setmostViewedCourses] = useState(null)
     
 
     useEffect(() => {
@@ -39,7 +40,21 @@
         
         }
 
+        const fetchCourses2 = async () => {
+        const params = new URLSearchParams(window.location.search);
+
+
+        const response = await fetch(`/View_Most_Viewed/?q=${searchQuery}`)
+        
+        const json = await response.json()
+        console.log(json)
+        
+        setmostViewedCourses(json)
+        
+        }
+
         fetchCourses()
+        fetchCourses2()
     }, [searchQuery,searchRateQuery])
 
     let navigate = useNavigate();
@@ -96,7 +111,35 @@
             
             </form>
             </div>
-            
+
+            <h4 className={styles.GuestHeading}>OUR POPULAR COURSES: </h4>
+
+            <div className={styles.grid}>
+
+            {mostViewedCourses && mostViewedCourses.map(course => (
+                
+            <div hover
+                sx={{
+                    "&:hover":{
+                    cursor: "pointer",
+                    backgroundColor: "#f5f5f5",
+                    width: "100%"
+                    }
+                }}
+                
+                onClick={() =>{
+                    const params = new URLSearchParams(window.location.search);
+                    window.location.href=`/GuestCurrentCoursePage/?CourseId=${course._id}`
+                    }}
+                key={course._id}>
+                <GuestCourseDetails course={course} key={course.id} />
+                
+                
+                </div>
+            ))}
+
+            </div>
+            <h4 className={styles.GuestHeading}>ALL OUR COURSES: </h4>
             <div className={styles.grid}>
                 {courses && courses.map(course => (
                 
