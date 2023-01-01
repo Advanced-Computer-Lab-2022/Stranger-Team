@@ -59,7 +59,7 @@ const {View_All_Courses, Filter_By_Subject, Filter_By_Rate, Filter_By_Price,data
 const {addUserRating,saveUserRating} = require('./Routes/usersController');
 
 const {insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,ratingAnInstructor,reviewingAnInstructor,getInstructorRatings,instructorSendReport,fetchInstructorAllPreviousReports,fetchInstructorDeliveredReports,fetchInstructorPendingReports,fetchInstructorResolvedReports,
-  fetchInstructorProblem,instructorSendFollowup,AllmoneyOwed} = require('./Routes/instructorController');
+  fetchInstructorProblem,instructorSendFollowup,AllmoneyOwed, fetchAcceptedContracts, UpdateAcceptedContracts} = require('./Routes/instructorController');
 
 const {addAdmin, addCorporateTrainee, viewPendingInstructors, registerPendingInstructor, addInstructor, deletePendingInstructor, viewAdmins, deleteAdmin, viewInstructors, deleteInstructor, viewCT, deleteCT, updateAdmin, updateInstructor, updateCT, addPendingInstructor, fetchSeenReports, fetchAllDeliveredReports, viewIReport, updateReportStatus, updateR, adminResponse, deleteRequest, grantAccess, viewRequests,addCourseDiscountToAllCourses,addCourseDiscountToSelectedCourses,fetchAdminProfileDetails, acceptRefund, rejectRefund, viewPendingRefunds, viewAcceptedRefunds, viewRejectedRefunds, viewSingleRefund, fetchAllPendingReports, fetchAllResolvedReports} = require('./Routes/adminController');
 
