@@ -22,6 +22,7 @@
     import InstructorCurrentCoursePageDetails from "../components/InstructorCurrentCoursePageDetails";
     import CurrentReportPageDetails from "../components/CurrentReportPageDetails";
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+    import styles from "../components/Guest/styles.module.css"
 
 
     const TraineeCurrentPendingReportPage = () => {
@@ -132,7 +133,7 @@
                 onChange={(e) => setFollowup(e.target.value)} 
                 value={Followup}
                 />
-                <button>Send Followup</button>
+                <button className={styles.blueButton}>Send Followup</button>
                 </form>
             </div>
 

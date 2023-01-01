@@ -46,7 +46,7 @@ function Payment(props) {
     return (
         <>
         <TraineeProfileNavBar/>
-        <h4>Enter credit card details</h4>
+        <h4 style={{marginTop:'20px',marginLeft:'10px'}}>Enter credit card details</h4>
         {stripePromise && clientSecret &&(
 
         <Elements stripe={stripePromise} options={{clientSecret}}>

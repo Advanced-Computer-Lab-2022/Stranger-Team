@@ -689,42 +689,68 @@ const addANewInstructor = async(req,res)=>{
     res.status(200).json(allCourses);
 }
 
-// const getCurrentCourseDetails  = async(req,res) =>{
-//     const currentCourse = req.query.CourseId;
-//     const endpoint = "https://api.exchangerate-api.com/v4/latest/USD";
-//     const result = await fetch(`${endpoint}?base=${req.session.user.Currency}`);
-//     const rates = await result.json();
-//    // const max= await course.find({$max : "$Views" });
-//    //const max = await course.find( {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Rating:1,Course_Description:1,Instructor:1 }).sort({Views: -1}) ;
-
-//     const currCourse = await course.findById({_id:currentCourse}).populate();
-//     const currentCourseDetails = await course.find({_id:currentCourse}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Rating:1,Course_Description:1,Instructor:1 }).sort({createdAt:-1}) ;
-//     const courseViews = currCourse.Views
-//     const updatedViews = courseViews + 1
-//  //  console.log("max views is "+max);
-//     console.log(courseViews)
-//     const updatedCourse = await course.findByIdAndUpdate({_id:currentCourse}, {"Views": updatedViews}, {new:true});
-
-//     const allCourses2 = currentCourseDetails.map(async coursaya => {
-//         //  let insCurrency= await Instructors.findOne({_id : coursaya.Instructor})
-//             const x= rates.rates.USD;
-//         //   console.log(coursaya.Instructor.Currency);
-//             coursaya.Price = coursaya.Price/x + req.session.user.Currency;
-//             //Do somethign with the user
-//         });
-//    // console.log("updatedcourse " + currentCourseDetails.Price)
-//     res.status(200).json(currentCourseDetails); 
-
-// }
-
 const getCurrentCourseDetails  = async(req,res) =>{
+
+    try{
+        const currSession = req.session.user;
+ var endpoint=null;
+ var result = null; 
+ var isGuest = false;
+  if(currSession==null||currSession==undefined)
+  {
+      endpoint = "https://api.exchangerate-api.com/v4/latest/USD";
+      result = await fetch(`${endpoint}?base=USD`);
+      isGuest = true;
+  }
+  else
+  {
+      endpoint = "https://api.exchangerate-api.com/v4/latest/USD";
+      result = await fetch(`${endpoint}?base=${req.session.user.Currency}`);
+  }
+
+    const rates = await result.json();
 
     const courseId = req.query.CourseId;
 
-    
     const currentCourseDetails = await course.find({_id:courseId}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Rating:1,Course_Description:1,Instructor:1 }).sort({createdAt:-1}) ;
 
+    const allCourses2 = currentCourseDetails.map(async coursaya => {
+      const x= rates.rates.USD;
+      
+    if(isGuest==true)
+   {
+    if(coursaya.Price=="0"||coursaya.Price==0)
+    {
+      coursaya.Price = "Free";
+    }
+    else
+    {
+      coursaya.Price = coursaya.Price/x + "USD";
+    }
+    
+   }
+   else
+   {
+    if(coursaya.Price=="0"||coursaya.Price==0)
+    {
+      coursaya.Price = "Free";
+    }
+    else
+    {
+      coursaya.Price = coursaya.Price/x + "USD";
+    }
+   }
+
+});
+    
     res.status(200).json(currentCourseDetails); 
+    }catch(error)
+    {
+        res.status(400).json({error:error.message});
+    }
+
+    
+    
 
 }
 
@@ -1178,11 +1204,60 @@ const isCourseFree= async (req,res) => {
                }
 
 const fetchInstructorCoursesByIdForGuest=async(req,res)=>{
+        
+
                 
                 try{
-                    const instructorId = req.query.id;
-                    const instructorCourses =  await course.find({Instructor:mongoose.Types.ObjectId(instructorId)}).sort({createdAt:-1}).populate('Instructor');
-                    res.status(200).json(instructorCourses);
+                     const currSession = req.session.user;
+ var endpoint=null;
+ var result = null; 
+ var isGuest = false;
+  if(currSession==null||currSession==undefined)
+  {
+      endpoint = "https://api.exchangerate-api.com/v4/latest/USD";
+      result = await fetch(`${endpoint}?base=USD`);
+      isGuest = true;
+  }
+  else
+  {
+      endpoint = "https://api.exchangerate-api.com/v4/latest/USD";
+      result = await fetch(`${endpoint}?base=${req.session.user.Currency}`);
+  }
+
+    const rates = await result.json();
+
+    const instructorId = req.query.id;
+    const instructorCourses =  await course.find({Instructor:mongoose.Types.ObjectId(instructorId)}).sort({createdAt:-1}).populate('Instructor');
+    const allCourses2 = instructorCourses.map(async coursaya => {
+      const x= rates.rates.USD;
+      
+    if(isGuest==true)
+   {
+    if(coursaya.Price=="0"||coursaya.Price==0)
+    {
+      coursaya.Price = "Free";
+    }
+    else
+    {
+      coursaya.Price = coursaya.Price/x + "USD";
+    }
+    
+   }
+   else
+   {
+    if(coursaya.Price=="0"||coursaya.Price==0)
+    {
+      coursaya.Price = "Free";
+    }
+    else
+    {
+      coursaya.Price = coursaya.Price/x + "USD";
+    }
+   }
+
+});
+    
+    res.status(200).json(instructorCourses);
                 }
                 catch(error){
                 res.status(400).json({error:error.message});

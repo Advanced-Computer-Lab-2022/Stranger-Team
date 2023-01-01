@@ -6,6 +6,7 @@
     import { useNavigate } from "react-router-dom";
 	import { useState } from 'react'
     import TraineeProfileNavBar from '../components/TraineeProfilNavBar';
+    import styles from "../components/Guest/styles.module.css"
 
     const TraineeEditMyProfilePage = () => {
 
@@ -115,7 +116,7 @@
 
         
 
-        <button>Update</button>
+        <button className={styles.blueButton}>Update</button>
         
         {error && <div className="error">{error}</div>} 
         </form>

@@ -10,8 +10,7 @@ import { useNavigate,useLocation  } from "react-router-dom";
 import MyCourses from "../components/MyCourses"
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-import{Button, Alert, Container, Nav} from 'react-bootstrap'
-import Navbar from "../components/Navbar";
+import{Button, Alert, Container, Nav,Navbar,Form} from 'react-bootstrap'
 import CourseDetails from "../components/CourseDetails";
 import StarRating from "../components/StarRating";
 import CurrentCoursePageDetails from "../components/CurrentCoursePageDetails";
@@ -24,6 +23,8 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
 import CurrentNonRegisteredCoursePageDetailsTrainee from "../components/CurrentNonRegisteredCoursePageDetailsTrainee";
 import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfileNavBar";
 import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
+import styles from "../components/Guest/styles.module.css"
+import CurrentNonRegisteredCoursePageDetailsCorporateTrainee from "../components/CurrentNonRegisteredCoursePageDetailsCorporateTrainee";
 
 
 
@@ -70,34 +71,58 @@ let navigate = useNavigate();
 }
 
 return (
-    <div>
-    <CorporateTraineeProfileNavBar/>
-    <Container >
+    // <div>
+    // <CorporateTraineeProfileNavBar/>
+    // <Container >
 
-    <div className="row gutters">
-    <div className="card h-100">
-        <div className="card-body" onClick={routeChange}>
-            {/* <FetchInstructorNameForTraineeCourseDetails/> */}
-            {/* <form className="course-details">
-                <button  onClick={routeChange}>Report a problem</button>
-            </form> */}
-            <h3>You are registered in this course!</h3>
+    // <div className="row gutters">
+    // <div className="card h-100">
+    //     <div className="card-body" onClick={routeChange}>
+    //         {/* <FetchInstructorNameForTraineeCourseDetails/> */}
+    //         {/* <form className="course-details">
+    //             <button  onClick={routeChange}>Report a problem</button>
+    //         </form> */}
+    //         <h3>You are registered in this course!</h3>
             
-        {course && course.map(course => (
-            <CurrentNonRegisteredCoursePageDetailsTrainee course={course} key={course._id} />
+    //     {course && course.map(course => (
+    //         <CurrentNonRegisteredCoursePageDetailsTrainee course={course} key={course._id} />
+    //         ))[0]}
+    //     <PreviewCourseVideoPageDetails/>
+            
+    //     </div>
+        
+    // </div>
+    
+            
+    // </div>
+    
+    
+    // </Container>
+    // </div>
+    //--------------------------------------------------------------------------
+    <div>
+        <CorporateTraineeProfileNavBar/>
+        <Container >
+
+        <div className="row gutters">
+        <div className="card h-100">
+            <div className="card-body" onClick={routeChange}>
+                <h3>You are registered in this course!</h3>
+            
+            {course && course.map(course => (
+            <CurrentNonRegisteredCoursePageDetailsCorporateTrainee course={course} key={course._id} />
             ))[0]}
-        <PreviewCourseVideoPageDetails/>
+                
+            <PreviewCourseVideoPageDetails/>
+                
+            </div>
             
         </div>
+        </div>
         
-    </div>
-    
-            
-    </div>
-    
-    
-    </Container>
-    </div>
+        
+        </Container>
+        </div>
 )
 }
 

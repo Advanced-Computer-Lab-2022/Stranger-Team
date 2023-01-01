@@ -8,7 +8,7 @@
     import MyCourses from "../components/MyCourses"
     import 'bootstrap/dist/css/bootstrap.min.css'
 
-    import{Button, Alert, Container} from 'react-bootstrap'
+    import{Button, Alert, Container,Card} from 'react-bootstrap'
     import ProfileNavBar from '../components/ProfileNavBar'
     import InstructorProfileDetails from "../components/InstructorProfileDetails";
     import CurrentCourseInstructorCoursesComponent from "../components/CurrentCourseInstructorCourses";
@@ -17,7 +17,8 @@
     import CurrentCourseInstructorProfileDetailsForTrainee from "../components/CurrentCourseInstructorProfileDetailsForTrainee";
     import CurrentCourseInstructorCoursesCorporateTrainee from "../components/CurrentCourseInstructorCoursesCorporateTrainee";
     import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfileNavBar";
-import TraineeReviewAnInstructor from "../components/TraineeReviewAnInstructor";
+    import TraineeReviewAnInstructor from "../components/TraineeReviewAnInstructor";
+    import styles from '../components/Guest/styles.module.css';
 
 
     const CurrentCourseInstructorPageCorporateTrainee = () => {
@@ -66,69 +67,88 @@ import TraineeReviewAnInstructor from "../components/TraineeReviewAnInstructor";
     return (
         
 
+        // <div>
+        // <CorporateTraineeProfileNavBar/>
+        // <Container >
+
+        // <div className="row gutters">
+        // <div className="card h-100">
+        //     <div className="card-body">
+        //         {/* <FetchInstructorNameForTraineeCourseDetails/> */}
+        //         {/* {error && <div className="error">{error}</div>} */}
+        //         {instructors && instructors.map(instructor => (
+        //         <CurrentCourseInstructorProfileDetailsForTrainee instructor={instructor} key={instructor._id} />
+        //         ))[0]}
+                
+            
+        //         {/* <button onClick={routeChange1}>Review Instructor</button> */}
+        //     </div>
+                    
+        //     <form className="course-details">
+        //             <RadioButtonsRateAnInstructor/>
+        //     </form>
+
+        //     <form className="course-details">
+        //             <TraineeReviewAnInstructor/>
+        //     </form>
+
+        //     <form className="course-details">
+        //         <h3>Explore More of The Instructor's Courses:</h3>
+        //         <CurrentCourseInstructorCoursesCorporateTrainee/>
+        //     </form>
+
+        // </div>
+        // </div>
+        
+        // </Container>
+        // </div>
+        //-----------------------------------------------------------
         <div>
         <CorporateTraineeProfileNavBar/>
         <Container >
 
         <div className="row gutters">
-        <div className="card h-100">
-            <div className="card-body">
-                {/* <FetchInstructorNameForTraineeCourseDetails/> */}
-                {/* {error && <div className="error">{error}</div>} */}
+        <Card style={{height:'686px'}}>
+            <div className="card-body" >
+
                 {instructors && instructors.map(instructor => (
-                <CurrentCourseInstructorProfileDetailsForTrainee instructor={instructor} key={instructor._id} />
-                ))[0]}
                 
-            
-                {/* <button onClick={routeChange1}>Review Instructor</button> */}
+            <Container  className={styles.currentCourseContainer} 
+                key={instructor._id}>
+                <CurrentCourseInstructorProfileDetailsForTrainee instructor={instructor} key={instructor._id} />
+                
+                </Container>
+            ))[0]}
+
+        
+
+                
             </div>
-                    
-            <form className="course-details">
+            
+        </Card>
+        </div>
+        <div></div>
+        <hr/>
+        <div className="course-details">
+                
                     <RadioButtonsRateAnInstructor/>
-            </form>
-
-            <form className="course-details">
+                </div>
+            <div className="course-details">
                     <TraineeReviewAnInstructor/>
-            </form>
+            </div>
 
-            <form className="course-details">
-                <h3>Explore More of The Instructor's Courses:</h3>
-                <CurrentCourseInstructorCoursesCorporateTrainee/>
-            </form>
+            {/* <form className="course-details"> */}
+            <hr/>
+            {/* <h3>Explore More of The Instructor's Courses:</h3> */}
+            <CurrentCourseInstructorCoursesCorporateTrainee/>
+            {/* </form> */}
 
-        </div>
-        </div>
         
         </Container>
         </div>
 
-        
-        // <Container >
-        // <CorporateTraineeProfileNavBar/>
-        // <form className="create"> 
-        // <div className="container">
-        // <div className="row gutters">
-        // <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-        // <div className="card h-100">
-        //     <div className="card-body">
-        //         {instructors && instructors.map(instructor => (
-        //         <CurrentCourseInstructorProfileDetailsForTrainee instructor={instructor} key={instructor._id} />
-        //         ))[0]}
-        //     </div>
-        // </div>
-        // </div>
-        // </div>
-        // </div>
-        // <button onClick={routeChange}>Rate Instructor</button>
-        // <button onClick={routeChange1}>Review Instructor</button>
-        // {/* <RadioButtonsRateAnInstructor/> */}
-        // {/* <StarRating/> */}
-        // <h3>Instructor Available Courses:</h3>
-        // <CurrentCourseInstructorCoursesCorporateTrainee/>
 
-        
-        // </form>
-        // </Container>
+    
     )
     }
 

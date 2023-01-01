@@ -5,8 +5,9 @@
     import React from 'react';
     import { useNavigate } from "react-router-dom";
     import { useEffect, useState } from "react"
-    import { FaWallet } from "react-icons/fa";
+    import { FaWallet,FaUserAlt } from "react-icons/fa";
     import profile from '../images/profile.png'
+    import styles from '../components/Guest/styles.module.css';
 
 
     const TraineeProfileDetails = ({ trainee }) => {
@@ -48,16 +49,27 @@
     return (
 
             <div>
+                {/* <div className={styles.currentCourseDetails}>
+        
+        <FaUserAlt  style={{ width: '100px',height:'100px',color:'#00008B'}}></FaUserAlt>
+        <span ><strong> Name:</strong> {trainee.First_Name} {trainee.Last_Name}</span>
+        <span ><strong> Email:</strong> {trainee.Email}</span>
+
+        {/* </div>  */}
+        {/* </div> */} 
+
     <div className="container py-5">
         <div className="row">
-        <div className="col-lg-4">
-            <div className="card mb-4">
-            <div className="card-body text-center">
-                <img src={profile} width="50" height="50" className="d-inline-block align-top" alt=""></img>
+        <div className="col-lg-4" style={{paddingLeft:'200px'}}>
+            <div className="card mb-4" style={{width:'300px'}}>
+            <div className="card-body text-center" >
+                <FaUserAlt  style={{ width: '100px',height:'100px',color:'#00008B'}}></FaUserAlt>
                 <h5 className="my-3">{trainee.Username}</h5>
                 <p className="text-muted mb-1">Individual Trainee</p>
                 
         </div>
+        
+        
         </div>
         </div>
         </div>
@@ -87,6 +99,16 @@
                 </div>
                 <div className="col-sm-9">
                     <p className="text-muted mb-0">{trainee.Gender}</p>
+                </div>
+                </div>
+
+                <hr/>
+                <div className="row">
+                <div className="col-sm-3">
+                    <p className="mb-0">Country</p>
+                </div>
+                <div className="col-sm-9">
+                    <p className="text-muted mb-0">{trainee.Country}</p>
                 </div>
                 </div>
 

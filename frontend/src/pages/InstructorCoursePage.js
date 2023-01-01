@@ -11,12 +11,16 @@
     import{Button, Alert, Container} from 'react-bootstrap'
     import ProfileNavBar from '../components/ProfileNavBar'
     import FilterMyCoursesInstructorComponent from "../components/FilterMyCoursesInstructorComponent";
+    import Terms from "../components/InstructorContract";
 
+    var c;
 
     const InstructorCoursePage = () => {
-    const [courses, setCourses] = useState(null)
-    const [searchQuery, setSearchQuery] = useState("")
-    const [searchPriceQuery, setSearchPriceQuery] = useState("")
+        const [courses, setCourses] = useState(null)
+        const [searchQuery, setSearchQuery] = useState("")
+        const [searchPriceQuery, setSearchPriceQuery] = useState("")
+        
+        const [contarct, setContract] = useState(false);
 
     useEffect(() => {
         const fetchInstructor = async () => {
@@ -40,10 +44,36 @@
         }
         }
 
+
+        const fetchContract=async()=>{
+            const response1=await fetch('/fetchContract')
+            const json = await response1.json()
+            console.log(response1)
+            if (response1.ok) {
+                setContract(json);
+            }
+        }
+        c=contarct;
+        console.log(">>>>>>>>>>>>>>MAWW",c);
+        fetchContract();
+        
         fetchInstructor()
-    }, [searchQuery])
+    })
 
+    // useEffect(()=>{
+    // const fetchContract=async()=>{
+    //     const response1=await fetch('/fetchContract')
+    //     const json = await response1.json()
+    //     console.log(response1)
+    //     if (response1.ok) {
+    //         setContract(json);
+    //     }
+    // }
+    // c=contarct;
+    // console.log(">>>>>>>>>>>>>>MAWW",c);
+    // fetchContract();
 
+    // })
     // const searchMyCourses=  async () => {
         
     //     const params = new URLSearchParams(window.location.search);
@@ -68,23 +98,25 @@
     //     navigate(path);
     // }
 
-    // const routeChange2 = () =>{ 
-    //     const params = new URLSearchParams(window.location.search);
-    //     const instructorId = params.get('id');
-    //     let path = `/InstructorAddANewCoursePage/?id=${instructorId}`; 
-    //     navigate(path);
-    // }
     const routeChange2 = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        //const instructorId = params.get('id');
-        //let path = `/InstructorAddANewCoursePage/?id=${instructorId}`; 
-        // let path = `/InstructorContract/?id=${instructorId}`; 
-        let path = `/InstructorContract`; 
+        const instructorId = params.get('id');
+        let path = `/InstructorAddANewCoursePage/?id=${instructorId}`; 
         navigate(path);
     }
+    // const routeChange2 = () =>{ 
+    //     const params = new URLSearchParams(window.location.search);
+    //     //const instructorId = params.get('id');
+    //     //let path = `/InstructorAddANewCoursePage/?id=${instructorId}`; 
+    //     // let path = `/InstructorContract/?id=${instructorId}`; 
+    //     let path = `/InstructorContract`; 
+    //     navigate(path);
+    // }
 
     return (
         <Container >
+            {c==false ? <Terms></Terms> : <div>
+
             <ProfileNavBar/>
             <input type="text" placeholder="Search My Courses By Title,Subject..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}></input>
             {/* <input type="text" placeholder="Search My Courses By Price..." className="search" onChange={(e)=>setSearchQuery(e.target.value)}></input> */}
@@ -124,10 +156,7 @@
             ))}
         </div>
         
-        
-
-        
-        
+        </div>   }
         </Container>
     )
     }

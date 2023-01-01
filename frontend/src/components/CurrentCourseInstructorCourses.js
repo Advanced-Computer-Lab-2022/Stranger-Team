@@ -16,6 +16,8 @@
     import CurrentCourseDiscountPage from "./CurrentCourseDiscountPage";
     import PreviewCourseVideoPageDetails from "./PreviewCourseVideoTraineePageDetails";
     // import FetchInstructorNameForTraineeCourseDetails from "../components/FetchInstructorNameForTraineeCourseDetails";
+    import styles from '../components/Guest/styles.module.css';
+    import GuestCurrentCourseinstructorCourseDetails from "./Guest/GuestCurrentCourseinstructorCourseDetails";
 
 
 
@@ -55,12 +57,46 @@
 
 
     return (
-        <div>
+        // <div>
 
-        <div className="row gutters">
-            <div className="courses">
-            {courses && courses.map(course => (
-            <Container hover
+        // <div className="row gutters">
+        //     <div className="courses">
+        //     {courses && courses.map(course => (
+        //     <Container hover
+        //         sx={{
+        //             "&:hover":{
+        //             cursor: "pointer",
+        //             backgroundColor: "#f5f5f5",
+        //             width: "100%"
+        //             }
+        //         }}
+        //         //onClick={() => window.location.href=`/CurrentCoursePageTrainee?CourseId=${course._id}`}
+        //         onClick={() =>{
+        //         const params = new URLSearchParams(window.location.search);
+        //         // const traineeId = params.get('TraineeId');
+        //         // console.log(traineeId);
+        //         // window.location.href=`/CurrentNonRegisteredCoursePageTrainee?CourseId=${course._id}&TraineeId=${traineeId}`
+        //     window.location.href=`/CurrentNonRegisteredCoursePageTrainee?CourseId=${course._id}`} }
+        //         key={course._id}>
+        //     <CourseDetails course={course} key={course.id} />
+        //     {/* <PreviewCourseVideoPageDetails course={course} key={course.id} /> */}
+            
+            
+        //     </Container>
+        //     ))}
+        // </div>
+            
+        // </div>
+        // </div>
+        <>
+        {courses && <h3>Explore More of The Instructor's Courses:</h3>}
+        {!courses && <h3>You are registered in all of this instructor's courses!</h3>}
+        
+
+        <div className={styles.instructorCoursesGrid}>
+                {courses && courses.map(course => (
+                
+            <div  className={styles.instructorCourseDetails} hover
                 sx={{
                     "&:hover":{
                     cursor: "pointer",
@@ -68,24 +104,18 @@
                     width: "100%"
                     }
                 }}
-                //onClick={() => window.location.href=`/CurrentCoursePageTrainee?CourseId=${course._id}`}
+                
                 onClick={() =>{
-                const params = new URLSearchParams(window.location.search);
-                // const traineeId = params.get('TraineeId');
-                // console.log(traineeId);
-                // window.location.href=`/CurrentNonRegisteredCoursePageTrainee?CourseId=${course._id}&TraineeId=${traineeId}`
             window.location.href=`/CurrentNonRegisteredCoursePageTrainee?CourseId=${course._id}`} }
                 key={course._id}>
-            <CourseDetails course={course} key={course.id} />
-            {/* <PreviewCourseVideoPageDetails course={course} key={course.id} /> */}
-            
-            
-            </Container>
+            <GuestCurrentCourseinstructorCourseDetails course={course} key={course.id} />  
+                
+                
+                </div>
             ))}
-        </div>
-            
-        </div>
-        </div>
+            </div>
+
+            </>
     )
     }
 

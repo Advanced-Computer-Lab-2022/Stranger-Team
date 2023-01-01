@@ -62,7 +62,7 @@
 
                 {course && course.map(course => (
                 
-            <Container  className={styles.currentCourseContainer} hover
+            <div  className={styles.currentCourseContainer} hover
                 sx={{
                     "&:hover":{
                     cursor: "pointer",
@@ -74,7 +74,7 @@
                 <GuestCurrentCoursePageDetails course={course} key={course._id} />
                 
                 
-                </Container>
+                </div>
             ))[0]}
             <PreviewCourseVideoPageDetails/>
 

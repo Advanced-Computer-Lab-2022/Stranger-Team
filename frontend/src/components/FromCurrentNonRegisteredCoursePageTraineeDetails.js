@@ -2,12 +2,12 @@
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
-    import { FaStar } from 'react-icons/fa'
-    import styles from "../components/Guest/styles.module.css"
-    
-    
+    import Card from 'react-bootstrap/Card';
+    import { FaStar } from 'react-icons/fa';
+    import styles from '../components/Guest/styles.module.css';
 
-    const CurrentNonRegisteredCoursePageDetailsTrainee = ({ course }) => {
+
+    const FromCurrentNonRegisteredCoursePageTraineeDetails = ({ course }) => {
         
         const [instructorFirstName, setInstructorFirstName] = useState(null)
         const [instructorLastName, setInstructorLastName] = useState(null)
@@ -16,6 +16,7 @@
         const [Discount_Start_Date, setDiscount_Start_Date] = useState(null);
         const [Discount_End_Date, setDiscount_End_Date] = useState(null);
         const [price, setPrice] = useState("")
+        
         
         
         // var instructorFirstName = null;
@@ -86,7 +87,7 @@
         let navigate = useNavigate();
 
         const routeChange = () =>{ 
-        let path = `/CurrentNonRegisteredCourseInstructorPage/?id=${currentInstructorId}`; 
+        let path = `/GuestCurrentCourseInstructorPage/?id=${currentInstructorId}`; 
         navigate(path);
     }
 
@@ -163,29 +164,12 @@
     return (
 
         
-        // <div className="course-details">
-
-
-        // <h4>{course.Title}</h4>
-        // <div className="course-details" onClick={routeChange}>
-        //     <p><strong>Instructor Name: </strong>{instructorFirstName} {instructorLastName}</p> 
-        // </div>
-        // <p><strong>Subject: </strong>{course.Subject}</p>
-        // <p><strong>Subtitles Total Hours: </strong>{course.Subtitles_Total_Hours}</p>
-        // <p><strong>Course Total Hours: </strong>{course.Course_Total_Hours}</p>
-        // <p><strong>Price: </strong>{course.Price}</p>
-        // <p><strong>Rating: </strong>{course.Rating}</p>
-        // <p><strong>Dicount: </strong>{Discount}</p>
-        // <p><strong>Course Description: </strong>{course.Course_Description}</p> 
-        
-        // </div>
-
         <div className={styles.currentCourseDetails}>
         {/* <div className="course-details"> */}
 
 
         <h4><strong>{course.Title}</strong></h4>
-        <div className={styles.currentInstructorCourseDetails} onClick={routeChange}>
+        <div className={styles.currentInstructorCourseDetails}>
             <p><strong>Instructor Name: </strong>{instructorFirstName} {instructorLastName}</p> 
         </div>
         <p><strong>Subject: </strong>{course.Subject}</p>
@@ -204,4 +188,4 @@
     )
     }
 
-    export default CurrentNonRegisteredCoursePageDetailsTrainee
+    export default FromCurrentNonRegisteredCoursePageTraineeDetails

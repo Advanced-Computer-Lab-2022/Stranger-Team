@@ -18,6 +18,7 @@
     import CurrentCoursePageSubtitleDetails from "../components/CurrentCourseInstructorPageSubtitlesDetails";
     import CurrentCourseSubtitlesPageDetailsTrainee from "../components/CurrentCourseSubtitlesPageDetailsTrainee";
     import TraineeSubtitleTitlesDetailsPage from "../components/TraineeSubtitleTitlesDetailsPage";
+    import styles from '../components/Guest/styles.module.css';
 
 
 

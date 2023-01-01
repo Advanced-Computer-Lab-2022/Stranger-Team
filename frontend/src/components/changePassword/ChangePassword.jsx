@@ -2,6 +2,7 @@ import { useEffect, useState, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import styles from "./styles.module.css";
+import newstyles from './newstyles.module.css';
 
 const ChangePassword = () => {
 	const [validUrl, setValidUrl] = useState(true);
@@ -55,6 +56,7 @@ const ChangePassword = () => {
 				<div className={styles.container}>
 					<form className={styles.form_container} onSubmit={handleSubmit}>
 					<h1>Change Password</h1>
+					<div className={newstyles.proceedToPayment}>
 						<input
 							type="Password"
 							placeholder="current password"
@@ -64,7 +66,9 @@ const ChangePassword = () => {
 							required
 							className={styles.input}
 						/>
+						</div>
 					
+						<div className={newstyles.proceedToPayment}>
 						<input
 							type="Password"
 							placeholder="New password"
@@ -74,6 +78,9 @@ const ChangePassword = () => {
 							required
 							className={styles.input}
 						/>
+						</div>
+
+						<div className={newstyles.proceedToPayment}>
 						<input
 							type="Password"
 							placeholder="confirm New password"
@@ -83,9 +90,10 @@ const ChangePassword = () => {
 							required
 							className={styles.input}
 						/>
+						</div>
 						{error && <div className={styles.error_msg}>{error}</div>}
 						{msg && <div className={styles.success_msg}>{msg}</div>}
-						<button type="submit" className={styles.green_btn}>
+						<button type="submit" className={newstyles.blueButton}>
 							Submit
 						</button>
 					</form>

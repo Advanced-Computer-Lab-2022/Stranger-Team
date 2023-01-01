@@ -71,7 +71,7 @@ const {addCourse, viewCourses, insertQuestions, viewQuestions,
 
 const {addIndividualTrainee,indiviualTraineeRegisterCourse,viewMyRegisteredCourses,traineeSendReport,fetchTraineeAllPreviousReports,fetchTraineeProfileDetails,fetchTraineeDeliveredReports,fetchTraineePendingReports,fetchTraineeResolvedReports,fetchProblem,fetchNonRegisteredTraineeCoursesForInstructor,checkIfAdminRespondedTrainee,updateReportStatusFromPendingToResolvedTrainee,traineeSendFollowup,getWalletBalance,viewMyWalletBalance,payByWalletBalance,traineeRefundRequest,fetchTraineePendingRequests,fetchCurrentRequest,getCurrentCourse,fetchTraineeResolvedRequests,editProfileDetails,checkIfRefundEligible} = require('./Routes/individualTraineeController');
 
-const {corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem,fetchNonRegisteredCorporateTraineeCoursesForInstructor, requestCourseAccess,corporateTraineeSendFollowup,AddNotes,getNotes, courseRequestCheck,check} = require('./Routes/corporateTraineeController');
+const {corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem,fetchNonRegisteredCorporateTraineeCoursesForInstructor, requestCourseAccess,corporateTraineeSendFollowup,AddNotes,getNotes, courseRequestCheck,check,fetchInstCoursesCT} = require('./Routes/corporateTraineeController');
 
 
 
@@ -222,34 +222,34 @@ mongoose.connect(MongoURI)
 app.get("/home", data);
 //app.get("/View_All_Courses/", View_All_Courses);
 
-app.get("/View_All_Courses/",async (req,res)=>{
+// app.get("/View_All_Courses/",async (req,res)=>{
 
 
-  const q = req.query.q;
+//   const q = req.query.q;
   
 
-  const keys=["Title","Subject","Instructor_Name"];
-  const search = (data)=>{
-    return data.filter((item)=>
-    keys.some((key)=>item[key].toLowerCase().includes(q))
-    );
-  };
+//   const keys=["Title","Subject","Instructor_Name"];
+//   const search = (data)=>{
+//     return data.filter((item)=>
+//     keys.some((key)=>item[key].toLowerCase().includes(q))
+//     );
+//   };
 
-  // if(parseInt(q))
-  // {
+//   // if(parseInt(q))
+//   // {
     
-  //   const allCourses = await course.find({"Rating":q}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Rating:1,Course_Description:1 }).sort({createdAt:-1}) ;
+//   //   const allCourses = await course.find({"Rating":q}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Rating:1,Course_Description:1 }).sort({createdAt:-1}) ;
     
-  //   res.status(200).json(allCourses);
-  // }
-  // else{
-    const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Instructor_Name:1,Course_Description:1 }).sort({createdAt:-1}) ;
-    res.status(200).json(search(allCourses));
-  //}
+//   //   res.status(200).json(allCourses);
+//   // }
+//   // else{
+//     const allCourses = await course.find({}, {Title: 1, Subject: 1,Subtitles_Total_Hours:1, Course_Total_Hours:1,Price:1,Discount:1,Instructor_Name:1,Course_Description:1 }).sort({createdAt:-1}) ;
+//     res.status(200).json(search(allCourses));
+//   //}
 
 
 
-});
+// });
 
 app.get("/View_All_Courses/",async (req,res)=>{
   const currSession = req.session.user;
@@ -397,95 +397,6 @@ app.get("/View_Most_Viewed/",async (req,res)=>{
 
 
 
-//app.get("/FilteredCourses",FilteredCourses);
-// app.get("/FilteredCourses",async (req,res)=>{
-
-
-//   const q = req.query.q;
-  
-
-//   const keys=["Title","Subject","Instructor_Name"];
-//   const search = (data)=>{
-//     return data.filter((item)=>
-//     keys.some((key)=>item[key].toLowerCase().includes(q))
-//     );
-//   };
-
-//             const subject = req.query.Subject;
-//             const rating = req.query.Rating;
-//             const price = req.query.Price;
-//             // const filteredCourses=null;
-
-//             if(subject==null||subject=="")
-//             {
-//                 if(rating==null||rating=="")
-//                 {
-//                     if(price==null||price=="")
-//                     {
-//                         const filteredCourses = await course.find({});
-
-//                         res.status(200).json(search(filteredCourses));
-//                     }
-//                     else
-//                     {
-//                         const filteredCourses = await course.find({Price:price});
-
-//                         res.status(200).json(search(filteredCourses));
-//                     }
-//                 }
-//                 else
-//                 {
-//                     if(price==null||price=="")
-//                     {
-//                         const filteredCourses = await course.find({Rating:rating});
-
-//                         res.status(200).json(search(filteredCourses));
-//                     }
-//                     else
-//                     {
-//                         const filteredCourses = await course.find({Rating:rating,Price:price});
-
-//                         res.status(200).json(search(filteredCourses));
-//                     }
-//                 }
-//             }
-//             else
-//             {
-//                 if(rating==null||rating=="")
-//                 {
-//                     if(price==null||price=="")
-//                     {
-//                         const filteredCourses = await course.find({Subject:subject});
-
-//                         res.status(200).json(search(filteredCourses));
-//                     }
-//                     else
-//                     {
-//                         const filteredCourses = await course.find({Subject:subject,Price:price});
-
-//                         res.status(200).json(search(filteredCourses));
-//                     }
-//                 }
-//                 else
-//                 {
-//                     if(price==null||price=="")
-//                     {
-//                         const filteredCourses = await course.find({Subject:subject,Rating:rating});
-
-//                         res.status(200).json(search(filteredCourses));
-//                     }
-//                     else
-//                     {
-//                         const filteredCourses = await course.find({Subject:subject,Rating:rating,Price:price});
-
-//                         res.status(200).json(search(filteredCourses));
-
-//                     }
-//                 }
-//             }
-
-// });
-
 app.get("/FilteredCourses",async (req,res)=>{
 
 
@@ -576,6 +487,7 @@ app.get("/FilteredCourses",async (req,res)=>{
             }
 
 });
+
 
 app.get("/FilteredCoursesAdmin" , async (req,res) => {
             const subject = req.query.Subject;
@@ -752,6 +664,26 @@ app.get("/FilterMyCourses",async (req,res)=>{
 
 });
 
+app.get("/GetUserRole",async (req,res)=>{
+  const currRole = req.session.user.Role;
+
+  try{
+    if(currRole==null || currRole==undefined)
+    {
+        res.status(400).json({error:"User not found"});
+    }
+    else
+    {
+      res.status(200).json(currRole);
+    }
+    
+  }catch(error)
+  {
+      res.status(400).json({error:error.message});
+  }
+
+});
+
 app.get("/CurrentCourse/",getCurrentCourseDetails);
 
 app.get("/fetchInstructorCoursesByIdForGuest",fetchInstructorCoursesByIdForGuest);
@@ -829,23 +761,35 @@ app.get("/fetchAdminProfileDetails",fetchAdminProfileDetails);
 
 app.get("/viewMyRegisteredCourses" , async(req,res) => {
     
-        //const individualTraineeId = req.query.TraineeId;
-        // const individualTraineeId = req.session.user._id;
-        // const individualTraineeId = req.query.TraineeId;
-        const individualTraineeId = req.session.user._id;
-
-        const q = req.query.q;
+      
+        const currSession = req.session.user;
   
-
-        const keys=["Title","Subject","Instructor_Name"];
+  var endpoint=null;
+  var result = null; 
+  var isGuest = false;
+  if(currSession==null||currSession==undefined)
+  {
+      endpoint = "https://api.exchangerate-api.com/v4/latest/USD";
+      result = await fetch(`${endpoint}?base=USD`);
+      isGuest=true;
+  }
+  else
+  {
+      endpoint = "https://api.exchangerate-api.com/v4/latest/USD";
+      result = await fetch(`${endpoint}?base=${req.session.user.Currency}`);
+  }
+ 
+  const rates = await result.json();
+  const q = req.query.q;
+  const keys=["Title","Subject","Instructor_Name"];
         const search = (data)=>{
           return data.filter((item)=>
           keys.some((key)=>item[key].toLowerCase().includes(q))
           );
         };
 
-    try{
-    const currTrainee = await Individual_Trainee.findById({_id:individualTraineeId});
+  const individualTraineeId = req.session.user._id;
+  const currTrainee = await Individual_Trainee.findById({_id:individualTraineeId});
     const coursesArray = currTrainee.Registered_Courses;
     const coursesArray1 = [];
     console.log("coursesarray"+coursesArray)
@@ -854,12 +798,67 @@ app.get("/viewMyRegisteredCourses" , async(req,res) => {
             coursesArray1.push(await course.findById({_id:coursesArray[i]}));
         }
 
-    console.log("coursesArray1"+coursesArray1)
+  const allCourses2 = coursesArray1.map(async coursaya => {
+    //  let insCurrency= await Instructors.findOne({_id : coursaya.Instructor})
+      const x= rates.rates.USD;
+   //   console.log(coursaya.Instructor.Currency);
+   if(isGuest==true)
+   {
+    if(coursaya.Price=="0"||coursaya.Price==0)
+    {
+      coursaya.Price = "Free";
+    }
+    else
+    {
+      coursaya.Price = coursaya.Price/x + "USD";
+    }
+    
+   }
+   else
+   {
+    if(coursaya.Price=="0"||coursaya.Price==0)
+    {
+      coursaya.Price = "Free";
+    }
+    else
+    {
+      coursaya.Price = coursaya.Price/x + "USD";
+    }
+   }
+   });
+    // //allCourses2=allCourses2.Price*rates.rates.USD;
+   //  console.log("all courses"+allCourses2);
+    
     res.status(200).json(search(coursesArray1));
-    }
-    catch(error){
-        res.status(400).json({error:error.message});
-    }
+   //-------------------------------
+    //     const individualTraineeId = req.session.user._id;
+
+    //     const q = req.query.q;
+  
+
+    //     const keys=["Title","Subject","Instructor_Name"];
+    //     const search = (data)=>{
+    //       return data.filter((item)=>
+    //       keys.some((key)=>item[key].toLowerCase().includes(q))
+    //       );
+    //     };
+
+    // try{
+    // const currTrainee = await Individual_Trainee.findById({_id:individualTraineeId});
+    // const coursesArray = currTrainee.Registered_Courses;
+    // const coursesArray1 = [];
+    // console.log("coursesarray"+coursesArray)
+
+    // for (let i = 0; i < coursesArray.length; i++) {
+    //         coursesArray1.push(await course.findById({_id:coursesArray[i]}));
+    //     }
+
+    // console.log("coursesArray1"+coursesArray1)
+    // res.status(200).json(search(coursesArray1));
+    // }
+    // catch(error){
+    //     res.status(400).json({error:error.message});
+    // }
 });
 
 app.get("/corporateViewMyRegisteredCourses" , async(req,res) => {
@@ -907,6 +906,8 @@ app.get("/fetchCorporateTraineeAllPreviousReports",fetchCorporateTraineeAllPrevi
 app.get("/fetchNonRegisteredTraineeCoursesForInstructor",fetchNonRegisteredTraineeCoursesForInstructor);
 
 app.get("/fetchNonRegisteredCorporateTraineeCoursesForInstructor",fetchNonRegisteredCorporateTraineeCoursesForInstructor);
+
+app.get("/fetchInstCoursesCT",fetchInstCoursesCT);
 
 app.get("/isCurrentCourseRegistered",isCurrentCourseRegistered);
 
@@ -1124,7 +1125,8 @@ app.get("/getSubtitlesStatus",getStatusOfSubtitlie);
 app.get("/updatetSubtitlesStatus",UpdateProgressOfSubtitlie);
 app.post("/fetchCorporateTraineeAddNotes",AddNotes);
 
-
+app.get("/fetchContract",fetchAcceptedContracts);
+app.get("/updateContract",UpdateAcceptedContracts);
 
 //HANA
 const TraineeWalletSchema = require("./Models/TraineeWalletScheema");

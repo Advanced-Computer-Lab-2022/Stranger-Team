@@ -2,7 +2,8 @@
     import 'bootstrap/dist/css/bootstrap.min.css'
     import{Button, Alert, Container, Nav} from 'react-bootstrap'
     import { useNavigate,useLocation  } from "react-router-dom";
-
+    import styles from '../components/Guest/styles.module.css';
+    import { MDBRadio } from 'mdb-react-ui-kit';
 
 
     const RadioButtonsRateACourse = () => {
@@ -38,26 +39,6 @@
         
         <form className="course-details" onSubmit={handleSubmit}>
         <h3>Rate The Course: </h3>
-        {/* <label className="radio-inline">
-        <input type="radio"  className="rate" onChange={(e) => setRate(e.target.value)} 
-            /> 1
-        </label>
-        <label className="radio-inline">
-        <input type="radio"  value="2" className="rate" onChange={(e) => setRate(e.target.value)} 
-            /> 2
-        </label>
-        <label className="radio-inline">
-        <input type="radio"  value="3" className="rate" onChange={(e) => setRate(e.target.value)} 
-            /> 3
-        </label>
-        <label className="radio-inline">
-        <input type="radio"  value="4" className="rate" onChange={(e) => setRate(e.target.value)} 
-            /> 4
-        </label>
-        <label className="radio-inline">
-        <input type="radio"  value="5" className="rate" onChange={(e) => setRate(e.target.value)} 
-            /> 5
-        </label> */}
 
 
         <div className="form-check">
@@ -94,7 +75,7 @@
         </div>
 
 
-        <button >Submit Rating</button>
+        <button className={styles.blueButton} >Submit Rating</button>
         {error && <div className="error">{error}</div>}
         </form>
     );

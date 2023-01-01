@@ -1,5 +1,6 @@
     import { useState } from 'react'
     import { useCourseContext } from "../hooks/useCoursesContext";
+    import styles from '../components/Guest/styles.module.css';
 
     const TraineeReviewAnInstructor = () => {
     const[review,setReview]= useState('')
@@ -7,7 +8,7 @@
     //const [instructorId, setInstructorId] = useState("")
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         const params = new URLSearchParams(window.location.search);
         const instructorId = params.get('id');
         console.log(instructorId);
@@ -44,7 +45,7 @@
             value={review}
         />
 
-        <button>Add Review</button>
+        <button className={styles.blueButton}>Add Review</button>
 
         {error && <div className="error">{error}</div>}
         </form>

@@ -168,6 +168,12 @@
 
                 const instructorId= req.query.id;
                 const instructorReview = req.query.review;
+                if(instructorReview==null||instructorReview==""||instructorReview==undefined)
+                {
+                    res.status(400).json({error:"Please fill in the field to review the instructor!"});
+                }
+                else
+                {
                 const currInstructor = await instructor.findById({_id:instructorId});
                 
                 const array = currInstructor.Instructor_Reviews;
@@ -177,6 +183,8 @@
                 const updatedInstructor =  await instructor.findByIdAndUpdate({_id:instructorId},{Instructor_Reviews:array},{new:true});
 
                 res.status(200).json(updatedInstructor);
+                }
+                
 
             }
             catch(error){
@@ -354,13 +362,45 @@ const AllmoneyOwed = async (req,res)=>{
 
 }
 
+const fetchAcceptedContracts =async(req,res)=>{
+    const inst=req.session.user._id;
+    try{
+    const contract=await instructor.find({"_id":inst},{Contract:1});
+    const Cont=contract[0].Contract;   
+     console.log(">>>>>>>>>>>>>>>>>>>>>>BEFORE",Cont)
+
+
+    res.status(200).json(Cont);
+    }
+    catch(error){
+        res.status(400).json({error:"No such Instructor"});
+
+    }
+}
+const UpdateAcceptedContracts =async(req,res)=>{
+    const inst1=req.session.user._id;
+    const flag=true;
+    try{
+    const contract=await instructor.updateOne({_id:inst1},{"$set":{Contract: true}});
+    const contract2=await instructor.find({"_id":inst1},{Contract:1});
+    const Cont1=contract2[0].Contract;
+    console.log(">>>>>>>>>>>>>>>>>>>>>>",Cont1)
+    res.status(200).json(Cont1);
+
+    }
+    catch(error){
+        res.status(400).json({error:"Cannot Update Contract"});
+    }
+}
+
+
 
     module.exports ={insttitles,filterTitles2,getInstructorInformation,editInstructorProfileEmailAndBio,
         ratingAnInstructor,reviewingAnInstructor,getInstructorRatings,
         instructorSendReport,fetchInstructorAllPreviousReports,
         fetchInstructorDeliveredReports,fetchInstructorPendingReports,
         fetchInstructorResolvedReports,fetchInstructorProblem,
-        instructorSendFollowup,AllmoneyOwed};
+        instructorSendFollowup,AllmoneyOwed,fetchAcceptedContracts,UpdateAcceptedContracts};
 
     // module.exports =filterTitles;
     //module.exports =createinst;

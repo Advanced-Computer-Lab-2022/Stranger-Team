@@ -60,29 +60,51 @@ useEffect(() => {
 }
 
 return (
-    <Container >
-        <CorporateTraineeProfileNavBar/>
+    // <Container >
+    //     <CorporateTraineeProfileNavBar/>
     
-    <form className="create"> 
-    <div className="container">
-    <div className="row gutters">
-    <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-    <div className="card h-100">
-        <div className="card-body">
-            {trainee && trainee.map(trainee => (
-            <CorporateTraineeProfileDetails trainee={trainee} key={trainee._id} />
-            ))[0]}
+    // <form className="create"> 
+    // <div className="container">
+    // <div className="row gutters">
+    // <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+    // <div className="card h-100">
+    //     <div className="card-body">
+    //         {trainee && trainee.map(trainee => (
+    //         <CorporateTraineeProfileDetails trainee={trainee} key={trainee._id} />
+    //         ))[0]}
             
-        </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    {/* <button className="create" onClick={routeChange}>Edit Profile</button> */}
+    //     </div>
+    // </div>
+    // </div>
+    // </div>
+    // </div>
+    // {/* <button className="create" onClick={routeChange}>Edit Profile</button> */}
 
     
-    </form>
-    </Container>
+    // </form>
+    // </Container>
+    ///-----------------------------------------------------------------------------------
+    <>
+        <CorporateTraineeProfileNavBar/>
+        <Container style={{marginRight:'450px'}}>
+        <form className="create"> 
+        <div className="container" >
+        <div className="row gutters">
+        <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+        <div className="card h-100" style={{width:'800px',marginRight:'50px',marginLeft:'90px'}}>
+            <div className="card-body"  >
+                {trainee && trainee.map(trainee => (
+                <CorporateTraineeProfileDetails trainee={trainee} key={trainee._id} />
+                ))[0]}
+                
+            </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </form>
+        </Container>
+        </>
 )
 }
 

@@ -77,8 +77,10 @@ router.post("/", async (req, res) => {
 
 		const token = user.generateAuthToken();
 		req.session.user=user;
-		console.log(req.session.user);
-		res.status(200).send({ data: token, message: "logged in successfully" });
+		const role = req.session.user.Role;
+		// console.log(""+req.session.user);
+		// res.status(200).send({ data: token, message: "logged in successfully"});
+		res.status(200).send({ data: token,userRole:role});
 	} catch (error) {
 		console.log(error);
 		res.status(500).send({ message: "Internal Server Error" });

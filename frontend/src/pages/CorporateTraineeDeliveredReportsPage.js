@@ -15,6 +15,7 @@ import PreviewCourseVideoPageDetails from '../components/PreviewCourseVideoTrain
 import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
 import ReportHeadings from "../components/ReportHeadings";
 import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfileNavBar";
+import styles from "../components/Guest/styles.module.css"
 
 
 const CorporateTraineeDeliveredReportsPage = () => {
@@ -50,33 +51,57 @@ let navigate = useNavigate();
 
 return (
 
+    // <div >
+    //     <CorporateTraineeProfileNavBar/>
+
+    //     {problems && problems.map(problem => (
+    //     <Container hover
+    //         sx={{
+    //             "&:hover":{
+    //             cursor: "pointer",
+    //             backgroundColor: "#f5f5f5",
+    //             width: "100%"
+    //             }
+    //         }}
+    //         onClick={() => {
+    //             //const params = new URLSearchParams(window.location.search);
+    //             //const traineeId = params.get('CorporateTraineeId');
+    //             //console.log(traineeId);
+    //             //&CorporateTraineeId=${traineeId}
+    //             window.location.href=`/CorporateTraineeCurrentReportPage?ReportId=${problem._id}`}}
+    //         key={problem._id}>
+    //     <ReportHeadings problem={problem} key={problem.id} />
+        
+    //     </Container>
+    //     ))}
+
+        
+
+    // </div>
+    //--------------------------------------------------------------------
     <div >
-        <CorporateTraineeProfileNavBar/>
+            <CorporateTraineeProfileNavBar/>
 
-        {problems && problems.map(problem => (
-        <Container hover
-            sx={{
-                "&:hover":{
-                cursor: "pointer",
-                backgroundColor: "#f5f5f5",
-                width: "100%"
-                }
-            }}
-            onClick={() => {
-                //const params = new URLSearchParams(window.location.search);
-                //const traineeId = params.get('CorporateTraineeId');
-                //console.log(traineeId);
-                //&CorporateTraineeId=${traineeId}
+            {problems && problems.map(problem => (
+            <Container hover
+                sx={{
+                    "&:hover":{
+                    cursor: "pointer",
+                    backgroundColor: "#f5f5f5",
+                    width: "100%"
+                    }
+                }}
+                onClick={() => {
                 window.location.href=`/CorporateTraineeCurrentReportPage?ReportId=${problem._id}`}}
-            key={problem._id}>
-        <ReportHeadings problem={problem} key={problem.id} />
-        
-        </Container>
-        ))}
+                key={problem._id}>
+            <ReportHeadings problem={problem} key={problem.id} />
+            
+            </Container>
+            ))}
 
-        
+            
 
-    </div>
+        </div>
 )
 }
 

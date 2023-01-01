@@ -1,6 +1,7 @@
     //sessions done
     import { useState } from 'react'
     import TraineeProfileNavBar from '../components/TraineeProfilNavBar'
+    import styles from '../components/Guest/styles.module.css';
 
     const RequestARefundPageTrainee = () => {
     const [Problem,setProblem] = useState('')
@@ -54,7 +55,7 @@
     return (
         <>
         <TraineeProfileNavBar/>
-        <form className="create" onSubmit={handleSubmit}> 
+        <form className="create" onSubmit={handleSubmit} style={{marginTop:'20px',marginLeft:'10px'}}> 
         <h3>Please write a brief explanation as to why you are requesting a refund so we could help provide for your convenience: </h3>
 
 
@@ -67,7 +68,7 @@
         />
 
 
-        <button>Request Refund</button>
+        <button className={styles.blueButton}>Request Refund</button>
         {error && <div className="error">{error}</div>}
         </form>
 

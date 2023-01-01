@@ -57,15 +57,18 @@
     // }
 
     return (
-        <Container >
-            <TraineeProfileNavBar/>
+
+        <>
+        <TraineeProfileNavBar/>
+        <Container style={{marginRight:'450px'}}>
+            
         
         <form className="create"> 
-        <div className="container">
+        <div className="container" >
         <div className="row gutters">
         <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-        <div className="card h-100">
-            <div className="card-body">
+        <div className="card h-100" style={{width:'800px',marginRight:'50px'}}>
+            <div className="card-body"  >
                 {trainee && trainee.map(trainee => (
                 <TraineeProfileDetails trainee={trainee} key={trainee._id} />
                 ))[0]}
@@ -80,6 +83,7 @@
         
         </form>
         </Container>
+        </>
     )
     }
 

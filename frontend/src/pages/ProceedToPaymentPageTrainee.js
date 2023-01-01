@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react"
+    import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
-import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
-    
+    import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+    import styles from '../components/Guest/styles.module.css';
+
 //HANA
     const ProceedToPaymentPageTrainee = ({}) => {
 
@@ -58,22 +59,26 @@ import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     return (
 
         
-        <div className="course-details">
+        <>
         <TraineeProfileNavBar/>
+        
+        <form className="create" style={{marginTop:'20px',marginLeft:'10px'}}>
+        
 
         <h4>Choose Payment Method </h4>
 
-        <div className="course-details" onClick={payForCourse}>
-            <p><strong>Wallet Balance</strong></p> 
-            <p><strong>Balance </strong>{wallet}</p> 
+        <div className={styles.proceedToPayment} onClick={payForCourse}>
+            <h4 ><strong>By Wallet Balance </strong></h4> 
+            <p>Available Balance: {wallet}</p> 
         </div>
 
-        <div className="course-details" onClick={routeChange}>
-            <p><strong>Credit Card</strong></p> 
+        <div className={styles.proceedToPayment} onClick={routeChange}>
+            <h4><strong>Credit Card</strong></h4> 
         </div>
 
         {error && <div className="error">{error}</div>}
-        </div>
+        </form>
+        </>
     )
     }
 

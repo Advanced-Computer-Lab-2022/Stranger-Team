@@ -15,7 +15,8 @@
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     import ReportHeadings from "../components/ReportHeadings";
     import RequestHeadings from "../components/RequestHeadings";
-        
+    import styles from "../components/Guest/styles.module.css"
+
 
     const TraineePendingRefundRequestsPage = () => {
     const [problems, setProblems] = useState(null)

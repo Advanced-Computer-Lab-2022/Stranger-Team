@@ -15,13 +15,14 @@
     import StarRating from "../components/StarRating";
     import RadioButtonsRateAnInstructor from "../components/RadioButtonsRateAnInstructor";
     import CurrentCourseInstructorProfileDetailsForTrainee from "../components/CurrentCourseInstructorProfileDetailsForTrainee";
-    import CorporateTraineeProfileNavBar from "./CorporateTraineeProfileNavBar";
-    import GuestCurrentCourseInstructorDetails from "./Guest/GuestCurrentCourseInstructorDetails";
-    import TraineeProfileNavBar from "./TraineeProfilNavBar";
+    import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfileNavBar";
     import styles from '../components/Guest/styles.module.css';
+    import CorporateTraineeCurrentCourseInstructorCourseDetails from "../components/CorporateTraineeCurrentCourseInstructorCourseDetails";
+    import CurrentCourseInstructorCoursesCorporateTrainee from "../components/CurrentCourseInstructorCoursesCorporateTrainee";
+import GuestCurrentCourseInstructorDetails from "../components/Guest/GuestCurrentCourseInstructorDetails";
 
 
-    const CurrentNonRegisteredCourseInstructorPage = () => {
+    const CurrentNonRegisteredCourseInstructorPageCorporateTrainee = () => {
     const [instructors, setInstructor] = useState(null)
 
     useEffect(() => {
@@ -48,7 +49,7 @@
     return (
 
         <div>
-        <TraineeProfileNavBar/>
+        <CorporateTraineeProfileNavBar/>
         <Container >
 
         <div className="row gutters">
@@ -74,38 +75,13 @@
         <div></div>
         <hr/>
         <h3>Instructor Available Courses:</h3>
-        <CurrentCourseInstructorCoursesComponent/>
+        <CurrentCourseInstructorCoursesCorporateTrainee/>
         
         
         </Container>
         </div>
         
-        
-        
-        // <Container >
-        
-
-        // <form className="create"> 
-        // <div className="container">
-        // <div className="row gutters">
-        // <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-        // <div className="card h-100">
-        //     <div className="card-body">
-        //         {instructors && instructors.map(instructor => (
-        //         <GuestCurrentCourseInstructorDetails instructor={instructor} key={instructor._id} />
-        //         ))[0]}
-        //     </div>
-        // </div>
-        // </div>
-        // </div>
-        // </div>
-        // <h3>Instructor Available Courses:</h3>
-        // <CurrentCourseInstructorCoursesComponent/>
-
-        
-        // </form>
-        // </Container>
     )
     }
 
-    export default CurrentNonRegisteredCourseInstructorPage
+    export default CurrentNonRegisteredCourseInstructorPageCorporateTrainee

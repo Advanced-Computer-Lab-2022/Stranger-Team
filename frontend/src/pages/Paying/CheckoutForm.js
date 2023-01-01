@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import{useStripe,useElements} from "@stripe/react-stripe-js"
 import { PaymentElement } from "@stripe/react-stripe-js";
 import paymentStyles from "./paymentStyles.css";
+// import styles from '../components/Guest/styles.module.css
+import styles from '../../components/Guest/styles.module.css';
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -47,7 +49,7 @@ export default function CheckoutForm() {
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement/>
-      <button disabled={isLoading} id={paymentStyles.submit}>
+      <button className={styles.blueButton} disabled={isLoading} id={paymentStyles.submit}>
         <span id={paymentStyles.paymentbutton}>
           {isLoading ? <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> : "Pay now"}
         </span>

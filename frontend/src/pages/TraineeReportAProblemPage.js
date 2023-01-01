@@ -1,6 +1,7 @@
     //sessions done
     import { useState } from 'react'
-import TraineeProfileNavBar from '../components/TraineeProfilNavBar'
+    import styles from '../components/Guest/styles.module.css';
+    import TraineeProfileNavBar from '../components/TraineeProfilNavBar'
 
     const TraineeReportAProblemPage = () => {
     const [Reported_Problem,setReported_Problem] = useState('')
@@ -56,7 +57,7 @@ import TraineeProfileNavBar from '../components/TraineeProfilNavBar'
     return (
         <>
         <TraineeProfileNavBar/>
-        <form className="create" onSubmit={handleSubmit}> 
+        <form className="create" onSubmit={handleSubmit} style={{marginTop:'20px',marginLeft:'10px'}}> 
         <h3>Fill In The Following Fields To Send Your Report:</h3>
 
         <div className="form-check">
@@ -79,18 +80,6 @@ import TraineeProfileNavBar from '../components/TraineeProfilNavBar'
         </div>
         
 
-        {/* <label> Please select the report type:</label>
-        <input  type="radio" value="Technical" onChange={(e) => setReport_Type(e.target.value)} 
-            /> Technical
-        <label className="radio-inline">
-        <input type="radio" value="Financial" onChange={(e) => setReport_Type(e.target.value)} 
-            /> Financial
-        </label>
-        <label className="radio-inline">
-        <input type="radio" value="Other" onChange={(e) => setReport_Type(e.target.value)} 
-            /> Other
-        </label> */}
-
         <label> Report Title:</label>
         <input 
             className='course'
@@ -107,7 +96,7 @@ import TraineeProfileNavBar from '../components/TraineeProfilNavBar'
             value={Reported_Problem}
         />
 
-        <button>Submit Report</button>
+        <button className={styles.blueButton}>Submit Report</button>
         {error && <div className="error">{error}</div>}
         </form>
         </>

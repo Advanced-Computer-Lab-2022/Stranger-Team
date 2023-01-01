@@ -7,6 +7,7 @@
 
     import { useCourseContext } from "../hooks/useCoursesContext";
     import { useNavigate } from "react-router-dom";
+    import styles from "../components/Guest/styles.module.css"
 
     const FilterCoursesByRateComponent = () => {
 
@@ -112,12 +113,9 @@
 
 
     return (
-        <div className="home">
-        <div className="courses">
-            <h1>Courses</h1>
-        
-        </div>
-        <form className="create" onSubmit={routeChange}> 
+        <>
+        {/* // <div className="home" style={{marginLeft:'1200px',marginTop:'100px'}}> */}
+        <form className="create" onSubmit={routeChange} style={{marginLeft:'1000px',marginTop:'100px',position:'absolute'}}> 
         <h3>Filter Courses: </h3>
 
         <label> Rate :</label>
@@ -141,7 +139,7 @@
             value={Price}
         />
 
-        <button>Filter</button>
+        <button className={styles.blueButton}>Filter</button>
         
 
         {error && <div className="error">{error}</div>}
@@ -155,7 +153,7 @@
         </div> */}
 
         
-        </div>
+        </>
     )
     }
 

@@ -14,6 +14,7 @@
     import PreviewCourseVideoPageDetails from '../components/PreviewCourseVideoTraineePageDetails'
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     import ReportHeadings from "../components/ReportHeadings";
+    import styles from "../components/Guest/styles.module.css"
     
 
     const TraineeDeliveredReportsPage = () => {

@@ -1,4 +1,5 @@
 //sessions done
+//styling done
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
@@ -20,6 +21,8 @@
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     import CurrentNonRegisteredCoursePageDetailsTrainee from "../components/CurrentNonRegisteredCoursePageDetailsTrainee";
     import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
+    import styles from "../components/Guest/styles.module.css"
+    import GuestCurrentCoursePageDetails from "../components/Guest/GuestCurrentCoursePageDetails";
     
 
 
@@ -105,6 +108,39 @@
     }
 
     return (
+        // <div>
+        // <TraineeProfileNavBar/>
+        // <Container >
+
+        // <div className="row gutters">
+        // <div className="card h-100">
+        //     <div className="card-body">
+        //         {/* <FetchInstructorNameForTraineeCourseDetails/> */}
+        //         {/* <form className="course-details">
+        //             <button  onClick={routeChange}>Report a problem</button>
+        //         </form> */}
+
+                
+        //         {course && course.map(course => (
+        //         <CurrentNonRegisteredCoursePageDetailsTrainee course={course} key={course._id} />
+        //         ))[0]}
+        //         <PreviewCourseVideoPageDetails/>
+
+        //         <form className="course-details">
+        //     <button onClick={checkIfPaymentNeeded}>Register For The Course</button>
+        //     </form>
+                
+        //     </div>
+            
+        // </div>
+        
+                
+        // </div>
+        
+        
+        // </Container>
+        // </div>
+
         <div>
         <TraineeProfileNavBar/>
         <Container >
@@ -112,31 +148,41 @@
         <div className="row gutters">
         <div className="card h-100">
             <div className="card-body">
-                {/* <FetchInstructorNameForTraineeCourseDetails/> */}
-                {/* <form className="course-details">
-                    <button  onClick={routeChange}>Report a problem</button>
-                </form> */}
+
+                {course && course.map(course => (
+                
+            <div  className={styles.currentCourseContainer} hover
+                sx={{
+                    "&:hover":{
+                    cursor: "pointer",
+                    backgroundColor: "#f5f5f5",
+                    width: "100%"
+                    }
+                }}
+                key={course._id}>
+                <CurrentNonRegisteredCoursePageDetailsTrainee course={course} key={course._id} />
+                
+                
+                </div>
+            ))[0]}
+            <PreviewCourseVideoPageDetails/>
 
                 
-                {course && course.map(course => (
-                <CurrentNonRegisteredCoursePageDetailsTrainee course={course} key={course._id} />
-                ))[0]}
-                <PreviewCourseVideoPageDetails/>
 
                 <form className="course-details">
-            <button onClick={checkIfPaymentNeeded}>Register For The Course</button>
+            <Button onClick={routeChange1} className={styles.registerForCourseButton}>Register For The Course</Button>
             </form>
                 
             </div>
             
         </div>
-        
-                
         </div>
         
         
         </Container>
         </div>
+
+
     )
     }
 

@@ -20,6 +20,7 @@ import CurrentCoursePageSubtitleDetails from "../components/CurrentCourseInstruc
 import CurrentCourseSubtitlesPageDetailsTrainee from "../components/CurrentCourseSubtitlesPageDetailsTrainee";
 import TraineeSubtitleTitlesDetailsPage from "../components/TraineeSubtitleTitlesDetailsPage";
 import CorporateTraineeSubtitleTitlesDetailsPage from "../components/CorporateTraineeSubtitleTitlesDetailsPage";
+import styles from '../components/Guest/styles.module.css';
 
 
 
@@ -57,38 +58,64 @@ useEffect(() => {
 
 return (
 
-        <div className="course-details">
-            <form className="course-details"> 
-            <h3>Available Course Subtitles:</h3>
-            {subtitle && subtitle.map(subtitle => (
+    //     <div className="course-details">
+    //         <form className="course-details"> 
+    //         <h3>Available Course Subtitles:</h3>
+    //         {subtitle && subtitle.map(subtitle => (
 
-            <form className="course-details" hover
-            sx={{
-                "&:hover":{
-                cursor: "pointer",
-                backgroundColor: "#f5f5f5",
-                width: "100%"
-                }
-            }}
-            onClick={() =>{
+    //         <form className="course-details" hover
+    //         sx={{
+    //             "&:hover":{
+    //             cursor: "pointer",
+    //             backgroundColor: "#f5f5f5",
+    //             width: "100%"
+    //             }
+    //         }}
+    //         onClick={() =>{
 
-            const params = new URLSearchParams(window.location.search);
-           // const corporateTraineeId = params.get('CorporateTraineeId');
-            const courseId = params.get('CourseId');
-            // window.location.href=`/CurrentCourseSubtitlesPageTrainee?CourseId=${courseId}&SubtitleId=${subtitle._id}&CorporateTraineeId=${corporateTraineeId}`
-        //he should reference
+    //         const params = new URLSearchParams(window.location.search);
+    //        // const corporateTraineeId = params.get('CorporateTraineeId');
+    //         const courseId = params.get('CourseId');
+    //         // window.location.href=`/CurrentCourseSubtitlesPageTrainee?CourseId=${courseId}&SubtitleId=${subtitle._id}&CorporateTraineeId=${corporateTraineeId}`
+    //     //he should reference
 
-        //&CorporateTraineeId=${corporateTraineeId}
-        window.location.href=`/CurrentCourseSubtitlesPageCorporateTrainee?CourseId=${courseId}&SubtitleId=${subtitle._id}`
-    } }
-            key={subtitle._id}>
-            <CorporateTraineeSubtitleTitlesDetailsPage subtitle={subtitle} key={subtitle._id} />
+    //     //&CorporateTraineeId=${corporateTraineeId}
+    //     window.location.href=`/CurrentCourseSubtitlesPageCorporateTrainee?CourseId=${courseId}&SubtitleId=${subtitle._id}`
+    // } }
+    //         key={subtitle._id}>
+    //         <CorporateTraineeSubtitleTitlesDetailsPage subtitle={subtitle} key={subtitle._id} />
         
-        </form>
-        ))}
+    //     </form>
+    //     ))}
 
-        </form>       
-        </div> 
+    //     </form>       
+    //     </div> 
+    //------------------------------------------------------------------------------------
+    <div className="course-details">
+                <form className="course-details"> 
+                <h3>Available Course Subtitles:</h3>
+                {subtitle && subtitle.map(subtitle => (
+
+                <form className="course-details" hover
+                sx={{
+                    "&:hover":{
+                    cursor: "pointer",
+                    backgroundColor: "#f5f5f5",
+                    width: "100%"
+                    }
+                }}
+                onClick={() =>{
+                const params = new URLSearchParams(window.location.search);
+                const courseId = params.get('CourseId');
+                window.location.href=`/CurrentCourseSubtitlesPageCorporateTrainee?CourseId=${courseId}&SubtitleId=${subtitle._id}`} }
+                key={subtitle._id}>
+                <CorporateTraineeSubtitleTitlesDetailsPage subtitle={subtitle} key={subtitle._id} />
+            
+            </form>
+            ))}
+
+            </form>       
+            </div> 
 
 )
 }

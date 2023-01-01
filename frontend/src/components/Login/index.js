@@ -19,8 +19,26 @@ const Login = () => {
 		try {
 			const url = "http://localhost:3000/auth";
 			const { data: res } = await axios.post(url, data);
+
 			localStorage.setItem("token", res.data);
-			window.location = "/";
+			console.log("res.userRole"+res.userRole);
+			if(res.userRole == "Individual Trainee")
+			{
+				window.location = "/Home";
+			}
+			else if(res.userRole == "Corporate Trainee")
+			{
+				window.location = "/corporateTraineeHome";
+			}
+			else if(res.userRole == "Instructor")
+			{
+				window.location = "/InstructorCoursePage";
+			}
+			else
+			{
+				window.location = "/adminHome";
+			}
+			
 		} catch (error) {
 			if (
 				error.response &&

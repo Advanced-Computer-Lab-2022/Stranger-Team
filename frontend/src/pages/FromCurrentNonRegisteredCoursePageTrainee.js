@@ -21,6 +21,9 @@
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     import CurrentNonRegisteredCoursePageDetailsTrainee from "../components/CurrentNonRegisteredCoursePageDetailsTrainee";
     import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
+    import GuestCurrentCoursePageDetails from "../components/Guest/GuestCurrentCoursePageDetails";
+    import styles from "../components/Guest/styles.module.css"
+    import FromCurrentNonRegisteredCoursePageTraineeDetails from "../components/FromCurrentNonRegisteredCoursePageTraineeDetails";
     
 
 
@@ -59,7 +62,8 @@
         const params = new URLSearchParams(window.location.search);
         //const traineeId = params.get('TraineeId');
         const courseId= params.get('CourseId');
-        //console.log(traineeId); 
+        console.log(courseId); 
+
 
         // let path = `/CurrentCoursePageTrainee?CourseId=${courseId}&TraineeId=${traineeId}`; 
         let path = `/CurrentCoursePageTrainee?CourseId=${courseId}`; 
@@ -99,9 +103,15 @@
             
             </Container> 
             ))[0]}*/}
+            
             {course && course.map(course => (
-                <CurrentNonRegisteredCoursePageDetailsTrainee course={course} key={course._id} />
+                <div  className={styles.currentCourseContainer } 
+                
+                key={course._id}>
+                <FromCurrentNonRegisteredCoursePageTraineeDetails course={course} key={course._id} />
+                </div>
                 ))[0]}
+                
             <PreviewCourseVideoPageDetails/>
                 
             </div>

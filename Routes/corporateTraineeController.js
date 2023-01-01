@@ -217,11 +217,13 @@ const fetchCorporateProblem = async(req,res) => {
 const fetchNonRegisteredCorporateTraineeCoursesForInstructor = async(req,res) => {
 
     const traineeId = req.session.user._id;
+    console.log("traineeId"+traineeId);
     const instructorId = req.query.id;
 
 
     try{
     const trainee = await corporate_Trainee.findById({_id:traineeId});
+    console.log("traineeeee"+trainee);
     const traineeRegisteredCourses = trainee.Registered_Courses;
     const instructorCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId)}).populate('Instructor');
     const traineeNonRegisteredCourses = [];
@@ -239,7 +241,43 @@ const fetchNonRegisteredCorporateTraineeCoursesForInstructor = async(req,res) =>
 
         }
 
-        console.log(traineeNonRegisteredCourses);
+        console.log("traineeNonRegisteredCourses"+traineeNonRegisteredCourses);
+        res.status(200).json(traineeNonRegisteredCourses)
+
+    }
+    catch(error){
+        res.status(400).json({error:error.message});
+    }
+}
+
+const fetchInstCoursesCT = async(req,res) => {
+
+    const traineeId = req.session.user._id;
+    console.log("traineeId"+traineeId);
+    const instructorId = req.query.id;
+
+
+    try{
+    const trainee = await corporate_Trainee.findById({_id:traineeId});
+    console.log("traineeeee"+trainee);
+    const traineeRegisteredCourses = trainee.Registered_Courses;
+    const instructorCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId)}).populate('Instructor');
+    const traineeNonRegisteredCourses = [];
+
+    for (let i = 0; i < traineeRegisteredCourses.length; i++) {
+            for(let j=0;j<instructorCourses.length;j++)
+            {
+                console.log(traineeRegisteredCourses[i]._id)
+                console.log(instructorCourses[j]._id)
+                if(traineeRegisteredCourses[i]._id != instructorCourses[j]._id)
+                {
+                    traineeNonRegisteredCourses.push(instructorCourses[j])
+                }
+            }
+
+        }
+
+        console.log("traineeNonRegisteredCourses"+traineeNonRegisteredCourses);
         res.status(200).json(traineeNonRegisteredCourses)
 
     }
@@ -379,4 +417,4 @@ const courseRequestCheck = async(req,res) => {
      }
     }
 
-    module.exports ={check,corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,addCorporateTrainee,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem,fetchNonRegisteredCorporateTraineeCoursesForInstructor, requestCourseAccess,corporateTraineeSendFollowup,AddNotes,getNotes, courseRequestCheck};
+    module.exports ={check,corporateTraineeSendReport,fetchCorporateTraineeAllPreviousReports,corporateViewMyRegisteredCourses,corporateTraineeRegisterCourse,addCorporateTrainee,fetchCorporateTraineeProfileDetails,fetchCorporateTraineeDeliveredReports,fetchCorporateTraineePendingReports,fetchCorporateTraineeResolvedReports,fetchCorporateProblem,fetchNonRegisteredCorporateTraineeCoursesForInstructor, requestCourseAccess,corporateTraineeSendFollowup,AddNotes,getNotes, courseRequestCheck,fetchInstCoursesCT};

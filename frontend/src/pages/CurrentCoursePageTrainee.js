@@ -2,12 +2,13 @@
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
+    // import{Button, Alert, Container,Card} from 'react-bootstrap'
 
     // components
     import MyCourses from "../components/MyCourses"
     import 'bootstrap/dist/css/bootstrap.min.css'
 
-    import{Button, Alert, Container, Nav} from 'react-bootstrap'
+    import{Button, Alert, Container, Nav,Card} from 'react-bootstrap'
     import Navbar from "../components/Navbar";
     import CourseDetails from "../components/CourseDetails";
     import StarRating from "../components/StarRating";
@@ -20,12 +21,13 @@
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
     import { Certificate } from "../components/Certificate";
+    import styles from '../components/Guest/styles.module.css';
 
     var p;
     const CurrentCoursePageTrainee = () => {
     const [course, setCourse] = useState(null);
     const[error,setError] = useState('');
-   const[enableRefundButton, setEnableRefundButton]=useState(false);
+    const[enableRefundButton, setEnableRefundButton]=useState(false);
     const [button, setButton] = useState(false)
     const [price, setPrice] = useState("")
     
@@ -177,29 +179,34 @@
     return (
         <div>
         <TraineeProfileNavBar/>
-        <Container >
+        <Container>
 
         <div className="row gutters">
-        <div className="card h-100">
+        <Card style={{height:'949px'}}>
             <div className="card-body">
 
                 <form className="course-details">
-                    <button  onClick={routeChange4}>Quiz Answer</button>
-                    <button  onClick={routeChange3}>My Certificate</button>
+                    
+                    <button className={styles.blueButton}  onClick={routeChange3}>My Certificate</button>
                 </form>
             
 
                 {/* <FetchInstructorNameForTraineeCourseDetails/> */}
                 <form className="course-details">
-                    <button  onClick={routeChange}>Report a problem</button>
+                    <button className={styles.blueButton}  onClick={routeChange}>Report a problem</button>
 
                     {/* {!button &&  <button  onClick={checkIfRefundEligible}>Request A Refund</button>} */}
                     {p==0 ? <div></div> :
-                    <button  onClick={checkIfRefundEligible}>Request A Refund</button>
+                    <button className={styles.blueButton}  onClick={checkIfRefundEligible}>Request A Refund</button>
     }
                     {error && <div className="error">{error}</div>}
                     
                     
+                </form>
+
+                <form className="course-details">
+                    <button className={styles.blueButton}  onClick={routeChange1}>Start Exam</button>
+                    <button className={styles.blueButton}  onClick={routeChange4}>Quiz Answer</button>
                 </form>
 
                 {/* <form  className="course-details" onSubmit={checkIfRefundEligible}> 
@@ -208,8 +215,12 @@
 
                 {/* {error && <div className="error">{error}</div>} */}
                 {course && course.map(course => (
+                <div className={styles.currentCourseContainerTrainee} 
+                key={course._id} >
                 <CurrentCoursePageDetails course={course} key={course._id} />
+                </div>
                 ))[0]}
+                
                 {/* <CurrentCourseDiscountPage/> */}
                 <RadioButtonsRateACourse/>
                 <PreviewCourseVideoPageDetails/>
@@ -218,14 +229,65 @@
                 {/* <CurrentCourseSubtitlesPageTrainee/>  */}
                 {/* <StarRating></StarRating>  */}
             </div>
-            <form className="course-details">
-                    <button  onClick={routeChange1}>Start Exam</button>
-                </form>
-        </div>
+            
+        </Card>
         </div>
         
+        
         </Container>
+        
+
         </div>
+//--------------------------------------------------------------------------------------
+        // <div>
+        // <TraineeProfileNavBar/>
+        // <Container >
+
+        // <div className="row gutters">
+        // <div className="card h-100">
+        //     <div className="card-body">
+        //         <form className="course-details">
+        //             <button style={styles.registerForCourseButton}  onClick={routeChange4}>Quiz Answer</button>
+        //             <button style={styles.registerForCourseButton}  onClick={routeChange3}>My Certificate</button>
+        //         </form>
+        //         <form className="course-details">
+        //             <button style={styles.registerForCourseButton}  onClick={routeChange}>Report a problem</button>
+
+        //             {/* {!button &&  <button  onClick={checkIfRefundEligible}>Request A Refund</button>} */}
+        //             {p==0 ? <div></div> :
+        //             <button style={styles.registerForCourseButton}  onClick={checkIfRefundEligible}>Request A Refund</button>
+        //             }
+        //             {error && <div className="error">{error}</div>}
+                    
+                    
+        //         </form>
+
+        //         {course && course.map(course => (
+                
+        //     <div  className={styles.currentCourseContainer} hover
+        //         key={course._id}>
+        //         <CurrentCoursePageDetails course={course} key={course._id} />
+                
+        //         </div>
+        //     ))[0]}
+        //     <RadioButtonsRateACourse/>
+        //     <PreviewCourseVideoPageDetails/>
+        //     <TraineeSubtitleTitlesPage/>
+
+                
+        //     </div>
+        //     <form className="course-details">
+        //             <button  onClick={routeChange1}>Start Exam</button>
+        //     </form>
+            
+        // </div>
+        // </div>
+        
+        
+        // </Container>
+        // </div>
+
+
     )
     }
 

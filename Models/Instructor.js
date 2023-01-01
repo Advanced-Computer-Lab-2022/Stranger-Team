@@ -54,6 +54,10 @@ const InstructorSchema = new Schema({
     type:Number,
     default:0
     },
+    Contract:{
+    type:Boolean,
+    default:false
+    },
     Currency: {
       type: String,
       required: false,

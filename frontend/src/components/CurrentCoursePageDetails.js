@@ -1,6 +1,8 @@
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
+    import { FaStar } from 'react-icons/fa';
+    import styles from '../components/Guest/styles.module.css';
     
 
     const CurrentCoursePageDetails = ({ course }) => {
@@ -80,9 +82,9 @@
         let navigate = useNavigate();
 
         const routeChange = () =>{ 
-        const params = new URLSearchParams(window.location.search);
-        const traineeId = params.get('TraineeId');
-        let path = `/CurrentCourseInstructorPage/?TraineeId=${traineeId}&id=${currentInstructorId}`; 
+        // const params = new URLSearchParams(window.location.search);
+        // const traineeId = params.get('TraineeId');
+        let path = `/CurrentCourseInstructorPage/?id=${currentInstructorId}`; 
         navigate(path);
     }
 
@@ -159,24 +161,46 @@
     return (
 
         
-        <div className="course-details">
+        // <div className="course-details">
 
 
-        <h4>{course.Title}</h4>
-        <div className="course-details" onClick={routeChange}>
+        // <h4>{course.Title}</h4>
+        // <div className="course-details" onClick={routeChange}>
+        //     <p><strong>Instructor Name: </strong>{instructorFirstName} {instructorLastName}</p> 
+        // </div>
+        // <p><strong>Subject: </strong>{course.Subject}</p>
+        // <p><strong>Subtitles Total Hours: </strong>{course.Subtitles_Total_Hours}</p>
+        // <p><strong>Course Total Hours: </strong>{course.Course_Total_Hours}</p>
+        // <p><strong>Price: </strong>{price}</p>
+        // <p><strong>Rating: </strong>{course.Rating}</p>
+        // <p><strong>Dicount: </strong>{Discount}</p>
+        // <p><strong>Course Description: </strong>{course.Course_Description}</p> 
+
+        
+        
+        
+        // </div>
+
+        <div className={styles.currentCourseDetails}>
+        {/* <div className="course-details"> */}
+
+
+        <h4><strong>{course.Title}</strong></h4>
+        <div className={styles.currentInstructorCourseDetails} onClick={routeChange}>
             <p><strong>Instructor Name: </strong>{instructorFirstName} {instructorLastName}</p> 
         </div>
         <p><strong>Subject: </strong>{course.Subject}</p>
         <p><strong>Subtitles Total Hours: </strong>{course.Subtitles_Total_Hours}</p>
         <p><strong>Course Total Hours: </strong>{course.Course_Total_Hours}</p>
         <p><strong>Price: </strong>{price}</p>
-        <p><strong>Rating: </strong>{course.Rating}</p>
+        <p><strong>Rating<FaStar></FaStar> : </strong>{course.Rating}</p> 
         <p><strong>Dicount: </strong>{Discount}</p>
         <p><strong>Course Description: </strong>{course.Course_Description}</p> 
 
+            
         
         
-        
+        {/* </div> */}
         </div>
     )
     }

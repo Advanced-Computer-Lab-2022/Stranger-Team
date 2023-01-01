@@ -69,15 +69,15 @@
 
         <div>
         <GuestNavBar/>
-        <Container >
+        <Container  >
 
         <div className="row gutters">
-        <div className="card h-100">
+        <div className="card h-100" >
             <div className="card-body">
 
                 {instructors && instructors.map(instructor => (
                 
-            <Container  className={styles.currentCourseContainer} 
+            <Container style={{height:'503px'}} className={styles.currentCourseContainer} 
                 key={instructor._id}>
                 <GuestCurrentCourseInstructorDetails instructor={instructor} key={instructor._id} />
                 

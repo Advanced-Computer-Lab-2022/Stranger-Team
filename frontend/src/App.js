@@ -152,6 +152,7 @@ import GuestHomePage from './components/Guest/GuestHomePage';
 import GuestCurrentCoursePage from './components/Guest/GuestCurrentCoursePage';
 import GuestCurrentCourseInstructorPage from './components/Guest/GuestCurrentCourseInstructorPage';
 import ViewQuestionsWizAnswersTrainee from './pages/ViewQwizAnswersTrainee';
+import CurrentNonRegisteredCourseInstructorPageCorporateTrainee from './pages/CurrentNonRegisteredCourseInstructorPageCorporateTrainee';
 //import ViewQuestionsWizAnswersTrainee from './components/ViewQwizAnswersTrainee';
 
 
@@ -163,6 +164,11 @@ function App() {
       {/* <Navbar/> */}
       <div className="pages">
         <Routes>
+
+          <Route
+          path="/"
+          element={<GuestHomePage />}
+          /> 
 
         <Route
         path="/GuestHome"
@@ -302,6 +308,12 @@ function App() {
         <Route
         path="/CurrentNonRegisteredCourseInstructorPage"
         element={<CurrentNonRegisteredCourseInstructorPage />}
+        />
+        
+
+        <Route
+        path="/CurrentNonRegisteredCourseInstructorPageCT"
+        element={<CurrentNonRegisteredCourseInstructorPageCorporateTrainee />}
         />
 
         <Route
@@ -691,10 +703,11 @@ function App() {
         element={<PendingInstructorsPage/>}
         />
 
-          <Route
+          {/* <Route
           path="/"
           element={<SignIn />}
-          /> 
+          />  */}
+
           <Route
           path="/InstructorCoursePage"
           element={<InstructorCoursePage />}

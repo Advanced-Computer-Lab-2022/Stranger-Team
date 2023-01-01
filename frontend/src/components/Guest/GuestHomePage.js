@@ -15,8 +15,9 @@
     import 'bootstrap/dist/css/bootstrap.min.css'
     import 'bootstrap/dist/js/bootstrap.min.js'
     import GuestCourseDetails from "./GuestCourseDetails";
-import GuestNavBar from "./GuestNavBar";
-    
+    import { FaSignInAlt } from 'react-icons/fa';
+    import { AiOutlineUserAdd } from "react-icons/ai";
+
 
 
 
@@ -59,7 +60,7 @@ import GuestNavBar from "./GuestNavBar";
     }, [searchQuery,searchRateQuery])
 
     let navigate = useNavigate();
-        const routeChange = () =>{ 
+    const routeChange = () =>{ 
         let path =  `/login`; 
         navigate(path);
     }
@@ -67,14 +68,18 @@ import GuestNavBar from "./GuestNavBar";
         let path =  `/signup`; 
         navigate(path);
     }
+
+    const routeChange2 = () =>{ 
+        let path =  `/`; 
+        navigate(path);
+    }
     
     
     return (
         <>
             <div>
-                <GuestNavBar/>
-            {/* <form className="signin">
-                <Navbar collapseOnSelect expand="lg"  variant="dark" className={styles.navbar}>
+            <form className="signin">
+                {/* <Navbar collapseOnSelect expand="lg"  variant="dark" className={styles.navbar}>
                 <h1>LearnEd</h1>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
@@ -109,9 +114,34 @@ import GuestNavBar from "./GuestNavBar";
                     </Nav.Link>
                 </Nav>
                 </Navbar.Collapse>
+            </Navbar> */}
+
+            <Navbar collapseOnSelect expand="lg"  variant="dark" className={styles.navbar}>
+                <h1 onClick={routeChange2}>LearnEd</h1>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                <Nav className="me-auto">
+                    {/* <Nav.Link href="#"></Nav.Link> */}
+                    <Form className={styles.search_navbar}>
+                    <Form.Control
+                        type="search"
+                        placeholder="Search"
+                        className="me-2"
+                        aria-label="Search"
+                        onChange={(e)=>setSearchQuery(e.target.value)}
+                    />
+                    </Form>
+                </Nav>
+                <Nav>
+                    <Nav.Link className={styles.navbar} onClick={routeChange1} style={{marginRight:'50px',fontSize:'20px'}}>Signup <AiOutlineUserAdd/></Nav.Link>
+                    <Nav.Link className={styles.navbar} onClick={routeChange} style={{marginRight:'50px',fontSize:'20px'}}>
+                    Login <FaSignInAlt/>
+                    </Nav.Link>
+                </Nav>
+                </Navbar.Collapse>
             </Navbar>
             
-            </form> */}
+            </form>
             </div>
 
             <h4 className={styles.GuestHeading}>OUR POPULAR COURSES: </h4>

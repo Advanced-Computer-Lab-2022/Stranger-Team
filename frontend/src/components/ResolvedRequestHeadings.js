@@ -4,6 +4,7 @@
     import React from 'react';
     import { useNavigate } from "react-router-dom";
     import { useEffect, useState } from "react"
+    import styles from "../components/Guest/styles.module.css"
 
 
     const ResolvedRequestHeadings = ({ problem }) => {
@@ -39,14 +40,33 @@
 
     return (
 
-        <div className="course-details">
-        <hr/>
-        <h4><strong>Course: </strong></h4>
-        <p><strong>{currCourse}</strong></p>
-        <h4><strong>Refunded Amount: </strong></h4>
-        <p><strong>{price}</strong></p>
-        <hr/>
+        // <div className="course-details">
+        // <hr/>
+        // <h4><strong>Course: </strong></h4>
+        // <p><strong>{currCourse}</strong></p>
+        // <h4><strong>Refunded Amount: </strong></h4>
+        // <p><strong>{price}</strong></p>
+        // <hr/>
+        // </div>
+
+        <>
+        
+        <form className="create" style={{marginTop:'20px',marginLeft:'10px'}}>
+        
+
+        <div className={styles.proceedToPayment}>
+            <h4 ><strong>Course </strong></h4> 
+            <p>{currCourse}</p> 
         </div>
+
+        <div className={styles.proceedToPayment} >
+            <h4><strong>Refunded Amount:</strong></h4> 
+            <p>{price}</p> 
+        </div>
+
+        {/* {error && <div className="error">{error}</div>} */}
+        </form>
+        </>
         
         
 

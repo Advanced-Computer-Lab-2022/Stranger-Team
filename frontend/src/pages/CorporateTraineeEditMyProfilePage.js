@@ -6,8 +6,9 @@
     import React from 'react';
     import { useNavigate } from "react-router-dom";
 	import { useState } from 'react'
-import TraineeProfileNavBar from '../components/TraineeProfilNavBar';
-import CorporateTraineeProfileNavBar from '../components/CorporateTraineeProfileNavBar';
+    import TraineeProfileNavBar from '../components/TraineeProfilNavBar';
+    import CorporateTraineeProfileNavBar from '../components/CorporateTraineeProfileNavBar';
+    import styles from "../components/Guest/styles.module.css"
 
     const CorporateTraineeEditMyProfilePage = () => {
 
@@ -82,6 +83,37 @@ import CorporateTraineeProfileNavBar from '../components/CorporateTraineeProfile
 
     return (
 
+        // <div>
+        // <CorporateTraineeProfileNavBar/>
+        // <div className="course-details">
+        // <form className="create" onSubmit={updateInstructorProfile}> 
+        // <h3>Edit Profile Details:</h3>
+
+        // <label>Username:</label>
+        // <input 
+        //     type="text" 
+        //     onChange={(e) => setUsername(e.target.value)} value={Username}
+        // />
+
+
+        // <label>Email:</label>
+        // <input 
+        //     type="text" 
+        //     onChange={(e) => setEmail(e.target.value)} value={Email}
+        // />
+
+        
+
+        // <button>Update</button>
+        
+        // {error && <div className="error">{error}</div>} 
+        // </form>
+        // </div>
+
+        // </div>
+
+        //--------------------------------------------------------------------------------
+
         <div>
         <CorporateTraineeProfileNavBar/>
         <div className="course-details">
@@ -103,7 +135,7 @@ import CorporateTraineeProfileNavBar from '../components/CorporateTraineeProfile
 
         
 
-        <button>Update</button>
+        <button className={styles.blueButton}>Update</button>
         
         {error && <div className="error">{error}</div>} 
         </form>

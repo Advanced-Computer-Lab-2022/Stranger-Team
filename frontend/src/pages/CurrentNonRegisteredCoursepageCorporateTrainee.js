@@ -25,6 +25,7 @@ import CurrentNonRegisteredCoursePageDetailsTrainee from "../components/CurrentN
 import CurrentNonRegisteredCoursePageDetailsCorporateTrainee from "../components/CurrentNonRegisteredCoursePageDetailsCorporateTrainee";
 import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfileNavBar";
 import PreviewCourseVideoPageDetails from "../components/PreviewCourseVideoTraineePageDetails";
+import styles from "../components/Guest/styles.module.css"
 
 
 
@@ -114,42 +115,84 @@ const checkAccess = async() => {
 
 
 return (
-    <div>
-    <CorporateTraineeProfileNavBar/>
-    <Container >
+    // <div>
+    // <CorporateTraineeProfileNavBar/>
+    // <Container >
 
-    <div className="row gutters">
-    <div className="card h-100">
-        <div className="card-body">
-            {/* <form className="course-details">
-                <button  onClick={routeChange}>Report a problem</button>
-            </form> */}
+    // <div className="row gutters">
+    // <div className="card h-100">
+    //     <div className="card-body">
+    //         {/* <form className="course-details">
+    //             <button  onClick={routeChange}>Report a problem</button>
+    //         </form> */}
 
             
-            {course && course.map(course => (
-            <CurrentNonRegisteredCoursePageDetailsCorporateTrainee course={course} key={course._id} />
+    //         {course && course.map(course => (
+    //         <CurrentNonRegisteredCoursePageDetailsCorporateTrainee course={course} key={course._id} />
+    //         ))[0]}
+    //         <PreviewCourseVideoPageDetails/>
+
+    //         {/* <form className="course-details">
+    //     <button >Request Access For The Course</button>
+    //     </form> */}
+    //     {/* {!removebutton && <button onClick={handleOnClick}>Request Access For The Course</button>} */}
+
+    //     {!accessLabel && <button onClick={checkAccess}>Request Access For The Course</button>}
+
+    //     {accessLabel && <label><strong>You've requested access to this course.</strong></label>}
+            
+    //     </div>
+        
+    // </div>
+    
+            
+    // </div>
+    
+    
+    // </Container>
+    // </div>
+    //-------------------------------------------------------------------
+
+    <div>
+        <CorporateTraineeProfileNavBar/>
+        <Container >
+
+        <div className="row gutters">
+        <div className="card h-100">
+            <div className="card-body">
+
+                {course && course.map(course => (
+                
+            <div  className={styles.currentCourseContainer} hover
+                sx={{
+                    "&:hover":{
+                    cursor: "pointer",
+                    backgroundColor: "#f5f5f5",
+                    width: "100%"
+                    }
+                }}
+                key={course._id}>
+                <CurrentNonRegisteredCoursePageDetailsCorporateTrainee course={course} key={course._id} />
+                
+                
+                </div>
             ))[0]}
             <PreviewCourseVideoPageDetails/>
 
-            {/* <form className="course-details">
-        <button >Request Access For The Course</button>
-        </form> */}
-        {/* {!removebutton && <button onClick={handleOnClick}>Request Access For The Course</button>} */}
+                
 
-        {!accessLabel && <button onClick={checkAccess}>Request Access For The Course</button>}
+        {!accessLabel && <button className={styles.blueButton} onClick={checkAccess}>Request Access For The Course</button>}
 
         {accessLabel && <label><strong>You've requested access to this course.</strong></label>}
+                
+            </div>
             
         </div>
+        </div>
         
-    </div>
-    
-            
-    </div>
-    
-    
-    </Container>
-    </div>
+        
+        </Container>
+        </div>
 )
 }
 

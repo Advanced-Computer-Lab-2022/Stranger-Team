@@ -84,7 +84,7 @@ const Signup = () => {
 					<h1>Welcome Back</h1>
 					<Link to="/login">
 						<button type="button" className={styles.white_btn}>
-							Sign in
+							Sign in <FaSignInAlt style={{width:'20px',height:'20px'}}/>
 						</button>
 					</Link>
 				</div>

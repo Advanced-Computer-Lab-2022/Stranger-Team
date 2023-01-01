@@ -2,6 +2,7 @@
     import 'bootstrap/dist/css/bootstrap.min.css'
     import{Button, Alert, Container, Nav} from 'react-bootstrap'
     import { useNavigate,useLocation  } from "react-router-dom";
+    import styles from '../components/Guest/styles.module.css';
 
 
 
@@ -49,31 +50,7 @@
 
     return (
         <form onSubmit={handleSubmit}>
-        {/* <input type="radio" value="1" name="rate"/> 1
-        <input type="radio" value="2" name="rate"/> 2
-        <input type="radio" value="3" name="rate"/> 3
-        <input type="radio" value="4" name="rate"/> 4
-        <input type="radio" value="5" name="rate"/> 5 */}
-        {/* <label className="radio-inline">
-        <input type="radio"  classNameName="rate" onChange={(e) => setRate(e.target.value)} 
-            /> 1
-        </label>
-        <label className="radio-inline">
-        <input type="radio"  value="2" classNameName="rate" onChange={(e) => setRate(e.target.value)} 
-            /> 2
-        </label>
-        <label className="radio-inline">
-        <input type="radio"  value="3" classNameName="rate" onChange={(e) => setRate(e.target.value)} 
-            /> 3
-        </label>
-        <label className="radio-inline">
-        <input type="radio"  value="4" classNameName="rate" onChange={(e) => setRate(e.target.value)} 
-            /> 4
-        </label>
-        <label className="radio-inline">
-        <input type="radio"  value="5" classNameName="rate" onChange={(e) => setRate(e.target.value)} 
-            /> 5
-        </label> */}
+            <h3>Rate The Instructor: </h3>
         <div className="form-check">
         <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="1" onChange={(e) => setRate(e.target.value)}/>
         <label className="form-check-label" >
@@ -106,7 +83,7 @@
             5
         </label>
         </div>
-        <button >Submit Rating</button>
+        <button className={styles.blueButton}>Submit Rating</button>
         {error && <div classNameName="error">{error}</div>}
         </form>
     );

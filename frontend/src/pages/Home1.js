@@ -9,16 +9,21 @@
     import FilterCoursesByRateComponent from "../components/FilterCoursesByRateComponent";
     
 
-    import{Button, Alert, Container} from 'react-bootstrap'
+    import{Button, Alert, Container,Navbar} from 'react-bootstrap'
     import ProfileNavBar from '../components/ProfileNavBar'
-    import Navbar from "../components/Navbar";
     import StarRating from "../components/StarRating";
     import PreviewCourseVideoPageDetails from '../components/PreviewCourseVideoTraineePageDetails'
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+    import Nav from 'react-bootstrap/Nav';
+    import NavDropdown from 'react-bootstrap/NavDropdown';
+    import Form from 'react-bootstrap/Form';
 
     import { FaWallet } from "react-icons/fa";
     import styles from "../components/Guest/styles.module.css"
     import GuestCourseDetails from "../components/Guest/GuestCourseDetails";
+    import { BsBookHalf,BsBook } from "react-icons/bs";
+    import { ImProfile } from "react-icons/im"; 
+    import { AiOutlineLogout } from "react-icons/ai"; 
 
     const Home1 = () => {
     const [courses, setCourses] = useState(null)
@@ -58,12 +63,44 @@
         
         }
 
-        fetchCourses()
         fetchCourses2()
+        fetchCourses()
+        
     }, [searchQuery,searchRateQuery])
 
 
     let navigate = useNavigate();
+    const routeChange = () =>{ 
+        const params = new URLSearchParams(window.location.search);
+        // const traineeId = params.get('TraineeId');
+        // console.log(traineeId); 
+        // let path =  `/TraineeProfilePage/?TraineeId=${traineeId}`; 
+        let path =  `/TraineeProfilePage`; 
+        navigate(path);
+    }
+
+    const routeChange2 = () =>{ 
+        const params = new URLSearchParams(window.location.search);
+        // const traineeId = params.get('TraineeId');
+        // console.log(traineeId); 
+        let path =  `/Home`; 
+        navigate(path);
+    }
+
+    const routeChange3 = () =>{ 
+        const params = new URLSearchParams(window.location.search);
+        // const traineeId = params.get('TraineeId');
+        // console.log(traineeId); 
+        // let path =  `/MyRegisteredCoursesTrainee/?TraineeId=${traineeId}`; 
+        let path =  `/MyRegisteredCoursesTrainee`; 
+        navigate(path);
+    }
+
+    const handleLogout = () => {
+		localStorage.removeItem("token");
+		// window.location.reload();
+        window.location.href=`/GuestHome`; 
+	};
 
     const handleSubmit = async (courseid) => {
         const params = new URLSearchParams(window.location.search);
@@ -164,11 +201,48 @@
     // </div>
 
     <>
-
+        {/* <TraineeProfileNavBar/> */}
+        <div>
+        <form className="signin">
+            <Navbar collapseOnSelect expand="lg"  variant="dark" className={styles.navbar}>
+                <h1 onClick={routeChange2}>LearnEd</h1>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                <Nav className="me-auto">
+                    {/* <Nav.Link href="#"></Nav.Link> */}
+                    <Form className={styles.search_navbar}>
+                    <Form.Control
+                        type="search"
+                        placeholder="Search"
+                        className="me-2"
+                        aria-label="Search"
+                        onChange={(e)=>setSearchQuery(e.target.value)}
+                    />
+                    </Form>
+                </Nav>
+                <Nav>
+                    {/* <Nav.Link className={styles.navbar} onClick={routeChange1} style={{marginRight:'50px',fontSize:'20px'}}>Signup <AiOutlineUserAdd/></Nav.Link> */}
+                    <Nav.Link className={styles.navbar}  style={{marginRight:'50px',fontSize:'20px',width:'322px',height:'70px'}} onClick={routeChange3}>
+                    My Courses <BsBookHalf/>
+                    </Nav.Link>
+                    <Nav.Link className={styles.navbar}  style={{marginRight:'20px',fontSize:'20px'}} onClick={routeChange}>
+                    My Profile<ImProfile/>
+                    </Nav.Link>
+                    <Nav.Link className={styles.navbar} style={{marginRight:'-125px',fontSize:'20px'}} onClick={handleLogout}>
+                    Logout <AiOutlineLogout/>
+                    </Nav.Link>
+                </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+            </form>
+            </div>
+            
+            <FilterCoursesByRateComponent/>
+            
+            
             <h4 className={styles.GuestHeading}>OUR POPULAR COURSES: </h4>
 
-            <div className={styles.grid}>
-
+            <div className={styles.traineehomegrid} style={{width:'500px'}}>
             {mostViewedCourses && mostViewedCourses.map(course => (
                 
             <div hover
@@ -181,16 +255,18 @@
                 }}
                 
                 onClick={() =>{handleSubmit(course._id)}}
-                key={course._id}>
+                key={course._id} style={{display:'inline'}}>
                 <GuestCourseDetails course={course} key={course.id} />
                 
                 
                 </div>
             ))}
+            
 
             </div>
+            
             <h4 className={styles.GuestHeading}>ALL OUR COURSES: </h4>
-            <div className={styles.grid}>
+            <div className={styles.traineehomegrid}>
                 {courses && courses.map(course => (
                 
             <div  hover

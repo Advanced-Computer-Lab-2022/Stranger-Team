@@ -1,7 +1,8 @@
     //REMOVED IDs' ===>>>>>>DONE
 
     import { useState } from 'react'
-import CorporateTraineeProfileNavBar from '../components/CorporateTraineeProfileNavBar'
+    import styles from '../components/Guest/styles.module.css';
+    import CorporateTraineeProfileNavBar from '../components/CorporateTraineeProfileNavBar'
 
     const CorporateTraineeReportAProblemPage = () => {
     const [Reported_Problem,setReported_Problem] = useState('')
@@ -51,8 +52,52 @@ import CorporateTraineeProfileNavBar from '../components/CorporateTraineeProfile
 
     return (
         
-        <form className="create" onSubmit={handleSubmit}> 
+        // <form className="create" onSubmit={handleSubmit}> 
+        // <CorporateTraineeProfileNavBar/>
+        // <h3>Fill In The Following Fields To Send Your Report:</h3>
+
+        // <div className="form-check">
+        // <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="Technical" onChange={(e) => setReport_Type(e.target.value)}/>
+        // <label className="form-check-label" >
+        //     Technical
+        // </label>
+        // </div>
+        // <div className="form-check">
+        // <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="Financial" onChange={(e) => setReport_Type(e.target.value)}  />
+        // <label className="form-check-label" >
+        //     Financial
+        // </label>
+        // </div>
+        // <div className="form-check">
+        // <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="Other" onChange={(e) => setReport_Type(e.target.value)}/>
+        // <label className="form-check-label" >
+        //     Other
+        // </label>
+        // </div>
+
+        // <label>Report Title:</label>
+        // <input 
+        //     className='course'
+        //     type="text" 
+        //     onChange={(e) => setReport_Title(e.target.value)} 
+        //     value={Report_Title}
+        // />
+
+        // <label> Please write a brief description of the issue so we could help you to the best of our abilities:</label>
+        // <input 
+        //     className='course'
+        //     type="text" 
+        //     onChange={(e) => setReported_Problem(e.target.value)} 
+        //     value={Reported_Problem}
+        // />
+
+        // <button>Submit Report</button>
+        // {error && <div className="error">{error}</div>}
+        // </form>
+        //-------------------------------------------------------------------------
+        <>
         <CorporateTraineeProfileNavBar/>
+        <form className="create" onSubmit={handleSubmit} style={{marginTop:'20px',marginLeft:'10px'}}> 
         <h3>Fill In The Following Fields To Send Your Report:</h3>
 
         <div className="form-check">
@@ -61,20 +106,21 @@ import CorporateTraineeProfileNavBar from '../components/CorporateTraineeProfile
             Technical
         </label>
         </div>
-        <div className="form-check">
+        {/* <div className="form-check">
         <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="Financial" onChange={(e) => setReport_Type(e.target.value)}  />
         <label className="form-check-label" >
             Financial
         </label>
-        </div>
+        </div> */}
         <div className="form-check">
         <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="Other" onChange={(e) => setReport_Type(e.target.value)}/>
         <label className="form-check-label" >
             Other
         </label>
         </div>
+        
 
-        <label>Report Title:</label>
+        <label> Report Title:</label>
         <input 
             className='course'
             type="text" 
@@ -90,9 +136,10 @@ import CorporateTraineeProfileNavBar from '../components/CorporateTraineeProfile
             value={Reported_Problem}
         />
 
-        <button>Submit Report</button>
+        <button className={styles.blueButton}>Submit Report</button>
         {error && <div className="error">{error}</div>}
         </form>
+        </>
     )
     }
 

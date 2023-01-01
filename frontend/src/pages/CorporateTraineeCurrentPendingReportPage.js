@@ -22,6 +22,8 @@ import CurrentCourseInstructorPageSubtitles from "../components/CurrentCourseIns
 import InstructorCurrentCoursePageDetails from "../components/InstructorCurrentCoursePageDetails";
 import CurrentReportPageDetails from "../components/CurrentReportPageDetails";
 import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+import CorporateTraineeProfileNavBar from "../components/CorporateTraineeProfileNavBar";
+import styles from "../components/Guest/styles.module.css"
 
 
 const CorporateTraineeCurrentPendingReportPage = () => {
@@ -97,52 +99,100 @@ const handleSubmit = async (e) => {
 
 
 return (
+    // <div>
+    // <TraineeProfileNavBar/>
+    // <form className="create">
+
+    
+    // <div className="row gutters">
+    
+    // <div className="card h-100">
+    //     <div className="card-body">
+
+    //         {problem && problem.map(problem => (
+    //         <CurrentReportPageDetails problem={problem} key={problem._id} />
+    //         ))[0]}
+    //     </div>
+
+        
+    // </div>
+    // </div>
+    // </form>
+
+    
+    // <div className="row gutters">
+    
+    // <div className="card h-100">
+    //     <div className="card-body">
+
+    //         <form className="create" onSubmit={handleSubmit}>
+    //         <h4>If you wish to send a follow up so we are able to tend to your needs better:</h4>
+    //         <input 
+    //         className='course'
+    //         type="text" 
+    //         onChange={(e) => setFollowup(e.target.value)} 
+    //         value={Followup}
+    //         />
+    //         <button>Send Followup</button>
+    //         </form>
+    //     </div>
+
+        
+    // </div>
+    // </div>
+            
+            
+        
+        
+    // </div>
+    //----------------------------------------------------------------------------------
     <div>
-    <TraineeProfileNavBar/>
-    <form className="create">
-
-    
-    <div className="row gutters">
-    
-    <div className="card h-100">
-        <div className="card-body">
-
-            {problem && problem.map(problem => (
-            <CurrentReportPageDetails problem={problem} key={problem._id} />
-            ))[0]}
-        </div>
+        <CorporateTraineeProfileNavBar/>
+        <form className="create">
 
         
-    </div>
-    </div>
-    </form>
+        <div className="row gutters">
+        
+        <div className="card h-100">
+            <div className="card-body">
 
-    
-    <div className="row gutters">
-    
-    <div className="card h-100">
-        <div className="card-body">
+                {problem && problem.map(problem => (
+                <CurrentReportPageDetails problem={problem} key={problem._id} />
+                
+                ))[0]}
+            </div>
 
-            <form className="create" onSubmit={handleSubmit}>
-            <h4>If you wish to send a follow up so we are able to tend to your needs better:</h4>
-            <input 
-            className='course'
-            type="text" 
-            onChange={(e) => setFollowup(e.target.value)} 
-            value={Followup}
-            />
-            <button>Send Followup</button>
-            </form>
+            
         </div>
+        </div>
+        </form>
 
         
-    </div>
-    </div>
+        <div className="row gutters">
+        
+        <div className="card h-100">
+            <div className="card-body">
+
+                <form className="create" onSubmit={handleSubmit}>
+                <h4>If you wish to send a follow up so we are able to tend to your needs better:</h4>
+                <input 
+                className='course'
+                type="text" 
+                onChange={(e) => setFollowup(e.target.value)} 
+                value={Followup}
+                />
+                <button className={styles.blueButton}>Send Followup</button>
+                </form>
+            </div>
+
+            
+        </div>
+        </div>
+                
+                
             
             
-        
-        
-    </div>
+        </div>
 )
 }
 
