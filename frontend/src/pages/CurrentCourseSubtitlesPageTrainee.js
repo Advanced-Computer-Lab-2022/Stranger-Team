@@ -128,9 +128,9 @@ return (
             <SubtitleQuestionComponent subtitleQuestion={subtitleQuestion} key={subtitleQuestion._id} />
             ))[0]}
             
-            <button onClick={updateProgress}  id="NextSub" style={{margin:"20px 640px",padding:"10px 20px",width:"100px",borderRadius:"10px"}}>
+            {/* <button onClick={updateProgress}  id="NextSub" style={{margin:"20px 640px",padding:"10px 20px",width:"100px",borderRadius:"10px"}}>
         {"Done"}
-    </button>
+    </button> */}
         </div>
         
         
