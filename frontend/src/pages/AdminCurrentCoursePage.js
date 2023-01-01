@@ -3,6 +3,8 @@
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
+    import AdminNavbar from '../components/AdminNavbar'
+    import styles from '../components/Guest/styles.module.css'
     
 
     // components
@@ -67,21 +69,37 @@
 
     return (
         <div>
-        <form className="create">
+            <AdminNavbar></AdminNavbar>
+        
 
         <div className="row gutters">
         <div className="card h-100">
             <div className="card-body">
-                <form className="course-details">
+                {/* <form className="course-details">
                 <button onClick={routeChange}>Define A New Course Discount</button>
-                </form>
+                </form> */}
+                  <Container >
+                  <button className="button-41" role="button" onClick={routeChange}><span class="text">Define A New Course Discount</span></button>
                 {course && course.map(course => (
-                <AdminCurrentCoursePageDetails course={course} key={course._id} />
-                ))[0]}
+                     <Container  className={styles.currentCourseContainer} hover
+                     sx={{
+                         "&:hover":{
+                         cursor: "pointer",
+                         backgroundColor: "#f5f5f5",
+                         width: "100%"
+                         }
+                     }}
+                     key={course._id}>
+                     <AdminCurrentCoursePageDetails course={course} key={course._id} />
+                     
+                     
+                     </Container>
+                 ))[0]}
                 <PreviewCourseVideoPageDetails/>
 
                 
 
+                </Container>
 
                 
             </div>
@@ -91,7 +109,6 @@
         </div>
         </div>
         
-        </form>
         </div>
     )
     }

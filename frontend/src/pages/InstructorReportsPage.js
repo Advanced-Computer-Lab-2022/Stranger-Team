@@ -13,6 +13,7 @@
     import StarRating from "../components/StarRating";
     import PreviewCourseVideoPageDetails from '../components/PreviewCourseVideoTraineePageDetails'
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+import InstructorNavbar from "../components/InstructorNavbar";
 
     const InstructorReportsPage = () => {
 
@@ -53,7 +54,7 @@
     return (
 
         <div >
-            <ProfileNavBar/>
+            <InstructorNavbar/>
 
             <div className="course-details" onClick={routeChange}>
             <p><strong>Delivered Reports</strong></p> 

@@ -98,88 +98,99 @@ const QuizForm = () => {
     return (
         <div> 
             <form className="create" onSubmit={handleSubmit}>
-            <h3>Add a new question</h3>
+            <h3><strong>Add a new question</strong></h3>
 
-            <label>Question number: </label>
+            <label><strong>Question number*</strong></label>
+            <br></br>
             <input 
             type="number" 
             onChange={(e) => setQNumber(e.target.value)}
             value={QNumber}
-            className={emptyFields.includes('QNumber') ? 'error':''}
+            required
+            // className={emptyFields.includes('QNumber') ? 'error':''}
             />
-
-            <label>Question: </label>
+            <p></p>
+            <label><strong>Question*</strong></label>
+           <br></br>
             <input 
             type="text" 
             onChange={(e) => setQ(e.target.value)}
             value={Q}
-            className={emptyFields.includes('Q') ? 'error':''}
+            required
+            // className={emptyFields.includes('Q') ? 'error':''}
             />
-
-            <label>OPTION 0: </label>
+<p></p>
+            <label><strong>OPTION 0*</strong></label>
+            <br></br>
             <input 
             type="text" 
             onChange={(e) => setAnswer1(e.target.value)}
             value={Answer1}
-            className={emptyFields.includes('A1') ? 'error':''}
+            required
+            // className={emptyFields.includes('A1') ? 'error':''}
             />
 
-
-            <label>OPTION 1: </label>
+<p></p>
+            <label><strong>OPTION 1*</strong></label>
+            <br></br>
             <input 
             type="text" 
             onChange={(e) => setAnswer2(e.target.value)}
             value={Answer2}
-            className={emptyFields.includes('A2') ? 'error':''}
+            required
+            // className={emptyFields.includes('A2') ? 'error':''}
             />
 
-            
-            <label>OPTION 2: </label>
+            <p></p>
+            <label><strong>OPTION 2*</strong></label>
+        <br></br>
             <input 
             type="text" 
             onChange={(e) => setAnswer3(e.target.value)}
             value={Answer3}
-            className={emptyFields.includes('A3') ? 'error':''}
+            required
+            // className={emptyFields.includes('A3') ? 'error':''}
             />
 
 
-
-            <label>OPTION 3: </label>
+<p></p>
+            <label><strong>OPTION 3*</strong></label>
+            <br></br>
             <input 
             type="text" 
             onChange={(e) => setAnswer4(e.target.value)}
             value={Answer4}
-            className={emptyFields.includes('A4') ? 'error':''}
+            required
+            // className={emptyFields.includes('A4') ? 'error':''}
             />
 
 
-            {/* <label>Option which holds the correct answer </label>
-            <input 
-            type="number" 
-            onChange={(e) => setCorrectAnswer(e.target.value)}
-            value={correctAnswer}
-            className={emptyFields.includes('correctAns') ? 'error':''}
-            /> */}
 
-            <label>Option which holds the correct answer </label>  
+
+
+<p></p>
+            <label><strong>Correct Option*</strong></label>  
+            <br></br>
             <select id="RID" name="correctAnswer" onChange={(e) => setCorrectAnswer(e.target.value)}
-            value={correctAnswer} type="number">
+            value={correctAnswer} required type="number" class="form-control" style={{width: "200px", height:"40px"}}>
             <option value=""></option>
             <option value="0">0</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
-            className={emptyFields.includes('correctAns') ? 'error':''}
             </select> 
             
             {/* <hr></hr> */}
-            <button>Add question</button>
-            {error && <div className="error">{error}</div>}
+           <div> <button className="button-40" role="button"><span class="text">Add Question</span></button></div>
+            {error && <div className="error1">{error}</div>}
 
            
         </form>
-        <button onClick={handleClick}>Done</button>
-        {error1 && <div className="error">{error1}</div>}
+
+
+        <button className="done" role="button" onClick={handleClick}><span class="text" >Done</span></button>
+       
+        {error1 && <div className="error2">{error1}</div>}
         
         </div>
         

@@ -301,7 +301,7 @@ const subtitleQuestionAnswer = async(req,res) => {
   const result = await Question.find({CourseId:mongoose.Types.ObjectId(courseid)}).populate('CourseId');
   console.log(result)
   if (result.length < 3) {
-    res.status(400).json({error1:"A quiz of a minimum of 3 questions should be created for each course."})
+    res.status(400).json({error1:"An exam of a minimum of 3 questions should be created for each course."})
   }
 
   else {

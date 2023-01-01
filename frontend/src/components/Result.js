@@ -109,7 +109,7 @@ const flag = flagResult(totalPoints, earnPoints)
 
     return (
         <div className='container'>
-            <h1 className='title'>RESULTS</h1>
+            <h1 style={{marginLeft:'300px'}}><strong>RESULTS</strong></h1>
     
             <div className='result flex-center'>
                
@@ -135,23 +135,27 @@ const flag = flagResult(totalPoints, earnPoints)
                 </div>
             </div>
     
-            <div className="start">
-                <Link className='btn' to={`/mainForQuiz/?CourseId=${courseId}`} onClick={onRestart}>Restart</Link>
+            <div className="start" style={{marginRight:'350px'}}>
+                <Link className='button-48' to={`/mainForQuiz/?CourseId=${courseId}`} onClick={onRestart}>Restart</Link>
             </div>
-        {!corpTrainee && <Link className='btn' to={`/CurrentCoursePageTrainee/?CourseId=${courseId}`}>Back To Course</Link>}
-        {corpTrainee && <Link className='btn' to={`/CurrentCoursePageCorporateTrainee/?CourseId=${courseId}`}>Back To Course</Link>}
-        {!corpTrainee && <Link className='btn' to={`/Traineeviewqwizanswers/?CourseId=${courseId}`}onClick={update}>Done</Link>}
-        {corpTrainee && <Link className='btn' to={`/viewqwizanswers/?CourseId=${courseId}`} onClick={update}>Done </Link>}
+
+            <div className="start" style={{marginRight:'350px'}}>
+            {!corpTrainee && <Link className='button-48' style={{marginTop:'20px'}} to={`/CurrentCoursePageTrainee/?CourseId=${courseId}`}>Back To Course</Link>}
+            {corpTrainee && <Link className='button-48'style={{marginTop:'20px'}} to={`/CurrentCoursePageCorporateTrainee/?CourseId=${courseId}`}>Back To Course</Link>}           
+             </div>
+
+            <div className="start" style={{marginRight:'350px'}}>
+            {!corpTrainee && <Link className='button-48' style={{marginTop:'20px'}} to={`/Traineeviewqwizanswers/?CourseId=${courseId}`}onClick={update}>Done</Link>}
+             {corpTrainee && <Link className='btn' to={`/viewqwizanswers/?CourseId=${courseId}`} style={{marginTop:'20px'}} onClick={update}>Done </Link>}            
+             </div>
+        
+        
         {/* {corpTrainee && <button onClick={update}>Done</button>} */}
 
 
 
 
-        {/* <Link className='btn' to={`/mainForQuiz/?CourseId=${courseId}&TraineeId=${traineeId}&CorporateTraineeId=${ctrainee}`} onClick={onRestart}>Restart</Link>
-            </div>
-        {!corpTrainee && <Link className='btn' to={`/CurrentCoursePageTrainee/?CourseId=${courseId}&TraineeId=${traineeId}`}>Back To Course</Link>}
-        {corpTrainee && <Link className='btn' to={`/CurrentCoursePageCorporateTrainee/?CourseId=${courseId}&CorporateTraineeId=${ctrainee}`}>Back To Course</Link>}
-        {!corpTrainee && <Link className='btn' to={`/Traineeviewqwizanswers/?CourseId=${courseId}&TraineeId=${traineeId}`}onClick={update}>Done</Link>} */}
+     
        
             
     

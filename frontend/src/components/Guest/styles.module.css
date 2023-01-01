@@ -9,6 +9,16 @@
 
 /* bg="#00008B" */
 
+
+.adminnavbar {
+    width: 100%;
+    height: 70px;
+    background-color: #00008B;
+    display: flex;
+    align-items: left;
+    justify-content: space-between;
+}
+
 .navbar h1 {
     color: white;
     font-size: 30px;
@@ -21,6 +31,14 @@
     font-size: 20px;
     margin-top:10px;
     margin-left: 45px;
+    margin-right: 10px;
+}
+
+.navbar h3 {
+    color: white;
+    font-size: 20px;
+    margin-top:10px;
+    margin-left: 700px;
     margin-right: 10px;
 }
 
@@ -181,7 +199,7 @@
     /* margin:20px; */
     margin-left: 15px;
     margin-bottom: 200px;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: 200px;
     gap: 8rem;
     grid-column-gap: 42px;
@@ -199,6 +217,23 @@
     grid-auto-rows: 200px;
     gap: 8rem;
     grid-column-gap:42px ;
+    /* grid-auto-flow: column;
+    grid-template-columns: repeat(auto-fit, minmax(min-content, 1fr)); */
+}
+
+
+.adminCoursegrid {
+    display: grid;
+    width:400px;
+    /* margin:20px; */
+    margin-left: 15px;
+    margin-bottom: 200px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 200px;
+    gap: 8rem;
+    grid-column-gap: 0px
+    
+    /* margin-right: 500px; */
     /* grid-auto-flow: column;
     grid-template-columns: repeat(auto-fit, minmax(min-content, 1fr)); */
 }

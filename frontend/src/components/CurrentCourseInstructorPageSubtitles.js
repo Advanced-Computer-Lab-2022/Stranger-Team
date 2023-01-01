@@ -52,14 +52,14 @@
 
     return (
 
-        <div className="course-details">
+        <div className="admin-details">
 
         {/* <div class="container">
         <div class="row gutters">
         <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
         <div class="card h-100">
             <div class="card-body"> */}
-                <h4>Available Course Subtitles:</h4>
+                <h4><strong>Available Course Subtitles:</strong></h4>
                 {subtitle && subtitle.map(subtitle => (
                 <CurrentCourseInstructorPageSubtitleDetails subtitle={subtitle} key={subtitle._id} />
                 ))}

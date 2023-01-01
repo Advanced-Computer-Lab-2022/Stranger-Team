@@ -1,6 +1,7 @@
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
+    import styles from './Guest/styles.module.css'
     
 
     const AdminCurrentCoursePageDetails = ({ course }) => {
@@ -56,9 +57,11 @@
     return (
 
         
-        <div className="course-details">
+        // <div className="course-details">
+        <div className={styles.currentCourseDetails}>
 
-        <h4>{course.Title}</h4>
+        <h4><strong>{course.Title}</strong></h4>
+        <div className={styles.currentInstructorCourseDetails}>
         <p><strong>Course Instructor: </strong>{course.Instructor_Name}</p> 
         <p><strong>Subject: </strong>{course.Subject}</p>
         <p><strong>Subtitles Total Hours: </strong>{course.Subtitles_Total_Hours}</p>
@@ -69,7 +72,7 @@
         <p><strong>Dicount Start Date: </strong>{Discount_Start_Date}</p>
         <p><strong>Dicount End Date: </strong>{Discount_End_Date}</p>
         <p><strong>Course Description: </strong>{course.Course_Description}</p> 
-        
+        </div>
         </div>
     )
     }

@@ -138,12 +138,21 @@
         <form className="create" onSubmit={routeChange} style={{marginLeft:'1000px',marginTop:'100px',position:'absolute'}}> 
         <h3>Filter Courses: </h3>
 
-        <label> Rate :</label>
+        {/* <label> Rate :</label>
         <input 
             type="number" 
             onChange={(e) => setRate(e.target.value)} 
             value={Rating}
-        />
+        /> */}
+        <label>Rating: </label>
+            <select onChange={(e) => setRate(e.target.value)} value={Rating} required class="form-control" style={{width: "200px", height:"40px"}}>
+                <option></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                </select>
 
         <label> Subject :</label>
         <input 

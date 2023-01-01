@@ -5,6 +5,8 @@ import { useNavigate,useLocation  } from "react-router-dom";
 import axios from "axios";
 import parse from 'html-react-parser'
 import JsPDF from 'jspdf';
+import styles from "../components/Guest/styles.module.css"
+
 
 
 const generatePDF = () => {
@@ -52,7 +54,7 @@ const CTraineeViewWithNotes = () => {
 }
 return (
     <div className="course-details">
-       <h4>Your Notes</h4>
+       {/* <h4 style={{color:'#00008B'}}>Your Notes</h4> */}
         <div className="blogList">
         {/* <button  onClick={fetchNotes}>{ 'Load Notess' }
       
@@ -73,7 +75,7 @@ return (
                  }
                  </div>   
             </div>   
-        <button onClick={generatePDF}> Save as PDF</button>
+        <button onClick={generatePDF}  className={styles.blueButton}> Save Your Notes as PDF</button>
     </div>
  
   

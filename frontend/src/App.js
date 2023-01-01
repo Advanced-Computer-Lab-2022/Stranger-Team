@@ -153,6 +153,7 @@ import GuestCurrentCoursePage from './components/Guest/GuestCurrentCoursePage';
 import GuestCurrentCourseInstructorPage from './components/Guest/GuestCurrentCourseInstructorPage';
 import ViewQuestionsWizAnswersTrainee from './pages/ViewQwizAnswersTrainee';
 import CurrentNonRegisteredCourseInstructorPageCorporateTrainee from './pages/CurrentNonRegisteredCourseInstructorPageCorporateTrainee';
+import FilteredCoursesGuestPage from './components/Guest/FilteredCoursesGuestPage';
 //import ViewQuestionsWizAnswersTrainee from './components/ViewQwizAnswersTrainee';
 
 
@@ -178,6 +179,11 @@ function App() {
         <Route
         path="/GuestCurrentCoursePage"
         element={<GuestCurrentCoursePage/>}
+        />
+        
+        <Route
+        path="/FilteredCoursesGuestPage"
+        element={<FilteredCoursesGuestPage/>}
         />
 
         <Route

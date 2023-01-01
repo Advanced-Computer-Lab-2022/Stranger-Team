@@ -20,7 +20,10 @@ import CurrentCoursePageSubtitleDetails from "../components/CurrentCourseInstruc
 import CurrentCourseSubtitlesPageDetailsTrainee from "../components/CurrentCourseSubtitlesPageDetailsTrainee";
 import Progressbar from "../components/progressBar";
 import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+import styles from "../components/Guest/styles.module.css"
 var p;
+
+
 
 
 

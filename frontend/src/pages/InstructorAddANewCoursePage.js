@@ -4,6 +4,8 @@
     import InstructorAddNewSubtitlePage from './InstructorAddANewSubtitlePage';
     import DefineACourseDiscountInstructorPage from './DefineACourseDiscountInstructorPage';
     import ProfileNavBar from "../components/ProfileNavBar"
+    import InstructorNavbar from '../components/InstructorNavbar';
+import { Container } from 'react-bootstrap';
 
     const InstructorAddANewCoursePage = () => {
     const [Title, setTitle] = useState('')
@@ -96,76 +98,86 @@
 
     return (
         <div>
-            <ProfileNavBar/>
-        <form className="create" onSubmit={handleSubmit}> 
-        <h3>Add a New Course</h3>
+            <InstructorNavbar/>
+           <Container><form className="create" onSubmit={handleSubmit} > 
+        <h3><strong>Add a New Course</strong></h3>
 
-        <label> Title:</label>
+        <label><strong>Title*</strong></label>
         <input 
             type="text" 
             onChange={(e) => setTitle(e.target.value)} 
             value={Title}
+            required
         />
-
-        <label> Subject:</label>
+<br></br>
+        <label><strong>Subject*</strong></label>
         <input 
             type="text" 
             onChange={(e) => setSubject(e.target.value)} 
             value={Subject}
+            required
         />
 
-
-        <label>Subtitles Total Hours:</label>
+<br></br>
+        <label><strong>Subtitles Total Hours*</strong></label>
         <input 
             type="number" 
             onChange={(e) => setSubtitles_Total_Hours(e.target.value)} 
             value={Subtitles_Total_Hours} 
+            required
         />
 
-
-        <label>Course Total Hours:</label>
+<br></br>
+        <label><strong>Course Total Hours*</strong></label>
         <input 
             type="number" 
             onChange={(e) => setCourse_Total_Hours(e.target.value)} 
-            value={Course_Total_Hours} 
+            value={Course_Total_Hours}
+            required 
         />
-
-        <label>Price:</label>
+<br></br>
+        <label><strong>Price*</strong></label>
         <input 
             type="text" 
             onChange={(e) => setPrice(e.target.value)} 
-            value={Price} 
+            value={Price}
+            required 
         />
-
-        <label>Preview Link For Course:</label>
+<br></br>
+        <label><strong>Preview Link for Course*</strong></label>
         <input 
             type="text" 
             onChange={(e) => setPreviewLink(e.target.value)} 
             value={PreviewLink} 
+            required
         />
 
         <hr></hr>
-        <h3>Course Subtitles:</h3>
-
-        <label>Subtitle Title:</label>
+        <h3><strong>Subtitles</strong></h3>
+        <label>One or more subtitles can be added to your course.</label>
+        <p></p>
+        <label><strong>Subtitle Title*</strong></label>
         <input 
             type="String" 
             onChange={(e) => setSubtitle_Title(e.target.value)} 
-            value={Subtitle_Title} 
+            value={Subtitle_Title}
+            required 
         />
-
-        <label>Subtitle Link:</label>
+<br></br>
+        <label><strong>Link*</strong></label>
         <input 
             type="String" 
             onChange={(e) => setLink(e.target.value)} 
             value={Link} 
+            required
         />
-
-        <label>Subtitle Description:</label>
+<br></br>
+        <label><strong>Description*</strong></label>
         <input 
             type="String" 
             onChange={(e) => setDescription(e.target.value)} 
-            value={Description} 
+            value={Description}  
+            required
         />
 
         <hr></hr>
@@ -173,64 +185,73 @@
 
 {/* SUBTITLE QUESTIONS */}
      
-        <h3>Subtitle Question</h3>
-        <label>Question:</label>
+        <h3><strong>Subtitle Question</strong></h3>
+        <label>Each Subtitle must have one question relevant to its given content.</label>
+        <p></p>
+        <label><strong>Question*</strong></label>
         <input 
             type="String" 
             onChange={(e) => setQ(e.target.value)} 
             value={Q} 
+            required
         />
-
-        <label>Option 1:</label>
+<br></br>
+        <label><strong>Option 1*</strong></label>
         <input 
             type="String" 
             onChange={(e) => setAnswer1(e.target.value)} 
             value={Answer1} 
+            required
         />
-
-        <label>Option 2:</label>
+<br></br>
+        <label><strong>Option 2*</strong></label>
         <input 
             type="String" 
             onChange={(e) => setAnswer2(e.target.value)} 
             value={Answer2} 
+            required
         />
+<br></br>
 
-
-        <label>Option 3:</label>
+        <label><strong>Option 3*</strong></label>
         <input 
             type="String" 
             onChange={(e) => setAnswer3(e.target.value)} 
             value={Answer3} 
+            required
         />
+<br></br>
 
-
-        <label>Option 4:</label>
+        <label><strong>Option 4*</strong></label>
         <input 
             type="String" 
             onChange={(e) => setAnswer4(e.target.value)} 
             value={Answer4} 
+            required
         />
-
-        <label>Correct Answer:</label>
+<br></br>
+        <label><strong>Correct Answer*</strong></label>
         <input 
             type="String" 
             onChange={(e) => setcorrectAnswer(e.target.value)} 
             value={correctAnswer} 
+            required
         />
 
         <hr></hr>
 
 
-        <h3>Optional Details:</h3>
+        <h3><strong>Discount</strong></h3>
+        <label>Course discounts can be added now or later.</label>
         <p> </p>
-        <label>Discount:</label>
+        <label><strong>Discount</strong></label>
         <input 
             type="number" 
             onChange={(e) => setDiscount(e.target.value)} 
             value={Discount} 
         />
-
-        <label>Discount Start Date:</label>
+<br></br>
+        <label><strong>Discount Start Date</strong></label>
         <input 
             className='course'
             type="Date" 
@@ -238,7 +259,7 @@
             onChange={(e) => setDiscount_Start_Date(e.target.value)} 
             value={Discount_Start_Date} 
         />
-
+<br></br>
         <label>Discount End Date:</label>
         <input 
             className='course'
@@ -247,17 +268,18 @@
             onChange={(e) => setDiscount_End_Date(e.target.value)} 
             value={Discount_End_Date} 
         />
-
-        <label>Course Description:</label>
+<br></br>
+        <label><strong>Course Description</strong></label>
         <input 
             type="String" 
             onChange={(e) => setCourse_Description(e.target.value)} 
             value={Course_Description} 
         />
-
-        <button>Add Course</button>
+<p></p>
+<button className="button-2" role="button"><span>Add Course</span></button>
         {error && <div className="error">{error}</div>}
-        </form>
+        </form></Container>
+        
         
         </div>
     )

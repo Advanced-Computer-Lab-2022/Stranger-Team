@@ -1,6 +1,7 @@
     //sessions done
     import { useState } from 'react'
     import ProfileNavBar from '../components/ProfileNavBar'
+    import InstructorNavbar from '../components/InstructorNavbar'
 
     const InstructorReportAProblemPage = () => {
     const [Reported_Problem,setReported_Problem] = useState('')
@@ -55,9 +56,13 @@
     }
 
     return (
+
+        <>
+        <InstructorNavbar/>
         <form className="create" onSubmit={handleSubmit}>
-        <ProfileNavBar/>
-        <h3>Fill In The Following Fields To Send Your Report:</h3>
+        
+        <br></br>
+        <h3><strong>What type of issues are you facing?</strong></h3>
 
         <div className="form-check">
         <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="Technical" onChange={(e) => setReport_Type(e.target.value)}/>
@@ -77,8 +82,9 @@
             Other
         </label>
         </div>
+        <br></br>
 
-        <label>Report Title:</label>
+        <label><strong>Report Title:</strong></label>
         <input 
             className='course'
             type="text" 
@@ -86,7 +92,7 @@
             value={Report_Title}
         />
 
-        <label> Please write a brief description of the issue so we could help you to the best of our abilities:</label>
+        <label><strong>Please write a brief description of the issue so we could help you to the best of our abilities:</strong></label>
         <input 
             className='course'
             type="text" 
@@ -94,9 +100,10 @@
             value={Reported_Problem}
         />
 
-        <button>Submit Report</button>
+<button className="button-48" role="button"><span class="text">Submit Report</span></button>
         {error && <div className="error">{error}</div>}
         </form>
+        </>
     )
     }
 

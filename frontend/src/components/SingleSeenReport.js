@@ -1,11 +1,12 @@
 import { useState } from "react"
+import {Link, useNavigate} from 'react-router-dom'
 
 //import UpdateStatus from "./UpdateStatus"
 
 
 //date fns
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
-
+import{Button, Alert, Container, Nav} from 'react-bootstrap'
 
 
 const SingleSeenReport = ({ irep }) => {
@@ -20,7 +21,13 @@ const SingleSeenReport = ({ irep }) => {
     const [emptyFields, setEmptyFields] = useState([])
     const [emptyFieldz, setEmptyFieldz] = useState([])
     const [drop, setdrop] = useState(false)
-   
+
+
+    let navigate = useNavigate();
+    const routeChange = () =>{ 
+    let path =  `/seenReports`; 
+    navigate(path);
+}
 
  const handleSubmit = async (e) =>  {
     e.preventDefault()
@@ -97,16 +104,31 @@ const SingleSeenReport = ({ irep }) => {
   }
 
     return (
-        
+        <div>
             
-        <div className="admin-details">
+         <div className="admin-details">
+             <div className="admin-details">
         <h4><strong>{irep.Report_Title}</strong></h4>
      <h6>{irep.Role} <strong>{irep.Username}</strong></h6>
         <p>{irep.Reported_Problem}</p>
         <div className="spanni">
         {!statusChange && <span className="material-symbols-outlined" onClick={() => setstatusChange(!statusChange)} >edit</span>}
              </div>
-             {statusChange && <div className="admin-details">
+
+             {statusChange && <form className="create" onSubmit={handleSubmit}>
+                <label>Status:</label>
+            <select onChange={(e) => setStatus(e.target.value)} value={Status} required className="form-control">
+                <option></option>
+                <option value="Pending">Pending</option>
+                <option value="Resolved">Resolved</option>
+                </select>
+                {/* <input type="submit" onClick={handleSubmit}/> */}
+                <div>
+                <button className="button-12" role="button">Change</button>
+                </div>
+                </form>
+                }
+             {/* {statusChange && <div className="admin-details">
         <p>
              <label>Status:</label>
              <select id="RID" name="Status" onChange={(e) => setStatus(e.target.value)}
@@ -121,7 +143,7 @@ const SingleSeenReport = ({ irep }) => {
              <input type="submit" onClick={handleSubmit}/>
              </p>
              </div>}
-             {error && <div className="error">{error}</div>}
+             {error && <div className="error">{error}</div>} */}
              {/* <label><strong>Follow-ups</strong></label> */}
              <p className="material-symbols-outlined" onClick={onSelect}>expand_more</p>
          {drop &&
@@ -153,7 +175,12 @@ irep.Followups.map((q, i) => (
             {error1 && <div className="error">{error1}</div>}  */}
             <p>Sent {formatDistanceToNow(new Date(irep.createdAt), {addSuffix: true})}</p>
             <p>Updated {formatDistanceToNow(new Date(irep.updatedAt), {addSuffix: true})}</p> 
+
+           
       </div>
+      <button className="button-41" role="button" onClick={routeChange}>Back</button></div>
+      </div>
+      
       
       )
     }

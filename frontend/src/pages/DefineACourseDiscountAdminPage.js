@@ -4,6 +4,7 @@
     import React from 'react';
     import { useNavigate } from "react-router-dom";
 	import { useState } from 'react'
+    import AdminNavbar from '../components/AdminNavbar'
 
     const DefineACourseDiscountAdminPage = () => {
 
@@ -51,7 +52,8 @@
 
 
     return (
-
+<div>
+    <AdminNavbar></AdminNavbar>
         <form className="create" onSubmit={defineCourseDiscount}> 
         <h3>Please enter the discount amount you would like to define for the course:</h3>
 
@@ -60,6 +62,7 @@
             type="Number" 
             onChange={(e) => setDiscount(e.target.value)} 
             value={Discount} 
+            required
         />
 
         <label>Discount Start Date:</label>
@@ -69,6 +72,7 @@
             min="2000-01-01" 
             onChange={(e) => setDiscount_Start_Date(e.target.value)} 
             value={Discount_Start_Date} 
+            required
         />
 
         <label>Discount End Date:</label>
@@ -78,11 +82,13 @@
             min="2000-01-01" 
             onChange={(e) => setDiscount_End_Date(e.target.value)} 
             value={Discount_End_Date} 
+            required
         />
 
-        <button>Add Discount</button>
-        {error && <div className="error">{error}</div>} 
+<button className="button-22" role="button" ><span class="text">Add Discount</span></button>
+        {error && <div className="error">{error}</div>}
         </form>
+        </div>
 
     )
     }

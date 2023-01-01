@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 //components
 import CourseRequestsDetails from '../components/CourseRequestsDetails';
-//import AdminNavbar from 
+import AdminNavbar from "../components/AdminNavbar";
 
 
 //hooks
@@ -28,11 +28,14 @@ const CourseRequestsPage = () => {
     
     
         return (
+            <div>
+                <AdminNavbar></AdminNavbar>
         <div className="home">
         <div className="admins">
             {courserequests && courserequests.map((courserequests) => (
                 <CourseRequestsDetails key={courserequests._id} courserequests={courserequests}/>
             ))}
+        </div>
         </div>
         </div>
         )

@@ -5,6 +5,7 @@ import AdminNavbar from "./AdminNavbar"
 import SeenReportsDetails from './SeenReportsDetails'
 import SeenPendingDetails from "./seenPendingDetails"
 import SeenResolvedDetails from "./SeenResolvedDetails"
+import Container from "react-bootstrap/esm/Container"
 
 const SeenReportsPage = () => {
   const [seenReports, setseenReports] = useState(null)
@@ -74,11 +75,11 @@ const SeenReportsPage = () => {
   return (
     <div>
       <AdminNavbar/>
-      <div>
-         <button onClick={fetchPending}>Pending</button>
-         <button onClick={fetchResolved}>Resolved</button>
-         <button onClick={fetchAll}>All</button>
-         </div>
+      <Container style={{top:"0px", right:"365px", display: "flex", gap: "30px"}}>
+      <button class="button-48" role="button"onClick={fetchPending}><span class="text">Pending</span></button> 
+      <button class="button-48" role="button"onClick={fetchResolved}><span class="text">Resolved</span></button> 
+      <button class="button-48" role="button"onClick={fetchAll}><span class="text">All</span></button> 
+         </Container>
       
     <div className="home">
       <div className="admins">

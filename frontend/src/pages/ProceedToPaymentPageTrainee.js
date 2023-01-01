@@ -30,7 +30,7 @@
         const courseId = params.get('CourseId');
         
         //?TraineeId=${traineeId}&CourseId=${courseId}
-        const response = await fetch(`/payByWalletBalance/`)
+        const response = await fetch(`/payByWalletBalance/?CourseId=${courseId}`)
         const json = await response.json()
         if(response.ok)
         {

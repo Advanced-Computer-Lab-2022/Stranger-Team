@@ -1,56 +1,16 @@
 //sessions done
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from "react"
-
 import '../index.css';
 import { useNavigate } from "react-router-dom";
-var c;
+
 const Terms = () => {
-
-    const [contarct, setContract] = useState(false);
-    const updateProgress = async () => {
-        const params = new URLSearchParams(window.location.search);
-        //const subtitleId = params.get('SubtitleId');
-        //const courseId = params.get('CourseId');
-        //const Trainee_Id = params.get('CorporateTraineeId');
-    //&T/raineeId=${Trainee_Id}
-        //console.log(subtitleId); 
-        const response = await fetch('updateContract')
-        const json = await response.json()
-        console.log( json)
-        if (response.ok) {
-            c=json;
-            setContract(json);
-                    
-        }
-        else{
-            console.log("ERRORRRRRRRR")
-        }
-    }
-
-
-
-        // const updateContract=async()=>{
-        //     const response=await fetch(`/updateContract`)
-        //     const json = await response.json()
-        //     console.log(response)
-    
-        //     if (response.ok) {
-        //         setContract(json);
-        //     }
-        //     console.log(">>>>>>>>>>>>>>",json);
-        // }
-        // c=contarct;
-        //updateContract();
-    
-
     let navigate = useNavigate();
 
     const routeChange1 = () =>{ 
         const params = new URLSearchParams(window.location.search);
         //const instructorId = params.get('id');
         // let path = `/InstructorCoursePage/?id=${instructorId}`; 
-        let path = `/login`; 
+        let path = `/InstructorCoursePage`; 
         navigate(path);
     }
     const routeChange2 = () =>{ 
@@ -226,11 +186,16 @@ The best way to get in touch with us is to contact our Support Team. We'd love t
     </div>
     <div >
         <div>
-        <button  onClick={routeChange1} className='course-details'> Reject</button>
-        </div>
+
+            
         <div>
-        {/* <button onClick={updateProgress} className='course-details'> Accept</button> */}
-        <Link className='btn' to={`/InstructorCoursePage`} onClick={updateProgress}>Accept </Link>
+        <button className="accept" role="button" onClick={routeChange2}><span class="text" >Accept</span></button>
+        </div>
+        <hr></hr>
+        <div>
+        <button className="reject" role="button" onClick={routeChange1}><span class="text">Reject</span></button>
+        </div>
+        
     </div>
     </div>
     </header>

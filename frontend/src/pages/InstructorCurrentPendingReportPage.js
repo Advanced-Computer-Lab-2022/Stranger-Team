@@ -21,6 +21,8 @@
     import InstructorCurrentCoursePageDetails from "../components/InstructorCurrentCoursePageDetails";
     import CurrentReportPageDetails from "../components/CurrentReportPageDetails";
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
+    import styles from "../components/Guest/styles.module.css"
+import InstructorNavbar from "../components/InstructorNavbar";
 
 
     const InstructorCurrentPendingReportPage = () => {
@@ -96,7 +98,7 @@
 
     return (
         <div>
-        <ProfileNavBar/>
+        <InstructorNavbar/>
         <form className="create">
 
         

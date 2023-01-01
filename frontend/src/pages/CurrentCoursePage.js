@@ -11,6 +11,7 @@
     import{Button, Alert, Container, Nav} from 'react-bootstrap'
     import Navbar from "../components/Navbar";
     import ProfileNavBar from "../components/ProfileNavBar"
+    import InstructorNavbar from '../components/InstructorNavbar'
 
     import CourseDetails from "../components/CourseDetails";
     import StarRating from "../components/StarRating";
@@ -98,7 +99,7 @@
 
     return (
         <div>
-        <ProfileNavBar/>
+        <InstructorNavbar/>
         <form className="create">
 
         {/* <div className="container"> */}
@@ -106,18 +107,23 @@
         {/* <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12"> */}
         <div className="card h-100">
             <div className="card-body">
-                <form className="course-details">
-                    <button  onClick={routeChange3}>Report a problem</button>
+                <form className="course-details1">
+                <button className="button-48" role="button"onClick={routeChange3}><span class="text">Report A Problem</span></button>
                 </form>
                 {course && course.map(course => (
                 <InstructorCurrentCoursePageDetails course={course} key={course._id} />
                 ))[0]}
                 {/* <CurrentCourseDiscountPage/> */}
+                <form className="course-details1">
+                <Container style={{top:"0px", right:"300px", display: "flex", gap: "30px", width:"2000px"}}>
+                  
+                <button className="button-48" role="button"onClick={routeChange}><span class="text">Discounts</span></button>
 
-                <form className="course-details">
-                <button onClick={routeChange}>Define A New Course Discount</button>
-                <button onClick={routeChange2}>Define A New Course Subtitle</button>
-                <button onClick={routeChange4}>Edit Course Exam</button>
+                <button className="button-48" role="button"onClick={routeChange2}><span class="text">Subtitles</span></button>
+
+                <button className="button-48" role="button"onClick={routeChange4}><span class="text">Edit Course Exam</span></button>
+                
+                </Container>
                 </form>
                 <PreviewCourseVideoPageDetails/>
 

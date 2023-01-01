@@ -25,11 +25,11 @@ function Payment(props) {
 
     useEffect(()=> {
         const params = new URLSearchParams(window.location.search);
-        const courseId = params.get('CourseId');
+       // const courseId = params.get('CourseId');
         //const traineeId = params.get('TraineeId');
 
         //&TraineeId=${traineeId}
-        fetch(`/create-payment/?CourseId=${courseId}`,{
+        fetch(`/createpayment`,{
             method:"POST",
             body:JSON.stringify({}),
         }).then(async(error)=>{
@@ -46,7 +46,7 @@ function Payment(props) {
     return (
         <>
         <TraineeProfileNavBar/>
-        <h4 style={{marginTop:'20px',marginLeft:'10px'}}>Enter credit card details</h4>
+        <h4>Enter credit card details</h4>
         {stripePromise && clientSecret &&(
 
         <Elements stripe={stripePromise} options={{clientSecret}}>

@@ -81,19 +81,28 @@
 
     return (
         <div className="home">
-        <div className="courses">
+        {/* <div className="courses">
             <h1>Courses</h1>
         
-        </div>
+        </div> */}
         <form className="create" onSubmit={routeChange}> 
         <h3>Filter Courses: </h3>
 
-        <label> Rate :</label>
+        {/* <label> Rate :</label>
         <input 
             type="number" 
             onChange={(e) => setRate(e.target.value)} 
             value={Rating}
-        />
+        /> */}
+        <label>Rating: </label>
+            <select onChange={(e) => setRate(e.target.value)} value={Rating} required class="form-control" style={{width: "200px", height:"40px"}}>
+                <option></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                </select>
 
         <label> Subject :</label>
         <input 
@@ -109,7 +118,7 @@
             value={Price}
         />
 
-        <button>Filter</button>
+<button className="button-20" role="button" ><span class="text">Filter</span></button>
         
 
         {error && <div className="error">{error}</div>}

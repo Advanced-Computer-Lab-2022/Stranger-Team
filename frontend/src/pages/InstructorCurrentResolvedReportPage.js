@@ -23,6 +23,7 @@
     import CurrentReportPageDetails from "../components/CurrentReportPageDetails";
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     import CurrentResolvedReportPageDetails from "../components/CurrentResolvedReportPage";
+import InstructorNavbar from "../components/InstructorNavbar";
 
 
     const InstructorCurrentResolvedReportPage = () => {
@@ -57,7 +58,7 @@
 
     return (
         <div>
-        <ProfileNavBar/>
+        <InstructorNavbar/>
         <form className="create">
 
         

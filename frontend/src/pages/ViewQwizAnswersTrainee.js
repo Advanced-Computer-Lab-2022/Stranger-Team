@@ -7,6 +7,10 @@ import { useNavigate,useLocation  } from "react-router-dom";
 import{Button, Alert, Container, Nav} from 'react-bootstrap'
 import Navbar from "../components/Navbar";
 import Viewqwizanswers from "../components/ViewQwizAnswers";
+import { Link } from 'react-router-dom';
+import TraineeProfileNavBar from "../components/TraineeProfilNavBar"; 
+import CorporateTraineeProfileNavBar from '../components/CorporateTraineeProfileNavBar'
+
 var p;
 var f;
 
@@ -17,6 +21,34 @@ const ViewQuestionsWizAnswersTrainee = () => {
 // const [questionN,setQuestionN] = useState(0)
 const [questions,setQuestions] = useState([])
 const [finished,setFinished] = useState(false)
+
+const [corpTrainee, setCorpTrainee] = useState(false)
+
+
+
+    const checkTrainee = async() => {
+    
+        // const response = await fetch(`/routeCheck?CourseId=${courseId}&TraineeId=${traineeId}&CorporateTraineeId=${ctrainee}`,  {
+        //     method: 'GET'
+        // })
+         const response = await fetch('/routeCheck?',  {
+            method: 'GET'
+        })
+        const json = await response.json()
+        console.log(json)
+        if (response.ok) {
+            setCorpTrainee(true)
+            console.log("OK" + corpTrainee)
+        }
+
+        if (!response.ok) {
+            console.log("NOT OK" + corpTrainee)
+        }
+
+    }
+    checkTrainee();
+    const params = new URLSearchParams(window.location.search);
+    const courseId = params.get('CourseId');
 
 // const [answers, setanswers] = useState([])
 // const [correctAnswer,setCorrectAnswer]=useState(0);
@@ -55,6 +87,9 @@ const fetchStatus=async()=>{
 console.log(p)
 return (
 <div>    
+
+{!corpTrainee && <TraineeProfileNavBar/>}
+    {corpTrainee && <CorporateTraineeProfileNavBar/>}      
     <Container >
     <div className="row gutters">
     <div className="card h-100">
@@ -70,6 +105,13 @@ return (
     </div>
     
     </Container>
+
+    <div className="start" style={{marginRight:'350px'}}>
+    {!corpTrainee && <Link  className='button-48'style={{marginTop:'20px',marginRight:'800px'}} to={`/CurrentCoursePageTrainee/?CourseId=${courseId}`}>Back To Course</Link>}
+    {corpTrainee && <Link  className='button-48'style={{marginTop:'20px',marginRight:'800px'}} to={`/CurrentCoursePageCorporateTrainee/?CourseId=${courseId}`}>Back To Course</Link>}       
+             </div>
+    
+    
     </div>
 
 )

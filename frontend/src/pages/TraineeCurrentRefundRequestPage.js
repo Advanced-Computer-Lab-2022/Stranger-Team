@@ -23,6 +23,7 @@
     import CurrentReportPageDetails from "../components/CurrentReportPageDetails";
     import TraineeProfileNavBar from "../components/TraineeProfilNavBar";
     import CurrentRequestDetails from "../components/CurrentRequestDetails";
+    import styles from "../components/Guest/styles.module.css"
 
 
     const TraineeCurrentRefundRequestPage = () => {

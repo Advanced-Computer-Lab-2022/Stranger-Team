@@ -35,12 +35,12 @@ const QuizDetails = ({ quiz }) => {
     
     return (
         <div className="admin-details">
-            <h4>{quiz.QNumber}. {quiz.Q}</h4>
+            <h4>{quiz.QNumber}. <strong>{quiz.Q}</strong></h4>
             <p className="material-symbols-outlined" onClick={onSelect}>expand_more</p>
-            <label>OPTIONS</label>
+            <label><strong>OPTIONS</strong></label>
             {drop &&
 quiz.Answers.map((q, i) => (
-<p  id={`q${i}-option`} visible="false">OPTION {i}: <strong>{quiz.Answers[i]}</strong></p>
+<p  id={`q${i}-option`} visible="false">Option-{i}: <strong>{quiz.Answers[i]}</strong></p>
                     ))
                     }
             <p><strong>Correct Answer:  </strong> {quiz.Answers[quiz.correctAnswer]}</p>

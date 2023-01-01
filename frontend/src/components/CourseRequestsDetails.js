@@ -1,4 +1,5 @@
 import { useCourseRequestsContext } from '../hooks/UseCourseRequests'
+import AdminNavbar from './AdminNavbar'
 
 //date fns
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
@@ -47,8 +48,9 @@ const CourseRequestsDetails = ({ courserequests }) => {
 
     
     return (
+        
         <div className="admin-details">
-            <h4>FROM <strong>{courserequests.TUsername}</strong></h4>
+            <h4>From <strong>{courserequests.TUsername}</strong></h4>
         
             <p>Requesting access to <strong>{courserequests.CourseTitle}</strong></p>
             <p><strong>{courserequests.Role}</strong></p>

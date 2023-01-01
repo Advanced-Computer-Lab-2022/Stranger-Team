@@ -32,7 +32,7 @@ const {quiz, dispatch} = useQuizContext()
     return (
     <div className="home">
     <div className="admins">
-        <h2>Edit your course exam</h2>
+        <h2><strong>Edit your course exam</strong></h2>
         {quiz && quiz.map((quiz) => (
             <QuizDetails key={quiz._id} quiz={quiz}/>
         ))}

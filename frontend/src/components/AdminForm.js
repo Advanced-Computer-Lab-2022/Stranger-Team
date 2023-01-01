@@ -1,7 +1,10 @@
 import { useState } from "react"
+import Container from "react-bootstrap/esm/Container";
 
 //hooks
 import { useAdminsContext } from "../hooks/UseAdminContext";
+import '../styles/admin.css'
+import AdminNavbar from "./AdminNavbar"
 
 const AdminForm = () => {
     const {dispatch} = useAdminsContext()
@@ -44,36 +47,40 @@ const AdminForm = () => {
     }
 
     return (
-        <form className="create" onSubmit={handleSubmit}>
-            <h3>Add a new admin</h3>
+        <form className="create" onSubmit={handleSubmit} style={{position:'absolute',paddingLeft:'1500px'}}>
+            <Container style={{right:"40px", bottom:"-60px"}}><h3><strong>Add a new admin</strong></h3></Container>
 
-            <label>Username: </label>
+            <label><strong>Username</strong></label>
             <input 
             type="text" 
             onChange={(e) => setUsername(e.target.value)}
             value={Username}
             required
             />
-
-            <label>Password: </label>
+<br></br>
+            <label><strong>Password</strong></label>
             <input 
             type="text" 
             onChange={(e) => setPassword(e.target.value)}
             value={Password}
             required
             />
-            <label>Confirm Password: </label>
+
+<br></br>
+            <label><strong>Confirm Password</strong></label>
             <input 
             type="text" 
             onChange={(e) => setconfirmPassword(e.target.value)}
             value={confirmPassword}
             required
-            />
-
-            <button>Add admin</button>
-            {error && <div className="error">{error}</div>}
-
+            />   
+           
+<div>
+        <button className="button-40" role="button"><span class="text">Add Admin</span></button></div>
+            {error && <div className="error1">{error}</div>}
+            
         </form>
+        
     )
 }
 

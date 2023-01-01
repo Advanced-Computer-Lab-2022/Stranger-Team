@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 //import RichTextEditor from "./Components/RichTextEditor";
 import AddNotes from "./AddNotes";
+import styles from "../components/Guest/styles.module.css"
+
 //import 'bootstrap/dist/css/bootstrap.min.css'
 
 // const config = {
@@ -35,8 +37,8 @@ const IndTraineeNotes = () => {
   return (
     <div className="row">
       <div className="col-md-12" style={{ margin: "auto", marginTop: "50px" }}>
-        <div style={{ textAlign: "center" }}>
-          <h3>Add Your Notes:</h3>
+        <div style={{ textAlign: "center"}}>
+          <h4 style={{color:'#00008B'}}><strong>Add Your Notes:</strong></h4>
         </div>
         
         <div>

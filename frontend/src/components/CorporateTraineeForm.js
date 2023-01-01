@@ -8,6 +8,7 @@ const CorporateTraineeForm = () => {
     const {dispatch} = useCorporateTraineesContext()
     const [Username, setUsername] = useState('')
     const [Password, setPassword] = useState('')
+    const [confirmPassword, setconfirmPassword] = useState('')
     const [First_Name, setFN] = useState('')
     const [Last_Name, setLN] = useState('')
     const [Email, setEmail] = useState('')
@@ -20,7 +21,7 @@ const CorporateTraineeForm = () => {
 
     const handleSubmit = async(e) => {
         e.preventDefault()
-        const ct = {Username, Password, First_Name, Last_Name, Email, Gender, Corporate}
+        const ct = {Username, Password, confirmPassword, First_Name, Last_Name, Email, Gender, Corporate, Country}
         const response = await fetch('/adminHome/addCorporateTrainee', {
             method: 'POST',
             body: JSON.stringify(ct),
@@ -41,6 +42,7 @@ const CorporateTraineeForm = () => {
             setError(null)
             setUsername('')
             setPassword('')
+            setconfirmPassword('')
             setFN('')
             setLN('')
             setEmail('')
@@ -54,61 +56,70 @@ const CorporateTraineeForm = () => {
     }
 
     return (
-        <form className="create" onSubmit={handleSubmit}>
-            <h3>Add a new Corporate Trainee</h3>
+        <form className="create" onSubmit={handleSubmit} style={{position:'absolute',paddingLeft:'1500px',paddingTop:'30px'}}>
+            <h3><strong>Add Corporate Trainee</strong></h3>
 
-            <label>Username: </label>
+            <label><strong>Username</strong></label>
             <input 
             type="text" 
             onChange={(e) => setUsername(e.target.value)}
             value={Username}
-            className={emptyFields.includes('Username') ? 'error':''}
+            required
             />
-
-            <label>Password: </label>
+<br></br>
+            <label><strong>Password</strong></label>
             <input 
             type="text" 
             onChange={(e) => setPassword(e.target.value)}
             value={Password}
-            className={emptyFields.includes('Password') ? 'error':''}
+            required
             />
+<br></br>
 
-
-            <label>First Name: </label>
+            <label><strong>Confirm Password</strong></label>
+            <input 
+            type="text" 
+            onChange={(e) => setconfirmPassword(e.target.value)}
+            value={confirmPassword}
+            required
+            />
+<br></br>
+            <label><strong>First Name</strong></label>
             <input 
             type="text" 
             onChange={(e) => setFN(e.target.value)}
             value={First_Name}
-            className={emptyFields.includes('First_Name') ? 'error':''}
+            required
             />
-
-            <label>Last Name: </label>
+<br></br>
+            <label><strong>Last Name</strong></label>
             <input 
             type="text" 
             onChange={(e) => setLN(e.target.value)}
             value={Last_Name}
-            className={emptyFields.includes('Last_Name') ? 'error':''}
+            required
             />
 
-
-            <label>Email: </label>
+<br></br>
+            <label><strong>Email</strong></label>
             <input 
             type="text" 
             onChange={(e) => setEmail(e.target.value)}
             value={Email}
-            className={emptyFields.includes('Email') ? 'error':''}
+            required
             />
-
-            <label>Gender: </label>
-            <input 
-            type="text" 
-            onChange={(e) => setGender(e.target.value)}
-            value={Gender}
-            className={emptyFields.includes('Gender') ? 'error':''}
-            />
-
-            <label for="Country">Choose your Country:</label>
-            <select id="Country" name="Country" onChange={(e) => setCountry(e.target.value)} value={Country} required class="form-control">
+<br></br>
+<label><strong>Gender</strong></label>
+            <select onChange={(e) => setGender(e.target.value)} value={Gender} required class="form-control" style={{width: "200px", height:"40px"}}>
+                <option></option>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Other">Other</option>
+                </select>
+                <br></br>
+            <label for="Country"><strong>Choose Country</strong></label>
+            <select id="Country" name="Country" onChange={(e) => setCountry(e.target.value)} value={Country} required class="form-control" style={{width: "200px", height:"40px"}}>
+                <option value=""></option>
                 <option value="Afghanistan">Afghanistan</option>
                 <option value="Åland Islands">Åland Islands</option>
                 <option value="Albania">Albania</option>
@@ -356,18 +367,20 @@ const CorporateTraineeForm = () => {
                 <option value="Zambia">Zambia</option>
                 <option value="Zimbabwe">Zimbabwe</option>
             </select>
+            <br></br>
 
-
-            <label>Corporate name: </label>
+            <label><strong>Corporate</strong></label>
             <input 
             type="text" 
             onChange={(e) => setCorporate(e.target.value)}
             value={Corporate}
-            className={emptyFields.includes('Corporate') ? 'error':''}
+            required
             />
 
-            <button>Add Corporate Trainee</button>
-            {error && <div className="error">{error}</div>}
+
+<div>
+        <button className="button-40" role="button"><span class="text">Add Corporate Trainee</span></button></div>
+            {error && <div className="error1">{error}</div>}
 
         </form>
     )

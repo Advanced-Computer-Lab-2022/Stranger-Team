@@ -6,6 +6,7 @@
     import { useNavigate } from "react-router-dom";
 	import { useState } from 'react'
     import ProfileNavBar from '../components/ProfileNavBar'
+    import InstructorNavbar from '../components/InstructorNavbar';
 
     const InstructorAddNewSubtitlePage = () => {
 
@@ -73,90 +74,98 @@
     return (
 
         <>
-        <ProfileNavBar/>
-        <div className="course-details">
+        <InstructorNavbar/>
+        <Container>
         <form className="create" onSubmit={defineCourseSubtitle}> 
-        <h3>Please enter the link to the new subtitle you would like to define for your course:</h3>
+        <h3>If you wish to add more subtitles to your course now, please enter the link to the new subtitle you would like to define for your course:</h3>
 
-        <label>Subtitle Title:</label>
+        <label><strong>Subtitle Title</strong></label>
         <input 
             type="String" 
             onChange={(e) => setSubtitle_Title(e.target.value)} 
             value={Subtitle_Title} 
         />
-        <label>Video Link :</label>
+        <br></br>
+        <label><strong>Video Link</strong></label>
         <input 
             type="String" 
             onChange={(e) => setLink(e.target.value)} 
             value={Link} 
         />
-
-        <label>Short Video Description :</label>
+ <br></br>
+        <label><strong>Short Video Description</strong></label>
         <input 
             type="String" 
             onChange={(e) => setDescription(e.target.value)} 
             value={Description} 
         />
-        <hr></hr>
+
+<hr></hr>
 
 
 {/* SUBTITLE QUESTIONS */}
-     
-        <h3>Subtitle Question</h3>
-        <label>Question:</label>
+
+        <h3><strong>Subtitle Question</strong></h3>
+        <label><strong>Question</strong></label>
         <input 
             type="String" 
             onChange={(e) => setQ(e.target.value)} 
             value={Q} 
         />
-
-        <label>Option 1:</label>
+ <br></br>
+        <label><strong>Option 1</strong></label>
         <input 
             type="String" 
             onChange={(e) => setAnswer1(e.target.value)} 
             value={Answer1} 
         />
-
-        <label>Option 2:</label>
+ <br></br>
+        <label><strong>Option 2</strong></label>
         <input 
             type="String" 
             onChange={(e) => setAnswer2(e.target.value)} 
             value={Answer2} 
         />
+ <br></br>
 
-
-        <label>Option 3:</label>
+        <label><strong>Option 3</strong></label>
         <input 
             type="String" 
             onChange={(e) => setAnswer3(e.target.value)} 
             value={Answer3} 
         />
 
-
-        <label>Option 4:</label>
+<br></br>
+        <label><strong>Option 4</strong></label>
         <input 
             type="String" 
             onChange={(e) => setAnswer4(e.target.value)} 
             value={Answer4} 
         />
-
-        <label>Correct Answer:</label>
+ <br></br>
+        <label><strong>Correct Answer</strong></label>
         <input 
             type="String" 
             onChange={(e) => setcorrectAnswer(e.target.value)} 
             value={correctAnswer} 
         />
 
-        <button>Add Subtitle</button>
-        <p></p>
-        <button className="create" onClick={routeChange2}>Done</button>
-        {Error && <div className="error">{Error}</div>}
+<p></p>
+<button className="button-2" role="button"><span>Add Subtitle</span></button>
+        {/* {error && <div className="error">{error}</div>} */}
+
         </form>
-        
-        </div>
+        <hr/>
+        <button className="accept" role="button" onClick={routeChange2}><span class="text" >Done</span></button>
+        </Container>
+
+
+
         </>
 
     )
+
+    
     }
 
     export default InstructorAddNewSubtitlePage

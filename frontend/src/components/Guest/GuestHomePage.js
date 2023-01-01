@@ -17,6 +17,7 @@
     import GuestCourseDetails from "./GuestCourseDetails";
     import { FaSignInAlt } from 'react-icons/fa';
     import { AiOutlineUserAdd } from "react-icons/ai";
+import FilterCoursesGuestComponents from "./FilterCoursesGuestComponents";
 
 
 
@@ -79,42 +80,7 @@
         <>
             <div>
             <form className="signin">
-                {/* <Navbar collapseOnSelect expand="lg"  variant="dark" className={styles.navbar}>
-                <h1>LearnEd</h1>
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                <Navbar.Collapse id="responsive-navbar-nav">
-                <Nav className="me-auto">
-                    <Nav.Link href="#features">Features</Nav.Link>
-                    <Form className={styles.search_navbar}>
-                    <Form.Control
-                        type="search"
-                        placeholder="Search"
-                        className="me-2"
-                        aria-label="Search"
-                        onChange={(e)=>setSearchQuery(e.target.value)}
-                    />
-                    </Form>
-                    <Nav.Link href="#pricing">Pricing</Nav.Link>
-                    <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                    <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.2">
-                        Another action
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action/3.4">
-                        Separated link
-                    </NavDropdown.Item>
-                    </NavDropdown>
-                </Nav>
-                <Nav>
-                    <Nav.Link className={styles.navbar} onClick={routeChange1}>Signup</Nav.Link>
-                    <Nav.Link className={styles.navbar} onClick={routeChange}>
-                    Login
-                    </Nav.Link>
-                </Nav>
-                </Navbar.Collapse>
-            </Navbar> */}
+               
 
             <Navbar collapseOnSelect expand="lg"  variant="dark" className={styles.navbar}>
                 <h1 onClick={routeChange2}>LearnEd</h1>
@@ -143,6 +109,7 @@
             
             </form>
             </div>
+            <FilterCoursesGuestComponents/>
 
             <h4 className={styles.GuestHeading}>OUR POPULAR COURSES: </h4>
 

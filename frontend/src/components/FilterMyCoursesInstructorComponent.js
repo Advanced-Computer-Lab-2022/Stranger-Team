@@ -9,6 +9,7 @@
 
     import { useCourseContext } from "../hooks/useCoursesContext";
     import { useNavigate } from "react-router-dom";
+    import styles from "../components/Guest/styles.module.css"
 
     const FilterMyCoursesInstructorComponent = () => {
 
@@ -91,20 +92,71 @@
 
 
     return (
-        <div className="home">
-        <div className="courses">
-            <h1>Courses</h1>
+        // <div className="home">
+        // <div className="courses">
+         
         
-        </div>
-        <form className="create" onSubmit={routeChange}> 
+        // </div>
+        // <form className="create" onSubmit={routeChange}> 
+        // <h3>Filter Courses: </h3>
+
+        // <label> Rate :</label>
+        // <input 
+        //     type="number" 
+        //     onChange={(e) => setRate(e.target.value)} 
+        //     value={Rating}
+        // />
+
+        // <label> Subject :</label>
+        // <input 
+        //     type="text" 
+        //     onChange={(e) => setSubject(e.target.value)} 
+        //     value={Subject}
+        // />
+
+        // <label> Price :</label>
+        // <input 
+        //     type="number" 
+        //     onChange={(e) => setPrice(e.target.value)} 
+        //     value={Price}
+        // />
+
+        // <button>Filter</button>
+        
+
+        // {error && <div className="error">{error}</div>}
+        // </form>
+
+        // {/* <div className="courses">
+        //     {courses && courses.map(course => (
+        //     <CourseDetails course={course} key={course._id} />
+
+        //     ))}
+        // </div> */}
+
+        
+        // </div>
+        //---------------------------------
+        <>
+        {/* // <div className="home" style={{marginLeft:'1200px',marginTop:'100px'}}> */}
+        <form className="create" onSubmit={routeChange} style={{marginLeft:'1000px',marginTop:'100px',position:'absolute'}}> 
         <h3>Filter Courses: </h3>
 
-        <label> Rate :</label>
+        {/* <label> Rate :</label>
         <input 
             type="number" 
             onChange={(e) => setRate(e.target.value)} 
             value={Rating}
-        />
+        /> */}
+        <label>Rating: </label>
+            <select onChange={(e) => setRate(e.target.value)} value={Rating} required class="form-control" style={{width: "200px", height:"40px"}}>
+                <option></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                </select>
 
         <label> Subject :</label>
         <input 
@@ -120,7 +172,7 @@
             value={Price}
         />
 
-        <button>Filter</button>
+        <button className={styles.blueButton}>Filter</button>
         
 
         {error && <div className="error">{error}</div>}
@@ -134,7 +186,7 @@
         </div> */}
 
         
-        </div>
+        </>
     )
     }
 

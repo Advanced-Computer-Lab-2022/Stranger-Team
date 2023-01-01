@@ -6,6 +6,8 @@ import { Jodit } from "jodit-react";
 import axios from "axios";
 import parse from 'html-react-parser'
 import CTraineeViewWithNotes from "./fetchCorporateNotes";
+import styles from "../components/Guest/styles.module.css"
+
 //let adjustedText = conversion('<p>Your string of HTML code here</p>');
  var Notes;
 
@@ -95,7 +97,7 @@ const AddNotesCorporate = ({ placeholder}) => {
     tabIndex={1}
     value={notes}
     onChange={handleTextAreaChange}    />
-    <button onClick={handleSubmit} style={{ margin: "auto", marginTop: "50px" ,width:"100px",padding:"10px",borderRadius:"10px"}}>Add</button>
+    <button onClick={handleSubmit} className={styles.blueButton} style={{ margin: "auto", marginTop: "50px" ,width:"100px",padding:"10px",borderRadius:"10px"}}>Add</button>
     <div>
     {/* {
      list.map((note) => <div>

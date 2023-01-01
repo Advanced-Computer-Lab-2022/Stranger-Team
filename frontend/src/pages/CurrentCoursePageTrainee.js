@@ -132,7 +132,7 @@
         const courseId = params.get('CourseId');
         // const corporateTraineeId = params.get('TraineeId');
         // let path = `/viewqwizanswers/?CourseId=${courseId}&CorporateTraineeId=${corporateTraineeId}`; 
-        let path = `/viewqwizanswers/?CourseId=${courseId}`; 
+        let path = `/Traineeviewqwizanswers/?CourseId=${courseId}`; 
         navigate(path);
 
     }

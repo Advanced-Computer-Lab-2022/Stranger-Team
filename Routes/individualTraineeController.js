@@ -639,8 +639,13 @@ const fetchNonRegisteredTraineeCoursesForInstructor = async(req,res) => {
     const traineeRegisteredCourses = trainee.Registered_Courses;
     const instructorCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId)}).populate('Instructor');
     const traineeNonRegisteredCourses = [];
-
-    for (let i = 0; i < traineeRegisteredCourses.length; i++) {
+    if(traineeRegisteredCourses==null||traineeRegisteredCourses.length==0||traineeRegisteredCourses.length==null)
+    {
+        res.status(200).json(instructorCourses)
+    }
+    else
+    {
+        for (let i = 0; i < traineeRegisteredCourses.length; i++) {
             for(let j=0;j<instructorCourses.length;j++)
             {
                 console.log(traineeRegisteredCourses[i]._id)
@@ -655,6 +660,9 @@ const fetchNonRegisteredTraineeCoursesForInstructor = async(req,res) => {
 
         console.log(traineeNonRegisteredCourses);
         res.status(200).json(traineeNonRegisteredCourses)
+    }
+
+    
 
     }
     catch(error){

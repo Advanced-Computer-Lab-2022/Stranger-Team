@@ -16,35 +16,29 @@ import { FaSignInAlt } from 'react-icons/fa';
 import { AiOutlineUserAdd, AiFillHome} from "react-icons/ai";
 import { ImProfile } from "react-icons/im"; 
     import { AiOutlineLogout } from "react-icons/ai"; 
-    
 
 
-
-const AdminNavbar = () => {
+const InstructorNavbar = () => {
 
 
     let navigate = useNavigate();
-        const routeReports = () =>{ 
-        let path =  `/reports`; 
+        const routeProfile = () =>{ 
+        let path =  `/MyProfile`; 
         navigate(path);
     }
 
 
         const routeHome = () =>{ 
-        let path =  `/adminHome`; 
+        let path =  `/InstructorCoursePage`; 
         navigate(path);
     }
 
-
-    const routeRefunds = () =>{ 
-        let path =  `/refunds`; 
-        navigate(path);
-    }
     const handleLogout = () => {
 		localStorage.removeItem("token");
 		// window.location.reload();
         window.location.href=`/GuestHome`; 
 	};
+
 
 return (
 //     <Navbar collapseOnSelect expand="lg"  variant="dark" className={styles.navbar}>
@@ -53,20 +47,20 @@ return (
 //     <Navbar.Collapse id="responsive-navbar-nav">
 //     <Nav>
 //         <Nav.Link className={styles.navbar} onClick={routeHome} style={{marginRight:'50px',fontSize:'20px', }}>Home</Nav.Link>
-//         <Nav.Link className={styles.navbar} onClick={routeReports} style={{marginRight:'50px',fontSize:'20px',  right:'70px'}}>Reports</Nav.Link>
-//         <Nav.Link className={styles.navbar} onClick={routeRefunds} style={{marginRight:'50px',fontSize:'20px',  right:'70px'}}>Refunds </Nav.Link>
+//         <Nav.Link className={styles.navbar} onClick={routeProfile} style={{marginRight:'50px',fontSize:'20px',  right:'70px'}}>Profile</Nav.Link>
 //     </Nav>
-//     <h3>Welcome, Admin</h3>
 //     </Navbar.Collapse>
 // </Navbar>
-//------------------------------------------
-<Navbar collapseOnSelect expand="lg"  variant="dark" className={styles.navbar}>
-                <h1 style={{width:'400px'}}>Welcome Admin</h1>
+
+<div>
+        <form className="signin">
+            <Navbar collapseOnSelect expand="lg"  variant="dark" className={styles.navbar} style={{width:'1350px'}}>
+                <h1 onClick={routeHome}>LearnEd</h1>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
                     {/* <Nav.Link href="#"></Nav.Link> */}
-                    <Form className={styles.search_navbar} style={{marginRight:'50px'}}>
+                    <Form className={styles.search_navbar}>
                     <Form.Control
                         type="search"
                         placeholder="Search"
@@ -76,24 +70,22 @@ return (
                     </Form>
                 </Nav>
                 <Nav>
-                
-                    <Nav.Link className={styles.navbar} onClick={routeHome} style={{marginRight:'50px',fontSize:'20px',width:'322px',height:'70px',paddingTop:'20px'}}>
-                    Home 
+                <Nav.Link className={styles.navbar}  style={{marginRight:'50px',fontSize:'20px',width:'322px',height:'70px'}}>
+                    
                     </Nav.Link>
-                    <Nav.Link className={styles.navbar} onClick={routeReports} style={{marginRight:'50px',fontSize:'20px',width:'322px',height:'70px',paddingTop:'20px'}}>
-                    My Reports 
+                    <Nav.Link className={styles.navbar}  style={{marginRight:'20px',fontSize:'20px'}} onClick={routeProfile}>
+                    My Profile<ImProfile/>
                     </Nav.Link>
-                    <Nav.Link className={styles.navbar} onClick={routeRefunds} style={{marginRight:'20px',fontSize:'20px',paddingTop:'20px'}}>
-                    Refunds<ImProfile/>
-                    </Nav.Link>
-                    <Nav.Link className={styles.navbar} onClick={handleLogout} style={{marginRight:'-125px',fontSize:'20px',paddingTop:'20px'}}>
+                    <Nav.Link className={styles.navbar} style={{marginRight:'-125px',fontSize:'20px'}} onClick={handleLogout}>
                     Logout <AiOutlineLogout/>
                     </Nav.Link>
                 </Nav>
                 </Navbar.Collapse>
             </Navbar>
+            </form>
+            </div>
     
 )
 }
 
-export default AdminNavbar
+export default InstructorNavbar

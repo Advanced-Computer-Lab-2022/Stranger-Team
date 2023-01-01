@@ -48,6 +48,7 @@ useEffect(() => {
 
     if (response.ok) {
         setCourse(json)
+        console.log("courses"+courses);
     }
 
 

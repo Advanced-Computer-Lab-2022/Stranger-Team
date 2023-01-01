@@ -74,7 +74,7 @@ import GuestCurrentCourseInstructorDetails from "../components/Guest/GuestCurren
         </div>
         <div></div>
         <hr/>
-        <h3>Instructor Available Courses:</h3>
+        {/* <h3>Instructor Available Courses:</h3> */}
         <CurrentCourseInstructorCoursesCorporateTrainee/>
         
         

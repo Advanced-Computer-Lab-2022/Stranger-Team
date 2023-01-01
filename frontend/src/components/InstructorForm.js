@@ -2,6 +2,8 @@ import { useState } from "react"
 
 //hooks
 import { useInstructorsContext } from "../hooks/UseInstructorContext";
+import Container from "react-bootstrap/esm/Container";
+
 
 const InstructorForm = () => {
     const {dispatch} = useInstructorsContext()
@@ -51,26 +53,26 @@ const InstructorForm = () => {
     }
 
     return (
-        <form className="create" onSubmit={handleSubmit}>
-            <h3>Add a new instructor</h3>
+        <form className="create" onSubmit={handleSubmit} style={{position:'absolute',paddingLeft:'1500px',paddingTop:'30px'}}>
+          <h3><strong>Add a new Instructor</strong></h3>
 
-            <label>Username: </label>
+            <label><strong>Username</strong></label>
             <input 
             type="text" 
             onChange={(e) => setUsername(e.target.value)}
             value={Username}
              required
             />
-
-            <label>Password: </label>
+<br></br>
+            <label><strong>Password</strong></label>
             <input 
             type="text" 
             onChange={(e) => setPassword(e.target.value)}
             value={Password}
             required
             />
-
-            <label>confirm Password: </label>
+<br></br>
+            <label><strong>Confirm Password</strong></label>
             <input 
             type="text" 
             onChange={(e) => setconfirmPassword(e.target.value)}
@@ -78,41 +80,43 @@ const InstructorForm = () => {
             required
             />
 
-
-            <label>First Name: </label>
+<br></br>
+            <label><strong>First Name</strong></label>
             <input 
             type="text" 
             onChange={(e) => setFN(e.target.value)}
             value={First_Name}
             required
             />
-
-            <label>Last Name: </label>
+<br></br>
+            <label><strong>Last Name</strong></label>
             <input 
             type="text" 
             onChange={(e) => setLN(e.target.value)}
             value={Last_Name}
             required
             />
-
-            <label>Email: </label>
+<br></br>
+            <label><strong>Email</strong></label>
             <input 
             type="text" 
             onChange={(e) => setEmail(e.target.value)}
             value={Email}
             required
             />
+<br></br>
 
-            <label>Gender: </label>
-            <input 
-            type="text" 
-            onChange={(e) => setGender(e.target.value)}
-            value={Gender}
-            required
-            />
+<label><strong>Gender</strong></label>
+            <select onChange={(e) => setGender(e.target.value)} value={Gender} required class="form-control" style={{width: "200px", height:"40px"}}>
+                <option></option>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Other">Other</option>
+                </select>
 
-            <button>Add instructor</button>
-            {error && <div className="error">{error}</div>}
+<div>
+        <button className="button-40" role="button"><span class="text">Add Instructor</span></button></div>
+            {error && <div className="error1">{error}</div>}
 
         </form>
     )

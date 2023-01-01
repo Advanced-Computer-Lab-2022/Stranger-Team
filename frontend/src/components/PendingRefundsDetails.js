@@ -78,8 +78,8 @@ const PendingRefundsDetails = ({ prefunds }) => {
 
 
         <div className="admin-details" onClick={routeChange}>
-        <h4>FROM <strong>{prefunds.Username}</strong></h4>
-        <p>Requesting refund of amount from course <strong>{prefunds.Title}</strong></p>
+        <h4>From <strong>{prefunds.Username}</strong></h4>
+        <p>Requesting refund from course <strong>{prefunds.Title}</strong></p>
         <p><strong>{prefunds.Status}</strong></p>
         <p><strong>{prefunds.Role}</strong></p>
         <p>Sent {formatDistanceToNow(new Date(prefunds.createdAt), {addSuffix: true})}</p>

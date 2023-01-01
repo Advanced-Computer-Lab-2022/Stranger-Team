@@ -5,6 +5,7 @@
     import React from 'react';
     import { useNavigate } from "react-router-dom";
     import { useEffect, useState } from "react"
+    import styles from "../components/Guest/styles.module.css"
 
 
     const CurrentRequestDetails = ({ problem }) => {
@@ -41,7 +42,7 @@
 
     return (
 
-        <div className="course-details">
+        <div className={styles.proceedToPayment}>
         <h4><strong>Course: </strong></h4>
         <p>{currCourse}</p>
         <hr/>

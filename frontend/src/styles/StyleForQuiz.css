@@ -19,7 +19,7 @@ body, html{
   display: block;
   position: relative;
   margin: 40px auto;
-  height: auto;
+  /* height: auto; */
   width: 800px;
   padding: 20px;
   

@@ -226,23 +226,33 @@ const fetchNonRegisteredCorporateTraineeCoursesForInstructor = async(req,res) =>
     console.log("traineeeee"+trainee);
     const traineeRegisteredCourses = trainee.Registered_Courses;
     const instructorCourses = await course.find({Instructor:mongoose.Types.ObjectId(instructorId)}).populate('Instructor');
+    console.log("instructorCourses"+instructorCourses)
     const traineeNonRegisteredCourses = [];
 
+    if(traineeRegisteredCourses==null||traineeRegisteredCourses.length==0||traineeRegisteredCourses.length==null)
+    {
+        res.status(200).json(instructorCourses)
+    }
+    else
+    {
+        
     for (let i = 0; i < traineeRegisteredCourses.length; i++) {
-            for(let j=0;j<instructorCourses.length;j++)
+        for(let j=0;j<instructorCourses.length;j++)
+        {
+            console.log(traineeRegisteredCourses[i]._id)
+            console.log(instructorCourses[j]._id)
+            if(traineeRegisteredCourses[i]._id != instructorCourses[j]._id)
             {
-                console.log(traineeRegisteredCourses[i]._id)
-                console.log(instructorCourses[j]._id)
-                if(traineeRegisteredCourses[i]._id != instructorCourses[j]._id)
-                {
-                    traineeNonRegisteredCourses.push(instructorCourses[j])
-                }
+                traineeNonRegisteredCourses.push(instructorCourses[j])
             }
-
         }
 
-        console.log("traineeNonRegisteredCourses"+traineeNonRegisteredCourses);
-        res.status(200).json(traineeNonRegisteredCourses)
+    }
+
+    console.log("traineeNonRegisteredCourses"+traineeNonRegisteredCourses);
+    res.status(200).json(traineeNonRegisteredCourses)
+
+    }
 
     }
     catch(error){

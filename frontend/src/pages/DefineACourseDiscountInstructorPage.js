@@ -7,6 +7,7 @@
     import { useNavigate } from "react-router-dom";
 	import { useState } from 'react'
     import ProfileNavBar from '../components/ProfileNavBar'
+    import InstructorNavbar from '../components/InstructorNavbar';
 
     const DefineACourseDiscountInstructorPage = () => {
 
@@ -57,18 +58,18 @@
     return (
 
         <>
-        <ProfileNavBar/>
+        <InstructorNavbar/>
         <form className="create" onSubmit={defineCourseDiscount}> 
-        <h3>Please enter the discount amount you would like to define for your course:</h3>
+        <h3><strong>Please enter the discount amount you would like to define for your course.</strong></h3>
 
-        <label>Discount :</label>
+        <label><strong>Discount</strong></label>
         <input 
             type="Number" 
             onChange={(e) => setDiscount(e.target.value)} 
             value={Discount} 
         />
-
-        <label>Discount Start Date:</label>
+<br></br>
+        <label><strong>Discount Start Date</strong></label>
         <input 
             className='course'
             type="Date" 
@@ -76,8 +77,8 @@
             onChange={(e) => setDiscount_Start_Date(e.target.value)} 
             value={Discount_Start_Date} 
         />
-
-        <label>Discount End Date:</label>
+<br></br>
+        <label><strong>Discount End Date</strong></label>
         <input 
             className='course'
             type="Date" 
@@ -86,7 +87,10 @@
             value={Discount_End_Date} 
         />
 
-        <button>Add Discount</button>
+<button className="button-48" role="button"><span class="text">Add Discount</span></button>
+<Container style={{right: "-310px", top:"-30px"}}>
+{/* <button className="button-12" role="button"><span class="text">Back</span></button> */}
+</Container>
         {error && <div className="error">{error}</div>} 
         </form>
         </>
