@@ -1,4 +1,6 @@
-    import YoutubeEmbed from "./YoutubeEmbed"
+    //sessions done
+    import { Container } from "react-bootstrap"
+import YoutubeEmbed from "./YoutubeEmbed"
 
 
     const CurrentCoursePageSubtitleDetails = ({ subtitle }) => {
@@ -6,9 +8,15 @@
 
     return (
         <div className="course-details">
-        <h4>{subtitle.Title}</h4> 
-        <h3><strong>Shot Video Description:</strong></h3>
-        <p>{subtitle.Description}</p>
+        
+    
+        {/* <h4><strong>Short Video Description:</strong></h4> */}
+        <Container style={{align:"center", right: "-270px"}}><h3><strong>{subtitle.Subtitle_Title}</strong></h3> </Container>
+        <hr></hr>
+        <label><strong>{subtitle.Description}</strong></label>
+     
+      <br></br>
+      <br></br>
         {/* <iframe
         width="853"
         height="480"

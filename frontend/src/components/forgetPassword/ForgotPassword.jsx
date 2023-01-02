@@ -2,6 +2,9 @@ import { useState } from "react";
 import axios from "axios";
 import styles from "./styles.module.css";
 import { Link } from "react-router-dom";
+import newstyles from './newstyles.module.css';
+
+
 const ForgotPassword = () => {
 	const [Email, setEmail] = useState("");
 	const [msg, setMsg] = useState("");
@@ -23,16 +26,17 @@ const ForgotPassword = () => {
         const json = await response.json()
 		console.log(json);
         if (!response.ok) {
-        setError(json.error)
+        setError(json.message)
         }
         if (response.ok) {
         setError(null)
         setEmail('')
-        setMsg("");
+		setMsg(json.message);
 		
         }
 		const { data } = await axios.post(`/passwordReset/?Email=${Email}`, { Email});
-		setMsg(data.message);
+		console.log("data:"+data);
+		//setMsg(data.message);
 		// try {
 		// 	console.log("email is "+Email);
 		// 	const url = `http://localhost:3000/passwordReset`;
@@ -56,21 +60,24 @@ const ForgotPassword = () => {
 	return (
 		<div className={styles.container}>
 			<form className={styles.form_container} onSubmit={handleSubmit}>
-				<h1>Forgot Password</h1>
+				<h1>Please enter your current email to reset your password:</h1>
+				<div className={newstyles.proceedToPayment}>
 				<input
 					type="text"
-					
+					placeholder=" Email"
 					name="Email"
 					onChange={(e) => setEmail(e.target.value)}
 					value={Email}
 					required
 					className={styles.input}
+					style={{width:'300px',height:'30px'}}
 				/>
+				</div>
 				{/* { <link to = "/forgetPassword" style = {{alignSelf:"flex-start"}}><p>Forgot Password?</p></link> } */}
 				{error && <div className={styles.error_msg}>{error}</div>}
 				{msg && <div className={styles.success_msg}>{msg}</div>}
-               
-				<button type="submit" className={styles.green_btn}>
+
+				<button type="submit" className={newstyles.blueButton}>
 					Submit
 				</button>
 			</form>

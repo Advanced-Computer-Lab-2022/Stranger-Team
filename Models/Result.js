@@ -6,35 +6,27 @@ const Schema = mongoose.Schema;
 
 const resultSchema = new Schema({
     
-    UserID:
+    CTrainee_Id:
     {
         type: mongoose.Types.ObjectId,
         ref:'corporatetrainees'
     },
 
-    EID: {
+    Trainee_Id:
+    {
         type: mongoose.Types.ObjectId,
-        ref:'exercises'
+        ref:'individualTrainee'
+    },
+
+    Course_Id:
+    {
+        type: mongoose.Types.ObjectId,
+        ref:'course'
     },
 
     Res: {
-        type: Array,
-        default: []
-    },
-
-    Attempts: {
         type: Number,
         default: 0
-    },
-
-    Points: {
-        type: Number,
-        default: 0
-    },
-
-    Achieved: {
-        type: String,
-        default: ''
     }
     
   }, { timestamps: true });

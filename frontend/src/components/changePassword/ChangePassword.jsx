@@ -2,34 +2,42 @@ import { useEffect, useState, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import styles from "./styles.module.css";
+import newstyles from './newstyles.module.css';
 
 const ChangePassword = () => {
-	const [validUrl, setValidUrl] = useState(false);
-	const [Password, setPassword] = useState("");
+	const [validUrl, setValidUrl] = useState(true);
+	const [data, setData] = useState({ Password: "", confirmPassword: "" });
 	const [msg, setMsg] = useState("");
 	const [error, setError] = useState("");
 	const param = useParams();
-	const url = `http://localhost:3000/changePassword/?Password=${Password}`;
-
-	useEffect(() => {
-		const verifyUrl = async () => {
-		
-				setValidUrl(true);
-			
-		};
-		verifyUrl();
-	}, [param, url]);
-
+	const url = `http://localhost:3000/changePassword`;
+	const [oldPassword , setoldPassword] = useState("");
+	const [Password , setPassword] = useState("");
+	const [confirmPassword , setconfirmPassword] = useState("");
+	const handleChange = ({ currentTarget: input }) => {
+		setData({ ...data, [input.name]: input.value });
+	};
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-            
-            console.log("ana bozt");
-			const { data } = await axios.post(`http://localhost:3000/changePassword/?Password=${Password}`, { Password });
-			console.log("ana mboztsh");   //
-            setMsg(data.message);
-			setError("");
-			window.location = "/";
+            const newUser = {oldPassword,Password,confirmPassword};
+            const response = await fetch('/changePassword', {
+                method: 'POST',
+                body: JSON.stringify(newUser),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+                })
+				const json = await response.json()  //
+				if (!response.ok) {
+					setError(json.message)
+					}
+					if (response.ok) {
+					setError(null)
+					setMsg(json.message);
+					window.location = "/";
+					}
+			
 		} catch (error) {
 			if (
 				error.response &&
@@ -47,19 +55,45 @@ const ChangePassword = () => {
 			{validUrl ? (
 				<div className={styles.container}>
 					<form className={styles.form_container} onSubmit={handleSubmit}>
-						<h1>Change Password</h1>
+					<h1>Change Password</h1>
+					<div className={newstyles.proceedToPayment}>
 						<input
 							type="Password"
-							placeholder="Password"
+							placeholder="current password"
+							name="oldPassword"
+							onChange={(e) => setoldPassword(e.target.value)}
+							value={oldPassword}
+							required
+							className={styles.input}
+						/>
+						</div>
+					
+						<div className={newstyles.proceedToPayment}>
+						<input
+							type="Password"
+							placeholder="New password"
 							name="Password"
 							onChange={(e) => setPassword(e.target.value)}
 							value={Password}
 							required
 							className={styles.input}
 						/>
+						</div>
+
+						<div className={newstyles.proceedToPayment}>
+						<input
+							type="Password"
+							placeholder="confirm New password"
+							name="confirmPassword"
+							onChange={(e) => setconfirmPassword(e.target.value)}
+							value={confirmPassword}
+							required
+							className={styles.input}
+						/>
+						</div>
 						{error && <div className={styles.error_msg}>{error}</div>}
 						{msg && <div className={styles.success_msg}>{msg}</div>}
-						<button type="submit" className={styles.green_btn}>
+						<button type="submit" className={newstyles.blueButton}>
 							Submit
 						</button>
 					</form>

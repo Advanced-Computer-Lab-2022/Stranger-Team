@@ -1,4 +1,5 @@
 import { useAdminsContext } from "../hooks/UseAdminContext"
+import AdminNavbar from "./AdminNavbar"
 
 
 //date fns
@@ -24,9 +25,9 @@ const AdminDetails = ({ admins }) => {
     
     return (
         <div className="admin-details">
-            <h4>{admins.Username}</h4>
+            <h4><strong>{admins.Username}</strong></h4>
             {/* <p><strong>USERNAME:</strong>{admins.Username}</p> */}
-            <p><strong>PASSWORD: </strong>{admins.Password}</p>
+            {/* <p><strong>PASSWORD: </strong>{admins.Password}</p> */}
             <p>Created {formatDistanceToNow(new Date(admins.createdAt), {addSuffix: true})}</p>
             <p>Updated {formatDistanceToNow(new Date(admins.updatedAt), {addSuffix: true})}</p>
             <span className="material-symbols-outlined" onClick={handleClick}>delete</span>

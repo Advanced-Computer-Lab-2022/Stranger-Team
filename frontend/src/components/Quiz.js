@@ -9,6 +9,8 @@ import { PushAnswer } from '../hooks/SetResult';
 import { useSelector, useDispatch } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 import { moveNextAction } from '../redux/question_reducer';
+import StyleForQuiz from '../components/../styles/StyleForQuiz.css'
+import MainForQuiz from '../components/../styles/MainForQuiz.css'
 
 export default function Quiz() {
     
@@ -59,18 +61,29 @@ export default function Quiz() {
 
     /** finished exam after the last question */
     if(result.length && result.length >= queue.length){
-        return <Navigate to={'/results'} replace={true}></Navigate>
+    
+         const params = new URLSearchParams(window.location.search);
+         const courseId = params.get('CourseId');
+        // const traineeId = params.get('TraineeId');
+        // const ctrainee = params.get('CorporateTraineeId');
+         console.log(courseId); 
+      
+        // return <Navigate to={`/results/?CourseId=${courseId}&TraineeId=${traineeId}&CorporateTraineeId=${ctrainee}`} replace={true}></Navigate>
+
+
+
+        return <Navigate to={`/results/?CourseId=${courseId}`} replace={true}></Navigate>
     }
 
   return (
-    <div className='container'>
+    <div className={StyleForQuiz.container}>
 
         {/* display questions */}
         <Questions onChecked={onChecked} />
 
-        <div className='grid'>
-            { trace > 0 ? <button className='btn prev' onClick={onPrev}>Prev</button> : <div></div>}
-            <button className='btn next' onClick={onNext}>Next</button>
+        <div className={StyleForQuiz.grid}>
+            { trace > 0 ? <button className='reject1' onClick={onPrev}>Prev</button> : <div></div>}
+            <button className='accept1' onClick={onNext}>Next</button>
         </div>
     </div>
   )

@@ -24,13 +24,13 @@ const CorporateTraineeDetails = ({ corporatetrainees }) => {
     
     return (
         <div className="admin-details">
-            <h4>{corporatetrainees.Username}</h4>
-            <p><strong>PASSWORD: </strong>{corporatetrainees.Password}</p>
+            <h4><strong>{corporatetrainees.Username}</strong></h4>
+            {/* <p><strong>PASSWORD: </strong>{corporatetrainees.Password}</p> */}
             <p><strong>FIRST NAME: </strong>{corporatetrainees.First_Name}</p>
             <p><strong>LAST NAME: </strong>{corporatetrainees.Last_Name}</p>
             <p><strong>EMAIL: </strong>{corporatetrainees.Email}</p>
             <p><strong>GENDER: </strong>{corporatetrainees.Gender}</p>
-            <p><strong>CORPORATE: </strong>{corporatetrainees.Corporate}</p>
+            <p><strong>{corporatetrainees.Corporate}</strong></p>
 
             <p>Created {formatDistanceToNow(new Date(corporatetrainees.createdAt), {addSuffix: true})}</p>
             <p>Updated {formatDistanceToNow(new Date(corporatetrainees.updatedAt), {addSuffix: true})}</p>

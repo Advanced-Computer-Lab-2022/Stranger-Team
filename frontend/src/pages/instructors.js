@@ -1,4 +1,7 @@
     import { useEffect } from "react";
+    import AdminNavbar from "../components/AdminNavbar";
+    import Container from "react-bootstrap/esm/Container";
+    import '../styles/admin.css'
 
 
         //components
@@ -27,13 +30,23 @@
             
             
                 return (
+                    <div>
+                        <AdminNavbar></AdminNavbar>
+                        <InstructorForm />
                 <div className="home">
                 <div className="admins">
                     {instructors && instructors.map((instructors) => (
                         <InstructorsDetails key={instructors._id} instructors={instructors}/>
                     ))}
                 </div>
-                <InstructorForm />
+
+                
+               
+                </div>
+                {/* <div> <Container style={{top:'-2950px',  right:'-800px'}}>
+                
+                 </Container></div> */}
+
                 </div>
                 )
             

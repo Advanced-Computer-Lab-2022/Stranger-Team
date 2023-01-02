@@ -1,3 +1,4 @@
+    //sessions done
     import { Link } from 'react-router-dom'
 
     import 'bootstrap/dist/css/bootstrap.min.css'
@@ -15,30 +16,32 @@
         let navigate = useNavigate();
         const routeChange = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        console.log(instructorId); 
-        let path =  `/MyProfile/?id=${instructorId}`; 
+        // const instructorId = params.get('id');
+        // console.log(instructorId); 
+        // let path =  `/MyProfile/?id=${instructorId}`; 
+        let path =  `/MyProfile`; 
         navigate(path);
     }
 
     const routeChange2 = () =>{ 
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        console.log(instructorId); 
-        let path =  `/InstructorCoursePage/?id=${instructorId}`; 
+        // const instructorId = params.get('id');
+        // console.log(instructorId); 
+        // let path =  `/InstructorCoursePage/?id=${instructorId}`; 
+        let path =  `/InstructorCoursePage`; 
         navigate(path);
     }
 
     return (
         
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <img src={download1} width="50" height="50" class="d-inline-block align-top" alt=""></img>
-        {/* <a class="navbar-brand" href="#">LearnEd</a> */}
-        <label class="nav-item nav-link active" onClick={routeChange2} width="40" height="30">LearnEd</label> 
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-            <label class="nav-item nav-link active" onClick={routeChange}>My Profile</label> 
-            {/* <a class="nav-item nav-link active" href={routeChange}> <span class="sr-only"></span></a> */}
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <img src={download1} width="50" height="50" className="d-inline-block align-top" alt=""></img>
+        {/* <a className="navbar-brand" href="#">LearnEd</a> */}
+        <label className="nav-item nav-link active" onClick={routeChange2} width="40" height="30">LearnEd</label> 
+        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div className="navbar-nav">
+            <label className="nav-item nav-link active" onClick={routeChange}>My Profile</label> 
+            {/* <a className="nav-item nav-link active" href={routeChange}> <span className="sr-only"></span></a> */}
             </div>
         </div>    
     </nav>

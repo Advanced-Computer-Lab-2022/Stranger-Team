@@ -1,5 +1,5 @@
 
-
+//sessions done
     import { useEffect, useState } from "react"
     import React from 'react';
     import { useNavigate,useLocation  } from "react-router-dom";
@@ -11,7 +11,8 @@
     import{Button, Alert, Container} from 'react-bootstrap'
     import ProfileNavBar from '../components/ProfileNavBar'
     import InstructorProfileDetails from "../components/InstructorProfileDetails";
-    import InstructorEditProfile from "../components/InstructorEditProfile";
+    import ViewMoney from "../components/InstructorMoneyOwed";
+    import InstructorNavbar from "../components/InstructorNavbar"
 
 
     const InstructorProfilePage = () => {
@@ -24,11 +25,12 @@
         //const response = await fetch('/View_My_Courses/Layla')
         //const response = await fetch(`/View_My_Courses/Layla/?q=${searchQuery}`)
         const params = new URLSearchParams(window.location.search);
-        const instructorId = params.get('id');
-        console.log(instructorId); 
+        // const instructorId = params.get('id');
+        // console.log(instructorId); 
         
         
-        const response = await fetch(`/MyProfile/?id=${instructorId}`)
+        // const response = await fetch(`/MyProfile/?id=${instructorId}`)
+        const response = await fetch(`/MyProfile`)
         // if(searchPriceQuery == null)
         // {
         //     const response = await fetch(`/MyCourses/${instructorId}/?q=${searchQuery}`)
@@ -56,35 +58,49 @@
     
 
         let navigate = useNavigate();
-        const routeChange = () =>{ 
-        let path = '/EditMyProfile'; 
-        navigate(path);
-    }
+    //     const routeChange = () =>{ 
+    //     const params = new URLSearchParams(window.location.search);
+    //     const instructorId = params.get('id');
+    //     console.log(instructorId); 
+    //     let path = `/InstructorEditMyProfilePage/?id=${instructorId}`; 
+    //     navigate(path);
+    // }
 
     return (
-        <Container >
-            <ProfileNavBar/>
+
+        <>
+        <InstructorNavbar/>
+        <Container style={{marginRight:'450px'}}>
+            
         
-        
-        <div class="container">
-        <div class="row gutters">
-        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-        <div class="card h-100">
-            <div class="card-body">
+        <form className="create"> 
+        <div className="container">
+        <div className="row gutters">
+        <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+        <div className="card h-100" style={{width:'800px',marginRight:'50px'}}>
+            <div className="card-body">
+            <div >
+         {/* <ViewMoney ></ViewMoney> */}
+            </div>
                 {instructors && instructors.map(instructor => (
                 <InstructorProfileDetails instructor={instructor} key={instructor._id} />
                 ))[0]}
+                {/* {instructors && instructors.map(instructor => (
+                <InstructorRatingsDetails instructor={instructor.Instructor_Ratings} key={instructor._id} />
+                ))[0]} */}
             </div>
         </div>
         </div>
         </div>
         </div>
+        {/* <button className="create" onClick={routeChange}>Edit Profile</button> */}
         
-        <InstructorEditProfile/>
+        {/* <InstructorEditProfile/> */}
 
         
-        
+        </form>
         </Container>
+        </>
     )
     }
 

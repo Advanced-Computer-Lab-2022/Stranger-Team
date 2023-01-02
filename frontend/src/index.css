@@ -39,7 +39,7 @@ header a {
 }
 
 .pages {
-  max-width: 1400px;
+  /* max-width: 1400px; */
   padding: 20px;
   margin: 0 auto;
 }
@@ -54,6 +54,15 @@ header a {
   gap: 100px;
 }
 
+
+
+.adminhome {
+  display: grid;
+  gap: 80px;
+  vertical-align: middle;
+ 
+  
+}
 .home1 {
   display: grid;
   grid-template-columns: 3fr 1fr;
@@ -76,9 +85,19 @@ header a {
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
 }
 
+
+.course-details1 {
+  background: #fff;
+  border-radius: 4px;
+  margin: 20px auto;
+  padding: 20px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+}
+
 div.preview{
-  width:20%;
-  height:10%;
+  width:50%;
+  height:20%;
 }
 
 .course-details h4 {
@@ -104,13 +123,25 @@ div.preview{
   color: #333;
 }
 
+
+.course-details1 span {
+  /* position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  background: #f1f1f1;
+  padding: 6px;
+  border-radius: 50%;
+  color: #333; */
+}
+
 /* new workout form */
 label,
 input {
   display: block;
 }
 
-input {
+input.course {
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 20px;
@@ -118,6 +149,9 @@ input {
   border: 1px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box;
+}
+div.radioRating{
+  display: inline;
 }
 
 form button {
@@ -140,6 +174,33 @@ div.error {
   margin: 20px 0;
 }
 
+
+div.error1 {
+  padding: 10px;
+  background: #ffefef;
+  border: 1px solid var(--error);
+  color: var(--error);
+  border-radius: 4px;
+  /* margin: 20px 0; */
+  margin-top: 40px;
+  margin-left: -63px;
+  width: 350px
+}
+
+
+div.error2 {
+  padding: 10px;
+  background: #ffefef;
+  border: 1px solid var(--error);
+  color: var(--error);
+  border-radius: 4px;
+  /* margin: 20px 0; */
+  margin-top: 50px;
+  margin-left: -63px;
+  width: 350px;
+  
+}
+
 .admin-details {
   background: #fff;
   border-radius: 4px;
@@ -152,13 +213,19 @@ div.error {
 .admin-details h4 {
   margin: 0 0 10px 0;
   font-size: 1.2em;
-  color: var(--primary);
+  color: #00008B;
 }
 
 .admin-details p {
   margin: 0;
   font-size: 0.9em;
   color: #555;
+}
+
+
+.instructor-form  {
+  top:'-2950px'; 
+  right:'-800px';
 }
 
 .admin-details span {
@@ -255,6 +322,58 @@ div.error {
   color: #333;
 
 }
+
+
+
+.spanni {
+  position: absolute;
+  top: 100px;
+  right: 1px;
+  cursor: pointer;
+  background: #f1f1f1;
+  /* padding: 6px; */
+  border-radius: 50%;
+  color: #333;
+
+}
+
+
+.drp {
+  position: absolute;
+  top: 20px;
+  right: 260px;
+  cursor: pointer;
+
+}
+
+
+.drpp {
+  position: absolute;
+  top: 100px;
+  right: 50px;
+  cursor: pointer;
+
+}
+
+
+.spannyyyy {
+  position: absolute;
+  top: 60px;
+  right: 1px;
+  cursor: pointer;
+  background: #f1f1f1;
+  /* padding: 6px; */
+  border-radius: 50%;
+  color: #333;
+
+}
+
+
+
+.nonspanny {
+  cursor: context-menu
+}
+
 
 a {
   color: #147de7;
@@ -363,9 +482,9 @@ hr .new1 {
   transition: color 200 ms;
 }
 
-input[type="radio"] {
+/* input[type="radio"] {
   display: none;
-}
+} */
 
 .starsLine {
   display: inline-flex;

@@ -1,8 +1,9 @@
 const Course = require ('../Models/Course');
-const Exercise = require('../Models/Exercise');
-const Week = require('../Models/Week');
 const Question = require('../Models/Question');
 const Result = require('../Models/Result');
+const subtitleQuestion = require('../Models/SubtitleQuestion');
+
+const mongoose = require('mongoose');
 
 
 //adding a new Course
@@ -68,68 +69,65 @@ const viewCourses = async (req, res) => {
   };
 
 
+  //adding a question
+  const insertQuestions = async (req, res) => {
+    const courseId = req.query.CourseId;
+    console.log("courseid"+courseId);
+    const{QNumber,Q,Answer1,Answer2,Answer3,Answer4,correctAnswer} = req.body;
+    let emptyFields = []
+        if (!QNumber) {
+            emptyFields.push('QNumber')
+        }
 
-  // adding a week
-    const addWeek = async (req, res) => {
-    const{Title,Hours} = req.body;
-    //const CourseID = req.query.id;
+        if (!Q) {
+            emptyFields.push('Q')
+        }
+
+        if (!Answer1) {
+          emptyFields.push('A1')
+      }
+
+      if (!Answer2) {
+        emptyFields.push('A2')
+    }
+
+    if (!Answer3) {
+      emptyFields.push('A3')
+     }
+
+    if (!Answer4) {
+    emptyFields.push('A4')
+    }
+
+
+    if (!correctAnswer) {
+      emptyFields.push('correctAns')
+      }
+
+        if(emptyFields.length > 0) {
+            return res.status(400).json({error: 'Please fill in the missing fields.', emptyFields})
+        }
+
+
+    
     try{
-        const week = await Week.create({Title,Hours,"CourseID":req.query.id});
+        const questionId = (await Question.create({QNumber,Q,correctAnswer,CourseId:req.query.CourseId}))._id;
+        const currQuestion = await Question.findById({_id:questionId});
+        const answersArray = currQuestion.Answers;
+        answersArray.push(Answer1);
+        answersArray.push(Answer2);
+        answersArray.push(Answer3);
+        answersArray.push(Answer4);
+        console.log(answersArray)
+        const newQuestion = await Question.findByIdAndUpdate({_id:questionId},{Answers:answersArray},{new:true});
         
-        res.status(200).json(week);
+        res.status(200).json(newQuestion);
     }catch(error){
         res.status(400).json({error:error.message});
     }
  
  }
 
-
-
- //to view Weeks
-const viewWeeks = async (req, res) => {
-    const data = await Week.find({})
-    res.status(200).json(data)
-   // console.log(data)
-   
-  };
-
-
-  // adding an exercise 
-  const addExercise = async (req, res) => {
-    const{Num,Score} = req.body;
-    //const CourseID = req.query.id;
-    try{
-        const exercise = await Exercise.create({Num, Score,"WeekID":req.query.id});
-        
-        res.status(200).json(exercise);
-    }catch(error){
-        res.status(400).json({error:error.message});
-    }
- 
- }
-
-
- //to view Exercises
-const viewExercises = async (req, res) => {
-    const data = await Exercise.find({})
-    res.status(200).json(data)
-   // console.log(data)
-   
-  };
-
-
-
-// adding questions
-const addQuestions = async (req, res) => {
-    const{QNumber, Q, Answers} = req.body;
-    try {
-        Question.insertMany({ QNumber, Q,Answers, "ExerciseID":req.query.id }, function(err, data){
-            res.json({ msg: "Data Saved Successfully...!"})
-        })
-    } catch (error) {
-        res.json({ error })
-    }
-}
 
 
 //to view the questions
@@ -139,17 +137,91 @@ const viewQuestions = async (req, res) => {
  
    
   };
-  const viewAnswers = async (req, res) => {
-    const data = await Question.find({})
-    const t = []
+
+
+  //viewing questions of a specific exercise
+  const fetchQuestionsByCID = async(req,res) => {
+
+    const courseId = req.query.CourseId;
+    console.log("courseid"+courseId);
+
+    if(courseId){
+    const result = await Question.find({CourseId:mongoose.Types.ObjectId(courseId)}).populate('CourseId');
+    res.status(200).json(result)
+    console.log(result)
+    }else{
+        res.status(400).json({error:"courseId is required"})
+    }
+}
+
+const viewAnswers = async(req,res) => {
+
+  const courseId = req.query.CourseId;
+  console.log("courseid"+courseId);
+
+  if(courseId){
+  const data = await Question.find({CourseId:mongoose.Types.ObjectId(courseId)}).populate('CourseId');
+  const t = []
     for (let i = 0; i < data.length; i++) {
         t[i]=data[i].correctAnswer
         console.log(t);
     }
     res.status(200).json(t)
  
+  }else{
+      res.status(400).json({error:"courseId is required"})
+  }
+}
+
+
+
+const viewSubtitleAnswer = async(req,res) => {
+
+  // const subtitleId = req.query.SubtitleId;
+  // console.log("subtitleid: "+subtitleId);
+
+  // if(courseId){
+  // const data = await Question.find({CourseId:mongoose.Types.ObjectId(courseId)}).populate('CourseId');
+  // const t = []
+  //   for (let i = 0; i < data.length; i++) {
+  //       t[i]=data[i].correctAnswer
+  //       console.log(t);
+  //   }
+  //   res.status(200).json(t)
+ 
+  // }else{
+  //     res.status(400).json({error:"courseId is required"})
+  // }
+}
+
+
+  // const viewAnswers = async (req, res) => {
+  //   const data = await Question.find({})
+  //   const t = []
+  //   for (let i = 0; i < data.length; i++) {
+  //       t[i]=data[i].correctAnswer
+  //       console.log(t);
+  //   }
+  //   res.status(200).json(t)
+ 
    
-  };
+  // };
+
+
+
+
+
+  const deleteQuestion = async (req, res) => {
+    const { id } = req.params
+
+    const deletedQuestion = await Question.findOneAndDelete({_id: id})
+
+    if(!deletedQuestion) {
+        return res.status(400).json({error: 'No such question'})
+    }
+
+    res.status(200).json(deletedQuestion) 
+  }
 
 // to add results
 const addResults = async (req, res) => {
@@ -172,7 +244,114 @@ const viewResults = async (req, res) => {
  
 };
 
- 
 
 
-  module.exports = {addCourse, viewCourses, addWeek, viewWeeks, addExercise, viewExercises, addQuestions, viewQuestions, addResults, viewResults,viewAnswers}
+
+//SUBTITLES
+
+
+
+// view question of a specific subtitle
+const fetchSubtitleQuestion = async(req,res) => {
+
+  const subtitleId = req.query.SubtitleId;
+ // console.log("subtitleid: "+subtitleId);
+
+  if(subtitleId){
+  const result = await subtitleQuestion.find({SubtitleId:mongoose.Types.ObjectId(subtitleId)}).populate('SubtitleId');
+  res.status(200).json(result)
+  //console.log(result)
+  }else{
+      res.status(400).json({error:"subtitleId is required"})
+  }
+}
+
+
+// view subtitle question right answer
+const subtitleQuestionAnswer = async(req,res) => {
+
+  const subtitleId = req.query.SubtitleId;
+  console.log("subtitleid: "+subtitleId);
+
+  if(subtitleId){
+  const result = await subtitleQuestion.findOne({SubtitleId:mongoose.Types.ObjectId(subtitleId)});
+  //console.log(result)
+  const ans =  result.correctAnswer
+  //console.log(ans)
+  if(ans) {
+    res.status(200).json(ans)
+    //console.log(result)
+  }
+  else {
+    res.status(400).json({error:"No answer found."})
+  }
+
+  }else{
+      res.status(400).json({error:"subtitleId is required"})
+  }
+}
+
+
+ const quizSize = async(req,res) => {
+
+  const courseid = req.query.CourseId;
+  console.log("courseid: "+courseid);
+
+  if(courseid){
+  const result = await Question.find({CourseId:mongoose.Types.ObjectId(courseid)}).populate('CourseId');
+  console.log(result)
+  if (result.length < 3) {
+    res.status(400).json({error1:"An exam of a minimum of 3 questions should be created for each course."})
+  }
+
+  else {
+    res.json({ msg: "Quiz questions are enough."})
+  }
+
+  }
+}
+//VIEW ALL QUESTIONS OF BIG EXAM WITH CORRECT ANSWERS
+const viewAllQuestions=async(req,res)=>{
+  const courseId=req.query.CourseId
+  try{
+    const data=await Question.find({"CourseId":mongoose.Types.ObjectId(courseId)},{QNumber:1,Q:1,Answers:1,correctAnswer:1,_id:0});
+    res.status(200).json(data);
+  }
+  catch(error){
+    res.status(400).json({error:"No Questions Found"})
+  }
+}
+
+
+
+// const routeCheck = async(req,res) => {
+//   const currRole = req.session.user.Role;
+//   console.log("ROLE:  " + currRole)
+//   if(currRole=="Individual Trainee")
+//   {
+//    res.status(400).json({error:"TRAINEE"})
+//   }
+//   else
+//   {
+//    if (currRole == "Corporate Trainee") {
+//     res.status(200).json(currRole)
+//    }
+      
+//   }
+  const routeCheck = async(req,res) => {
+    const currRole = req.session.user.Role;
+    console.log("ROLE:  " + currRole)
+    if(currRole=="Individual Trainee")
+    {
+     res.status(400).json({error:"TRAINEE"})
+    }
+    else
+    {
+     if (currRole == "Corporate Trainee") {
+      res.status(200).json(currRole)
+     }
+        
+    }
+  }
+
+  module.exports = {addCourse, viewCourses, insertQuestions, viewQuestions, addResults, viewResults, viewAnswers, fetchQuestionsByCID, fetchSubtitleQuestion, subtitleQuestionAnswer, deleteQuestion, quizSize,viewAllQuestions, routeCheck}

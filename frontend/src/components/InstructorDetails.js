@@ -24,8 +24,8 @@ const InstructorDetails = ({ instructors }) => {
     
     return (
         <div className="admin-details">
-            <h4>{instructors.Username}</h4>
-            <p><strong>PASSWORD: </strong>{instructors.Password}</p>
+            <h4><strong>{instructors.Username}</strong></h4>
+            {/* <p><strong>PASSWORD: </strong>{instructors.Password}</p> */}
             <p><strong>FIRST NAME: </strong>{instructors.First_Name}</p>
             <p><strong>LAST NAME: </strong>{instructors.Last_Name}</p>
             <p><strong>EMAIL: </strong>{instructors.Email}</p>
