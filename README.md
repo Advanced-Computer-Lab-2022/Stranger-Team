@@ -205,9 +205,61 @@ router.use(session(
 1. [Axios](https://axios-http.com/docs/intro) for communication between backend and frontend
 2. [Stripe](https://stripe.com/docs/js) for online Payments.
 3. [Nodemailer](https://nodemailer.com/about/) for sending emails to users
-4. (GET)
-5. (POST)
-6. (PUT)
+4. 
+5. (GET)
+6.  ## Getting All Admins
+### Request
+
+`GET /adminHome/admins`
+
+    curl -i -H 'Accept: application/json' http://localhost:4000/adminHome/admins
+    
+### Response
+
+    HTTP/1.1 200 OK
+    Status: 200 OK
+    Connection: close
+    Content-Type: application/json
+    Content-Length: 2
+    []
+
+6. (POST)
+
+ ## Trainee Add Notes
+
+### Request
+
+`POST /fetchCorporateTraineeAddNotes`
+
+    curl -i -H 'Accept: application/json' -d 'Notes=HIIIII' http://localhost:4000/fetchCorporateTraineeAddNotes
+
+### Response
+
+    HTTP/1.1 201 Created
+    Status: 200 Created
+    Connection: close
+    Content-Type: application/json
+
+    {"id":1,"Notes":"HIIIII"}
+
+8. (PUT)
+## Updating status from delivered to pending
+
+### Request
+
+`PUT /updatePending`
+
+    curl -i -H 'Accept: application/json' -X PUT http://localhost:4000/updatePending
+
+### Response
+
+    HTTP/1.1 200 OK
+    Date: Thu, 24 Feb 2011 12:36:31 GMT
+    Status: 200 OK
+    Connection: close
+    Content-Type: application/json
+
+    {"id":1,"RID":"true"}
 
 ## Tests
 - Postman can be used to test the functionality of different API endpoints make sure to attach bearer token if endpoint requires token
