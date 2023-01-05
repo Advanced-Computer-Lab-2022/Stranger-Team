@@ -284,3 +284,6 @@ Apache 2.0
 ## Credits
 ✨[https://wwww.youtube.com/NetNinga](https://www.youtube.com/results?search_query=net+ninga)
 ✨[https://wwww.ReactBootStrap.com](https://react-bootstrap.github.io/)
+✨[https://wwww.youtube.com/ReactRatings](https://youtu.be/nErdlbLWqtA)
+✨[https://wwww.youtube.com/Stripe](https://youtu.be/1r-F3FIONl8)
+
