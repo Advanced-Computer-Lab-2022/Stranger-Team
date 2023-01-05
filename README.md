@@ -212,12 +212,12 @@ router.use(session(
 ## Tests
 - Postman can be used to test the functionality of different API endpoints make sure to attach bearer token if endpoint requires token
 - Any browser can be used to test the functionality of the frontend webpages and web compenents 
-- 
+
 ## How to use?
 What can you do on the website
 
 - Login/Signup to the website
-- 
+
 - Go to the admin dashboard if signed in with admin account
 
   - Create Users (Instructor, CorpotateTrainee, Admin)
