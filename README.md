@@ -205,9 +205,8 @@ router.use(session(
 1. [Axios](https://axios-http.com/docs/intro) for communication between backend and frontend
 2. [Stripe](https://stripe.com/docs/js) for online Payments.
 3. [Nodemailer](https://nodemailer.com/about/) for sending emails to users
-4. 
-5. (GET)
-6.  ## Getting All Admins
+4. (GET)
+  ## Getting All Admins
 ### Request
 
 `GET /adminHome/admins`
@@ -242,7 +241,7 @@ router.use(session(
 
     {"id":1,"Notes":"HIIIII"}
 
-8. (PUT)
+7. (PUT)
 ## Updating status from delivered to pending
 
 ### Request
