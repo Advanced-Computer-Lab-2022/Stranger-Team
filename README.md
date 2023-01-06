@@ -221,6 +221,46 @@ router.use(session(
     Content-Type: application/json
     Content-Length: 2
     []
+    
+  ## HERE ARE OTHER EXAMPLES OF ROUTES:
+   * /search(GET)
+   * /home(GET)
+   * /View_All_Courses/(GET)
+   * /View_Most_Viewed/(GET)
+   * /CurrentCourse(GET)
+   * /fetchInstructorCoursesByIdForGuest(GET)
+   * /isCourseFree(GET)
+   * /ratingACourse(GET)
+   * /ratingAnInstructor(GET)
+   * /reviewingAnInstructor(GET)
+   * /getInstructorRatings(GET)
+   * /fetchInstructorAllPreviousReports(GET)
+   * /fetchTraineePendingReports(GET)
+   * /fetchTraineeResolvedReports(GET)
+   * /checkIfAdminRespondedTrainee(GET)
+   * /updateReportStatusFromPendingToResolvedTrainee(GET)
+   * /fetchProblem(GET)
+   * /fetchCorporateTraineeDeliveredReports(GET)
+   * /fetchCorporateTraineePendingReports(GET)
+   * /fetchCorporateTraineeResolvedReports(GET)
+   * /fetchCorporateProblem(GET)
+   * /fetchInstructorDeliveredReports(GET)
+   * /fetchInstructorProblem(GET)
+   * /indiviualTraineeRegisterCourse(GET)
+   * /checkIfRefundEligible(GET)
+   * /adminHome/pendingInstructors(GET)
+   * /adminHome/instructors(GET)
+   * /acceptRefund(GET)
+   * /rejectRefund(GET)   
+   * /checkCourseFinished(GET) 
+   * /updateFinished(GET) 
+   * /viewAllQuestions(GET) 
+   * /allMoneyOwed(GET) 
+   * /fetchCorporateTraineeNotes(GET) 
+   * /getSubtitlesStatus(GET) 
+   * /updatetSubtitlesStatus(GET) 
+   * /fetchContract(GET) 
+   * /updateContract(GET) 
 
 6. (POST)
 
@@ -240,17 +280,51 @@ router.use(session(
     Content-Type: application/json
 
     {"id":1,"Notes":"HIIIII"}
+    
+ ## HERE ARE OTHER EXAMPLES OF ROUTES:
+ * /fetchCorporateTraineeAddNotes(POST)
+ * /addUserCourseRating(POST)
+ * /addCourseDiscount(POST)
+ * /addSubtitle(POST)
+ * /addANewInstructor(POST)
+ * /addIndividualTrainee(POST)
+ * /corporateTraineeSendFollowup(POST)
+ * /instructorSendFollowup(POST)
+ * /editInstProfileDetails(POST)
+ * /traineeSendReport(POST)
+ * /corporateTraineeSendReport(POST)
+ * /instructorSendReport(POST)
+ * /editProfileDetails(POST)
+ * /Filter_By_Subject(POST)
+ * /Filter_By_Price(POST)
+ * /Filter_By_Rate(POST)
+ * /Search_By_Instructor_Name(POST)
+ * /Search_By_Title(POST)
+ * /createCourse(POST)
+ * /EditMyProfile(POST)
+ * /traineeRefundRequest(POST)
+ * /search(POST)
+ * /adminHome/addAdmin(POST)
+ * /adminHome/addCorporateTrainee(POST)
+ * /adminHome/registerInstructorRequest(POST)
+ * /adminHome/addInstructor(POST)
+ * /addResults(POST)
+ * /reqAccess(POST)
+ * /addCourseDiscountToAllCourses(POST)
+ * /addCourseDiscountToSelectedCourses(POST)
+ * /fetchCorporateTraineeAddNotes(POST)
+ * /createpayment(POST) 
 
 7. (PUT)
-## Updating status from delivered to pending
+ ## Updating status from delivered to pending
 
-### Request
+ ### Request
 
-`PUT /updatePending`
+ `PUT /updatePending`
 
     curl -i -H 'Accept: application/json' -X PUT http://localhost:4000/updatePending
 
-### Response
+ ### Response
 
     HTTP/1.1 200 OK
     Date: Thu, 24 Feb 2011 12:36:31 GMT
@@ -259,6 +333,27 @@ router.use(session(
     Content-Type: application/json
 
     {"id":1,"RID":"true"}
+  ## HERE ARE OTHER EXAMPLES OF ROUTES:
+  
+  * /acceptRefund(PUT)
+  * /rejectRefund(PUT)
+  * /grantAccess/:id(PUT)
+  * /manualStatus(PUT)
+  * /adminRes(PUT)
+  * /updatePending(PUT)
+  * /adminHome/update/corporateTrainees/:id(PUT)
+  * /adminHome/update/instructors/:id(PUT)
+  * /adminHome/update/admins/:id(PUT)
+  
+8. (DELETE)
+  ## HERE ARE OTHER EXAMPLES OF ROUTES:
+  * /adminHome/pendingInstructors/:id(DELETE)
+  * /adminHome/delete/admins/:id(DELETE)
+  * /adminHome/delete/instructors/:id(DELETE)
+  * /adminHome/delete/corporateTrainees/:id(DELETE)
+  * /deleteReq/:id(DELETE)
+ 
+ 
 
 ## Tests
 - Postman can be used to test the functionality of different API endpoints make sure to attach bearer token if endpoint requires token
